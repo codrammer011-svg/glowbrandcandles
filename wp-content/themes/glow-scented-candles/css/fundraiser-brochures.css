@@ -1,0 +1,55 @@
+/* Show the complete portrait brochure covers instead of cropped banner strips. */
+#user-registration-form-62316 #radio_1788399847_field .user-registration-image-choice,
+#user-registration-form-62316 #check_box_1791918628_field .user-registration-image-choice {
+    display: block !important;
+    width: auto !important;
+    height: 200px !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+}
+#user-registration-form-62316 #radio_1788399847_field .user-registration-image-choice img,
+#user-registration-form-62316 #check_box_1791918628_field .user-registration-image-choice img {
+    position: static !important;
+    display: block !important;
+    width: auto !important;
+    height: 200px !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    aspect-ratio: auto !important;
+    max-width: 100% !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+#user-registration-form-62316 .user-registration-image-options li,
+#user-registration-form-62316 .user-registration-image-options li:hover,
+#user-registration-form-62316 .user-registration-image-options label,
+#user-registration-form-62316 .user-registration-image-options label:hover,
+#user-registration-form-62316 .user-registration-image-choice:hover,
+#user-registration-form-62316 .user-registration-image-choice img:hover {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+}
+#user-registration-form-62316 #check_box_1791918628_field .ur-checkbox-list {
+    width: 100%;
+    max-width: 280px;
+}
+
+/* Keep selected image choices in the site's primary pink. */
+#user-registration-form-62316 .user-registration-image-options input:checked + label,
+#user-registration-form-62316 .user-registration-image-options li:has(input:checked) {
+    border-color: var(--e-global-color-primary, #ff0076) !important;
+    color: var(--e-global-color-primary, #ff0076) !important;
+}
+#user-registration-form-62316 .user-registration-image-options input:checked + label::before,
+#user-registration-form-62316 .user-registration-image-options input:checked + label::after,
+#user-registration-form-62316 .user-registration-image-options input:checked + label .user-registration-image-choice::after {
+    background-color: var(--e-global-color-primary, #ff0076) !important;
+    border-color: var(--e-global-color-primary, #ff0076) !important;
+}
+#user-registration-form-62316 input[type="checkbox"],
+#user-registration-form-62316 input[type="radio"] {
+    accent-color: var(--e-global-color-primary, #ff0076);
+}

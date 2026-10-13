@@ -27,6 +27,18 @@ function glow_registration_field_value($form_data, $key)
     return is_scalar($value) && trim((string) $value) !== '' ? (string) $value : null;
 }
 
+function glow_holiday_brochure_email_value($user_id)
+{
+    $value = get_user_meta($user_id, 'user_registration_check_box_1791918628', true);
+    $values = is_array($value) ? $value : array($value);
+    foreach ($values as $choice) {
+        if (is_scalar($choice) && !in_array(strtolower(trim((string) $choice)), array('', '0', 'false', 'no'), true)) {
+            return 'Yes — A Classic Kind of Sparkle — 15 Classic candles, $15 each';
+        }
+    }
+    return 'No';
+}
+
 // Normalize blank optional inputs before UR runs format/length validation.
 add_action('wp_ajax_user_registration_user_form_submit', 'glow_fundraiser_nullable_request', 0);
 add_action('wp_ajax_nopriv_user_registration_user_form_submit', 'glow_fundraiser_nullable_request', 0);
@@ -101,6 +113,8 @@ function glow_fundraiser_nullable_optional_fields($valid_form_data, $form_fields
 }
 
 add_action('wp_enqueue_scripts', function () {
+    $brochure_css = '/css/fundraiser-brochures.css';
+    wp_enqueue_style('glow-fundraiser-brochures', get_stylesheet_directory_uri() . $brochure_css, array(), filemtime(get_stylesheet_directory() . $brochure_css));
     $relative = '/js/registration-response-guard.js';
     wp_enqueue_script('glow-registration-response-guard', get_stylesheet_directory_uri() . $relative, array('jquery'), filemtime(get_stylesheet_directory() . $relative), true);
     if (function_exists('ur_get_form_fields')) {
@@ -317,7 +331,7 @@ function glow_email_admin_fundraiser_summary($valid_form_data, $form_id, $user_i
         'Fundraising Sales Goal'         => $m('user_registration_fr_goal'),
         'Selling Goal (per participant)' => $m('user_registration_selling_goal'),
         'Reason for Fundraising'         => $m('user_registration_reason_for_fundraising'),
-        'Brochures Shipped To'           => $m('user_registration_Brochures_will_be_shipped'),
+        'Small Candle Holiday Brochure' => glow_holiday_brochure_email_value($user_id),
         'Profit Check Payable To'        => $m('user_registration_input_box_1693293590'),
     );
 
@@ -424,7 +438,7 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
     $sales_goal     = $m('user_registration_fr_goal');
     $selling_goal   = $m('user_registration_selling_goal');
     $reason         = $m('user_registration_reason_for_fundraising');
-    $ship_to        = $m('user_registration_Brochures_will_be_shipped');
+    $holiday_brochure = glow_holiday_brochure_email_value($user_id);
     $payable_to     = $m('user_registration_input_box_1693293590');
 
     // Domain-safe URLs (works on any environment, not just glowscentedcandles.com).
@@ -569,7 +583,7 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
           📱 <b>Cell:</b> <?php echo $e($chair_cell); ?><br>
           🏠 <b>Address:</b> <?php echo $e($chair_address); ?><br>
           📧 <b>Email:</b> <?php echo $e($user_email); ?><br>
-          📦 <b>Brochures Ship To:</b> <?php echo $e($ship_to); ?>
+          <b>Small Candle Holiday Brochure:</b> <?php echo $e($holiday_brochure); ?>
         </p>
 
         <hr style="border:none;border-top:1px solid #eee;margin:25px 0;">
