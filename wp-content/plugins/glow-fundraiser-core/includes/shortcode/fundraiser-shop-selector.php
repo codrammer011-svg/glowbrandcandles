@@ -44,6 +44,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'wp_footer', 'glow_fc_auto_popup_trigger', 30 );
 add_action( 'wp_footer', 'glow_fc_popup_cookie_guard', 20 );
 
+function glow_fc_is_popup_shop_page() {
+	if ( is_page( 'products' ) ) { return false; }
+	return is_page( 'shop' ) || ( function_exists( 'is_shop' ) && is_shop() );
+}
+
+add_action( 'wp_head', function() {
+	$popup_id = (int) get_option( 'glow_fundraiser_popup_id', 0 );
+	if ( $popup_id && ! glow_fc_is_popup_shop_page() ) {
+		echo '<style id="glow-shop-popup-page-guard">#elementor-popup-modal-' . $popup_id . '{display:none!important;}</style>';
+	}
+}, 20 );
+
 /**
  * Runs on EVERY page. Two jobs:
  *   1. When a ".continue_shopping" element (or its child) is clicked, remember it in a
@@ -61,6 +73,7 @@ function glow_fc_popup_cookie_guard() {
 	<script>
 	(function () {
 		var popupId = <?php echo $popup_id; ?>;
+		var allowedPage = <?php echo wp_json_encode( glow_fc_is_popup_shop_page() ); ?>;
 		function gsHas(n){ return new RegExp('(^|;\\s*)' + n + '=').test(document.cookie); }
 		function gsSet(n,v,days){ var d=new Date(); d.setTime(d.getTime()+days*86400000); document.cookie=n+'='+v+';expires='+d.toUTCString()+';path=/'; }
 
@@ -69,7 +82,7 @@ function glow_fc_popup_cookie_guard() {
 			if ( b ) { gsSet('glow_shop_continue', '1', 30); }
 		}, true);
 
-		if ( gsHas('glow_shop_continue') ) {
+		if ( ! allowedPage || gsHas('glow_shop_continue') ) {
 			// Bulletproof hide: CSS !important overrides Elementor's inline display:flex,
 			// so the popup never becomes visible regardless of which trigger opened it.
 			var st = document.createElement('style');
@@ -102,7 +115,7 @@ function glow_fc_popup_cookie_guard() {
 }
 
 function glow_fc_auto_popup_trigger() {
-	if ( ! function_exists( 'is_shop' ) || ! is_shop() ) {
+	if ( ! glow_fc_is_popup_shop_page() ) {
 		return;
 	}
 
