@@ -1367,7 +1367,7 @@ get_header();
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-06.png" alt="boxed-metallic"></p>-->
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-07.png" alt="boxed-metallic"></p>-->
 								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/boxed-image.jpg" alt="boxed-metallic"></p>
-								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/boxed-metallic/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/product-category/celebrate-the-moments/' ) ); ?>">SHOP</a></div>
 							</div>
 						</div>
 				 </div>
