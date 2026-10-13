@@ -942,7 +942,7 @@ get_header();
 			   
 							<div id="DemoStoreShareButton" class="sc-CtfFt eGOSHP" style="cursor:pointer;">SHARE</div>
 							<div class="social-media"> 
-				 <a title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=https://glowbrandscandles.com/seller/&amp;t=Rochelle LIGSAY | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+				 <a title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=<?php echo esc_url( home_url( '/' ) ); ?>seller/&amp;t=Rochelle LIGSAY | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
 				 <a class="fr-btn instagrambtn"><i class="fa fa-instagram"></i></a>
 			<a id="CopyLink" class="fr-btn style-scope copy-code"><i class="fa fa-clone" aria-hidden="true"></i></a>
 					 </div>
@@ -1019,7 +1019,7 @@ get_header();
 								<!--<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-11.png" alt="hexagon-jars">-->
 								<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/classic-banner.jpg" alt="hexagon-jars">
 								</p>
-								<div class="overlay"><a href="https://glowbrandscandles.com/product-category/classic-candles/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/classic-candles/">SHOP</a></div>
 							</div>
 						</div>
 						 <div class="col-md-4 col-sm-4 col-xs-4 block">
@@ -1027,7 +1027,7 @@ get_header();
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-02.png" alt="16oz-round-classic"></p>-->
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/09/Main-Banner_1920x851-10-3.png" alt="16oz-round-classic"></p>-->
 								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/melt-banner.jpg" alt="16oz-round-classic"></p>
-								<div class="overlay"><a href="https://glowbrandscandles.com/product-category/large-wax-melts-6-cubes/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/large-wax-melts-6-cubes/">SHOP</a></div>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
@@ -1035,7 +1035,7 @@ get_header();
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-04.png" alt="flameless-scented-melts"></p>-->
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-08.png" alt="melts"></p>-->
 								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/oils-banner.jpg" alt="melts"></p>
-								<div class="overlay"><a href="https://glowbrandscandles.com/product-category/essential-oils/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/essential-oils/">SHOP</a></div>
 							</div>
 						</div>
 						
@@ -1048,7 +1048,7 @@ get_header();
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-03.png" alt="room-spray"></p>-->
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-05.png" alt="room-spray"></p>-->
 								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/signature-banner-1.jpg" alt="room-spray"></p>
-								<div class="overlay"><a href="https://glowbrandscandles.com/product-category/2-wick-signature-candles/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/2-wick-signature-candles/">SHOP</a></div>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
@@ -1058,7 +1058,7 @@ get_header();
 								<!--<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-09.png" alt="essential-oils">-->
 								<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/spray-banner.jpg" alt="essential-oils">
 								</p>
-								<div class="overlay"><a href="https://glowbrandscandles.com/product-category/all-items/room-sprays-all-items/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/all-items/room-sprays-all-items/">SHOP</a></div>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
@@ -1066,7 +1066,7 @@ get_header();
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-06.png" alt="boxed-metallic"></p>-->
 								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-07.png" alt="boxed-metallic"></p>-->
 								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/boxed-image.jpg" alt="boxed-metallic"></p>
-								<div class="overlay"><a href="https://glowbrandscandles.com/product-category/celebrate-the-moments/">SHOP</a></div>
+								<div class="overlay"><a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/celebrate-the-moments/">SHOP</a></div>
 							</div>
 						</div>
 				 </div>
@@ -1735,7 +1735,7 @@ get_header();
 			 </div>
 			 <div class="sc-bYSBpT lhXSJZ"></div>-->
 			 
-			<!-- <a href="https://glowbrandscandles.com/product-category/boxed-crystal/" target="_self" style="display: inline-block;padding-top:20px;">
+			<!-- <a href="<?php echo esc_url( home_url( '/' ) ); ?>product-category/boxed-crystal/" target="_self" style="display: inline-block;padding-top:20px;">
 						<img src="https://glowscentedcandles.com/wp-content/uploads/2020/08/5bjUMQZA.png" alt="">
 					</a>-->
 		  </div>
@@ -1864,13 +1864,13 @@ else if(!empty($image_url_profile)) {
         <div class="manual-mass-order-popup-wrapper">
 		
 		<h3>Share Profile Link and Support Us</h3>
-           <!-- <a href="https://glowbrandscandles.com/profile/<?php echo $ID; ?>" class="fr-btn">https://glowbrandscandles.com/profile/<?php echo $ID; ?></a>-->
-			<a  title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=https://glowbrandscandles.com/profile/<?php echo $ID; ?>&t=<?php echo $org; ?> | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-			<a title="Click to share this profile on Twitter" href="http://twitter.com/intent/tweet?text=<?php echo $org; ?>&url=https://glowbrandscandles.com/profile/<?php echo $ID; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-			<a title="Click to share this profile on Linkedin"  href="https://www.linkedin.com/shareArticle?mini=true&url=https://glowbrandscandles.com/profile/<?php echo $ID; ?>&t=<?php echo $org; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
-			<a title="Click to share this profile on Whatsapp"  href="whatsapp://send?text=https://glowbrandscandles.com/profile/<?php echo $ID; ?>" data-action="share/whatsapp/share"class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+           <!-- <a href="<?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?>" class="fr-btn"><?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?></a>-->
+			<a  title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=<?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?>&t=<?php echo $org; ?> | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Twitter" href="http://twitter.com/intent/tweet?text=<?php echo $org; ?>&url=<?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Linkedin"  href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?>&t=<?php echo $org; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Whatsapp"  href="whatsapp://send?text=<?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?>" data-action="share/whatsapp/share"class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
 			<a id="CopyLink" class="fr-btn style-scope copy-code" ><i class="fa fa-clone" aria-hidden="true"></i></a>
-			<span id="fundLink" style="display:none;">https://glowbrandscandles.com/profile/<?php echo $ID; ?></span>
+			<span id="fundLink" style="display:none;"><?php echo esc_url( home_url( '/' ) ); ?>profile/<?php echo $ID; ?></span>
            <!-- <span id="CopyLink" class="style-scope copy-code">Copy Link</span>-->
 			 <a href="#" id="m-link" class="txt-link">Cancel</a>
         </div>
