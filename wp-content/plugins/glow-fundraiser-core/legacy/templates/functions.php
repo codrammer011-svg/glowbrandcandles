@@ -14931,7 +14931,8 @@ add_shortcode('fund', function ($atts = []) {
 add_filter( 'wpcf7_load_css', '__return_false' );
 
 
-add_action( 'woocommerce_order_status_on-hold', 'send_on_hold_email_to_customer', 10, 2 );
+// WooCommerce already sends the customer on-hold notification on status transitions.
+// Do not register a second trigger on woocommerce_order_status_on-hold.
 
 function send_on_hold_email_to_customer( $order_id, $order = false ) {
     if ( ! $order ) {
