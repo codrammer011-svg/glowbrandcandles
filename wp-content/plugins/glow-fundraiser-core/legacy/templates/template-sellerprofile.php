@@ -1316,26 +1316,26 @@ get_header();
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
 							<div class="cover-img">
 								<p>
-								<!--<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-01.png" alt="hexagon-jars">-->
-								<!--<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-11.png" alt="hexagon-jars">-->
-								<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/classic-banner.jpg" alt="Classic">
+								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-01.png' ); ?>" alt="hexagon-jars">-->
+								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-11.png' ); ?>" alt="hexagon-jars">-->
+								<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/classic-banner.jpg' ); ?>" alt="Classic">
 								</p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/classic-candles/">SHOP</a></div>
 							</div>
 						</div>
 						 <div class="col-md-4 col-sm-4 col-xs-4 block">
 							<div class="cover-img">
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-02.png" alt="16oz-round-classic"></p>-->
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/09/Main-Banner_1920x851-10-3.png" alt="16oz-round-classic"></p>-->
-								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/melt-banner.jpg" alt="Melt"></p>
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-02.png' ); ?>" alt="16oz-round-classic"></p>-->
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/09/Main-Banner_1920x851-10-3.png' ); ?>" alt="16oz-round-classic"></p>-->
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/melt-banner.jpg' ); ?>" alt="Melt"></p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/large-wax-melts-6-cubes/">SHOP</a></div>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
 							<div class="cover-img">
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-04.png" alt="flameless-scented-melts"></p>-->
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-08.png" alt="melts"></p>-->
-								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/oils-banner.jpg" alt="Oils"></p>
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-04.png' ); ?>" alt="flameless-scented-melts"></p>-->
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-08.png' ); ?>" alt="melts"></p>-->
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/oils-banner.jpg' ); ?>" alt="Oils"></p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/essential-oils/">SHOP</a></div>
 							</div>
 						</div>
@@ -1346,27 +1346,27 @@ get_header();
 				      <div class="banner-second row">
 					  <div class="col-md-4 col-sm-4 col-xs-4 block">
 							<div class="cover-img">
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-03.png" alt="room-spray"></p>-->
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-05.png" alt="room-spray"></p>-->
-								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/signature-banner-1.jpg" alt="Signature Candles"></p>
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-03.png' ); ?>" alt="room-spray"></p>-->
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-05.png' ); ?>" alt="room-spray"></p>-->
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/signature-banner-1.jpg' ); ?>" alt="Signature Candles"></p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/2-wick-signature-candles/">SHOP</a></div>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
 							<div class="cover-img">
 								<p>
-								<!--<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-05.png" alt="essential-oils">-->
-								<!--<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-09.png" alt="essential-oils">-->
-								<img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/spray-banner.jpg" alt="Room Spray">
+								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-05.png' ); ?>" alt="essential-oils">-->
+								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-09.png' ); ?>" alt="essential-oils">-->
+								<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/spray-banner.jpg' ); ?>" alt="Room Spray">
 								</p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/all-items/room-sprays-all-items/">SHOP</a></div>
 							</div>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4 block">
 							<div class="cover-img">
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2023/08/296x420-06.png" alt="boxed-metallic"></p>-->
-								<!--<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2024/08/Main-Banner_1920x851-07.png" alt="boxed-metallic"></p>-->
-								<p><img class="img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2026/01/boxed-image.jpg" alt="boxed-metallic"></p>
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-06.png' ); ?>" alt="boxed-metallic"></p>-->
+								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-07.png' ); ?>" alt="boxed-metallic"></p>-->
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/boxed-image.jpg' ); ?>" alt="boxed-metallic"></p>
 								<div class="overlay"><a href="<?php echo esc_url( home_url( '/product-category/celebrate-the-moments/' ) ); ?>">SHOP</a></div>
 							</div>
 						</div>
