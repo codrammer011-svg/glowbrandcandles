@@ -45,8 +45,9 @@ add_action( 'wp_footer', 'glow_fc_auto_popup_trigger', 30 );
 add_action( 'wp_footer', 'glow_fc_popup_cookie_guard', 20 );
 
 function glow_fc_is_popup_shop_page() {
-	if ( is_page( 'products' ) ) { return false; }
-	return is_page( 'shop' ) || ( function_exists( 'is_shop' ) && is_shop() );
+	$path = wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ), PHP_URL_PATH );
+	$shop_path = wp_parse_url( home_url( '/shop/' ), PHP_URL_PATH );
+	return untrailingslashit( (string) $path ) === untrailingslashit( $shop_path );
 }
 
 add_action( 'wp_head', function() {
