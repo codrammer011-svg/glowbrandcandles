@@ -1,0 +1,673 @@
+/**Custom Css **/
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-55');
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+.eaTkcl {
+    margin: 0px auto;
+    max-width: 1450px;
+}
+div#DemoStoreShareButton {
+    background-color: #0800E4;
+    font-weight: 400;
+    font-family: 'Helvetica Neue';
+    font-size: 16px;
+    letter-spacing: 1px;
+    border-radius: 40px;
+    padding: 10px 38px;
+}
+.gxfVgS {
+    display: flex;
+    flex-direction: row;
+}
+.fYjnlz {
+    flex: 2 1 0%;
+    padding: 45px;
+}
+.hWeIyu {
+    margin-bottom: 50px;
+}
+.kJfAmm {
+    color: #0800E4;
+    font-size: 66px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 67px;
+    margin: 0px 0px 15px;
+    text-transform: uppercase;
+    font-family: 'Winnie PERSONAL USE';
+}
+.kZLEoE {
+    color: #000;
+    font-size: 34px;
+    font-style: normal;
+    line-height: 37px;
+    margin: 0px;
+    font-weight: 400;
+    font-family: 'Helvetica Neue', sans-serif;
+    text-transform: capitalize;
+}
+.hFzTRD {
+    margin: 25px 0px 15px;
+    width: 100%;
+    height: 12px;
+    background: rgb(239, 238, 238);
+}
+.kzulUN {
+    width: 79.1667%;
+    height: 12px;
+    background: rgb(23, 198, 113);
+}
+.ccbzhW {
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+.eoCznv {
+    display: flex;
+}
+.jZDald {
+    width: 55px;
+    color: rgb(50, 50, 50);
+    font-size: 30px;
+    font-style: normal;
+    line-height: 40px;
+    font-weight: 300;
+    font-family: 'Helvetica Neue', sans-serif;
+}
+.eYHKCV {
+    color: #000;
+    font-size: 30px;
+    font-style: normal;
+    line-height: 40px;
+    font-weight: 300;
+    font-family: 'Helvetica Neue', sans-serif;
+    letter-spacing: 1px;
+}
+
+.lhXSJZ {
+    border-bottom: 1px solid rgb(239, 238, 238);
+    width: 100%;
+}
+.jdKEFA {
+    color: rgb(50, 50, 50);
+    font-size: 35px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 52px;
+    margin: 15px 0px;
+}
+.jdixbU {
+    margin-right: -13px;
+    margin-left: -13px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.cBwrLd {
+    position: relative;
+    padding: 30px;
+    width: 260px;
+    height: 345px;
+    flex-basis: 30%;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+  /*  border-radius: 10px;
+    border: 1px solid rgb(239, 238, 238);*/
+    -webkit-box-align: center;
+    align-items: center;
+    margin: 13px;
+    cursor: pointer;
+    
+    /*width: 220px;*/
+    font: 16px/20px 'Roboto', Arial, Helvetica, sans-serif;
+    color: #000;
+    margin: 0 0 15px;
+}
+.bkQDyc {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.csiNFR {
+    color: rgb(50, 50, 50);
+    font-size: 15px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 2;
+    text-align: center;
+}
+.gLNwlI {
+    font-size: 15px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 2;
+    text-align: center;
+    padding: 15px 0px 25px;
+    color: rgb(88, 165, 255);
+}
+.jXQyQT {
+    margin-top: 30px;
+    font-size: 17px;
+    font-style: normal;
+    line-height: 34px;
+    font-weight: 500;
+    color: rgb(88, 165, 255);
+    width: 225px;
+    height: 55px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(229, 242, 254);
+    text-transform: capitalize;
+}
+.kwlQpM {
+    max-width: 135px;
+    max-height: 210px;
+    object-fit: cover;
+}
+.JERKF {
+    margin: 15px -15px 0px;
+    color: rgb(50, 50, 50);
+    font-size: 15px;
+    font-style: normal;
+    line-height: 2;
+    font-weight: 500;
+    text-align: center;
+}
+.cBwrLd:hover {
+   /* border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px 0px;
+    border: 1px solid rgb(88, 165, 255);*/
+}
+.hOUgTb {
+    font-size: 15px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 2;
+    text-align: center;
+    color: rgb(88, 165, 255);
+}
+
+/*Right Side*/
+.gaqdDY {
+    flex: 1 1 0%;
+    padding: 45px;
+}
+.hWeIyu {
+    margin-bottom: 25px;
+}
+.kKkoMh {
+    position: relative;
+    border-radius: 8px;
+    width: 100%;
+    overflow: hidden;
+    background: url(../images/Frame-92-1.png) 50% 0px / cover rgb(255, 255, 255);
+    box-shadow: 0px 0px 1px 0px gray;
+}
+.kKkoMh::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+.ctVDjL {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+.ebvVGN {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.bio-msg {
+    line-height: 145%;
+    padding: 30px 5px;
+    font-size: 25px !important;
+    font-family: 'Winnie PERSONAL USE';
+    font-weight: 400;
+    color: #000;
+    text-align: center;
+}
+.jqEzoc::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: calc(50% - 14px);
+    width: 0px;
+    height: 0px;
+    border-left: 28px solid transparent;
+    border-right: 28px solid transparent;
+    border-bottom: 28px solid rgb(239, 238, 238);
+}
+.hWeIyu {
+    margin-bottom: 50px;
+}
+.brJQDe {
+    margin-top: 15px;
+    height: 55px;
+    display: flex
+;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: rgb(229, 242, 254);
+    background: transparent;
+}
+.social-media {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+.mainHeading {
+    font-size: 36px !important;
+    text-align: center !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+a.fr-btn {
+    display: inline-block;
+    width: 17%;
+    margin: 0 2%;
+    color: #fff;
+    background: #0800E4;
+    text-align: center;
+    padding: 5px;
+    font-size: 16px;
+    transition: .5s;
+    border-radius: 40px;
+}
+.eGOSHP {
+    font-size: 17px;
+    font-style: normal;
+    line-height: 2;
+    font-weight: 500;
+    /*opacity: 0.4;*/
+    color: rgb(88, 165, 255);
+    color: #fff;
+    text-transform: uppercase;
+}
+.lhXSJZ {
+    border-bottom: 1px solid rgb(239, 238, 238);
+    width: 100%;
+}
+.hPPNSx {
+    margin: 45px 0px;
+}
+.jFdVyI {
+    color: rgb(50, 50, 50);
+    font-size: 35px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1.49;
+}
+.jFdVyI {
+    color: rgb(50, 50, 50);
+    font-size: 35px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 1.49;
+        font-size: 30px;
+}
+.bqqpfS {
+    margin-top: 10px;
+    height: 90px;
+    border-radius: 5px;
+    border: 1px solid rgb(239, 238, 238);
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.jpHjAO {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.eixpDv {
+    min-width: 15px;
+    margin-left: 15px;
+}
+.bnSLTW {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-size: cover;
+    display: block;
+    border-radius: 50%;
+}
+.kaIYXE {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-size: cover;
+    display: block;
+    border-radius: 50%;
+}
+.kaIYXE {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url(https://fundraising-platform-dev.s3.amazonaws.com/demo-store/group-4.png);
+    background-size: cover;
+    display: block;
+    border-radius: 50%;
+}
+.bjLWnN {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-size: cover;
+    display: block;
+    border-radius: 50%;
+}
+.eiboPB {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-size: cover;
+    display: block;
+    border-radius: 50%;
+}
+.kRrrjx {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-size: cover;
+    display: block;
+    border-radius: 50%;
+}
+.cQcVNN {
+    color: rgb(50, 50, 50);
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    margin-left: 15px;
+}
+.iAGvZs {
+    color: rgb(50, 50, 50);
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    margin: 0px 15px;
+}
+.lhXSJZ {
+    border-bottom: 1px solid rgb(239, 238, 238);
+    width: 100%;
+}
+.hWeIyu {
+    margin-bottom: 50px;
+}
+.dGEqvM {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.kLuVwd {
+    color: rgb(50, 50, 50);
+    font-size: 28px;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 52px;
+    margin: 0px 0px;
+    font-family: 'Montserrat', sans-serif;
+}
+h4.seller-msg {
+    font-family: 'Winnie PERSONAL USE';
+    font-size: 30px;
+    margin: 25px 0;
+    text-transform:capitalize;
+    color:#000;
+}
+.jEXOub {
+    margin: 15px 0px;
+    min-height: 93px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.hfFGhf {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.SPXWF {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.bILfZF {
+    font-size: 25px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(248, 248, 250);
+    border-radius: 50%;
+}
+.IDcrV {
+    margin: 0px 15px;
+    font-family: "SF Pro Display", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+.iomnjy {
+    color: rgb(50, 50, 50);
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 2;
+}
+.khyAlo {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    font-size: 15px;
+    line-height: 2;
+}
+.iInHIm {
+    font-size: 15px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    color: rgb(140, 140, 140);
+}
+.dYgjKy {
+    margin-top: 8px;
+}
+.lhXSJZ {
+    border-bottom: 1px solid rgb(239, 238, 238);
+    width: 100%;
+}
+.banner-second 
+{
+    padding-top:30px;
+}
+.banner-second  img,
+.banner-first img
+{
+    width: 100%;
+}
+.shop_section
+{
+        width: 100%;
+    margin: 42px auto;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+}
+.shop_section a
+{
+    background: rgb(0 0 0 / 0.9);
+    color: #fff;
+    font-size: 20px;
+    padding: 13px 55px;
+    border-radius: 4px;
+    text-decoration:none;
+}
+.shop_section a:hover
+{
+    opacity:0.8;
+}
+
+.progressBar {
+    margin: 18px 0px 3px;
+    width: 100%;
+    height: 27px;
+    background: #E4E8ED;
+    border-radius: 16px;
+    overflow: visible;
+}
+.progress-bar {
+    height: 27px;
+    background: #0800E4;
+    border-radius: 16px;
+}
+.row-count-4 .product
+{
+        padding: 15px;
+}
+.progress-bar:after {
+    content: "";
+    background-image: url(http://glowscentedcandles.com/wp-content/uploads/2025/10/84566287_9977709-removebg-preview-1.png);
+    width: 50px;
+    height: 95px;
+    display: block;
+    position: absolute;
+    z-index: 9;
+    right: -29px;
+    top: -31px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.brave_popup__step.brave_popup__step__desktop.position_center.closeButton_icon.brave_popup__step--boxed.closeButtonPosition_inside_right.has_overlay.has_overlay_close .progress-bar:after {
+    display: none;
+}
+@media (max-width: 767px) {
+    .brJQDe {
+    margin-bottom: 20px;
+}
+    .mainHeading {
+    font-size: 26px !important;
+    text-align: center !important;
+}
+        .kJfAmm {
+        font-size: 32px;
+        line-height: 1.6;
+        margin-top: 30px;
+        margin-bottom: 0px;
+    }
+}
+@media (max-width:1199px)
+{
+    .kLuVwd
+    {
+        font-size:25px;
+    }
+    .eGOSHP
+    {
+        font-size:14px;
+    }
+    
+}
+@media (max-width:992px)
+{
+    .mobile-screen .bio-msg-smallScr {
+    line-height: 131%;
+    padding: 13px 5px 22px 5px;
+    font-size: 23px !important;
+    font-family: 'Winnie PERSONAL USE';
+    font-weight: 400;
+}
+    .gxfVgS
+    {
+        display:block;
+    }
+    .sc-jtRfpW .left-side, .sc-jtRfpW  .right-side
+    {
+        width: 100%;
+        float: left;
+        flex: none;
+            padding: 40px 20px;
+    }
+    .kKkoMh
+    {
+        width: 400px;
+        margin: 0 auto;
+    }
+    .small-screen {
+    width: 100% !important;
+}
+}
+@media (max-width: 580px)
+{
+    .kKkoMh {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .kJfAmm 
+    {
+        font-size: 32px;
+        line-height: 1.6;
+    }
+    .jdKEFA 
+    {
+        font-size: 27px;
+    }
+    .sc-jtRfpW .product-content-image img 
+    {
+        width: 140px;
+    }
+    .jFdVyI
+    {
+            font-size: 25px;
+    }
+}
+@media (max-width: 375px)
+{
+    .hWeIyu 
+    {
+        margin-bottom: 20px;
+    }
+    .kJfAmm 
+    {
+        font-size: 25px;
+    }
+    .jFdVyI {
+    font-size: 20px;
+}
+}

@@ -1,0 +1,446 @@
+/* =========================================================================
+   GLOW — Checkout Redesign (front-end, is_checkout only)
+   Loaded by glow_enqueue_checkout_redesign() in functions.php.
+   Styling only — no field/behaviour changes.
+   ========================================================================= */
+:root {
+	--glow-pink: #ec1e79;
+	--glow-pink-2: #d6006e;
+	--glow-grad: linear-gradient(90deg, #ff2d87 0%, #d6006e 100%);
+	--glow-navy: #17264c;
+	--glow-orange: #ff7a1a;
+	--glow-bg: #fdf2f5;
+	--glow-card-border: #f7c6d8;
+	--glow-teal: #57d0c2;
+	--glow-input-border: #ece3e8;
+	--glow-muted: #7b7b8b;
+	--glow-radius: 18px;
+	--glow-radius-sm: 10px;
+}
+
+/* page background behind the Elementor checkout section */
+body.woocommerce-checkout .e-checkout-layout-two-column,
+body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
+	background: var(--glow-bg);
+}
+
+/* ---- Checkout heading injected by the hook ---- */
+.glow-checkout-head {
+	max-width: 1180px;
+	margin: 28px auto 6px;
+	padding: 0 12px;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+.glow-checkout-head .glow-ch-icon { font-size: 30px; line-height: 1; }
+.glow-checkout-head h1,
+.glow-checkout-head h2 {
+	font-size: 34px;
+	font-weight: 800;
+	color: var(--glow-navy);
+	margin: 0;
+	letter-spacing: -.5px;
+	padding: 0;
+	border: 0;
+}
+.glow-checkout-head .glow-ch-count {
+	border: 2px solid var(--glow-pink);
+	color: var(--glow-pink);
+	font-weight: 700;
+	font-size: 13px;
+	letter-spacing: .5px;
+	padding: 6px 16px;
+	border-radius: 999px;
+	background: #fff;
+}
+
+/* ---- Column cards (billing + order review) : ONLY these get the border ---- */
+.woocommerce-checkout #customer_details .col-1,
+.woocommerce-checkout #customer_details .col-2,
+.woocommerce-checkout #order_review {
+	background: #fff;
+	border: 1.5px solid var(--glow-card-border);
+	border-radius: var(--glow-radius);
+	padding: 26px 28px;
+	box-shadow: 0 10px 30px rgba(214, 0, 110, .06);
+}
+.woocommerce-checkout #customer_details .col-1 { margin-bottom: 22px; }
+
+/* Prevent DOUBLE borders: inner WooCommerce + Elementor wrappers must be plain. */
+.woocommerce-checkout .woocommerce-billing-fields,
+.woocommerce-checkout .woocommerce-shipping-fields,
+.woocommerce-checkout .woocommerce-additional-fields,
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order,
+.woocommerce-checkout .e-checkout__column,
+.woocommerce-checkout .e-checkout__column-start,
+.woocommerce-checkout .e-checkout__column-end,
+.woocommerce-checkout [class*="e-checkout__order"],
+.woocommerce-checkout [class*="e-checkout__billing"] {
+	background: transparent !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+}
+
+/* section headings */
+.woocommerce-checkout h3,
+.woocommerce-checkout #order_review_heading {
+	color: var(--glow-navy);
+	font-weight: 800;
+	font-size: 24px;
+	margin: 0 0 18px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.woocommerce-checkout .woocommerce-billing-fields > h3::before { content: "🧾"; }
+.woocommerce-checkout #order_review_heading::before { content: "🏷️"; }
+.woocommerce-checkout .woocommerce-additional-fields h3::before { content: "📝"; font-size: 20px; }
+.woocommerce-checkout .woocommerce-additional-fields h3 { font-size: 20px; }
+
+/* ---- Labels + inputs ---- */
+.woocommerce-checkout .form-row label {
+	color: var(--glow-navy);
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 6px;
+	display: block;
+}
+.woocommerce-checkout .required { color: #e01e5a; border: 0; }
+.woocommerce-checkout .form-row input.input-text,
+.woocommerce-checkout .form-row textarea,
+.woocommerce-checkout .form-row .select2-selection,
+.woocommerce-checkout .form-row select,
+.woocommerce-checkout #order_comments {
+	width: 100%;
+	border: 1.5px solid var(--glow-input-border);
+	border-radius: var(--glow-radius-sm);
+	padding: 13px 15px;
+	background: #fff;
+	font-size: 15px;
+	color: #303040;
+	box-shadow: none;
+	transition: border-color .15s, box-shadow .15s;
+	min-height: 48px;
+}
+.woocommerce-checkout .select2-container .select2-selection--single {
+	height: 48px;
+	display: flex;
+	align-items: center;
+}
+.woocommerce-checkout .form-row input.input-text:focus,
+.woocommerce-checkout .form-row textarea:focus,
+.woocommerce-checkout .form-row select:focus,
+.woocommerce-checkout #order_comments:focus {
+	border-color: var(--glow-pink);
+	box-shadow: 0 0 0 3px rgba(236, 30, 121, .12);
+	outline: none;
+}
+.woocommerce-checkout .form-row input::placeholder,
+.woocommerce-checkout .form-row textarea::placeholder { color: #b9b4bd; }
+
+/* ---- Ship-to-different + fundraiser bits ---- */
+.woocommerce-checkout #ship-to-different-address label,
+.woocommerce-checkout .are_pu_support label { font-weight: 700; color: var(--glow-navy); }
+.woocommerce-checkout .woocommerce-additional-fields .form-row { margin-bottom: 16px; }
+
+/* ---- Order review table (products) ---- */
+.woocommerce-checkout .woocommerce-checkout-review-order-table {
+	border: 0;
+	width: 100%;
+}
+.woocommerce-checkout .woocommerce-checkout-review-order-table thead { display: none; }
+.woocommerce-checkout .woocommerce-checkout-review-order-table .cart_item td {
+	border: 0;
+	padding: 14px 0;
+	vertical-align: middle;
+	border-bottom: 1px solid #f3eaef;
+}
+.woocommerce-checkout .cart_item .product-name {
+	color: var(--glow-navy);
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+.woocommerce-checkout .cart_item .product-name .glow-thumb {
+	width: 62px; height: 62px;
+	border-radius: 12px;
+	object-fit: cover;
+	flex: 0 0 62px;
+	background: #f4eef1;
+}
+.woocommerce-checkout .cart_item .product-name .glow-name-text { flex: 1; }
+.woocommerce-checkout .cart_item .product-quantity {
+	display: inline-block;
+	color: var(--glow-muted);
+	font-weight: 600;
+	font-size: 13px;
+	margin-left: 6px;
+}
+.woocommerce-checkout .cart_item .product-total .amount { color: var(--glow-orange); font-weight: 800; }
+
+/* totals */
+.woocommerce-checkout .cart-subtotal th,
+.woocommerce-checkout .woocommerce-shipping-totals th,
+.woocommerce-checkout .tax-total th,
+.woocommerce-checkout .order-total th { color: #4a4a58; font-weight: 600; text-align: left; padding: 10px 0; border: 0; }
+.woocommerce-checkout .cart-subtotal td,
+.woocommerce-checkout .woocommerce-shipping-totals td,
+.woocommerce-checkout .tax-total td,
+.woocommerce-checkout .order-total td { text-align: right; padding: 10px 0; border: 0; }
+.woocommerce-checkout .order-total th,
+.woocommerce-checkout .order-total td { font-size: 20px; font-weight: 800; color: var(--glow-navy); border-top: 2px solid #f0e3ea; padding-top: 16px; }
+.woocommerce-checkout .order-total .amount { color: var(--glow-navy); }
+
+/* shipping method radios */
+.woocommerce-checkout #shipping_method li,
+.woocommerce-checkout .woocommerce-shipping-methods li { list-style: none; }
+
+/* ---- Payment box (Send Check etc.) ---- */
+.woocommerce-checkout #payment { background: transparent; border-radius: 0; }
+.woocommerce-checkout #payment ul.payment_methods {
+	border: 1.5px solid var(--glow-card-border);
+	border-radius: var(--glow-radius-sm);
+	padding: 14px 16px;
+	background: #fff;
+}
+.woocommerce-checkout #payment ul.payment_methods li { list-style: none; }
+.woocommerce-checkout #payment label { font-weight: 700; color: var(--glow-navy); }
+.woocommerce-checkout #payment .payment_box {
+	background: #f7f4f6;
+	border-radius: var(--glow-radius-sm);
+	color: #55555f;
+	font-size: 13px;
+}
+.woocommerce-checkout #payment .payment_box::before { display: none; }
+
+/* ---- Place order button ---- */
+.woocommerce-checkout #place_order,
+.woocommerce-checkout .wc-block-components-checkout-place-order-button {
+	width: 100%;
+	background: var(--glow-grad) !important;
+	border: 0 !important;
+	color: #fff !important;
+	font-weight: 800;
+	font-size: 17px;
+	letter-spacing: .3px;
+	padding: 16px 24px;
+	border-radius: 999px;
+	box-shadow: 0 10px 24px rgba(214, 0, 110, .28);
+	cursor: pointer;
+	transition: transform .12s, box-shadow .12s, filter .12s;
+	margin-top: 8px;
+}
+.woocommerce-checkout #place_order:hover { transform: translateY(-1px); filter: brightness(1.04); box-shadow: 0 14px 30px rgba(214,0,110,.34); }
+
+/* ---- Coupon card (styled + optional injected) ---- */
+.glow-coupon-card {
+	background: #fff;
+	border: 1.5px solid var(--glow-teal);
+	border-radius: var(--glow-radius);
+	padding: 22px 24px;
+	margin-top: 22px;
+	text-align: center;
+	box-shadow: 0 10px 30px rgba(87, 208, 194, .08);
+}
+.glow-coupon-card h4 { color: var(--glow-navy); font-weight: 800; letter-spacing: .5px; margin: 0 0 14px; font-size: 17px; }
+.glow-coupon-card .glow-coupon-row { display: flex; flex-direction: column; gap: 12px; }
+.glow-coupon-card input[type="text"] {
+	border: 1.5px solid var(--glow-input-border);
+	border-radius: var(--glow-radius-sm);
+	padding: 13px 15px;
+	font-size: 15px;
+	width: 100%;
+}
+.glow-coupon-card button, .glow-coupon-card .button {
+	background: var(--glow-grad) !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 999px;
+	padding: 13px 20px;
+	font-weight: 800;
+	width: 100%;
+	cursor: pointer;
+}
+.glow-coupon-card .glow-coupon-help { color: var(--glow-muted); font-size: 12.5px; margin: 12px 0 0; }
+/* fold the native coupon toggle into the card look if present */
+.woocommerce-checkout .woocommerce-form-coupon-toggle { display: none; }
+
+/* ---- Trust badges card ---- */
+.glow-trust-card {
+	background: #fde9f0;
+	border-radius: var(--glow-radius);
+	padding: 20px 24px;
+	margin-top: 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.glow-trust-row { display: flex; align-items: center; gap: 14px; }
+.glow-trust-ico {
+	width: 40px; height: 40px; flex: 0 0 40px;
+	border-radius: 50%;
+	background: #fff;
+	display: flex; align-items: center; justify-content: center;
+	font-size: 18px;
+	box-shadow: 0 4px 10px rgba(214,0,110,.12);
+}
+.glow-trust-row b { display: block; color: var(--glow-navy); font-size: 13px; letter-spacing: .4px; }
+.glow-trust-row span { color: #7a6d74; font-size: 12.5px; }
+
+/* ---- responsive ---- */
+@media (max-width: 880px) {
+	.glow-checkout-head h2 { font-size: 26px; }
+	.woocommerce-checkout .woocommerce-billing-fields,
+	.woocommerce-checkout #customer_details .col-1,
+	.woocommerce-checkout #customer_details .col-2,
+	.woocommerce-checkout #order_review { padding: 20px 18px; }
+}
+
+/* ---- Two-column layout for the [woocommerce_checkout] shortcode ---------- */
+/* Billing + fundraiser stack in the left column; order summary sits right.   */
+.woocommerce-checkout form.checkout.woocommerce-checkout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 400px;
+	grid-template-areas: "customer summary" "customer extras";
+	gap: 4px 28px;
+	align-items: start;
+	max-width: 1180px;
+	margin: 0 auto;
+}
+.woocommerce-checkout form.checkout #customer_details { grid-area: customer; }
+/* the standalone "Your order" heading is hidden — the title is rendered INSIDE the card */
+.woocommerce-checkout form.checkout #order_review_heading { display: none !important; }
+.woocommerce-checkout form.checkout #order_review { grid-area: summary; }
+.woocommerce-checkout .glow-os-title {
+	color: var(--glow-navy);
+	font-weight: 800;
+	font-size: 22px;
+	margin: 0 0 18px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+.woocommerce-checkout form.checkout .glow-summary-extras {
+	grid-area: extras;
+	margin-top: 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+.woocommerce-checkout .glow-coupon-card,
+.woocommerce-checkout .glow-trust-card { margin-top: 0; }
+
+/* Order summary stays WHITE — remove any grey/zebra background on the review area */
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order,
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table,
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table tbody,
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table tfoot,
+.woocommerce-checkout #order_review tr,
+.woocommerce-checkout #order_review .cart_item,
+.woocommerce-checkout #order_review .cart_item td,
+.woocommerce-checkout #order_review .cart-subtotal td,
+.woocommerce-checkout #order_review .cart-subtotal th {
+	background: transparent !important;
+}
+/* stack billing (col-1) and fundraiser/additional (col-2) vertically */
+.woocommerce-checkout form.checkout #customer_details.col2-set {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+
+.woocommerce table.shop_table{
+	border:none !important;
+}
+.woocommerce-checkout form.checkout #customer_details .col-1,
+.woocommerce-checkout form.checkout #customer_details .col-2 { width: 100%; float: none; margin: 0; }
+
+@media ( max-width: 880px ) {
+	.woocommerce-checkout form.checkout.woocommerce-checkout {
+		grid-template-columns: 1fr;
+		grid-template-areas: "customer" "summary" "extras";
+	}
+}
+
+/* ---- Order-summary refinements (heading in card, product text, table borders) ---- */
+/* All review table cells: NO borders except a subtle bottom rule per row. */
+.woocommerce-checkout #order_review table th,
+.woocommerce-checkout #order_review table td {
+	border: 0 !important;
+	border-bottom: 1px solid #f3eaef !important;
+	background: transparent !important;
+}
+/* keep the Total row's stronger top rule, drop its bottom */
+.woocommerce-checkout #order_review .order-total th,
+.woocommerce-checkout #order_review .order-total td {
+	border-bottom: 0 !important;
+	border-top: 2px solid #f0e3ea !important;
+}
+
+/* Product rows: give the NAME room; keep qty + price tight on the right. */
+.woocommerce-checkout .cart_item .product-name .glow-thumb {
+	width: 54px; height: 54px; flex: 0 0 54px;
+}
+.woocommerce-checkout .cart_item .product-name {
+	font-size: 14px;
+	line-height: 1.35;
+	gap: 12px;
+	padding-right: 8px;
+}
+.woocommerce-checkout .cart_item .product-name .glow-name-text { flex: 1 1 auto; min-width: 0; }
+.woocommerce-checkout .cart_item .product-total {
+	width: 78px;
+	white-space: nowrap;
+	text-align: right;
+	vertical-align: middle;
+	font-size: 14px;
+}
+
+/* Totals / shipment / tax / ship-to-school: label left (~55%), value right. */
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table tfoot th { width: 55%; text-align: left; font-weight: 600; }
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table tfoot td { text-align: right; }
+.woocommerce-checkout #order_review .woocommerce-shipping-totals td,
+.woocommerce-checkout #order_review .woocommerce-shipping-totals th { vertical-align: top; }
+
+/* Give the product TITLE the width; keep qty + price to their content width. */
+.woocommerce-checkout #order_review .woocommerce-checkout-review-order-table { table-layout: auto !important; }
+.woocommerce-checkout #order_review .cart_item .product-name { width: 100% !important; }
+.woocommerce-checkout #order_review .cart_item .product-total {
+	width: 1% !important;
+	white-space: nowrap;
+	padding-left: 12px;
+}
+.woocommerce-checkout .cart_item .product-name .glow-name-text { flex: 1 1 auto; min-width: 0; }
+.woocommerce-checkout .cart_item .product-quantity { flex: 0 0 auto; margin-left: 8px; }
+
+/* Shipment row -> full width (label on top, options below) so it isn't squished
+   into the narrow price column, WITHOUT shrinking the product title column. */
+.woocommerce-checkout #order_review tr.woocommerce-shipping-totals,
+.woocommerce-checkout #order_review tr.woocommerce-shipping-totals th,
+.woocommerce-checkout #order_review tr.woocommerce-shipping-totals td {
+	display: block !important;
+	width: 100% !important;
+	text-align: left !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.woocommerce-checkout #order_review tr.woocommerce-shipping-totals th {
+	padding-bottom: 6px !important;
+	border-bottom: 0 !important;
+}
+.woocommerce-checkout #order_review .woocommerce-shipping-methods { list-style: none; margin: 0; padding: 0; }
+.woocommerce-checkout #order_review .woocommerce-shipping-methods li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 5px 0;
+	white-space: nowrap;
+}
+.woocommerce-checkout #order_review .woocommerce-shipping-methods li label {
+	margin: 0;
+	font-weight: 600;
+	color: #4a4a58;
+}

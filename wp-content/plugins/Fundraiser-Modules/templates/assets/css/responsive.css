@@ -1,0 +1,74 @@
+@media only screen and (min-width: 320px) and (max-width: 575px){
+.main-heading h1, .main-heading h1 span {font-size: 53px;}
+.main-heading h2 {font-size: 30px;}
+.main-heading {margin-bottom: 40px;}
+.boxWrpr h3 {font-size: 25px !important;}
+.box-three figcaption h2 {font-size: 60px;}
+.box-three figcaption p {font-size: 30px;}
+.box-three figcaption {top: 33%;}
+.box-four figure img {height: 480px;object-fit: cover;border-radius: 28px;}
+.box-four .inner-boxes .inner-box {padding: 20px;width: 100%;text-align: center;}
+.box-four .inner-boxes .inner-box h3 {font-size: 30px;}
+.box-four .inner-boxes .inner-box p {font-size: 18px;}
+.box-four .inner-boxes {justify-content: center;gap: 20px;}
+.box-four figcaption ul {padding-left: 30px;}
+.box-four figcaption ul li {font-size: 22px;}
+.box-four figcaption ul li i {font-size: 16px;}
+.box-five .box-head h3, .box-six .box-head h3 {font-size: 30px;}
+.box-five {height: auto;}
+.six-cont-detail h4 {font-size: 30px;}
+.six-cont-detail p {font-size: 20px;}
+.six-cont-detail-two h5 {font-size: 32px;}
+.six-cont-detail-two p {font-size: 24px;}
+.box-one, .box-seven, .box-nine, .box-eleven, .box-thirteen {height: 280px;padding: 20px;justify-content: center;gap: 15px;}
+.box-eight, .box-ten, .box-twelve, .box-fourteen {padding: 30px;height: auto;gap: 15px;}
+.box-seventeen {padding: 20px;}
+.boxWrpr figure {max-width: 80px;height: auto;margin: 0 auto;}
+.box-four figure {max-width: 100%;}
+.box-fifteen .bg-img, .box-sixteen .bg-img {max-width: 100%;}
+.box-fifteen .bg-img .box-bg {height: 300px;border-radius: 28px;}
+.box-fifteen figcaption {padding: 30px;}
+.box-fifteen .scaning-img figure {max-width: 100%;width: 100%;}
+.box-fifteen .scaning-img figure figcaption h6 {font-size: 14px;}
+.box-fifteen .scaning-img figure figcaption {text-align: center;left: 40px;top: 60px;}
+.box-fifteen .scaning-img .offer-two figcaption {right: 40px;}
+.box-sixteen .bg-img .box-bg {height: 220px;border-radius: 28px;}
+.line::before {bottom: 44rem;}
+.section_one .row {--bs-gutter-y: 30px;}
+.six-cont-two {flex-wrap: wrap;}
+.line-left::before {content: none}
+}
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+.main-heading h1, .main-heading h1 span {font-size: 80px;}
+.main-heading h2 {font-size: 48px;}
+.main-heading {margin-bottom: 40px;}
+.boxWrpr h3 {font-size: 30px !important;}
+.box-four .inner-boxes .inner-box {padding: 20px;}
+.box-four .inner-boxes .inner-box p {font-size: 18px;}
+.box-four .inner-boxes {justify-content: center;gap: 30px;}
+.box-four figcaption ul li {font-size: 24px;}
+.box-four figcaption ul li i {font-size: 20px;}
+.box-fifteen .scaning-img figure figcaption h6 {font-size: 20px;}
+.box-fifteen .scaning-img figure {max-width: 200px;}
+.box-fifteen .bg-img .box-bg {height: 400px;border-radius: 28px;}
+.box-sixteen .bg-img .box-bg {height: 220px;border-radius: 28px;}
+.box-three figure img {max-width: 60%;}
+.box-three figure {text-align: center;}
+.box-three figcaption h2 {font-size: 60px;}
+.box-three figcaption p {font-size: 30px;}
+.box-three figcaption {top: 32.5%;}
+}
+@media only screen and (min-width: 576px) and (max-width: 991px){
+
+}
+@media only screen and (max-width: 991px){
+
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px){
+}
+@media only screen and (max-width: 1199px){
+}
+@media only screen and (max-width: 1200px){
+}
+@media only screen and (min-width: 1200px) and (max-width: 1299px){
+}

@@ -1,0 +1,1920 @@
+<?php 
+	get_header();
+	$current_user = wp_get_current_user();
+	 
+	$u_id = $current_user->ID;
+	$IDG=$_GET['frid'];
+	if(!empty($IDG))
+	{
+		$u_id  = $IDG;
+	}
+	else
+	{
+	}
+	if ( is_user_logged_in() ) 
+	{
+		$ajax_cookies_val=get_user_meta( $u_id,"skip_popup_SD",true);
+	}
+	else
+	{
+		 
+	}
+?>
+  <link rel='stylesheet' href="<?php echo get_template_directory_uri(); ?>/css/custom-style.css">
+    <style>
+	.QRcode
+	{
+		display: block;
+		height: 175px;
+	}
+	.QRcode-left
+	{
+		margin-top: 22px;
+		display: inline-block;
+	}
+	.QRcode-right a
+	{
+		  display: block;
+		text-align: center;
+	}
+	.hoverbox
+	{
+		display:none;
+		font-size: 19px;
+		color: #ffffffb8;
+		background: rgb(0 0 0 / 66%);
+		padding: 12px 5px;
+		border-radius: 7px;
+		width: 100%;
+		text-align: center;
+		font-weight: normal;
+		font-family: 'SF Pro Display', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+		height: 70px;
+		max-width: 279px;
+		right: 4%;
+		margin-top: 7px;
+		position: absolute;
+		
+	}
+	.result_hover
+	{
+		display:block;
+	}
+  .fundraiser-rebooking
+  {
+	  width: 100%;
+    text-align: right;
+  }
+  .rebooking-btn
+  {
+    background: green;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+  }
+  .rebookingBtn
+  {
+	padding: 5px 35px;
+    background: #f5f5f5;
+    margin-left: 10px;
+    text-align: right;
+    position: absolute;
+    right: 10px;
+    top: 11px;
+    color: #000;
+  }
+  #rebookRow .woocommerce-error::before
+  {
+	  content: "\f00c";
+  }
+  #rebookRow .woocommerce-error
+  {
+	  background-color: rgb(0 128 0 / 28%);
+    border-color: rgb(0 128 0 / 28%);
+  }
+  .progressBar {
+    margin: 25px 0px 15px;
+    width: 100%;
+    height: 12px;
+    background: rgb(239, 238, 238);
+}
+.progress-bar {
+    background: #cda85c;
+    height: 28px;
+    margin-bottom: 10px;
+    position: relative;
+    color: #fff;
+}
+.progress-bar {
+    height: 12px;
+    background: rgb(23, 198, 113);
+}
+.bar-sec{
+    width: 83%;
+    float: left;
+}
+.image_sec
+{
+    width: 15%;
+}
+.ccbzhW {
+    display: inline-block;
+    flex-flow: row wrap;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.eoCznv {
+    display: flex;
+	float: left;
+}
+.jZDald {
+    width: auto;
+    color: rgb(50, 50, 50);
+    font-size: 20px;
+    font-style: normal;
+    line-height: 40px;
+    font-weight: 600;
+}
+.eYHKCV {
+    color: rgb(50, 50, 50);
+    font-size: 20px;
+    font-style: normal;
+    line-height: 40px;
+    font-weight: 600;
+}
+.eYHKCV {
+    padding-left: 6px;
+}
+#remianing-left{
+	color:red;
+	    display: inline-block;
+    padding-left: 10px;
+}
+.value.event-payout {
+    margin-left: auto;
+    color: #4a4a4a;
+	float: right;
+}
+.highlight-green.event-payout {
+    color: #17c671;
+}
+.event-payout-0 .panel.event-payout{
+    margin-top: 0;
+}
+.header.organizer-fundraisers-detail
+{
+	margin-bottom: 25px;
+    border-bottom: 0;
+}
+.fundraiser-status-0.image_sec .container-status.fundraiser-status
+{
+	padding: 0;
+    margin: 20px;
+    margin-top: -22px;
+    margin-bottom: 0;
+    margin-right: 0;
+}
+.header.organizer-fundraisers-detail.seller-dashboard-progressbar-and-image
+{
+    margin-bottom: 4px;	
+}
+.report-sec {
+    margin-top: 26px;
+}
+  </style>
+  <script>
+  jQuery(document).ready(function () 
+{
+	jQuery("a.walk-through").hover(
+  function () {
+    jQuery(".hoverbox").toggleClass("result_hover")      
+  }
+);	
+	jQuery(document).on('click', '#CopyID', function (e) 
+	{
+		e.preventDefault();
+		var $temp = jQuery("<input>");
+		jQuery("body").append($temp);
+		$temp.val(jQuery('#selectableArea').text()).select();
+		document.execCommand("copy");
+		$temp.remove();
+		jQuery('#CopyID .copy-code').text('Copied');
+	});
+	jQuery(document).on('click', '#CopyProfileLink', function (e) 
+	{
+		e.preventDefault();
+		var $temp = jQuery("<input>");
+		jQuery("body").append($temp);
+		$temp.val(jQuery('#selectableAreaProfile').text()).select();
+		document.execCommand("copy");
+		$temp.remove();
+		jQuery('#CopyProfileLink .copy-code').text('Copied');
+	});
+	jQuery(document).on('click', '#SellerCopyLink', function (e) 
+	{
+		e.preventDefault();
+		var $temp = jQuery("<input>");
+		jQuery("body").append($temp);
+		$temp.val(jQuery('#sellerLink').text()).select();
+		document.execCommand("copy");
+		$temp.remove();
+		jQuery('#SellerCopyLink .copy-code').text('Copied');
+	});
+	
+	jQuery(document).on('click', '#CopyRefLink', function (e) 
+	{
+		e.preventDefault();
+		var $temp = jQuery("<input>");
+		jQuery("body").append($temp);
+		$temp.val(jQuery('#refLink').text()).select();
+		document.execCommand("copy");
+		$temp.remove();
+		jQuery('#CopyRefLink .copy-code').text('Copied');
+	});
+	
+	
+});
+  </script>
+  <style>
+  .fundraiser-rebooking
+  {
+	  width: 100%;
+    text-align: right;
+  }
+  .rebooking-btn
+  {
+    background: green;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+  }
+  .item.no-border.style-scope.organizer-fundraisers-detail.profile-section
+  {
+	  background: #000;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+   .item.no-border.style-scope.organizer-fundraisers-detail.profile-section .label.organizer-fundraisers-detail
+   {
+	   color:#fff;
+	   font-weight: bold;
+   }
+   .item.no-border.style-scope.organizer-fundraisers-detail.profile-section .label small
+   {
+	   opacity: 0.8;
+		color: #fff;
+   }
+   .item.no-border.style-scope.organizer-fundraisers-detail.last-space.right-seller-link
+   {
+	       padding-bottom: 277px;
+   }
+   .header.organizer-fundraisers-detail.tp
+   {
+	   width:83%;
+	   padding-bottom:0px;
+	   margin-bottom:0px;
+   }
+   .fundraiser-status-0 .container-status.fundraiser-status
+   {
+	   padding-top:10px;
+   }
+   @media (max-width:870px)
+   {
+	   .item.no-border.style-scope.organizer-fundraisers-detail.last-space.right-seller-link
+		{
+	       padding-bottom: 60px;
+		}
+   }
+   @media (max-width:870px)
+{
+	.header.organizer-fundraisers-detail.tp {
+    width: 100%;
+	}
+.header.organizer-fundraisers-detail.tp .organizer-fundraisers-detail,
+.header.organizer-fundraisers-detail .organizer-fundraisers-detail.fundraiser-status-0
+{
+	text-align: center;
+    width: 100%;
+}
+.dg-header-1-1 h1.dg-header-1
+{
+	font-size: 25px;
+}
+.fundraiser-status-0 .title.fundraiser-status
+{
+	    font-size: 19px;
+		padding: 10px 0;
+}
+.fundraiser-status-0 .container-status.fundraiser-status {
+    padding-top: 3px;
+}
+.header.organizer-fundraisers-detail .organizer-fundraisers-detail.fundraiser-status-0.image_sec{
+	    float: none;
+    text-align: center;
+	width: 100%;
+}
+.header.organizer-fundraisers-detail .organizer-fundraisers-detail.fundraiser-status-0.image_sec .container-status.fundraiser-status
+{
+	    width: 110px;
+    display: inline-block;
+    margin: 15px;
+}
+.bar-sec {
+    width: 100%;
+    float: left;
+}
+}
+@media screen and (max-width: 580px){
+.header.organizer-fundraisers-detail .organizer-fundraisers-detail, .header.organizer-fundraisers-detail .organizer-fundraisers-detail {
+    padding: 0 12px;
+}
+}
+@media screen and (max-width: 420px)
+{
+	.progressBar
+	{
+		margin-bottom: 3px;
+    margin-top: 16px;
+	}
+	.jZDald,
+	.eYHKCV,
+	.eYHKCV
+	{
+		font-size: 17px;
+		line-height: 1.6;
+	}
+}
+  </style>
+<div class="content style-scope events-controller fundraiser_dashboard_design">
+ <?php $current_user = wp_get_current_user(); ?>
+
+                        <?php 
+                              global $wpdb;
+                              session_start();
+
+                              $u_id = $current_user->ID;
+							  $IDG=$_GET['frid'];
+							if(!empty($IDG))
+							{
+								$u_id=$IDG;
+							}
+							else
+							{
+								
+								
+							}
+                              //$id        = $wpdb->get_row("SELECT meta_value FROM wp_usermeta WHERE user_id='$u_id'  ");
+
+                               $_SESSION['fundraiser_id'] = $u_id ;  //  get_post_meta 
+							  
+								   $f=get_user_meta( $u_id , 'first_name' , true );		
+								   $l=get_user_meta( $u_id , 'last_name' , true );	
+								   $fid=get_user_meta( $u_id , 'user_registration_seller_fundraiser' , true );	
+								   $fundraiser_fname=get_user_meta( $fid , 'first_name' , true );		
+								   $fundraiser_lname=get_user_meta( $fid , 'last_name' , true );	
+								//   $org=get_user_meta( $fid , 'user_registration_input_company' , true );
+								$org=get_user_meta( $fid , 'user_registration_name_of_school_business' , true );
+								   $sd=get_user_meta( $fid , 'user_registration_start_date' , true );
+								   $ed=get_user_meta( $fid , 'user_registration_end_date' , true );
+								   $before=get_user_meta( $fid , 'user_registration_radio_1534260773' , true );
+								   $hear=get_user_meta( $fid , 'user_registration_reference' , true );
+								   $referral=get_user_meta( $fid , 'user_registration_referral_name' , true );
+								   $type=get_user_meta( $fid , 'user_registration_favorite_candle_scents' , true );
+								   $Participants= get_user_meta( $fid , 'user_registration_participants_no' , true );
+								   $goal_amount=get_user_meta( $fid , 'user_registration_fr_goal' , true );
+								   $go_toward=get_user_meta( $fid , 'user_registration_fund_destination' , true );  
+								   $selling_goal=get_user_meta( $fid , 'user_registration_selling_goal' , true );
+								   $payable=get_user_meta( $fid , 'user_registration_check_payable' , true );
+								   $cartContent = get_user_meta($u_id, 'cart-restore', true); 
+								   $fund_desc=get_user_meta($u_id,'fund_profile_description',true);
+									$fund_image=get_user_meta($u_id,'fund_profile_image',true);
+									$goal_amount=get_user_meta( $u_id , 'user_registration_seller_goal' , true );
+									$description=get_user_meta($u_id,"description",true);
+									$seller_desc=get_user_meta($u_id,'seller_profile_description',true);
+									$url=get_user_meta($u_id,"user_registration_image_url_profile",true);
+									/*if(!empty($url)) {
+									$crop_url=profile_image_resize_crop( $src=$url, $w=150, $h=150, $dest = null, $override = false, $createNewIfExists = false );
+									}*/
+									
+									$current_user = wp_get_current_user(); 
+                            $frID2          = $current_user->ID; 
+							$IDG=$_GET['frid'];
+							if(!empty($IDG))
+							{
+								$ID = $IDG;
+								$frID2=$IDG;
+							}
+							else
+							{
+								$ID = $frID2;
+								
+							}
+							   $total_sale_so_far=0;
+							  $rebate_so_far=0;
+							   $item_qty=0;
+							  $item_qty_catalog=0;
+                            $args = array(
+                                'status'   => "published",
+                                'meta_key' => 'wc_seller_field',
+								'meta_value' => $ID,
+								'limit' => -1
+                            );
+                            $orders = wc_get_orders($args);
+                        foreach ( $orders as $order ) {
+                            $frID3 = get_post_meta($order->ID, 'fundraiser_field', true );
+							  $ID3 = get_post_meta($order->ID, 'wc_seller_field', true );
+
+                         /*   if ($ID3 == $IDD) { */
+								$order_data = $order->get_data();
+                                $order_customer_id = $order_data['customer_id'];
+								if ( $order->has_status('completed') || $order->has_status('processing')) {
+									/*Active / inactive*/
+									
+									 $order_date = $order->order_date;
+										$extract_date=$order_date;
+										$inactive_date=get_user_meta($frID3, "user_close_out_date_inactive", true);
+										$inactive_s=get_user_meta($frID3, "user_action_status", true);
+									$in_s=1;
+									if ($inactive_date < $extract_date && $inactive_s==2)
+									{
+										$in_s=2;
+									}
+									else if($inactive_s==1 || empty($inactive_s))
+									{
+										$in_s=1;
+									}
+									else{
+										$in_s=1;
+									}
+									/*$inactive_date="2020-08-29 01:00:01";*/
+									if ($in_s ==1){
+									/* total Item  Sold */
+										foreach ($order->get_items() as $item_key => $item_values): 
+                                                $item_data = $item_values->get_data(); 
+												
+												$order_type = get_post_meta($order->ID, 'wc_order_type', true );
+											if($order_type=="Online") 
+											{
+												$item_qty  +=  $item_data['quantity']; 
+											}
+											else if($order_type=="Catlog") 
+											{
+												$item_qty_catalog  +=  $item_data['quantity']; 
+											}
+											else{}
+																								
+                                        endforeach; 
+										
+									
+									/* total Item  Sold */
+									
+								  if ($frID3 != $order_customer_id) {
+									   $order_type = get_post_meta($order->ID, 'wc_order_type', true );
+									  if($order_type=="Online") 
+									  {
+                              $tdiscount=$order->get_total_discount();
+										
+									  if(!empty($tdiscount))
+									  {
+										  $newamt=$order->get_subtotal()-$tdiscount;
+										  $total_sale_so_far+=$newamt;
+									  }
+									  else
+									  {
+										 $total_sale_so_far+=$order->get_subtotal();
+									  }
+							 
+
+                                       foreach ($order->get_items() as $item_key => $item_values): 
+                                                $item_data = $item_values->get_data();  
+                                             endforeach; 
+                                     
+                                    $total_product = $order->get_total();   ///$order_data->get_total();
+
+
+                                    $percentage  = 40;
+                                    $percentFifty= 50;
+
+                                   $tdiscount=$order->get_total_discount();
+										
+									if(!empty($tdiscount))
+									{
+										 $newamt=$order->get_subtotal()-$tdiscount;
+										 $totalAmount = $newamt;
+									}
+									else
+									{
+                                     $totalAmount = $order->get_subtotal();
+                                    }
+                        
+                             
+                                 if ($item_data['quantity']>99){
+                                    $Discount    = ($percentFifty / 100) * $totalAmount;
+								 $rebate_so_far+=$Discount;
+								 }
+                                 else
+								 {
+                                    $Discount    = ($percentage / 100) * $totalAmount;
+                                    $Discount = number_format($Discount, 2, '.', '');
+									 $rebate_so_far+=$Discount;
+								 }
+								  }
+								} 
+								 else if ($frID3 == $order_customer_id) {
+									  $order_type = get_post_meta($order->ID, 'wc_order_type', true );
+									  if($order_type=="Online") 
+									  {
+										$tdiscount=$order->get_total_discount();
+										
+										if(!empty($tdiscount))
+										{
+										  $newamt=$order->get_subtotal()-$tdiscount;
+										  $total_sale_so_far+=$newamt;
+										}
+										else
+										{
+										 $total_sale_so_far+=$order->get_subtotal();
+										}
+							 
+
+                                       foreach ($order->get_items() as $item_key => $item_values): 
+                                                $item_data = $item_values->get_data();  
+                                             endforeach; 
+                                     
+                                    $total_product = $order->get_total();   ///$order_data->get_total();
+
+
+                                    $percentage  = 40;
+                                    $percentFifty= 50;
+
+                                   $tdiscount=$order->get_total_discount();
+										
+									if(!empty($tdiscount))
+									{
+										 $newamt=$order->get_subtotal()-$tdiscount;
+										 $totalAmount = $newamt;
+									}
+									else
+									{
+                                     $totalAmount = $order->get_subtotal();
+                                    }
+                        
+                             
+                                 if ($item_data['quantity']>99){
+                                    $Discount    = ($percentFifty / 100) * $totalAmount;
+								 $rebate_so_far+=$Discount;
+								 }
+                                 else
+								 {
+                                    $Discount    = ($percentage / 100) * $totalAmount;
+                                    $Discount = number_format($Discount, 2, '.', '');
+									 $rebate_so_far+=$Discount;
+								 }
+								 }
+								} 
+								else{}
+								} }
+                            /*     } */
+						}
+						
+						/* Ship to School Total Sales and Rebate */
+						/* Calculate Catlog Quantity */
+						 $arr_order_id2=array();
+						 $total_cat_quantity =0; 						
+						 $total_sale_so_far2=0;
+						 $rebate_so_far2=0;		
+						 $item_qty_fund_online=0;
+						 
+						 $args = array(
+                                'status'   => "published",
+                                'meta_key' => 'wc_seller_field',
+								'meta_value' => $ID,
+								'limit' => -1
+                            );
+                        $orders = wc_get_orders($args);
+                        foreach ( $orders as $order ) {
+								$frID3 = get_post_meta($order->ID, 'fundraiser_field', true );
+								$ID3 = get_post_meta($order->ID, 'wc_seller_field', true );
+							   	$scat = get_post_meta($order->ID, 'ship_with_catalog', true );
+								$order_data = $order->get_data();
+                                $order_customer_id = $order_data['customer_id'];
+								
+								if ($order->has_status('on-hold') || $order->has_status('completed') || $order->has_status('processing')) {
+								  if ($frID3 == $order_customer_id) { 
+								  $order_type = get_post_meta($order->ID, 'wc_order_type', true );
+								  if($order_type=="Catlog") 
+									 {
+										 foreach ($order->get_items() as $item_key => $item_values): 
+												$item_data = $item_values->get_data();
+												$total_cat_quantity += $item_data['quantity']; 			//ship to school								
+										  endforeach;	
+								} } }
+						}
+							   
+							   
+							   
+                            $args = array(
+                                 'status' => array('wc-waiting-call'),
+                                'meta_key' => 'wc_seller_field',
+								'meta_value' => $ID,
+								'limit' => -1
+                            );
+                            $orders = wc_get_orders($args);
+                        foreach ( $orders as $order ) {
+								$frID3 = get_post_meta($order->ID, 'fundraiser_field', true );
+								$ID3 = get_post_meta($order->ID, 'wc_seller_field', true );
+							   	$scat = get_post_meta($order->ID, 'ship_with_catalog', true );
+								$order_data = $order->get_data();
+                                $order_customer_id = $order_data['customer_id'];
+								
+								if ($scat==1) {
+									/* Active/Inactive */	
+								    $order_date = $order->order_date;
+									$extract_date=$order_date;
+									$inactive_date=get_user_meta($frID3, "user_close_out_date_inactive", true);
+									$inactive_s=get_user_meta($frID3, "user_action_status", true);
+									$in_s=1;
+									if ($inactive_date < $extract_date && $inactive_s==2)
+									{
+										$in_s=2;
+									}
+									else if($inactive_s==1 || empty($inactive_s))
+									{
+										$in_s=1;
+									}
+									else{
+										$in_s=1;
+									}
+									/*$inactive_date="2020-08-29 01:00:01";*/
+								if ($in_s ==1){
+								  if ($frID3 != $order_customer_id) { 
+								  $order_type = get_post_meta($order->ID, 'wc_order_type', true );
+                            if ($order_type=='ship-to-school') {
+								
+									$arr_order_id2[]=$order->ID;
+								
+                               /*$total_sale_so_far+=$order->get_subtotal();*/
+										$tdiscount=$order->get_total_discount();
+										
+										if(!empty($tdiscount))
+										{
+										  $newamt=$order->get_subtotal()-$tdiscount;
+										  $total_sale_so_far2+=$newamt;
+										}
+										else
+										{
+										 $total_sale_so_far2+=$order->get_subtotal();
+										}
+										$total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');
+
+                                        foreach ($order->get_items() as $item_key => $item_values): 
+                                                $item_data = $item_values->get_data();  
+												$order_type_2 = get_post_meta($order->ID, 'wc_order_type', true );
+															if($order_type_2=="ship-to-school") 
+															{
+																$item_qty_fund_online +=  $item_data['quantity']; 
+															}
+															
+															else{}
+                                             endforeach; 
+                         } } } }
+						}
+						$percentage  = 40;
+                        $percentFifty= 50;
+					    $real_qty_catlog_online=$total_cat_quantity+$item_qty_fund_online;
+						if ($real_qty_catlog_online>99)
+						{
+                            $Discount    = ($percentFifty / 100) * $total_sale_so_far2;
+							$rebate_so_far2 = number_format($Discount, 2, '.', '');
+							
+						}
+                        else
+						{
+                            $Discount    = ($percentage / 100) * $total_sale_so_far2;
+                            $rebate_so_far2 = number_format($Discount, 2, '.', '');
+							
+						}
+						
+						$rebate_so_far3=$rebate_so_far+$rebate_so_far2; 
+						$rebate_so_far3=number_format($rebate_so_far3, 2, '.', '');
+						
+						
+						$total_sale_so_far3=$total_sale_so_far+$total_sale_so_far2; 
+						$total_sale_so_far3=number_format($total_sale_so_far3, 2, '.', '');
+						 // End Ship to school							
+									
+									
+									
+                         ?>
+						 <?php $action_status= get_user_meta( $fid, 'user_action_status' , true );
+						 $paid_status= get_user_meta( $fid, 'user_status' , true );
+						/* date_default_timezone_set('America/Chicago');
+								echo $current_time = date('Y-m-d H:i:s');	*/					 
+						 if($action_status ==2) { ?>
+						<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">
+								<ul class="woocommerce-error" role="alert">
+									<li class="lastItem firstItem">Your GLOW fundraiser has been successfully closed out. Any online sales profits will be sent on the 15th of the month. Thank you for choosing GLOW for your fundraising needs.
+We look forward to working with you again!</li>
+								</ul>
+						</div>
+						<?php } ?>
+						<?php $image_url_profile=get_user_meta($u_id,"user_registration_image_url_profile",true);
+							  $seller_imageUrl=get_user_meta($u_id,'seller_profile_image',true);
+						if((empty($description) || empty($seller_imageUrl)) && empty($image_url_profile)) { ?>
+<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">
+								<ul class="woocommerce-error" role="alert">
+									<li class="lastItem firstItem" >Please upload your profile image and description. <a class="uploadImage"href="https://glowscentedcandles.com/seller-upload-image-and-description/" > Upload Now</a></li>
+								</ul>
+						</div>
+						<?php } if( $action_status ==2 ) {  ?>
+						 <div id="rebookRow" class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">
+								<ul class="woocommerce-error" role="alert">
+									<li class="lastItem firstItem" >Create NEW SELLER ACCOUNT! <a id="rebook_ajax" class="rebookingBtn" > Reregister</a></li>
+								</ul>
+						</div> 
+						<?php } ?>
+         <div class="header style-scope organizer-fundraisers-detail tp">
+            <div class="style-scope organizer-fundraisers-detail x-scope dg-header-1-1" large-screen="">
+               <h1 class="style-scope dg-header-1"><?php echo $f." ".$l; ?></h1>
+            </div>
+            <div class="style-scope organizer-fundraisers-detail x-scope fundraiser-status-0">
+				<!--<div class="container-status style-scope fundraiser-rebooking">
+				<a id="rebook_ajax" class="rebooking-btn">Rebooking</a>
+				</div>-->
+               <div class="container-status style-scope fundraiser-status">
+                  <span class="title style-scope fundraiser-status">Fundraiser Campaign is </span>
+				  <?php  if($action_status !=2) { ?>
+                  <span class="status live style-scope fundraiser-status">Active</span>
+				  <?php } else { ?>
+				   <span class="status live style-scope fundraiser-status" style="color:red;">Inactive</span>
+				  <?php } ?>
+				 <a class="walk-through fa fa-file-pdf-o" data-toggle="tooltip" title="Print Fundraiser Instructions here" href="https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf" target=" _blank"></a>
+               <!--<div class="hoverbox"><span class="">Print Fundraiser instructions here.</span></div>-->
+			   </div>
+			   
+            </div>
+         </div>
+		 
+		  <div class="header style-scope organizer-fundraisers-detail seller-dashboard-progressbar-and-image">
+            <div class="style-scope organizer-fundraisers-detail x-scope dg-header-1-1 bar-sec" large-screen="">
+              <div class="progress progressBar">
+				 <?php $goal_amount_clean = preg_replace('/[^0-9.]/', '', $goal_amount); $width=round($rebate_so_far3 / ($goal_amount_clean / 100),2); ?>
+				
+				<script>
+				 jQuery(document).ready(function()
+				 {
+					var i = 0;
+					var total_width="<?php echo $width; ?>";
+					/*var total_width=40;*/
+					  if (i == 0) {
+						i = 1;
+						var elem = document.getElementById("myBar");
+						var width = 0;
+						var id = setInterval(frame, 10);
+						function frame() {
+						  if (width >= total_width) {
+							clearInterval(id);
+							i = 0;
+						  } else {
+							  if(width<=total_width){
+							width++;
+							elem.style.width = width + "%";
+							  }
+						  }
+						  }
+						}
+					  
+					
+				 });
+				 </script>
+					<div id="myBar" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+				<div class="sc-dqBHgY ccbzhW">
+					<div class="sc-hwwEjo eoCznv">
+					   <div width="55" class="sc-kTUwUJ jZDald">$<?php echo $rebate_so_far3=number_format($rebate_so_far3, 2, '.', '')." "; ?></div>
+					 
+					   <div class="sc-kTUwUJ eYHKCV"> / $<?php if(!empty($goal_amount_clean)){ echo $goal_amount_clean=number_format($goal_amount_clean, 2, '.', ''); } else{ echo "0.00";} ?></div>
+					</div>
+					<div id="remianing-left" class="sc-kTUwUJ eYHKCV">Remaining Left: $<?php if(!empty($goal_amount_clean)){ 
+					$rem = ( $goal_amount_clean - $rebate_so_far3 );  
+					echo number_format((float)$rem, 2, '.', '');  
+					} else{ echo "0.00";} ?></div>
+				 </div>
+            </div>
+            <div class="style-scope organizer-fundraisers-detail x-scope fundraiser-status-0 image_sec">
+				<!--<div class="container-status style-scope fundraiser-rebooking">
+				<a id="rebook_ajax" class="rebooking-btn">Rebooking</a>
+				</div>-->
+               <div class="container-status style-scope fundraiser-status">
+			   
+					<img class="profile-seller" src="<?php if(!empty($url)){ echo $url; }  else if(!empty($seller_imageUrl)){ echo $seller_imageUrl; } else{ ?>https://glowscentedcandles.com/wp-content/uploads/2021/02/3135715.png<?php } ?>"/>
+			   </div>
+			   
+            </div>
+         </div>
+		 
+         <div class="row style-scope organizer-fundraisers-detail">
+            <div class="large-6 small-12 left-panel style-scope organizer-fundraisers-detail left-side-section">
+               <div id="A" class="style-scope organizer-fundraisers-detail x-scope dg-panel-0">
+                  <div class="panel-container style-scope dg-panel">
+                     <div class="header style-scope dg-panel">
+                        <span slot="header" class="style-scope organizer-fundraisers-detail">Seller Details <span id="info" icon="dg:info" data-toggle="tooltip" title="In this section, your Fundraiser Code, Director Name. Click Copy Button to share your code. View Your Profile, Click Share button to share your profile link on social media, email & text!" class="style-scope dg-info-tooltip x-scope iron-icon-3">
+                                          <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                                             <g class="style-scope iron-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" class="style-scope iron-icon">
+                                                   <path fill-rule="nonzero" d="M7.5.078a7.422 7.422 0 1 0 0 14.844A7.422 7.422 0 0 0 7.5.078zm1.63 6.7c-.072.341-1.104 2.225-1.405 2.862-.17.364-.508.87-.434 1.294.059.338.408.521.712.595.1.024.392.057.392.205a.11.11 0 0 1-.108.109l-2.293.001a.649.649 0 0 1-.653-.556c-.047-.366.2-.695.35-1.008.32-.67.684-1.32 1.002-1.991.115-.243.221-.489.338-.73.117-.24.26-.512.165-.784-.103-.29-.446-.435-.722-.502-.1-.024-.392-.057-.392-.204a.11.11 0 0 1 .108-.11c0-.002 2.293-.002 2.293-.002.34 0 .645.266.663.604a.853.853 0 0 1-.017.217zm-.525-1.502a1.06 1.06 0 1 1 0-2.12 1.06 1.06 0 0 1 0 2.12z" class="style-scope iron-icon"></path>
+                                                </svg>
+                                             </g>
+                                          </svg>
+                                       </span>
+						</span>
+                        <span style="float: right;color: #4990e2;font-size: 14px;"><a id="edit_info" href="<?php echo get_site_url(); ?>/edit-seller-info/?seller_ID=<?php echo $current_user->ID; ?>">Edit info</a></span>
+                        <!--<div class="action style-scope dg-panel">
+                           <span slot="action" class="style-scope organizer-fundraisers-detail">
+                           	  <template is="dom-if" class="style-scope organizer-fundraisers-detail"></template>
+                           </span>
+                           </div>-->
+                        <div class="sub-header style-scope dg-panel"></div>
+                     </div>
+                     <div class="content style-scope dg-panel">
+                        <div slot="content" class="style-scope organizer-fundraisers-detail">
+                           <div class="item style-scope organizer-fundraisers-detail">
+                              <span class="label style-scope organizer-fundraisers-detail">Fundraiser Code</span>
+                              <span class="value style-scope organizer-fundraisers-detail">
+                                 <div class="style-scope organizer-fundraisers-detail x-scope copy-code-0">
+                                    <div class="style-scope copy-code x-scope dg-copy-text-0 code_text">
+                                       <pre class="style-scope dg-copy-text"><div id="selectableArea" class="style-scope dg-copy-text"><?php  echo $fid; ?></div></pre>
+                                    </div>
+                                    <div type="custom" class="style-scope copy-code x-scope dg-button-3" large-screen="">
+                                       <div id="CopyID" class="custom filled style-scope dg-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" style="min-width: 90px;">
+                                          <span class="center style-scope dg-button">
+                                          <span class="style-scope copy-code" >Copy</span>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </span>
+                           </div>
+						   <?php $fileUpload_full_link=get_user_meta($u_id,'seller_barcode_link',true); 
+						   if(!empty($fileUpload_full_link)) { ?>
+						    <div class="item style-scope organizer-fundraisers-detail QRcode qrcode-secfp-sm">
+                              <span class="label style-scope organizer-fundraisers-detail QRcode-left">QR code</span>
+                              <span class="value style-scope organizer-fundraisers-detail QRcode-right"><img src="<?php echo $fileUpload_full_link; ?>" /><br/><a href="<?php echo $fileUpload_full_link; ?>" download="download_img">Download</a></span>
+                           </div>
+							
+						 <?php  } ?>
+                           <div class="item style-scope organizer-fundraisers-detail">
+                              <span class="label style-scope organizer-fundraisers-detail">Director</span>
+                              <span class="value style-scope organizer-fundraisers-detail"><?php  echo $fundraiser_fname." ".$fundraiser_lname; ?></span>
+                           </div>
+                          
+                           <div class="item style-scope organizer-fundraisers-detail">
+                              <span class="label style-scope organizer-fundraisers-detail">Total Sales | Profit</span>
+                              <span class="value style-scope event-payout">
+                                 $<?php echo $total_sale_so_far3=number_format($total_sale_so_far3, 2, '.', ''); ?> |
+                                 <span class="highlight-green style-scope event-payout">$<?php echo $rebate_so_far3=number_format($rebate_so_far3, 2, '.', ''); ?></span>
+                                 </span>
+                           </div>
+                           <div class="item  style-scope organizer-fundraisers-detail">
+                              <span class="label style-scope organizer-fundraisers-detail">Total Online Items Sold</span>
+                              <span class="value style-scope organizer-fundraisers-detail"><?php  echo $item_qty; ?> </span>
+                           </div>
+						     <div class="item  style-scope organizer-fundraisers-detail">
+                              <span class="label style-scope organizer-fundraisers-detail">Total Ship To School Items Sold</span>
+                              <span class="value style-scope organizer-fundraisers-detail"><?php  echo $item_qty_fund_online; ?> </span>
+                           </div>
+						    <?php 
+			
+								$user_1 = get_user_by( 'id', $u_id );
+								$userName1 = $user_1->user_login;
+								$userInfo1 = "user/".$userName1;
+					
+							?>
+						   <div class="item no-border style-scope organizer-fundraisers-detail profile-section">
+                              <span class="label style-scope organizer-fundraisers-detail">Profile Link <a href="https://glowscentedcandles.com/seller/<?php echo $userInfo1; ?>" target="_blank"> View Profile </a><br> <small style="opacity: 0.8;">Share link with your sellers and supports. To see <br>
+							  your target reached and top sellers and recent buyers</small></span>
+                              <span class="value style-scope organizer-fundraisers-detail">
+                                 <!--<div class="style-scope organizer-fundraisers-detail x-scope copy-code-0">-->
+                                   <!-- <div class="style-scope copy-code x-scope dg-copy-text-0 code_text">
+                                       <pre class="style-scope dg-copy-text"><div id="selectableAreaProfile" class="style-scope dg-copy-text"><?php  echo $u_id; ?></div></pre>
+                                    </div>-->
+                                    <div type="custom" class="style-scope copy-code x-scope dg-button-3" large-screen="">
+                                       <div id="CopyProfileLink" class="custom filled style-scope dg-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" style="min-width: 90px;">
+                                          <span class="center style-scope dg-button">
+										  <span id="selectableAreaProfile" style="display:none;">https://glowscentedcandles.com/Seller/<?php echo $userInfo1; ?></span>
+                                          <span id="ShareButton" class="" >Share</span>
+                                          </span>
+                                       </div>
+                                    </div>
+                                 <!--</div>-->
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="footer style-scope dg-panel">
+                     </div>
+                  </div>
+               </div>
+			  
+			 </div>
+            <div class="large-6 small-12 right-panel style-scope organizer-fundraisers-detail right-side-section">
+              
+						<?php 
+							$numberof=0;
+							$buyer_name=array();
+							$buyer_total=array();
+							$buyer_profit=array();
+							$c=array();
+							$orderDate=array();
+							$args = array(
+                                'status'   => "published",
+                                'meta_key' => 'wc_seller_field',
+								'meta_value' => $ID,
+								'order' => 'DESC',
+								'limit' => -1
+                            );
+                            $orders = wc_get_orders($args);
+							foreach ( $orders as $order ) {
+                            $frID3 = get_post_meta($order->ID, 'fundraiser_field', true );
+							  $ID3 = get_post_meta($order->ID, 'wc_seller_field', true );
+								$total_sale_so_far=0;
+								 $rebate_so_far=0;
+								$order_data = $order->get_data();
+                                $order_customer_id = $order_data['customer_id'];
+								if ( $order->has_status('completed') || $order->has_status('processing')) 
+								{
+									/* Active/Inactive */	
+								    $order_date = $order->order_date;
+									$extract_date=$order_date;
+									$inactive_date=get_user_meta($frID3, "user_close_out_date_inactive", true);
+									$inactive_s=get_user_meta($frID3, "user_action_status", true);
+									$in_s=1;
+									if ($inactive_date < $extract_date && $inactive_s==2)
+									{
+										$in_s=2;
+									}
+									else if($inactive_s==1 || empty($inactive_s))
+									{
+										$in_s=1;
+									}
+									else{
+										$in_s=1;
+									}
+									/*$inactive_date="2020-08-29 01:00:01";*/
+								if ($in_s ==1){
+									
+								  if ($frID3 != $order_customer_id) 
+								  { 
+										
+                                 
+									$first=$order->get_billing_first_name();
+									$last=$order->get_billing_last_name();
+									$s_name=$first." ".$last;
+									$s_name_lower= strtolower($s_name);
+									/*if(!in_array($s_name_lower,$buyer_name))
+									{*/
+										$buyer_name[]=strtolower($s_name);
+										$c[]=$order->get_billing_country();
+										date_default_timezone_set('America/Chicago');
+										$date1 = date('Y-m-d');
+										
+										//$d2 = $order->get_date_completed();
+										$d2 = $order->get_date_created();
+										$date2 = substr($d2, 0, 10);
+
+										$date1 = new DateTime($date1);
+										$date2 = new DateTime($date2);
+										$diff=date_diff($date2,$date1);
+										$days_ago=$diff->format("%a days");
+										$orderDate[]=$days_ago;
+										
+										$tdiscount=$order->get_total_discount();
+										
+										if(!empty($tdiscount))
+										{
+										  $newamt=$order->get_subtotal()-$tdiscount;
+										  $total_sale_so_far+=$newamt;
+										}
+										else
+										{
+										 $total_sale_so_far+=$order->get_subtotal();
+										}
+										/*$total_sale_so_far+=$order->get_subtotal();*/
+										$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+
+                                       foreach ($order->get_items() as $item_key => $item_values): 
+                                                $item_data = $item_values->get_data();  
+                                             endforeach; 
+                                     
+										$total_product = $order->get_total();   ///$order_data->get_total();
+
+
+										$percentage  = 40;
+										$percentFifty= 50;
+
+                                   /* $totalAmount = $order->get_subtotal();*/
+									 $tdiscount=$order->get_total_discount();
+											
+										if(!empty($tdiscount))
+										{
+											 $newamt=$order->get_subtotal()-$tdiscount;
+											 $totalAmount = $newamt;
+										}
+										else
+										{
+										 $totalAmount = $order->get_subtotal();
+										}
+                        
+                             
+									 if ($item_data['quantity']>99)
+									 {
+										$Discount    = ($percentFifty / 100) * $totalAmount;
+										$Discount_d = number_format($Discount, 2, '.', '');
+										$rebate_so_far+=$Discount_d;
+									 }
+									 else
+									 {
+										$Discount    = ($percentage / 100) * $totalAmount;
+										$Discount_d = number_format($Discount, 2, '.', '');
+										 $rebate_so_far+=$Discount_d;
+									 }
+									 $buyer_total[]=$total_sale_so_far;
+									 $buyer_profit[]=number_format($rebate_so_far, 2, '.', '');
+								 /*}*/
+							  
+								} } } 
+						}
+						$numberof=count($buyer_name);
+						?>
+				 <div id="B" class="style-scope organizer-fundraisers-detail x-scope event-payout-0 participent_sec">
+                  <div class="panel style-scope event-payout x-scope dg-panel-0" large-screen="">
+                     <div class="panel-container style-scope dg-panel">
+                        <div class="header style-scope dg-panel">
+					
+                           <span slot="header" class="style-scope event-payout">5 Recent Buyers <span id="info" icon="dg:info" data-toggle="tooltip" title=" 5 Recent Buyers list" class="style-scope dg-info-tooltip x-scope iron-icon-3">
+                                          <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                                             <g class="style-scope iron-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" class="style-scope iron-icon">
+                                                   <path fill-rule="nonzero" d="M7.5.078a7.422 7.422 0 1 0 0 14.844A7.422 7.422 0 0 0 7.5.078zm1.63 6.7c-.072.341-1.104 2.225-1.405 2.862-.17.364-.508.87-.434 1.294.059.338.408.521.712.595.1.024.392.057.392.205a.11.11 0 0 1-.108.109l-2.293.001a.649.649 0 0 1-.653-.556c-.047-.366.2-.695.35-1.008.32-.67.684-1.32 1.002-1.991.115-.243.221-.489.338-.73.117-.24.26-.512.165-.784-.103-.29-.446-.435-.722-.502-.1-.024-.392-.057-.392-.204a.11.11 0 0 1 .108-.11c0-.002 2.293-.002 2.293-.002.34 0 .645.266.663.604a.853.853 0 0 1-.017.217zm-.525-1.502a1.06 1.06 0 1 1 0-2.12 1.06 1.06 0 0 1 0 2.12z" class="style-scope iron-icon"></path>
+                                                </svg>
+                                             </g>
+                                          </svg>
+                                       </span>
+							</span>
+                         
+                           <div class="sub-header style-scope dg-panel"></div>
+                        </div>
+                        <div class="content style-scope dg-panel" <?php if($numberof<2) { ?>style="height:200px;" <?php } if($numberof>2) { ?>id="style-1" style="height:200px; overflow-y:scroll;" <?php } ?> >
+                           <div slot="content" class="style-scope event-payout">
+                              <div id="heading_payout_manually" class="item style-scope event-payout">
+                                 <span class="label style-scope event-payout">Buyer</span>
+                                 <span class="value style-scope event-payout">
+                                 Sales | Profit
+                                 </span>
+                              </div>
+							
+							<?php $cnt=1; for($i=0;$i<count($buyer_name);$i++) 
+							{ if($cnt<=5)	{	 ?>
+							 <div id="<?php echo $i; ?>" class="item style-scope event-payout">
+                                 <span class="label style-scope event-payout" style="text-transform: capitalize;"><?php echo $buyer_name[$i]; ?></span>
+                                 <span class="value style-scope event-payout">
+                                 <?php echo "$".$buyer_total[$i]; ?> |
+                                 <span class="highlight-green style-scope event-payout"><?php echo "$".$seller_r=number_format($buyer_profit[$i], 2, '.', ''); ?></span> 
+                                 </span>
+                              </div>
+							<?php } $cnt++; } ?>
+							  
+							
+                           </div>
+                        </div>
+                        <div class="footer style-scope dg-panel">
+                        </div>
+                     </div>
+                  </div>
+               </div>				
+               <div  id="C" class="style-scope organizer-fundraisers-detail x-scope dg-panel-0 report-sec" large-screen="" style="">
+                  <div class="panel-container style-scope dg-panel">
+                     <div class="header style-scope dg-panel">
+                        <span slot="header" class="style-scope organizer-fundraisers-detail">Report <span id="info" icon="dg:info" data-toggle="tooltip" title=" In this section you can see all orders." class="style-scope dg-info-tooltip x-scope iron-icon-3">
+                                          <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                                             <g class="style-scope iron-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" class="style-scope iron-icon">
+                                                   <path fill-rule="nonzero" d="M7.5.078a7.422 7.422 0 1 0 0 14.844A7.422 7.422 0 0 0 7.5.078zm1.63 6.7c-.072.341-1.104 2.225-1.405 2.862-.17.364-.508.87-.434 1.294.059.338.408.521.712.595.1.024.392.057.392.205a.11.11 0 0 1-.108.109l-2.293.001a.649.649 0 0 1-.653-.556c-.047-.366.2-.695.35-1.008.32-.67.684-1.32 1.002-1.991.115-.243.221-.489.338-.73.117-.24.26-.512.165-.784-.103-.29-.446-.435-.722-.502-.1-.024-.392-.057-.392-.204a.11.11 0 0 1 .108-.11c0-.002 2.293-.002 2.293-.002.34 0 .645.266.663.604a.853.853 0 0 1-.017.217zm-.525-1.502a1.06 1.06 0 1 1 0-2.12 1.06 1.06 0 0 1 0 2.12z" class="style-scope iron-icon"></path>
+                                                </svg>
+                                             </g>
+                                          </svg>
+                                       </span>
+						</span>
+                        <span style="float: right;color: #4990e2;font-size: 14px;"></span>
+                        <div class="action style-scope dg-panel">
+                           <span slot="action" class="style-scope organizer-fundraisers-detail">
+                              <template is="dom-if" class="style-scope organizer-fundraisers-detail"></template>
+                           </span>
+                        </div>
+                        <div class="sub-header style-scope dg-panel"></div>
+                     </div>
+                     <div class="content style-scope dg-panel">
+                        <div slot="content" class="style-scope organizer-fundraisers-detail">
+                          <div class="item no-border style-scope organizer-fundraisers-detail">
+                              <span class="label style-scope organizer-fundraisers-detail">Seller Report</span>
+                              <span class="value style-scope organizer-fundraisers-detail"><a href="https://glowscentedcandles.com/seller-report/" style="color: #4990e2;">View Report</a></span>
+                           </div>
+							  
+                        </div>
+                     </div>
+                     <div class="footer style-scope dg-panel">
+                     </div>
+                  </div>
+               </div>
+			   
+						
+            </div>
+         </div>
+		 <div class="large-12 small-12 left-panel style-scope organizer-fundraisers-detail left-side-section">
+				<div class="fix_order_Table_Head"> 
+				<table class="order_roports" border=1>
+				<?php 
+				//echo $u_id;
+					$current_user_id = get_current_user_id();
+						 $count_args = array(
+                            'type'  => 'shop_order',
+                            'meta_key' => 'wc_seller_field',
+							'meta_value' => $u_id,
+							'limit' => -1
+						   );
+						$c_orders = wc_get_orders( $count_args); 
+						
+						
+						
+						/* $count_args = array(
+										'type'        => 'shop_order',
+										'customer_id' => $current_user_id,  // Key change here
+										'limit'       => -1
+							);
+
+						$c_orders = wc_get_orders($count_args); */
+						
+						
+				?>		
+				
+					<thead>
+					<tr>
+					<th colspan=6><center><h3>Check your order status and tracking information</h3></center></th>
+					</tr>
+					<tr>
+						<th>Order #ID</th>
+						<th>Customer Name</th>
+						<th>Fund #ID</th>
+						<th>Order Date</th>
+						<th>Payment Status</th>
+						<!-- <th>Order Status</th> -->
+						<th>Tracking No.</th>
+						
+					</tr>
+					</thead>
+					<?php 
+					
+					foreach( $c_orders as $c_order ){
+						$order_id = $c_order->get_id();
+						$order_status2="";
+						$order_status1="";
+						$order_status1 = $c_order->get_status(); 
+						$order_status2 = str_replace(' ', '', $order_status1);
+						if($order_status2=="processing" || $order_status2=="completed" || $order_status2=="waiting-call" || $order_status2=="on-hold"){
+						$results = $wpdb->get_results("
+					select comment_content from wp_comments where comment_post_id=$order_id AND  `comment_content` LIKE  '%tracking number%';
+					");
+					
+					$order_full_date =$c_order->get_date_created();
+					$timestamp = strtotime($order_full_date);
+					$new_short_date_format = date('Y-m-d', $timestamp);
+					$order_data = $c_order->get_data();
+					$order_billing_first_name = $order_data['billing']['first_name'];
+					$order_billing_last_name = $order_data['billing']['last_name'];
+					 //echo $new_short_date_format ."<br>";
+						?>
+						<tbody>
+						<tr>
+							<td>#<?php echo $c_order->get_id();  ?></td>
+							<td><?php echo $order_billing_first_name . ' '. $order_billing_last_name;  ?></td>
+							<td><?php  echo "#".$fid; ?></td>
+							<td><?php echo $new_short_date_format;  ?></td>
+							<!--<td><?php //echo $c_order->get_id();  ?></td> -->
+							<td> 
+							<?php 
+								if($c_order->get_status()=='waiting-call'){
+									echo 'Ship To School';  
+								}
+								else{
+									echo $c_order->get_status();
+								}
+							?>
+							</td>
+							<td><?php foreach( $results as $result ){
+						$data_track = $result->comment_content;
+						$tack_number = explode(" ",$data_track);
+						$name = "number"; //name to be searched
+						$foundIndex = array_search($name, $tack_number);
+						$remove_data =  $tack_number[$foundIndex+1];
+						$final_value = substr($remove_data, 0, -1);
+						?>
+						<a href="https://www.ups.com/track?loc=en_US&tracknum=<?php echo $final_value; ?>&requester=WT/trackdetails\" target="_blank"><?php echo $final_value; ?></a>
+						<?php 
+						}  ?>
+					</td>
+					
+						</tr>
+						<?php 
+					}
+					}
+					
+					?>
+					</tbody>
+				</table>
+				</div>
+			</div>
+      </div>
+	    <div class="manual-mass-rebook-popup">
+        <div class="manual-mass-order-popup-wrapper">
+		<span>Ready to reregister your NEW SELLER ACCOUNT?</span>
+		<small style="
+    font-size: 13px;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 10px;"><b style="color:red;">Note:</b> Once you will click <b>YES</b> button, you will no longer have access to this seller dashboard or detailed reports. *<b>Please note</b>—If you need any of these reports, please print them and come back to book here. Please complete the Seller Register form and submit. You will receive New Seller Dashboard login credentials via email.</small>
+            <a id="rebook_request" class="txt-link" data-action="yes" data-id="<?php echo $current_user->ID; ?>">Yes</a>
+            <a href="#" id="m-rebook-link" class="txt-link">No</a>
+        </div>
+    </div>
+	<div class="manual-mass-popup">
+        <div class="manual-mass-order-popup-wrapper">
+		<h3>Share Profile Link</h3>
+           <?php 
+			
+					$user = get_user_by( 'id', $ID );
+					$userName = $user->user_login;
+					$userInfo = "user/".$userName;
+					
+		 ?>
+		 
+			<a  title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=https://glowscentedcandles.com/seller/<?php echo $userInfo; ?>&t=<?php echo $f." ".$l; ?> | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Twitter" href="http://twitter.com/intent/tweet?text=<?php echo $f." ".$l; ?>&url=https://glowscentedcandles.com/seller/<?php echo $userInfo; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Linkedin"  href="https://www.linkedin.com/shareArticle?mini=true&url=https://glowscentedcandles.com/seller/<?php echo $userInfo; ?>&t=<?php echo $f." ".$l; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Whatsapp"  href="whatsapp://send?text=https://glowscentedcandles.com/seller/<?php echo $userInfo; ?>" data-action="share/whatsapp/share"class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+			<a id="CopyLinkpopup" class="fr-btn style-scope copy-code" ><i class="fa fa-clone" aria-hidden="true"></i></a>
+			<span id="fundLink" style="display:none;">https://glowscentedcandles.com/seller/<?php echo $userInfo; ?></span>
+           <!-- <span id="CopyLink" class="style-scope copy-code">Copy Link</span>-->
+			 <a href="#" id="m-link" class="txt-link">Cancel</a>
+        </div>
+    </div>
+	<style>
+	#close_out
+	{
+		cursor: pointer;
+	}
+	.uploadImage
+	{
+		padding: 5px 30px;
+    background: #f5f5f5;
+    margin-left: 10px;
+    text-align: right;
+    /* float: right; */
+    position: absolute;
+    right: 10px;
+    top: 11px;
+	}
+	.manual-mass-order-popup, 
+	.manual-mass-generation-popup,
+	.manual-mass-close_out-popup,
+	.manual-mass-rebook-popup
+	{
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		z-index: 999;
+		background: rgba(0,0,0,0.6);
+		top: 0;
+		left: 0;
+		display: none;
+	}
+	.manual-mass-order-popup .manual-mass-order-popup-wrapper,
+	.manual-mass-generation-popup .manual-mass-order-popup-wrapper,
+	.manual-mass-close_out-popup .manual-mass-order-popup-wrapper,
+	.manual-mass-rebook-popup .manual-mass-order-popup-wrapper
+	{
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    text-align: center;
+    padding: 40px 25px;
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 5px;
+	}
+.manual-mass-order-popup a.fr-btn {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 250px;
+}
+.manual-mass-generation-popup .manual-mass-order-popup-wrapper,
+.manual-mass-close_out-popup .manual-mass-order-popup-wrapper,
+.manual-mass-rebook-popup .manual-mass-order-popup-wrapper 
+{
+    padding: 30px 25px;
+    max-width: 600px;
+    border: 3px solid #cda85c; 
+}
+.manual-mass-generation-popup span,
+.manual-mass-close_out-popup span,
+.manual-mass-rebook-popup span
+{
+    padding-bottom: 6px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: 2px dotted #cda85c;
+    color: #cda85c;
+}
+#generateLink
+{
+    padding-top: 15px;
+    display: inline-block;
+    padding-bottom: 20px;
+    font-size: 15px;
+    width: 100%;
+}
+.manual-mass-generation-popup #m-txt-link,
+.manual-mass-close_out-popup #m-txt-link,
+.manual-mass-rebook-popup #m-rebook-link
+{
+	    background: #cda85c;
+    color: #fff;
+    padding: 6px 30px;
+    display: inline-block;
+    transition: all 0.5s ease 0s;
+}
+.manual-mass-generation-popup #m-txt-link:hover,
+.manual-mass-close_out-popup #m-txt-link:hover,
+.manual-mass-rebook-popup #m-rebook-link:hover
+{
+	   background: #fff;
+    color: #cda85c;
+	border:1px solid #cda85c;
+	    box-sizing: border-box;
+}
+.manual-mass-close_out-popup span,
+.manual-mass-rebook-popup span
+{
+	width: 100%;
+    margin-bottom: 20px;
+}
+#close_out_ajax,
+#rebook_request
+{
+	background: #cda85c;
+    color: #fff;
+    padding: 6px 30px;
+    display: inline-block;
+    transition: all 0.5s ease 0s;
+}
+.manual-mass-close_out-popup #close_out_ajax:hover,
+.manual-mass-rebook-popup #rebook_request:hover 
+{
+	   background: #fff;
+    color: #cda85c;
+	border:1px solid #cda85c;
+	    box-sizing: border-box;
+}
+.show_load
+{
+	display:inline-block;
+}
+.hide_load
+{
+	display:none;
+}
+#style-1::-webkit-scrollbar-track
+{
+	
+	border-radius: 10px;
+	background-color: #ebebeb;
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 10px;
+	
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	 background: #6d6d6d; 
+}
+span.style-scope.copy-code {
+    width: 100%;
+}
+.show_load_restore,.show_load_p,.show_load_p_m{
+	display:inline-block;
+}
+.hide_load_restore,.hide_load_p, .hide_load_p_m{
+	display:none;
+}
+.load_part
+{
+	width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+.walk-through
+{
+	color: #dd2a2a;
+    font-size: 25px;
+    padding-left: 12px;
+}
+.tooltip-inner 
+{
+    max-width: 300px;
+    padding: 11px 10px;
+	
+}
+	</style>
+	<style>
+	.manual-mass-popup
+	{
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		z-index: 999;
+		background: rgba(0,0,0,0.6);
+		top: 0;
+		left: 0;
+		display: none;
+	}
+	.manual-mass-popup .manual-mass-order-popup-wrapper
+	{
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    text-align: center;
+    padding: 40px 25px;
+    background: #fff;
+    border: 3px solid #000;
+    border-radius: 5px;
+	}
+.manual-mass-popup a.fr-btn {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 250px;
+}
+#manual-mass-popup .show
+{
+	    background: #fff;
+    color: #000;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+.manual-mass-popup a.fr-btn
+{
+    display: block;
+    margin: 0px auto;
+    width: 100%;
+    background: none;
+    color: #000;
+	max-width: 100%;
+	display: inline;
+    margin: 0px auto;
+    width: auto;
+	font-size: 25px;
+}
+#m-link
+{
+	    display: block;
+    margin-top: 10px;
+}
+.manual-mass-rebook-popup span
+{
+	display:inline-block;
+	font-size: 18px;
+    font-weight: 700;
+	   margin-bottom: 5px;
+}
+	</style>
+	<script>
+		jQuery(document).on('click', '#rebook_ajax',function()
+		{
+			jQuery(".manual-mass-rebook-popup").addClass("show");
+		});
+		jQuery(document).on('click', '#m-rebook-link', function (e) 
+		{
+			e.preventDefault();
+			jQuery(".manual-mass-rebook-popup").removeClass("show");
+				
+		});
+		
+	jQuery('#rebook_request').click(function()
+			  {
+				  var ajaxurl="https://glowscentedcandles.com/wp-admin/admin-ajax.php";
+				 var sid=jQuery(this).attr("data-id");
+				 var yes_action=jQuery(this).attr("data-action");
+				 /*var fid=<?php echo $u_id; ?>;*/
+				 jQuery.ajax({
+
+					type : "post",
+
+					url : ajaxurl,
+
+					data : {action: 'seller_wp_rebooking_ajax', rebook_id:sid, yes_action:yes_action},
+	
+					success: function(response) {
+						console.log(response);
+						jQuery(".manual-mass-rebook-popup").removeClass("show");
+						 window.location.href = "https://glowscentedcandles.com/rebook-seller/?rebook_seller_id="+response;
+					}
+				});
+	           });	
+			   
+	jQuery(document).on('click', '#ShareButton', function (e) 
+			{
+				e.preventDefault();
+				jQuery(".manual-mass-popup").addClass("show");
+				
+				
+			});
+			jQuery(document).on('click', '#m-link', function (e) 
+			{
+				e.preventDefault();
+				jQuery(".manual-mass-popup").removeClass("show");
+				
+			});
+			jQuery(document).on('click', '#CopyLinkpopup', function (e) 
+			{
+				e.preventDefault();
+				var $temp = jQuery("<input>");
+				jQuery("body").append($temp);
+				$temp.val(jQuery('#fundLink').text()).select();
+				document.execCommand("copy");
+				$temp.remove();
+				jQuery('#CopyLinkpopup').text('Copied');
+			});
+			
+			
+	</script>
+	
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+<!-- Start Take Tour -->
+<style>
+.dyPNnG {
+    position: fixed;
+    inset: 0px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.65);
+}
+.eWPMk {
+    margin: 200px auto;
+    max-width: 500px;
+    height: 460px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 30px 50px 0px;
+    background-color: rgb(255, 255, 255);
+    padding: 75px 25px 50px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.bhtBxK {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgb(248, 248, 250);
+    border-radius: 100%;
+    top: -140px;
+    left: -200px;
+}
+.dWJjwC {
+    color: rgb(50, 50, 50);
+    font-size: 55px;
+    font-style: normal;
+    z-index: 1;
+    line-height: 1.49;
+    font-weight: 600;
+    padding-bottom: 10px;
+	color: #333;
+    font-size: 40px;
+}
+.gouVSR {
+    color: rgb(50, 50, 50);
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    text-align: center;
+    padding-bottom: 25px;
+	color: #333;
+	 line-height: 1.6;
+}
+.jXbIyY {
+    font-size: 17px;
+    font-style: normal;
+    line-height: 34px;
+    width: 108px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: rgba(88, 165, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(88, 165, 255);
+    font-weight: 500;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+.fwIEMD {
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 21px;
+    color: rgb(140, 140, 140);
+    cursor: pointer;
+}
+.NqDzw {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgb(242, 101, 58);
+    border-radius: 100%;
+    bottom: -140px;
+    right: -200px;
+    opacity: 0.8;
+}
+div#fullpage.tour-active {
+    transform: translate3d(0px, 0px, 0px) !important;
+}
+div.tourBg
+{
+	   /* background-color: rgb(247 247 247) !important;*/
+}
+.tourNext.btn.btn-primary.btn-sm {
+    font-size: 14px;
+    font-style: normal;
+    line-height: 34px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: rgba(88, 165, 255, 0.15);
+    color: rgb(88, 165, 255);
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 2px 20px;
+    height: auto;
+    border: 0;
+    text-transform: capitalize;
+	
+}
+.tourPrev.btn.btn-default.btn-sm
+{
+	font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 21px;
+    color: rgb(140, 140, 140);
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 0;
+    text-transform: capitalize;
+    border: 0;
+	color: #555;
+	background: none;
+}
+.panel-footer h6
+{
+    margin: 0;
+    padding-top: 11px;
+    font-size: 12px;
+	color: #555;
+}
+.popover{
+ 
+min-width: 600px !important;
+    padding: 5px 0px 0px !important;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 25px 0px;
+}
+.panel-footer
+{
+	    /*margin-bottom: 11px;*/
+		width:100%;
+		display:inline-block;
+		border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.panel-body {
+
+    color: #333;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    font-size: 15px;
+}
+button.close
+{
+	    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.close:hover, .close:focus
+{
+	    color: rgb(88, 165, 255);
+    background: none;
+}
+</style>
+  <style>
+.endTourAnimate {
+    -webkit-transition: bottom .5s;
+    transition: bottom .5s;
+    bottom: -370px;
+	bottom: -401px;
+}
+.jaRTKi {
+    overflow: hidden;
+    position: fixed;
+    right: 45px;
+    z-index: 1000;
+    background-color: rgb(255, 255, 255);
+    max-width: 400px;
+    height: 434px;
+	height: 465px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border: 1px solid rgb(238, 238, 238);
+    padding: 25px 25px 0px;
+}
+.etYwuz {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.IwcWe {
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 21px;
+    color: rgb(88, 165, 255);
+    cursor: pointer;
+}
+.joQcpv {
+    padding-left: 200px;
+    cursor: pointer;
+}
+.jeiGCo {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.dYBfUp {
+    color: rgb(50, 50, 50);
+    font-size: 35px;
+    font-weight: 600;
+    font-style: normal;
+    line-height: 52px;
+    padding-top: 25px;
+    padding-bottom: 10px;
+	color: #333;
+}
+.eYvePi {
+    color: rgb(50, 50, 50);
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 34px;
+    text-align: center;
+    padding-bottom: 50px;
+	padding-bottom: 26px;
+	color: #333;
+	line-height: 1.6;
+}
+.qXac {
+    height: 50px;
+    border-radius: 5px;
+    width: 225px;
+    background-color: rgba(88, 165, 255, 0.15);
+    color: rgb(88, 165, 255);
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 50px;
+    z-index: 1;
+    cursor: pointer;
+}
+.hyMzIi {
+    background: rgb(248, 248, 250);
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 360px;
+    left: -180px;
+    border-radius: 100%;
+}
+.fQiUEz {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgb(242, 101, 58);
+    bottom: -270px;
+    opacity: 0.4;
+    border-radius: 100%;
+}
+#root-2
+{
+	display:none;
+}
+.endTourAnimate.isOpen
+{
+	bottom:0;
+}
+.tour-heading
+{
+	margin-bottom: 10px;
+    border-bottom: 1px solid #cdc7c7;
+    padding-bottom: 6px;
+    font-weight: normal;
+    font-family: 'SF Pro Display', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+    color: #4a4a4a;
+    text-transform: capitalize;
+    line-height: 24px;
+    font-size: 19px;
+	font-family: 'Proxima Nova', Georgia, sans-serif;
+	font-weight: 700;
+	color: #333;
+}
+.tour-detail
+{
+    color: #828286;
+    font-weight: normal;
+    font: 14px 'SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+	font-family: 'Proxima Nova', Georgia, sans-serif;
+	color: #333;
+}
+</style>  
+<?php /* if($ajax_cookies_val=="yes") { */?>
+<style> 
+#root{
+	display:none;
+}
+#root-2
+{
+	display:block;
+}
+</style> 
+<?php/* } */ ?>
+ 
+
+<?php
+	get_footer();
+?>

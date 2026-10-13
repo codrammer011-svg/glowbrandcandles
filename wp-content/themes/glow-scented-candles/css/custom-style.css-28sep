@@ -1,0 +1,425 @@
+/*Custom Css*/
+blockquote, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, li, ol, p, pre, td, th, ul {
+    margin: 0;
+    padding: 0;
+}
+.content.events-controller {
+    max-width: 1105px;
+    padding: 0 30px;
+    margin: 0 auto;
+    margin-top: 120px;
+	 margin-top: 45px;
+	margin-bottom: 45px;
+}
+.header.organizer-fundraisers-detail {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    margin-bottom: 45px;
+    border-bottom: 1px solid #efeeee;
+}
+.header.organizer-fundraisers-detail .organizer-fundraisers-detail {
+    display: inline-block;
+}
+.dg-header-1-1 h1.dg-header-1 {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Roboto', Georgia, sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-size: 44px;
+    line-height: 66px;
+    font-weight: normal;
+    font-size: 14px;
+    font-weight: normal;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-size: 14px;
+    font-weight: normal;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0;
+}
+.fundraiser-status-0 .container-fluid.fundraiser-status, .fundraiser-status-0 .container.fundraiser-status {
+    max-width: 100rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+.fundraiser-status-0 .container-status.fundraiser-status {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Roboto', Georgia, sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-size: 16px;
+    line-height: 24px;
+    font-size: 19px;
+}
+.container-status.fundraiser-status
+{
+	padding-top: 20px;
+}
+.fundraiser-status-0 .title.fundraiser-status {
+    color: #4a4a4a;
+    opacity: 0.6;
+	border: 0;
+}
+.fundraiser-status-0 .live.fundraiser-status {
+    color: #17c671;
+}
+
+.row.organizer-fundraisers-detail {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-flex: 0 0 100%;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+	font: 14px 'SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.label small {
+    margin-top: 9px;
+    display: inline-block;
+    text-align: left;
+    line-height: 15px;
+    font-size: 11px;
+}
+.left-panel.organizer-fundraisers-detail {
+    padding-right: calc(45px / 2);
+}
+.dg-panel-0 .panel-container.dg-panel {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #efeeee;
+}
+.dg-panel-0 .header.dg-panel {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'SF Pro Display', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-size: 16px;
+    line-height: 24px;
+    font-size: 19px;
+    padding: calc(20px + 5px) 20px;
+    background: #fafafa;
+    border-bottom: 1px solid #efeeee;
+}
+.dg-panel-0 .header.dg-panel .action.dg-panel {
+    float: right;
+}
+.dg-panel-0 .content.dg-panel {
+    padding: 0 20px;
+}
+ .item.organizer-fundraisers-detail {
+    padding: calc(20px + 5px) 0;
+    border-bottom: 1px solid #efeeee;
+}
+ .item.organizer-fundraisers-detail .label.organizer-fundraisers-detail {
+    color: #828286;
+	    padding: 0;
+		font-weight: normal;
+    font: 14px 'SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.item.organizer-fundraisers-detail .value.organizer-fundraisers-detail {
+    float: right;
+    color: #4a4a4a;
+	font: 14px 'SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.copy-code-0 {
+    display: inline-block;
+}
+.copy-code-0 div.copy-code.code_text {
+    display: inline-block;
+    padding-right: 17px;
+    text-align: center;
+}
+.dg-copy-text-0 pre.dg-copy-text {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'SF Pro Display', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-size: 16px;
+    line-height: 24px;
+    color: #828286;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Roboto', Georgia, sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-weight: 600;
+	overflow: unset;
+	    border: 0;
+    background: none;
+}
+.copy-code-0 div.copy-code {
+    width: auto;
+    display: inline-block;
+    margin: 0;
+}
+.paper-button-0 {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 5.14em;
+    margin: 0 0.29em;
+    background: transparent;
+    text-align: center;
+    font: inherit;
+    text-transform: uppercase;
+    outline-width: 0;
+    border-radius: 3px;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    z-index: 0;
+    padding: 0.7em 0.57em;
+}
+.dg-button-3 div.dg-button {
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'SF Pro Display', 'Helvetica Neue', 'Helvetica', 'Roboto', 'Arial', sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+    font-weight: 500;
+    min-height: 50px;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    padding: 5px 30px;
+    margin: 0;
+    width: 100%;
+    transition: background-color 200ms linear;
+    border-radius: 2px;
+    box-shadow: none;
+    text-transform: none;
+    border-radius: 15px;
+    color: #fff;
+    background-color: #4990e2;
+    padding: 5px;
+    min-height: 30px;
+    min-width: 75px;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'Roboto', Georgia, sans-serif;
+    color: #4a4a4a;
+    -webkit-font-smoothing: antialiased !important;
+}
+.dg-button-3 div.filled.dg-button {
+    color: #fff;
+}
+ .right-panel.organizer-fundraisers-detail {
+    padding-left: calc(45px / 2);
+}
+/*Payout Section*/
+.event-payout-0 .panel.event-payout {
+    margin-top: 45px;
+}
+.event-payout-0 .item.event-payout,
+.participant-section {
+    border-bottom: 1px solid #efeeee;
+    height: 66px;
+    display: flex;
+    align-items: center;
+}
+.event-payout-0 .item.event-payout .label.event-payout {
+    white-space: nowrap;
+    color: #828286;
+    margin-right: 20px;
+	font: 14px 'SF Pro Display','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.event-payout-0 .item.event-payout .value.event-payout {
+    margin-left: auto;
+    color: #4a4a4a;
+}
+.event-payout-0 .highlight-green.event-payout {
+    color: #17c671;
+}
+.dg-info-tooltip-0 {
+    cursor: pointer;
+    white-space: normal;
+}
+.iron-icon-3 {
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    fill: currentcolor;
+    stroke: none;
+    width: 24px;
+    height: 24px;
+}
+.dg-info-tooltip-0 .dg-info-tooltip {
+    height: 24px;
+    display: inline-block;
+    overflow: visible;
+    vertical-align: calc(10px * (-1));
+    color: #4a4a4a;
+}
+.report-sec
+{
+	margin-top: 45px;
+}
+.right-heading
+{
+	font-size: 16px;
+}
+.order_sec
+{
+	margin-top: 45px;
+}
+.organizer-fundraisers-detail span.label{
+	font-size:14px;
+}
+@media screen and (min-width: 1200px)
+{
+	.large-6.organizer-fundraisers-detail.left-side-section {
+		float:left;
+		max-width: 50%;
+		    width: 47.888%;
+	}
+	.large-6.organizer-fundraisers-detail.right-side-section {
+		max-width: 50%;
+		float:right;
+		    width: 47.888%;
+	}
+}
+@media screen and (max-width: 1199px)
+{
+	.large-6.organizer-fundraisers-detail.left-side-section {
+		float:left;
+		max-width: 50%;
+		    width: 47.555%;
+	}
+	.large-6.organizer-fundraisers-detail.right-side-section {
+		max-width: 50%;
+		float:right;
+		    width: 47.555%;
+	}
+}
+@media screen and (max-width: 1020px)
+{
+	.right-panel.organizer-fundraisers-detail 
+	{
+		padding-left: calc(42px / 2);
+	}
+	.left-panel.organizer-fundraisers-detail 
+	{
+		padding-right: calc(42px / 2);
+	}
+}
+@media screen and (max-width: 990px)
+{
+	.right-panel.organizer-fundraisers-detail 
+	{
+		padding-left: calc(38px / 2);
+	}
+	.left-panel.organizer-fundraisers-detail 
+	{
+		padding-right: calc(38px / 2);
+	}
+}
+@media screen and (max-width: 870px)
+{
+	.large-6.organizer-fundraisers-detail.left-side-section 
+	{
+		float:left;
+		max-width: 100%;
+		width: 100%;
+		padding-right: 0;
+	}
+	.large-6.organizer-fundraisers-detail.right-side-section 
+	{
+		max-width: 100%;
+		float:right;
+		width: 100%;
+		padding-left: 0;
+	}
+	.large-6.organizer-fundraisers-detail.right-side-section
+	{
+		margin-top:45px;
+	}
+}
+@media screen and (max-width: 580px)
+{
+	.header.organizer-fundraisers-detail
+	{
+		display: inline-block;
+		width: 100%;
+		    margin-bottom: 30px;
+	}
+	.header.organizer-fundraisers-detail .organizer-fundraisers-detail,
+	.header.organizer-fundraisers-detail .organizer-fundraisers-detail
+	{
+		width: 100%;
+		margin: 0 auto;
+		display: inline-block;
+		text-align: center;
+	}
+	.container-status.fundraiser-status 
+	{
+		padding-top: 6px;
+	}
+	.content.events-controller 
+	{
+		padding: 0 5px;
+	}
+	.dg-panel-0 .panel-container.dg-panel
+	{
+		font-size:14px;
+	}
+	.event-payout-0 .panel.event-payout,
+	.large-6.organizer-fundraisers-detail.right-side-section,.report-sec, .order_sec	
+	{
+		margin-top: 30px;
+	}
+}
+@media screen and (max-width: 380px)
+{
+	.dg-panel-0 .panel-container.dg-panel 
+	{
+		font-size: 12px;
+	}
+	.dg-panel-0 .header.dg-panel
+	{
+		padding: calc(15px + 5px) 15px;
+		font-size: 14px;
+	}
+	.right-heading
+	{
+		font-size: 14px;
+	}
+	.dg-button-3 div.dg-button
+	{
+		min-height: 27px;
+		min-width: 65px;
+		font-size: 13px;
+	}
+}

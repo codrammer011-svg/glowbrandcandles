@@ -1,0 +1,179 @@
+/* Custom Style- New Catalog Design */
+#menu
+{
+	/*position: relative;*/
+    /*background: white;*/
+    margin-top: 0px;
+	z-index:1;
+	top: 99px;
+}
+#fullpage .section {
+    text-align: left !important;
+}
+.admin-bar  #menu
+{
+	/*top:20px;*/
+}
+
+.header-logo
+{
+	    width: 33.33%;
+    text-align: center;
+    padding-right: 0;
+    margin: 0 auto;
+}
+.dataTables_filter
+{
+	text-align: right;
+}
+.navbar .container-fluid {
+    display: inherit;
+}
+#menu li a {
+   
+    font-weight: 600;
+}
+.top-section
+{
+	    position: relative;
+    width: 100%;
+    float: left;
+}
+#DataTables_Table_0 tr[role='row']
+{
+	margin-bottom:0;
+}
+#section1, #section2, #section3, #section4, #section5, #section6, #section7, #section8, #section9, #section10
+{
+	    border-top: 1px solid #333;
+}
+#menu li a, #menu li.active a {
+    padding: 9px 9px;
+}
+#menu li.active {
+    background: none;
+    /* background: rgba(0,0,0, 0.5); */
+    color: #000;
+}
+#menu li.active a {
+    color: #000;
+}
+#menu li
+{
+	margin:4px;
+	text-transform: uppercase;
+	    background: none;
+}
+#DataTables_Table_0 tr[role='row']
+{
+	width:14%;
+}
+#DataTables_Table_0 tr[role='row'] td
+{
+	text-align: center;
+    font-size: 12px;
+    padding: 6px 0px;
+}
+table#DataTables_Table_0 tr td:nth-child(4)
+{
+	text-align: center;
+    font-size: 12px;
+}
+table#DataTables_Table_0 span.woocommerce-Price-amount.amount {
+    font-size: 12px;
+}
+#DataTables_Table_0 tr[role='row'] td:nth-child(3) input{
+	width:100%;
+}
+#DataTables_Table_0 tr[role='row'] td:nth-child(2)
+{
+	width: 20%;
+    padding: 0;
+}
+.quickster-table
+{
+	display:none;
+}
+
+.dataTables_filter
+{
+	    padding-top: 25px;
+		    padding-top: 0;
+}
+span.catalogue-dynamic-popup-btn
+{
+	font-size: 14px;
+	    /*border-radius: 30px;*/
+}
+table#DataTables_Table_0, table#DataTables_Table_0 tbody {
+   
+    padding: 15px 0;
+}
+table#DataTables_Table_0 tr td:nth-child(4) {
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.4;
+}
+table#DataTables_Table_0 span.woocommerce-Price-amount.amount {
+    font-size: 12px;
+}
+.fp-controlArrow.fp-prev {
+    left: 15px;
+    width: 0;
+    border-width: 38.5px 34px 38.5px 0;
+    border-color: transparent #333 transparent transparent;
+}
+.fp-controlArrow.fp-next {
+    right: 15px;
+    border-width: 38.5px 0 38.5px 34px;
+    border-color: transparent transparent transparent #333;
+}
+.fp-tableCell {
+    display: inline-block;
+}
+table.dataTable.no-footer {
+    border-bottom: 0;
+}
+.item_no
+{
+	    font-weight: 800;
+    padding-right: 6px;
+    color: #000;
+    /* font-size: 13px;*/
+}
+.header.main-header
+{
+	z-index: 2;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    height: auto;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+}
+.add-to-cart-Btn
+{
+	 position: fixed;
+    top: 99px;
+	right:0;
+	    right: 128px;
+    z-index: 1;
+}
+.page-content {
+   
+    margin-top: 0px;
+}
+.header-logo img
+{
+	    width: 250px;
+}
+.admin-bar .header.main-header 
+{
+	top:32px;
+}
+.admin-bar .add-to-cart-Btn,.admin-bar #menu
+{
+	top:131px;
+}

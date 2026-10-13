@@ -1,0 +1,16 @@
+@media (min-width: 992px) {
+  :root { --left-to-right-nil: polygon(0 0, 0 0, 0 100%, 0 100%); --left-to-right-fil: polygon(0 0, 100% 0, 100% 100%, 0 100%); --right-to-left-nil: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); --right-to-left-fil: polygon(100% 0, 0 0, 0 100%, 100% 100%); --top-to-bottom-nil: polygon(100% 0, 0 0, 0 0, 100% 0); --top-to-bottom-fil: polygon(100% 0, 0 0, 0 100%, 100% 100%); --bottom-to-top-nil: polygon(0 88%, 100% 88%, 100% 100%, 0% 100%); --bottom-to-top-fil: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
+}
+
+@media only screen and (min-width: 1200px) {.container {max-width: 88.580vw;padding: 0}}
+
+@media only screen and (min-width: 1600px) {
+	h2{font-size: 2.5rem}
+	h3{font-size: 2rem}
+	h4{font-size: 1.75rem}
+	h5{font-size: 1.5rem}
+	h6{font-size: 1.25rem}
+	:root{--base-font-size:1.125rem;}
+	.main-heading {margin-bottom: 2rem;}
+	.main-heading h2 {font-size: 3rem;}
+}

@@ -1,0 +1,551 @@
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+}
+var fundraiserID = getUrlParam('frid');
+
+    if(window.location.href.indexOf("?frid") > -1) {
+     Cookies.set('fundraiserID', fundraiserID, { expires: 1 });
+    }
+
+jQuery( "a.fr-btn.mass-order" ).click(function() {
+  jQuery(".mass-order-popup").addClass("show");
+});
+
+jQuery( ".mass-order-popup .txt-link" ).click(function() {
+  jQuery(".mass-order-popup").removeClass("show");
+});
+
+var customVar1 = "/frid=";
+
+jQuery('.popup-fundraiser-id').on('input',function(e){
+    var idVal = jQuery(this).val();
+    var customVar2 = customVar1+idVal;
+    jQuery(".top-bar a.fr-btn").attr("href" , customVar2);
+});
+
+//jQuery(".quickster-table a.add_selection.button").html("Go to Payment");
+
+jQuery(window).load(function() {
+    jQuery("div#DataTables_Table_0_length > label").prepend("<span>Products per page: </span>");
+   // jQuery("#DataTables_Table_0_filter, #DataTables_Table_0_paginate").prepend("<span class='catalogue-dynamic-popup-btn'>Add Order to Cart</span>");
+    jQuery("#DataTables_Table_0_filter, #DataTables_Table_0_paginate").prepend('<form method="post" class="seller-buyer-cookie-form"><input type="text" name="mass-seller-name-new" class="mass-seller-name-new" style="display:none;"><select class="mass-order-seller-name" style="display:none;"><option value="No-seller">No Seller</option></select><input class="popup-submit-button popup-submit-button-cart catalogue-dynamic-popup-btn" type="submit" value="Add Order To Cart"></form>');
+    jQuery("#DataTables_Table_0 tr[role='row']").each(function(){
+    var trProductValue = jQuery("td:nth-child(4)", this).html();
+        //console.log(trProductValue);
+        jQuery(this).attr("data-product-name" , trProductValue);
+});
+   /* jQuery( "<span class='mass-order-section-title'><h3>Qty: 10oz Masons</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Baked Apple Crisp']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: 10oz Hexagons</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Bamboo &amp; Sandalwood']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: 16oz Tins</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Honeysuckle &amp; Gardenia Tin']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: 24oz Grands</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Creme de la Creme Boxed Candle']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: Scented Melts</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Fresh']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: Warmers</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Damask Plug in']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: 4 fl oz Room Sprays</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Vanilla Latte Room Spray']");
+    jQuery( "<span class='mass-order-section-title'><h3>Qty: 5fl oz Essential Oils</h3></span>" ).insertBefore("body.page-id-22008 #DataTables_Table_0 tr[data-product-name='Citronella Essential Oil 15ml/.5oz']");
+	*/
+});
+
+jQuery(document).on("click", ".seller-buyer-cookie-form .catalogue-dynamic-popup-btn", function(){
+    //jQuery(".seller-buyer-cookie-popup").addClass("show");
+	/*var seller_name_new_test = jQuery(".mass-seller-name-new-test");
+    var massSellerNameTest = seller_name_new_test.val();
+    massSellerNameTest = massSellerNameTest.trim();
+	if(massSellerNameTest =='')
+	{
+       seller_name_new_test.css('border','1px solid red');
+    }
+	else
+	{
+		seller_name_new_test.css('border','1px solid #d5d5d5');
+	}
+	*/
+});
+
+jQuery(document).on("click", ".seller-buyer-cookie-popup_new_onsite span.popup-close, .seller-buyer-cookie-popup_new_onsite span.another_order", function() {
+	//jQuery('.successMSG').remove();
+    jQuery(".seller-buyer-cookie-popup_new_onsite").removeClass("show");
+    
+});
+
+jQuery(document).on("click", '.seller-buyer-cookie-form input:submit', function() {
+	var seller_name_new_test = jQuery(".mass-seller-name-new-test");
+    var massSellerNameTest = seller_name_new_test.val();
+    massSellerNameTest = massSellerNameTest.trim();
+	if(massSellerNameTest =='')
+	{
+       seller_name_new_test.css('border','1px solid red');
+    }
+	else
+	{
+		jQuery(".seller-buyer-cookie-form .mass-seller-name-new").val(massSellerNameTest);
+		seller_name_new_test.css('border','1px solid #d5d5d5');
+	}
+  	submitter = jQuery(this).val();
+  });
+jQuery(document).on("submit", "form.seller-buyer-cookie-form", function(e) {
+    e.preventDefault();    
+    var seller_name_new = jQuery(".mass-seller-name-new");
+    var massSellerName = seller_name_new.val();
+    massSellerName = massSellerName.trim();
+    
+    if(massSellerName ==''){
+        seller_name_new.focus();
+        return false;
+    }
+	/*
+    var myarray = [];
+    jQuery('input[name="quantity"]').each(function () {
+		myarray.push(jQuery(this).val());
+			});
+    if (myarray.length === 0) {
+		return false;
+	}
+	*/
+	
+    jQuery("form.seller-buyer-cookie-form input.popup-submit-button[value='"+submitter+"']").addClass("loading");
+    var massBuyerName = jQuery("input.mass-order-buyer-name").val();
+    //var massSellerName = jQuery("select.mass-order-seller-name").val();
+    
+    
+    
+    
+    //var massSellerDisplay = jQuery("select.mass-order-seller-name").find(":selected").text();
+    var thirtySeconds = new Date(new Date().getTime() + 300000);
+    
+    Cookies.remove('massBuyerName');
+    Cookies.remove('massSellerName');
+    Cookies.remove('massSellerDisplay');
+    Cookies.set('massBuyerName', massBuyerName, { expires: thirtySeconds });
+    Cookies.set('massSellerName', massSellerName, { expires: thirtySeconds });
+    Cookies.set('massSellerDisplay', massSellerName, { expires: thirtySeconds });
+    
+    jQuery("body .quickster-table a.add_selection.button").click();
+    setTimeout(function() {
+        if (submitter === 'Add Order To Cart') {
+			
+			jQuery('input[name="add"]:checked').each(function () 
+			{
+				jQuery(this).prop('checked',false);
+				jQuery(this).attr('data-test','yes1');
+            });
+			jQuery('input[name="quantity"]').each(function () {
+				jQuery(this).val('');
+			});
+			jQuery('.mass-seller-name-new').val('');
+			jQuery('.mass-seller-name-new-test').val('');
+			
+			jQuery('.popup-submit-button ').removeClass('loading');
+			//jQuery('.seller-buyer-cookie-popup_new_onsite').prepend('<span class="successMSG">Added Successfully!</span>');
+			jQuery(".seller-buyer-cookie-popup_new_onsite").addClass("show");
+			//jQuery('.cart-sec').css("display", "block");
+		/*	setTimeout(function() {
+				jQuery('.successMSG').remove();
+				jQuery('#fullpage').css('transform','translate3d(0px, 0, 0px)');
+				 window.location.hash = '#hexagon';
+				 }, 3000);
+      */
+        //location.reload(true);
+    } 
+    }, 4000);
+//  if ( $( "input:first" ).val() === "correct" ) {
+//    $( "span" ).text( "Validated..." ).show();
+//    return;
+//  }
+// 
+//  $( "span" ).text( "Not valid!" ).show().fadeOut( 1000 );
+//  event.preventDefault();
+});
+
+jQuery(".fundraiser-order-row .fr-order-col span.details-btn").click(function() {
+    var frOrderDetailsValue = jQuery(this).attr("data-trigger");
+    jQuery(this).toggleClass("active");
+    jQuery("#"+ frOrderDetailsValue +"").toggleClass("show");
+});
+
+
+
+
+
+
+
+
+function getSellerOrderCalculation() {
+    
+    jQuery('.fundraiser-order-details-table').each(function(){
+    var frOrderSubtotal = 0;
+    var frOrderTotal = jQuery(".fr-footer .product-price span", this).html();
+    jQuery('.fr-body.line-item-match .product-price span', this).each(function(){
+    frOrderSubtotal += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+    });
+       var frDiscount = frOrderSubtotal-frOrderTotal;
+        jQuery(".fr-footer .all-order-subtotal span", this).html(frOrderSubtotal.toFixed(2));
+        jQuery(".fr-footer .all-order-discount span", this).html(frDiscount.toFixed(2));
+    //    console.log(frOrderSubtotal);
+    //    console.log(frOrderTotal);
+    //    console.log(frDiscount);
+
+    });
+    
+    
+    
+    
+    jQuery('.page-template-fundraiser-seller-reports .online-sale .fundraiser-order-row.sellermatch').each(function(){
+    var sellerOrderSubTotal = 0;
+    jQuery('.fundraiser-order-details-col.product-price.show span', this).each(function(){
+    sellerOrderSubTotal += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+    });
+    
+    jQuery(".fundraiser-order-details-col.seller-order-subtotal span", this).html(sellerOrderSubTotal.toFixed(2));
+    jQuery(".fundraiser-order-details-col.seller-order-discount span", this).html("0");
+    jQuery(".fr-footer .fundraiser-order-details-col.product-price span", this).html(sellerOrderSubTotal.toFixed(2));
+    jQuery("span.fr-order-amt", this).html(sellerOrderSubTotal.toFixed(2));
+    }); 
+    
+    jQuery('.page-template-fundraiser-seller-reports .catalogue-sale .fundraiser-order-row.itemmatch, .page-template-seller-dashboard .catalogue-sale .fundraiser-order-row.itemmatch').each(function(){
+        var thisOrderQty = parseFloat(jQuery(".parent-order-qty span", this).text());;
+        if (thisOrderQty > 99) {
+            var totalOrderAmt = jQuery(".fr-footer .all-order-subtotal span", this).html();
+            var orderDiscountCalc = totalOrderAmt*5/10;
+            var discountedOrderAmt = totalOrderAmt - orderDiscountCalc;
+        jQuery(".fr-footer .all-order-discount-calc span", this).html(orderDiscountCalc.toFixed(2));
+        jQuery(".fr-footer .product-price span", this).html(discountedOrderAmt.toFixed(2));
+        } else {
+            var totalOrderAmt = jQuery(".fr-footer .all-order-subtotal span", this).html();
+            var orderDiscountCalc = totalOrderAmt*4/10;
+            var discountedOrderAmt = totalOrderAmt - orderDiscountCalc;
+        jQuery(".fr-footer .all-order-discount-calc span", this).html(orderDiscountCalc.toFixed(2));
+        jQuery(".fr-footer .product-price span", this).html(discountedOrderAmt.toFixed(2));
+        jQuery("span.fr-order-amt", this).html(discountedOrderAmt.toFixed(2));
+        }
+    });
+    
+    
+} 
+// Fire.
+getSellerOrderCalculation();
+
+
+
+function getOrderCalculation() {
+
+var frAllOrdersum = 0;
+jQuery('.fundraiser-dashboard-section span.fr-order-amt').each(function(){
+    frAllOrdersum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+
+jQuery("h5 span.fr-total-sale").html(frAllOrdersum.toFixed(2));
+
+var frRebateOrdersum = 0;
+jQuery('.fundraiser-dashboard-section.total-sale span.fr-order-amt1').each(function(){
+    frRebateOrdersum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+
+jQuery("h5 span.fr-total-rebate").html(frRebateOrdersum.toFixed(2));
+
+var frOlOrdersum = 0;
+jQuery('.fundraiser-dashboard-section.online-sale .sellermatch span.fr-order-amt').each(function(){
+    frOlOrdersum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+
+jQuery("h5 span.fr-online-sale").html(frOlOrdersum.toFixed(2));
+
+var frCatOrdersum = 0;
+jQuery('.fundraiser-dashboard-section.catalogue-sale span.fr-order-amt').each(function(){
+    frCatOrdersum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+
+jQuery("h5 span.fr-catalogue-sale").html(frCatOrdersum.toFixed(2));
+    
+
+} 
+// Fire.
+getOrderCalculation();
+
+function wp_shiptoschool(){
+			var thisOrderQty1 = parseInt(jQuery(".page-template-fundraiser-reports input#cat_total_items").val());
+			var thisOrderQty2 = parseInt(jQuery(".page-template-fundraiser-reports input#ship_total_items").val());
+			var thisOrderQty =  parseInt(thisOrderQty1+thisOrderQty2);
+			if (thisOrderQty >=100) {
+				var totalOrderAmt = jQuery(".page-template-fundraiser-reports input#totalAmount").val();
+				var shiporderRebateCalc = parseFloat(totalOrderAmt)*5/10;
+			} 
+			else {
+				var totalOrderAmt = jQuery(".page-template-fundraiser-reports input#totalAmount").val();
+				var shiporderRebateCalc = parseFloat(totalOrderAmt)*4/10;
+			}
+			
+		jQuery(".page-template-fundraiser-reports span.fr-rebate-shiptoschool").html(shiporderRebateCalc.toFixed(2)); 
+		jQuery(".page-template-fundraiser-reports span.fr-rebate-shiptoschool-qty").html(thisOrderQty2); 
+		console.log(totalOrderAmt);
+		console.log(thisOrderQty2);
+		
+}
+wp_shiptoschool();
+
+
+function wp_shiptoschool_2(){
+			var thisOrderQty1 = parseInt(jQuery(".page-template-fundraiser-seller-reports input#cat_total_items").val());
+			var thisOrderQty2 = parseInt(jQuery(".page-template-fundraiser-seller-reports input#ship_total_items").val());
+			
+			var thisOrderQty =  parseInt(thisOrderQty1+thisOrderQty2);
+			if (thisOrderQty >=100) {
+				var totalOrderAmt = jQuery(".page-template-fundraiser-seller-reports input#totalAmount").val();
+				var shiporderRebateCalc = parseFloat(totalOrderAmt)*5/10;
+			} 
+			else {
+				var totalOrderAmt = jQuery(".page-template-fundraiser-seller-reports input#totalAmount").val();
+				var shiporderRebateCalc = parseFloat(totalOrderAmt)*4/10;
+			}
+			
+			var tmt = parseFloat(totalOrderAmt);
+			jQuery(".page-template-fundraiser-seller-reports span.fr-rebate-shiptoschool").html(shiporderRebateCalc.toFixed(2)); 
+			jQuery(".page-template-fundraiser-seller-reports span.slr-shiptoschool-sale").html(tmt.toFixed(2)); 
+			jQuery(".page-template-fundraiser-seller-reports span.fr-rebate-shiptoschool-qty").html(thisOrderQty2); 
+			console.log(totalOrderAmt);
+			console.log(thisOrderQty2);
+		
+		
+}
+wp_shiptoschool_2();
+
+function wp_shiptoschool_3(){
+		//	var thisOrderQty1 = parseInt(jQuery(".page-template-seller-dashboard input#cat_total_items").val());
+			var thisOrderQty2 = parseInt(jQuery(".page-template-seller-dashboard input#ship_total_items").val());
+			
+			var thisOrderQty =  parseInt(thisOrderQty2);
+			if (thisOrderQty >=100) {
+				var totalOrderAmt = jQuery(".page-template-seller-dashboard input#totalAmount").val();
+				var shiporderRebateCalc = parseFloat(totalOrderAmt)*5/10;
+			} 
+			else {
+				var totalOrderAmt = jQuery(".page-template-seller-dashboard input#totalAmount").val();
+				var shiporderRebateCalc = parseFloat(totalOrderAmt)*4/10;
+			}
+			
+			var tmt = parseFloat(totalOrderAmt);
+			jQuery(".page-template-seller-dashboard span.fr-rebate-shiptoschool").html(shiporderRebateCalc.toFixed(2)); 
+			jQuery(".page-template-seller-dashboard span.fr-rebate-shiptoschool-qty").html(thisOrderQty2); 
+			console.log(totalOrderAmt);
+			console.log(thisOrderQty2);
+		
+		
+}
+wp_shiptoschool_3();
+
+
+function slrTotalSaleGeneration() {
+    
+    var slrOLSale = jQuery(".page-template-fundraiser-seller-reports span.fr-online-sale").html();
+    var slrMassSale = jQuery(".page-template-fundraiser-seller-reports span.fr-catalogue-sale").html();
+ //   var slrTotlSale = parseFloat(slrMassSale)+parseFloat(slrOLSale);
+    var slrTotlSale = 0+parseFloat(slrOLSale);
+//    console.log(slrOLSale);
+//    console.log(slrMassSale);
+//    console.log(slrTotlSale);
+    jQuery("span.slr-report-total-sale").html(slrTotlSale.toFixed(2));
+    
+}
+slrTotalSaleGeneration()
+
+jQuery('select.seller-select-report').on('change', function() {
+    var sellerReportValue = jQuery(this).find(":selected").text();
+    jQuery("span.dynamic-seller-name").html(sellerReportValue);
+    jQuery('.page-template-fundraiser-seller-reports .online-sale .fundraiser-order-row').each(function(){
+        jQuery(this).removeClass("sellermatch seller-no-match");
+        var orderSingleSeller = jQuery(".fr-order-seller", this).html();
+        if (sellerReportValue == orderSingleSeller) {
+        jQuery(this).addClass("sellermatch");
+        }
+        else if (sellerReportValue == "All Sellers") {
+        jQuery(this).removeClass("seller-no-match");
+        jQuery(this).addClass("sellermatch");
+        } 
+        else {
+        jQuery(this).addClass("seller-no-match");
+        }
+    }); 
+    
+    jQuery('.page-template-fundraiser-seller-reports .catalogue-sale .fundraiser-order-details-table .fundraiser-order-details-row.fr-body').each(function(){
+        jQuery(this).removeClass("line-item-match line-item-no-match");
+        var orderMassSeller = jQuery(".product-seller", this).html();
+        
+        if (sellerReportValue == orderMassSeller) {
+        jQuery(this).addClass("line-item-match");
+        } else if (sellerReportValue == "All Sellers") {
+        jQuery(this).removeClass("line-item-no-match");
+        jQuery(this).addClass("line-item-match");
+        } else {
+        jQuery(this).addClass("line-item-no-match");
+        }
+        
+    });
+    
+    getSellerOrderCalculation();
+    getOrderCalculation();
+    slrTotalSaleGeneration();
+    
+        jQuery('.page-template-fundraiser-seller-reports .catalogue-sale .fundraiser-order-row .fr-order-amt').each(function(){
+        var orderAmt0 = jQuery(this).html();
+        if (orderAmt0 == "0") {
+            jQuery(this).parent().parent().addClass("item-no-match");
+        } else {
+            jQuery(this).parent().parent().removeClass("item-no-match");
+        }
+        
+        
+    });
+    
+});
+ 
+
+// Admin Report generation Scripts
+/*
+jQuery( "#from_date, #to_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd'
+    }); */
+function adminCalculations() {
+var adminTotalSum = 0;
+    jQuery('.page-template-admin-reports .fundraiser-dashboard-section.total-sale .datematch span.fr-order-amt').each(function(){
+    adminTotalSum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+    
+var adminOlSum = 0;
+    jQuery('.page-template-admin-reports .fundraiser-dashboard-section.online-sale .datematch.frmatch span.fr-order-amt').each(function(){
+    adminOlSum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+    
+var adminCatSum = 0;
+    jQuery('.page-template-admin-reports .fundraiser-dashboard-section.catalogue-sale .datematch.frmatch span.fr-order-amt').each(function(){
+    adminCatSum += parseFloat(jQuery(this).text());  // Or this.innerHTML, this.innerText
+});
+    jQuery(".page-template-admin-reports span.fr-total-sale").html(adminTotalSum);
+    jQuery(".page-template-admin-reports span.fr-online-sale").html(adminOlSum);
+    jQuery(".page-template-admin-reports span.fr-catalogue-sale").html(adminCatSum);
+    
+    
+}
+adminCalculations();
+
+jQuery(".page-template-admin-reports span.filter_dates").click(function() {
+    var fromDate = parseInt(jQuery("#from_date").val().replace(/[^a-z0-9\s]/gi, ''))-1;
+    var toDate = parseInt(jQuery("#to_date").val().replace(/[^a-z0-9\s]/gi, ''))+1;
+    jQuery('.page-template-admin-reports .fundraiser-order-row.fr-body').each(function(){
+        jQuery(this).removeClass("datematch nodatematch");
+        var orderDate = parseInt(jQuery(".fr-order-date", this).html().replace(/[^a-z0-9\s]/gi, ''));
+        if (fromDate < orderDate && orderDate < toDate) {
+            jQuery(this).removeClass("nodatematch");
+            jQuery(this).addClass("datematch");
+        } else {
+            jQuery(this).removeClass("datematch");
+            jQuery(this).addClass("nodatematch");            
+        }
+                
+    });
+    adminCalculations();
+});
+
+jQuery('select.fundraiser-select-report').on('change', function() { 
+    var frIDVal = jQuery(this).val();
+    var frNameValue = jQuery(this).find(":selected").text();
+    jQuery(".dynamic_fr_name").html(frNameValue);
+    console.log(frIDVal);
+    jQuery('.page-template-admin-reports .online-sale .fundraiser-order-row.fr-body, .page-template-admin-reports .catalogue-sale .fundraiser-order-row.fr-body').each(function(){
+        jQuery(this).removeClass("frmatch nofrmatch");
+    var frIDVal2 = jQuery(this).attr("admin-fr-id");
+        if (frIDVal == frIDVal2) {
+            jQuery(this).addClass("frmatch");            
+            } else if (frIDVal == "All") {
+            jQuery(this).removeClass("nofrmatch");
+                jQuery(this).addClass("frmatch");   
+            } else {
+            jQuery(this).removeClass("frmatch");
+            jQuery(this).addClass("nofrmatch");
+            }
+    });
+    adminCalculations();
+});
+
+jQuery(".page-template-admin-reports span.reset-dates").click(function() {
+    jQuery(".fundraiser-order-table .fundraiser-order-row").removeClass("nodatematch").addClass("datematch");
+    adminCalculations(); 
+    });
+
+jQuery(".generate-pdf.total").click(function() {
+var admin_total_sale_pdf = document.getElementById('admin_total_sale');
+    var opt = {
+  margin:       1,
+  filename:     'Total-Sale-report.pdf',
+  html2canvas:  { scale: 1.5 },
+  jsPDF:        { unit: 'cm', format: 'letter', orientation: 'portrait' }
+};
+html2pdf().from(admin_total_sale_pdf).set(opt).save();
+     });
+
+jQuery(".generate-pdf.fr").click(function() {
+var admin_total_sale_pdf = document.getElementById('admin_fr_sale_report');
+    var frNameValues = jQuery("select.fundraiser-select-report").find(":selected").text();
+    var frFileExt = ".pdf";
+    var frDLFileName = frNameValues+frFileExt;
+    var opt = {
+  margin:       1,
+  filename:     frDLFileName,
+  html2canvas:  { scale: 1.5 },
+  jsPDF:        { unit: 'cm', format: 'letter', orientation: 'portrait' }
+};
+html2pdf().from(admin_total_sale_pdf).set(opt).save();
+     });
+
+/*
+jQuery('.send_report').click(function(){
+
+let fund_id = jQuery(this).data('fund_id');
+         jQuery.ajax({
+
+         type : "post",
+
+         url : ajaxurl,
+
+         data : {action: 'custom_fund_report_mail', fund_id:fund_id},
+
+         success: function(response) {
+
+        console.log(response);
+		jQuery(".admin-report").append('<p style="padding-top:10px;color:green;">'+response+'</p>');
+    }
+});
+
+});
+jQuery('.send_report_other').click(function(){
+let fund_id = jQuery(this).data('fund_id');
+let a_email = jQuery("#another_email").val();
+         jQuery.ajax({
+
+         type : "post",
+
+         url : ajaxurl,
+
+         data : {action: 'custom_fund_report_another_mail', a_email:a_email, fund_id:fund_id},
+
+         success: function(response) {
+
+        console.log(response);
+		jQuery(".manual-mass-order-popup").removeClass("show");
+		jQuery(".admin-report").append('<p style="padding-top:10px;color:green;">'+response+'</p>');
+    }
+})
+
+})
+*/

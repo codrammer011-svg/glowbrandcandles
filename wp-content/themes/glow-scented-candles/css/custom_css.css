@@ -1,0 +1,3 @@
+#fundraiser_id_form { color: #000; position: absolute; margin-top: 6px; border: 3px solid #000 !important; z-index: 999; background-color: #fff; }
+.hide_this_wrapper{ display:none; }
+.wp-megamenu-main-wrapper.wpmm-orientation-horizontal ul.wpmm-mega-wrapper > li > a, .wpmm-sub-menu-wrap ul li h4.wpmm-mega-block-title, .wpmm-sub-menu-wrap ul li.wp-mega-menu-header > a.wp-mega-menu-link span.wpmm-mega-menu-href-title, .wpmm-sub-menu-wrapper ul li a span.wpmm-mega-menu-href-title { font-weight: 600; font-family: "Jost", sans-serif; }
