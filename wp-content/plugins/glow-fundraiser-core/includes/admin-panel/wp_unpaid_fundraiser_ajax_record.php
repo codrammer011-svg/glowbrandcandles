@@ -611,7 +611,7 @@ function wp_unpaid_fundraiser_ajax_record()
 				<td id="77_" style="vertical-align: top; text-align: center; "><span class="label" style="background-color:#468847;"> <?php if(!empty($user_rebate_remainpaid) && $user_rebate_remainpaid=="Yes") { echo "completed"; } else { echo "-"; }  ?></span></td>
 				<td id="7_" style="vertical-align: top; text-align: center; width: 240px;">
 					<div class="btn-toolbar"><div class="first-col" style="margin-bottom:10px;">
-					<a href="https://glowbrandscandles.com/print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a>&nbsp;
+					<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a>&nbsp;
 					<a href="#" class="btn btn-inverse btn-mini padtop btn-custom status" data-id="<?php echo $ID;?>" data-action="<?php echo $status;?>" data-rebate="<?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?>">Status</a>&nbsp;
 					<a id="send_report" class="btn btn-inverse btn-mini padtop btn-custom" data-fund_id="<?php echo $ID; ?>">Email Report</a></div><div class="second-col">
 					

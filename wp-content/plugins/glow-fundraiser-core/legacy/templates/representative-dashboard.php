@@ -343,26 +343,26 @@ span.page-numbers.current {
 	  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 		<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="active-content-show nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="active-content-show nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 		  </li>
 		
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 		  </li>
 		</ul>
 		<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
 		  <div class="active-content" id="manage-fundraisers-tab-pane" role="tabpanel" aria-labelledby="manage-fundraisers-tab" tabindex="0">
 		  <h1 class="new-heading ft-size">Manage Fundraisers</h1>
-			<a href="https://glowbrandscandles.com/fundraiser-register/?repID=<?php echo $current_userID; ?>" class="btn btn-dark mb-4 lineinbtn" >
+			<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser-register/?repID=<?php echo $current_userID; ?>" class="btn btn-dark mb-4 lineinbtn" >
 				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
 				  <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"></path>
 				  <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"></path>
@@ -713,20 +713,20 @@ span.page-numbers.current {
 	  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 		<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 		  <li class="nav-item" style="display:block;" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="active-content-show nav-link border-0" id="payment-history-tab" >Payment History</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="active-content-show nav-link border-0" id="payment-history-tab" >Payment History</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 		  </li>
 		
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 		  </li>
 		</ul>
 		<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
@@ -804,8 +804,8 @@ span.page-numbers.current {
 					<td id="3_" style="vertical-align: top; text-align: left;"><?php if($payment_date){ echo $payment_date; } else{ } ?></td>					
 					<td id="4_" style="vertical-align: top; text-align: left;"><?php if($m_fund){ echo $m_fund; } else{ } ?></td>
 					<td id="5_" style="vertical-align: top; text-align: left;"><?php if($total_commission){ echo '$'.$total_commission; } else{ } ?></td>
-					<td><a style="text-decoration: none;" href="https://glowbrandscandles.com/representative-dashboard/?<?php  echo "fundraisers_list=true&PID=".$ID; ?>"><?php echo "View"; ?></a></td>
-					<td><a style="text-decoration: none;" href="https://glowbrandscandles.com/representative-print/?<?php  echo "r_id=".$current_userID."&pid=".$ID; ?>"><?php echo "View"; ?></a></td>
+					<td><a style="text-decoration: none;" href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?<?php  echo "fundraisers_list=true&PID=".$ID; ?>"><?php echo "View"; ?></a></td>
+					<td><a style="text-decoration: none;" href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-print/?<?php  echo "r_id=".$current_userID."&pid=".$ID; ?>"><?php echo "View"; ?></a></td>
 				</tr>
 				<?php  $cno++;
 						endwhile;
@@ -909,25 +909,25 @@ span.page-numbers.current {
 	  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 		<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 		  <li class="nav-item" style="display:block;" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="active-content-show  nav-link border-0" id="payment-history-tab" >Payment History</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="active-content-show  nav-link border-0" id="payment-history-tab" >Payment History</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 		  </li>
 		
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 		  </li>
 		</ul>
 		<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
 		  <div class="active-content" id="fundraisers-reports-tab-pane2" role="tabpanel" aria-labelledby="fundraisers-reports-tab" tabindex="0">
-		  <h1 class="new-heading ft-size"><a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true"><i title="Back" class="fa fa-chevron-left" style="font-size:24px;padding-right: 20px;color: #000000;cursor: pointer;"></i></a>Fundraisers List</h1>
+		  <h1 class="new-heading ft-size"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true"><i title="Back" class="fa fa-chevron-left" style="font-size:24px;padding-right: 20px;color: #000000;cursor: pointer;"></i></a>Fundraisers List</h1>
 			<table>
 				<thead>
 				<tr>
@@ -1261,20 +1261,20 @@ span.page-numbers.current {
 	  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 		<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 		  <li class="nav-item" style="display:block;" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="active-content-show nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="active-content-show nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 		  </li>
 		
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 		  </li>
 		</ul>
 		<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
@@ -1534,7 +1534,7 @@ span.page-numbers.current {
 					<td>$<?php echo $total_sale_so_far_Catlog = number_format($total_sale_so_far_Catlog, 2, '.', ''); ?></td>
 					<td>$<?php echo $totalAmount = number_format($totalAmount, 2, '.', ''); ?></td>
 					<td>$<?php echo $get_referral_commission_amount; ?></td>
-					<td><a href="https://glowbrandscandles.com/representative-dashboard/?<?php  echo "order_detail=true&frid=".$ID; ?>"><?php echo "View"; ?></a></td>
+					<td><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?<?php  echo "order_detail=true&frid=".$ID; ?>"><?php echo "View"; ?></a></td>
 				</tr>
 			<?php  
 			
@@ -1824,7 +1824,7 @@ span.page-numbers.current {
 					<td>$<?php echo $total_sale_so_far_Catlog = number_format($total_sale_so_far_Catlog, 2, '.', ''); ?></td>
 					<td>$<?php echo $totalAmount = number_format($totalAmount, 2, '.', ''); ?></td>
 					<td>$<?php echo $get_referral_commission_amount; ?></td>
-					<td><a href="https://glowbrandscandles.com/representative-dashboard/?<?php  echo "order_detail=true&frid=".$ID; ?>"><?php echo "View"; ?></a></td>
+					<td><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?<?php  echo "order_detail=true&frid=".$ID; ?>"><?php echo "View"; ?></a></td>
 				</tr>
 			<?php 
 				}
@@ -1904,20 +1904,20 @@ span.page-numbers.current {
 	  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 		<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 		  <li class="nav-item" style="display:block;" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 		  </li>
 		
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class="active-content-show nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class="active-content-show nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 		  </li>
 		</ul>
 		<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
@@ -1983,7 +1983,7 @@ span.page-numbers.current {
 					<td id="7_" style="vertical-align: top; text-align: left; "><span class="label <?php if (($currentDate >= $startDate) && ($currentDate <= $endDate)){ ?>label-success<?php } else { echo "label-danger"; } ?> "><?php echo $sd; ?> - <?php echo $ed; ?></span></td>
 					<!--<td id="8__referral" style="vertical-align: top; text-align: left;"><?php if($paid_status){ echo "<span class=''>Paid</span>"; } else{ echo "<span class=''>Unpaid</span>"; } ?></td>-->					
 					<td id="9_" style="vertical-align: top; text-align: left;">
-						<div class="btn-toolbar"><div class="first-col" style="margin-bottom:0px;">&nbsp;<a href="https://glowbrandscandles.com/print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a></div></div>
+						<div class="btn-toolbar"><div class="first-col" style="margin-bottom:0px;">&nbsp;<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a></div></div>
 					</td>
 				</tr>
 			<?php } } ?>
@@ -2027,25 +2027,25 @@ span.page-numbers.current {
 	  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 		<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 		  <li class="nav-item" style="display:block;" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="nav-link border-0" id="account-information-tab">Account Information</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
 		  </li>
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="active-content-show nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="active-content-show nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 		  </li>
 		
 		  <li class="nav-item" role="presentation">
-		    <a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+		    <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class="nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 		  </li>
 		</ul>
 		<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
 		  <div class="active-content" id="fundraisers-reports-tab-pane" role="tabpanel" aria-labelledby="fundraisers-reports-tab" tabindex="0">
-		  <h1 class="new-heading ft-size"><a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"><i title="Back" class="fa fa-chevron-left" style="font-size:24px;padding-right: 20px;color: #000000;cursor: pointer;"></i></a>Fundraisers Orders</h1>
+		  <h1 class="new-heading ft-size"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"><i title="Back" class="fa fa-chevron-left" style="font-size:24px;padding-right: 20px;color: #000000;cursor: pointer;"></i></a>Fundraisers Orders</h1>
 			<!-- Expand Feature Start -->	
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 	<?php 
@@ -3085,20 +3085,20 @@ span.page-numbers.current {
 					  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-outstanding-tab" tabindex="0">
 						<ul class="nav nav-tabs justify-content-center border-0" id="myTab" role="tablist">
 							  <li class="nav-item" style="display:block;" role="presentation">
-								<a href="https://glowbrandscandles.com/representative-dashboard/" class="active-content-show nav-link border-0" id="account-information-tab">Account Information</a>
+								<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/" class="active-content-show nav-link border-0" id="account-information-tab">Account Information</a>
 							  </li>
 							  <li class="nav-item" role="presentation">
-								<a href="https://glowbrandscandles.com/representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
+								<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?manage=true" class="nav-link border-0" id="manage-fundraisers-tab">Manage Fundraisers</a>
 							  </li>
 							  <li class="nav-item" role="presentation">
-								<a href="https://glowbrandscandles.com/representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
+								<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?payment_historytab=true" class="nav-link border-0" id="payment-history-tab" >Payment History</a>
 							  </li>
 							  <li class="nav-item" role="presentation">
-								<a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
+								<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_reports=true"  class="nav-link border-0" id="fundraisers-reports-tab">Fundraisers Reports</a>
 							  </li>
 							
 							  <li class="nav-item" role="presentation">
-								<a href="https://glowbrandscandles.com/representative-dashboard/?fundraisers_operation=true" class=" nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
+								<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>representative-dashboard/?fundraisers_operation=true" class=" nav-link border-0" id="fundraisers-operation-entry-tab" >Fundraisers Operation</a>
 							  </li>
 							</ul>
 						<div class="tab-content tab-content-new inner-tabContent" id="myTabContent">
@@ -3110,13 +3110,13 @@ span.page-numbers.current {
 								<div class="col p-0 your-account-balance m-2">
 									<h1 class="inner-tab-label mb-2 "><?php echo $fundraiserTotal2;?></h1>
 									<h5 class="inner-tab-title">Total Fundraisers</h5>
-									<!--<img src="https://glowscentedcandles.com/wp-content/uploads/2023/04/avatar.png" class="account-info-img">-->
+									<!--<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2023/04/avatar.png" class="account-info-img">-->
 									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon text-muted-400 size-5 account-info-img-new" data-v-257aca76=""  width="50px" height="50px" viewBox="0 0 256 256" data-v-b4402e20=""><g fill="#000"><path d="M136 108a52 52 0 1 1-52-52a52 52 0 0 1 52 52" opacity=".2"></path><path d="M117.25 157.92a60 60 0 1 0-66.5 0a95.83 95.83 0 0 0-47.22 37.71a8 8 0 1 0 13.4 8.74a80 80 0 0 1 134.14 0a8 8 0 0 0 13.4-8.74a95.83 95.83 0 0 0-47.22-37.71M40 108a44 44 0 1 1 44 44a44.05 44.05 0 0 1-44-44m210.14 98.7a8 8 0 0 1-11.07-2.33A79.83 79.83 0 0 0 172 168a8 8 0 0 1 0-16a44 44 0 1 0-16.34-84.87a8 8 0 1 1-5.94-14.85a60 60 0 0 1 55.53 105.64a95.83 95.83 0 0 1 47.22 37.71a8 8 0 0 1-2.33 11.07"></path></g></svg>
 								</div>
 								<div class="col p-0 your-account-balance m-2">
 									<h1 class="inner-tab-label mb-2 ">$<?php echo $total_referral_comm=number_format($total_referral_comm, 2, '.', ''); ?></h1>
 									<h5 class="inner-tab-title">Total Balance:</h5>
-									<!--<img src="https://glowscentedcandles.com/wp-content/uploads/2023/04/money.png" class="account-info-img">-->
+									<!--<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2023/04/money.png" class="account-info-img">-->
 									<svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" fill="#000" class="bi bi-coin account-info-img-new" viewBox="0 0 16 16">
 									  <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"></path>
 									  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
@@ -3312,7 +3312,7 @@ $current_user = wp_get_current_user();
 }
  else{
 
-		wp_redirect( "https://glowbrandscandles.com/my-account", 301 );
+		wp_redirect( ("" . glow_dynamic_url_base('home') . "my-account"), 301 );
 	 
 } ?>
 

@@ -78,7 +78,7 @@ function glow_sd_config() {
 			'brochure_ps'  => '/seller-perfect-scents/',
 			'brochure_fw'  => '/seller-fall-winter/',
 			'rebook'       => '/rebook-seller/',
-			'instructions' => 'https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf',
+			'instructions' => ('' . glow_dynamic_url_base('uploads') . '2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf'),
 		),
 
 		'recent_buyers'   => 5,

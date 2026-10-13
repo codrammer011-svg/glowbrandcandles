@@ -90,7 +90,7 @@ add_action( 'template_redirect', function () {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
-	$src = 'https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf';
+	$src = ('' . glow_dynamic_url_base('uploads') . '2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf');
 	$tmp = download_url( $src, 120 );
 	if ( is_wp_error( $tmp ) ) {
 		wp_die( 'Download failed: ' . esc_html( $tmp->get_error_message() ) );

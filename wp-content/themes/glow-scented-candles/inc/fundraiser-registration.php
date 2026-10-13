@@ -610,7 +610,7 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
         <h2 style="font-size:18px;">💬 We’re Here for You</h2>
         <p style="font-size:14px;line-height:1.6;">We’re always here to help — from kickoff to closeout! 💛</p>
         <p>📧 <b>Email:</b> <a href="mailto:contact@glowscentedcandles.com" style="color:#4184f3;">contact@glowscentedcandles.com</a><br>
-        🌐 <b>Website:</b> <a href="https://glowbrandscandles.com" style="color:#4184f3;">www.glowscentedcandles.com</a></p>
+        🌐 <b>Website:</b> <a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" style="color:#4184f3;">www.glowscentedcandles.com</a></p>
       </td>
     </tr>
   </table>

@@ -31,7 +31,7 @@ if ( ! function_exists( 'glow_cat_image_field_html' ) ) {
             <div class="glow-extra-image-preview" style="margin-bottom:8px;"><?php echo $preview; // phpcs:ignore ?></div>
             <button type="button" class="button glow-extra-image-upload">Upload / Select Image</button>
             <button type="button" class="button glow-extra-image-remove" style="<?php echo $image_id ? '' : 'display:none;'; ?>">Remove Image</button>
-            <p class="description">Ye image Elementor mein dynamic tag "Category Extra Image" se show hogi.</p>
+            <p class="description">This image will be displayed in Elementor using the “Category Extra Image” dynamic tag.</p>
         </div>
         <?php
     }

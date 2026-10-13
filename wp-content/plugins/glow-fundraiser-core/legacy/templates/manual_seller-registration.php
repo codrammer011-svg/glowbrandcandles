@@ -4,7 +4,7 @@
 */
 	get_header();
 	$c_ID=$_GET['frid'];
-	$seller_url="https://glowbrandscandles.com/seller-register/?frid=".$c_ID; 
+	$seller_url=("" . glow_dynamic_url_base('home') . "seller-register/?frid=").$c_ID; 
  ?>
  <script>
 		jQuery(document).ready(function () {

@@ -344,7 +344,7 @@
 							3702 Cavalier Street<br>
 							Suite 100<br>
 							Garland TX 75042<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 						
 				</address>

@@ -109,12 +109,12 @@ We look forward to working with you again!</li>
 						<div class="top-grid">
 							<h3>Fundraiser Info</h3>
 							<span class="btn-grad"><a id="close_out"  data-id="<?php echo $current_user->ID; ?>">Close My Fundraiser</a>
-								<img id="loading" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load">
+								<img id="loading" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load">
 							</span>
 							<?php if(!empty($cartContent)){ ?>
 							<span class="restore-btn">
 								<a id="restore_order">Move Saved Order To Cart</a>
-								<img id="loading_r" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load_restore">
+								<img id="loading_r" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load_restore">
 							</span>
 							<?php } ?>
 						</div>
@@ -408,7 +408,7 @@ We look forward to working with you again!</li>
 				e.preventDefault();
 				let fund_id = jQuery(this).data('frid');
 				let sellername = jQuery(this).data('sellername');
-				let link="https://glowbrandscandles.com/?frid="+fund_id+"&seller_name="+sellername;
+				let link="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>?frid="+fund_id+"&seller_name="+sellername;
 				jQuery("#generateLink").attr("href",link);
 					jQuery("#generateLink").text(link);
 				jQuery(".manual-mass-generation-popup").addClass("show");
@@ -464,7 +464,7 @@ jQuery("#loading_r").removeClass("hide_load_restore");
 						jQuery("#loading_r").addClass("hide_load_restore");
         console.log(response);
 		jQuery(".restore-btn").after('<p style="top: 116px; color: green;position: absolute;right: -33px;padding: 20px;">Success!!</p>');
-		window.location.href="https://glowbrandscandles.com/checkout/";
+		window.location.href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>checkout/";
     }
 });
 

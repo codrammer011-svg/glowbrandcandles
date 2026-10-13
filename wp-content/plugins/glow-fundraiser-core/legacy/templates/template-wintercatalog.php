@@ -47,7 +47,7 @@ jQuery(document).ready(function(){
 	</ul>
 	<div id="DataTables_Table_0_filter" class="dataTables_filter add-to-cart-Btn"><input id="nSeller" type="text" name="mass-seller-name-new-test" value="" style=" position: absolute;top: 0;left: -150px;" class="mass-seller-name-new-test" placeholder="Seller Name"></div>
 </div>
-<script type='text/javascript' src='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.js'></script>
+<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.js'></script>
 <div id="fullpage">
 	<!-- Hexagon Catagory Product-->
 	<div class="section" id="section0">
@@ -94,7 +94,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input <?php if($postid==22433){ ?> id="selectbox" <?php } ?> name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -163,7 +163,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -231,7 +231,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -299,7 +299,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -368,7 +368,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -438,7 +438,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -505,7 +505,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -577,7 +577,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -645,7 +645,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -712,7 +712,7 @@ jQuery(document).ready(function(){
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -780,7 +780,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -852,7 +852,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -917,7 +917,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -986,7 +986,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1057,7 +1057,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1125,7 +1125,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1194,7 +1194,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1262,7 +1262,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1337,7 +1337,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1405,7 +1405,7 @@ $ids= array(24403,24404,24405,23116,23112,24406,24407);
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1473,7 +1473,7 @@ $i++;
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1541,7 +1541,7 @@ $i++;
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1615,7 +1615,7 @@ $i++;
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1683,7 +1683,7 @@ $i++;
 											 $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
 											<img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
 										<?php } else { ?>
-										 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+										 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 										<?php } ?>
 						</td>
 						<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -1785,7 +1785,7 @@ a.cart-sec:hover{
               </select>
 			    <span class="alert-selection"></span>
             <input class="popup-submit-button popup-submit-button-cart" type="submit" value="Add Another Order"><br>
-			<a href="https://glowbrandscandles.com/cart/" class="cart-sec">Preview Cart</a>
+			<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>cart/" class="cart-sec">Preview Cart</a>
             <input class="popup-submit-button popup-submit-button-checkout" type="submit" value="Checkout">
           </div>
         </form>

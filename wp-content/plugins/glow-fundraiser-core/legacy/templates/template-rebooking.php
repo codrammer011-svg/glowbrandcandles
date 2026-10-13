@@ -200,7 +200,7 @@
 	<div class="row style-scope organizer-fundraisers-detail first-grid">
 		<div class="large-6 small-12 left-panel style-scope organizer-fundraisers-detail left-side-section">
 			<div class="content-inner-img">
-				<img src="https://glowscentedcandles.com/wp-content/uploads/2021/01/left-img-2.png">
+				<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2021/01/left-img-2.png">
 			</div>
 		</div>
 		<div class="large-6 small-12 right-panel style-scope organizer-fundraisers-detail right-side-section">
@@ -211,7 +211,7 @@
 	<div class="row style-scope organizer-fundraisers-detail second-grid">
 		<div class="large-6 small-12 left-panel style-scope organizer-fundraisers-detail left-side-section small-scr">
 			<div class="content-inner-img">
-				<img src="https://glowscentedcandles.com/wp-content/uploads/2021/01/right-img.png">
+				<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2021/01/right-img.png">
 			</div>
 		</div>
 		<div class="large-6 small-12 left-panel style-scope organizer-fundraisers-detail left-side-section">
@@ -220,7 +220,7 @@
 		</div>
 		<div class="large-6 small-12 right-panel style-scope organizer-fundraisers-detail right-side-section large-scr">
 			<div class="content-inner-img">
-				<img src="https://glowscentedcandles.com/wp-content/uploads/2021/01/right-img.png">
+				<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2021/01/right-img.png">
 			</div>
 		</div>
 		

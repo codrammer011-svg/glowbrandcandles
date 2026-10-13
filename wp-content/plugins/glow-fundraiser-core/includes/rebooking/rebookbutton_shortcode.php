@@ -36,7 +36,7 @@ ob_start();
 <?php 
  if ( is_user_logged_in() ) {
 ?>
-<a href="https://glowbrandscandles.com/fundraiser-dashboard/" class="login-link fundr_signIn">Fundraiser Dashboard</a>
+<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser-dashboard/" class="login-link fundr_signIn">Fundraiser Dashboard</a>
 <b class="sm_note">You are already logged in. Click on Fundraiser Dashboard</b>
 <?php
  }
@@ -102,7 +102,7 @@ ob_start();
 <?php 
  if ( is_user_logged_in() ) {
 ?>
-<a href="https://glowbrandscandles.com/seller-dashboard/" class="login-link fundr_signIn">Seller Dashboard</a>
+<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller-dashboard/" class="login-link fundr_signIn">Seller Dashboard</a>
 <b class="sm_note">You are already logged in. Click on Seller Dashboard</b>
 <?php
  }

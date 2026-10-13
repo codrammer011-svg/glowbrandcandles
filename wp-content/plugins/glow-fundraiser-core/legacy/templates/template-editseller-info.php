@@ -108,7 +108,7 @@ function isImage(filename) {
 					 var file = jQuery('#imgInp');
 					 if (!isImage(file.val())) 
 					 {
-						jQuery('#img-upload').attr('src', "https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png");
+						jQuery('#img-upload').attr('src', "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png");
 						jQuery('#imgInp').val("");
 						return failValidation('Only .jpg or .png formats are allowed.');
 					}
@@ -279,7 +279,7 @@ input
 				
 				$seller_goal=get_user_meta( $u_id , 'user_registration_seller_goal' , true );
 			?>
-                <img class="preview-img" src="<?php if(!empty($url)){ echo $url; }  else if(!empty($surl)){ echo $surl; } else{ ?>https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png<?php } ?>" alt="Preview Image" width="200" height="200" id='img-upload'/>
+                <img class="preview-img" src="<?php if(!empty($url)){ echo $url; }  else if(!empty($surl)){ echo $surl; } else{ ?><?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png<?php } ?>" alt="Preview Image" width="200" height="200" id='img-upload'/>
                 <div class="browse-button">
                     <i class="fa fa-pencil"></i>
                     <input class="browse-input" type="file" name="UploadedFile" id="imgInp"/>
@@ -318,7 +318,7 @@ input
 					$userINFO = get_user_by('id', $u_id);
 					$username001=$userINFO->user_login;
 			?>
-						<a href="https://glowbrandscandles.com/seller/user/<?php echo $username001; ?>" style="text-decoration:none; background:#000;color: #fff;padding: 10px 30px;border-radius: 4px;">Preview Profile</a>
+						<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/user/<?php echo $username001; ?>" style="text-decoration:none; background:#000;color: #fff;padding: 10px 30px;border-radius: 4px;">Preview Profile</a>
 					</p>
 				</div>
             </div>

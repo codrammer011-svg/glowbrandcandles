@@ -638,7 +638,7 @@ span.round-tab:hover {
 																	jQuery(".glow-register_user .alert.alert-info p").text("Email already exists. Please reregister.");
 																	setTimeout(function()
 																	{
-																		window.location.href = "https://glowbrandscandles.com/seller-rebooking/";
+																		window.location.href = "<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller-rebooking/";
 																	
 																	}, 2000);
 																}

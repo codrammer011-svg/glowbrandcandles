@@ -128,7 +128,7 @@ foreach ( $glow_sections as $i => $sec ) {
             ?>
                <tr>
                   <td class="glow-td-img">
-                     <img src="<?php echo esc_url( $img ? $img : 'https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png' ); ?>" alt="">
+                     <img src="<?php echo esc_url( $img ? $img : ('' . glow_dynamic_url_base('uploads') . '2020/09/news-20190130-202923.png') ); ?>" alt="">
                   </td>
                   <td class="glow-td-name"><?php echo esc_html( strip_tags( $product->get_name() ) ); ?></td>
                   <td class="glow-td-sku"><?php echo esc_html( $row['code'] ); ?></td>

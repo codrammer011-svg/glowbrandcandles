@@ -582,7 +582,7 @@ add_filter( 'woocommerce_get_price_suffix', 'wc_get_price_suffix_filter', 10, 2 
 								<tr>
 									<td align="left">
 										<p style="font:17px/23px  PTSansRegular , Arial, Helvetica, sans-serif;color:#1b0f0e;">Hi </p>
-										<p  style="font:17px/23px PTSansRegular, Arial, Helvetica, sans-serif;color:#1b0f0e;">Fundraiser invite you to register as seller. Click here <?php echo '<a href="https://glowbrandscandles.com/seller-register/?frid='.$_POST['f_id'].'" target="_blank">Seller Register Form</a>';  ?> </p>
+										<p  style="font:17px/23px PTSansRegular, Arial, Helvetica, sans-serif;color:#1b0f0e;">Fundraiser invite you to register as seller. Click here <?php echo ('<a href="' . glow_dynamic_url_base('home') . 'seller-register/?frid=').$_POST['f_id'].'" target="_blank">Seller Register Form</a>';  ?> </p>
 											<p  style="font:17px/23px PTSansRegular, Arial, Helvetica, sans-serif;color:#1b0f0e;">Fundraiser ID: <?php echo $_POST['f_id']; ?> </p>
 										<p style="font:17px/23px  PTSansRegular , Arial, Helvetica, sans-serif;color:#1b0f0e;">Thanks! </p>
 								</td>
@@ -824,7 +824,7 @@ $m_body=stripslashes($body);
 							<strong>Glow Scented Candles:</strong><br>
 							4628 Industrial Street<br>
 							Rowlett, TX 75088<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							(972) 941-6874
 				</address>
@@ -2581,7 +2581,7 @@ $m_body=stripslashes($body);
 		<p>Glow will ship your brochures along with kick off product to you within 2 weeks of your sale start date via UPS to the address given below. Tracking information will be provided once it ships. In the meantime, you can set your online account below.  </p>
       
 		<p style="color: #000; text-decoration: underline;"><b>ONLINE "DIRECTOR LOGIN":</b></p>
-		<p>Click the following link <a href="https://glowbrandscandles.com/my-account/?email=<?php echo $user_email; ?>&pass=<?php echo $character[14]->value; ?>" target="_blank">https://glowbrandscandles.com/my-account</a> to access the Director Login. </p> 
+		<p>Click the following link <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/?email=<?php echo $user_email; ?>&pass=<?php echo $character[14]->value; ?>" target="_blank"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account</a> to access the Director Login. </p> 
 		<p><b>Login Details: </b></p>
          <p><b>Email Address: </b> <?php echo $user_email; ?> </p>
 	     <p><b>Password: </b> <?php echo $character[14]->value; ?> </p>
@@ -2600,7 +2600,7 @@ $m_body=stripslashes($body);
 		 <p style="text-align: center;background: rgb(65,132,243);padding: 8px 18px;display: inline-block;border-radius: 2px;margin: 0;margin-top: 10px;"><a style="color: #ffffff;font-family: 'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size: 14px;font-weight: 300;line-height: 150%;text-decoration: none;" href="<?php echo $character[25]->value; ?>" target="_BLANK"><?php echo "Download Logo"; ?></a></p>
 		 <?php } ?>
 		<pre>Do you want an online only fundraiser? : <?php echo $character[26]->value; ?><br>Organization's Name: <?php echo $org; ?><br>Fundraiser's Name:  <?php echo $user_full_name; ?><br>Have you had a Glow Fundraiser before?: <?php  echo $before=$character[27]->value; ?><br>How did you hear about Glow?: <?php  echo $character[3]->value; ?><br>Name of referral: <?php  echo $character[4]->value; ?><br>Referral's email address: <?php  echo $character[5]->value; ?><br>What are your favorite type of candle scents?: <?php  echo $character[6]->value; ?><br>Shipping Address: <?php  echo $character[7]->value; ?><br>City: <?php  echo $character[8]->value; ?><br>State: <?php  echo $character[9]->value; ?><br>Zip: <?php  echo $character[10]->value; ?><br>Phone Number: <?php  echo $character[11]->value; ?><br>Cell Phone: <?php  echo $character[12]->value; ?><br>Email:<?php echo $user_email; ?><br>Number of Participants: <?php  echo $character[15]->value; ?><br>Start Date: <?php  echo $character[16]->value; ?><br>End Date: <?php echo $character[17]->value; ?><br>Fundraising Goal Amount:  <?php echo $character[18]->value; ?><br>Funds Go Toward:  <?php  echo $character[19]->value; ?><br>Selling Goal (# of Items):  <?php  echo $character[20]->value; ?><br>Rebate Pay By ?:  <?php  echo $character[21]->value; ?><br><?php if(!empty($character[22]->value)){ ?>Checks made payable to:  <?php  echo $character[22]->value; } ?><br><?php /*if(!empty($character[22]->value)){ ?>PayPal Email Address:  <?php  echo $character[22]->value; }*/ ?></pre>
-		<p><b>Profile Link: <a href="<?php echo "https://glowbrandscandles.com/profile/".$user_id; ?>" target="_blank"><?php echo "https://glowbrandscandles.com/profile/".$user_id; ?></a></b></p>
+		<p><b>Profile Link: <a href="<?php echo ("" . glow_dynamic_url_base('home') . "profile/").$user_id; ?>" target="_blank"><?php echo ("" . glow_dynamic_url_base('home') . "profile/").$user_id; ?></a></b></p>
 		<hr style="border-style:dotted;">
 		<ul>
  	<li>Boost sales and reach everyone with or online shopping option. This is the perfect solution to out of town family & friends. Customer pays for their order online via credit card, their order drop ships directly to the customer within 7 days.</li>
@@ -2613,7 +2613,7 @@ $m_body=stripslashes($body);
 		<p><b>If you have any questions at all during your sale please feel free to contact us, we are here to help!</b></p>
 		<p>The Glow Team<font color="#888888"><br>Glow Scented Candles<br>
 <a href="mailto:contact@glowscentedcandles.com" target="_blank">contact@glowscentedcandles.com</a><br>
-<a href="https://glowbrandscandles.com" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
+<a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
 	  </td>
 		</tr>
         </table>
@@ -2668,7 +2668,7 @@ $m_body=stripslashes($body);
 		<p>Glow will ship your brochures along with kick off product to you within 2 weeks of your sale start date via UPS to your directors address. </p>
       
 		<p style="color: #000; text-decoration: underline;"><b>ONLINE "SELLER LOGIN":</b></p>
-		<p>Click the following link <a href="https://glowbrandscandles.com/my-account/?email=<?php echo $user_email; ?>&pass=<?php echo $character[3]->value; ?>" target="_blank">https://glowbrandscandles.com/my-account</a> to access the Seller Login. Here you can view your up-to-date sales. </p> 
+		<p>Click the following link <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/?email=<?php echo $user_email; ?>&pass=<?php echo $character[3]->value; ?>" target="_blank"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account</a> to access the Seller Login. Here you can view your up-to-date sales. </p> 
 		
 		 <?php if(!empty($character[7]->value)) { ?> 
 		 <img src="<?php echo $character[7]->value; ?>" width="120" height="120"/><br/>
@@ -2683,7 +2683,7 @@ $m_body=stripslashes($body);
 		 <p><b>Login Details: </b></p>
          <p><b>Email Address: </b> <?php echo $user_email; ?> </p>
 	     <p><b>Password: </b> <?php echo $character[3]->value; ?> </p>
-		 <p><b>Profile Link: <a href="<?php echo "https://glowbrandscandles.com/seller/user/".$username; ?>" target="_blank"><?php echo "https://glowbrandscandles.com/seller/user/".$username; ?></a></b></p>
+		 <p><b>Profile Link: <a href="<?php echo ("" . glow_dynamic_url_base('home') . "seller/user/").$username; ?>" target="_blank"><?php echo ("" . glow_dynamic_url_base('home') . "seller/user/").$username; ?></a></b></p>
 		 <pre>Seller's Name:  <?php echo $user_full_name =  $character[0]->value.' '.$character[1]->value; ?><br>Email:<?php echo $user_email; ?><br></pre>
 		<hr style="border-style:dotted;">
 		<ul>
@@ -2697,7 +2697,7 @@ $m_body=stripslashes($body);
 		<p><b>If you have any questions at all during your sale please feel free to contact us, we are here to help!</b></p>
 		<p>The Glow Team<font color="#888888"><br>Glow Scented Candles<br>
 <a href="mailto:contact@glowscentedcandles.com" target="_blank">contact@glowscentedcandles.com</a><br>
-<a href="https://glowbrandscandles.com" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
+<a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
 	  </td>
 		</tr>
         </table>
@@ -3213,7 +3213,7 @@ function custom_new_order_email($order_id)
    <table cellpadding="0" cellspacing="0" border="0" align="center" width="600px" bgcolor="#fff" style="background-color:#f7f7f7;margin:0 auto;padding:70px 0 70px 0;">
         <tr>
              <td align="center" style="padding:30px; text-align:center;background:#333;">
-			   <img style="width: 180px;" src="https://glowscentedcandles.com/wp-content/uploads/2020/10/unnamed-1.png">
+			   <img style="width: 180px;" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/10/unnamed-1.png">
 				
 		  	</td>
 		</tr>
@@ -3754,7 +3754,7 @@ function wc_new_orders($order_id)
 							<strong>Glow Scented Candles:</strong><br>
 							4628 Industrial Street<br>
 							Rowlett, TX 75088<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							(972) 941-6874
 				</address>
@@ -6032,18 +6032,18 @@ function redirect_to_specific_page() {
 
 if ( is_page('fundraiser-reports') && ! is_user_logged_in() ) {
 
-wp_redirect( 'https://glowbrandscandles.com/my-account', 301 ); 
+wp_redirect( ('' . glow_dynamic_url_base('home') . 'my-account'), 301 ); 
   //exit;
     }
 	if ( is_page('seller-reports') && ! is_user_logged_in() ) {
 
-wp_redirect( 'https://glowbrandscandles.com/my-account', 301 ); 
+wp_redirect( ('' . glow_dynamic_url_base('home') . 'my-account'), 301 ); 
   //exit;
     }
 	
 	if ( is_page('seller-dashboard') && ! is_user_logged_in() ) {
 
-wp_redirect( 'https://glowbrandscandles.com/my-account', 301 ); 
+wp_redirect( ('' . glow_dynamic_url_base('home') . 'my-account'), 301 ); 
   //exit;
     }
 }
@@ -6553,7 +6553,7 @@ You will receive a email confirmation when the order is placed. </span>
 
 <div class="woocommerce-info save-btn">
 	If you want to pay later then you can save order.<a id="save_order" style="">Save Order and Pay Later</a>
-<img id="loading_s" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load_save">
+<img id="loading_s" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load_save">
 </div>
 
 <script>
@@ -7109,16 +7109,16 @@ if (!function_exists('ajax_login')) {
         } else {
 			
 			if ( in_array( 'fundraiser', (array) $user_signon->roles ) ) {
-				$redirect_url="https://glowbrandscandles.com/fundraiser-dashboard/";
+				$redirect_url=("" . glow_dynamic_url_base('home') . "fundraiser-dashboard/");
 			}
 			else if ( in_array( 'seller', (array) $user_signon->roles ) ) {
-				$redirect_url="https://glowbrandscandles.com/seller-dashboard/";
+				$redirect_url=("" . glow_dynamic_url_base('home') . "seller-dashboard/");
 			}
 			else if ( in_array( 'administrator', (array) $user_signon->roles ) ) {
 				$redirect_url="<?php echo admin_url(); ?>";
 			}
 			else {
-				$redirect_url="https://glowbrandscandles.com/my-account/";
+				$redirect_url=("" . glow_dynamic_url_base('home') . "my-account/");
 			}
             echo json_encode(array('loggedin'=>true, 'test'=>$user_signon, 'url'=> $redirect_url, 'message'=> esc_html__('Login successful, redirecting...', 'yourtheme')));
         }
@@ -7128,7 +7128,7 @@ if (!function_exists('ajax_login')) {
 add_action( 'sendy_scheduled_cron', 'sendy_scheduled' );
 function sendy_scheduled()
 { 
-file_get_contents('https://glowbrandscandles.com/newsletter/scheduled.php');
+file_get_contents(('' . glow_dynamic_url_base('home') . 'newsletter/scheduled.php'));
 }
 function disable_coupon_field_on_cart( $enabled ) {
 	$user = wp_get_current_user();
@@ -8502,7 +8502,7 @@ div#brave_element--WWW {
 												<?php } 
 												else {	
 												?>
-			 <img width="300" height="300" class="brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="https://glowscentedcandles.com/wp-content/uploads/2022/10/3d-cartoon-character-young-woman-call-center-customer-service-using-laptop_40876-3098.jpg" alt="">									
+			 <img width="300" height="300" class="brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/10/3d-cartoon-character-young-woman-call-center-customer-service-using-laptop_40876-3098.jpg" alt="">									
 												<?php } ?>
 										  </div>
                                        </div>
@@ -8893,7 +8893,7 @@ function representative_login_redirect( $redirect_to, $request, $user ) {
         //check for subscribers
         if (in_array('representative', $user->roles)) {
             // redirect them to another URL, in this case, the homepage 
-            $redirect_to =  "https://glowbrandscandles.com/reprenstative-dashboard/";
+            $redirect_to =  ("" . glow_dynamic_url_base('home') . "reprenstative-dashboard/");
         }
     }
 

@@ -303,7 +303,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -385,7 +385,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -470,7 +470,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -562,7 +562,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -644,7 +644,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -725,7 +725,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -809,7 +809,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -899,7 +899,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -982,7 +982,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -1065,7 +1065,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -1147,7 +1147,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -1216,7 +1216,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>
@@ -1298,7 +1298,7 @@ if ( $glow_is_new ) {
                                         <?php if ( !empty( $image ) ) { ?>    
                                             <img src="<?php echo $image[0]; ?>" alt="" class="card-image" /> 
                                         <?php } else { ?>
-                                            <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" alt="" class="card-image" />
+                                            <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" alt="" class="card-image" />
                                         <?php } ?>
                                     </td>
                                     <td>

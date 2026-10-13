@@ -250,7 +250,7 @@ if($u_id==205821){
 							3702 Cavalier Street<br>
 							Suite 100<br>
 							Garland TX 75042<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 						
 				</address>
@@ -2654,7 +2654,7 @@ if($u_id==205821){
 							3702 Cavalier Street<br>
 							Suite 100<br>
 							Garland TX 75042<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							
 				</address>
@@ -6147,7 +6147,7 @@ $profit_catlog_a_NEW = str_replace( ',', '', $profit_catlog_a_NEW );
 }
 	else
 	{
-		$url="https://glowbrandscandles.com/my-account/";
+		$url=("" . glow_dynamic_url_base('home') . "my-account/");
 		wp_redirect($url);
 	}
 

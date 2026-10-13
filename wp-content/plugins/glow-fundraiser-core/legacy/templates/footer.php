@@ -205,7 +205,7 @@ body.page .footer-container, body.page .main-footer, body.page .copyright-3, bod
 	jQuery('<h4 class="sub-heading">Details<span>*</span></h4>').insertBefore('#user-registration-form-62179 .ur-field-item[data-field-id="radio_1534260773"], #user-registration-form-37978 .ur-field-item[data-field-id="radio_1534260773"]');
 	setTimeout(function(){
 		if (!jQuery('#imageLoad').length) {
-			jQuery('#user-registration-form-62179 form [data-field-id="check_payable"], #user-registration-form-37978 form [data-field-id="check_payable"]').insertAfter('<div id="imageLoad"><label class="ur-label">Upload Profile Image or logo</label><div class="pview"><img class="preview-img" src="https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png" alt="Preview Image" width="200" height="200" id="img-upload"><div class="browse-button"><i class="fa fa-pencil"></i><input class="browse-input" type="file" required="" name="UploadedFile" id="imgInp"></div></div></div>');
+			jQuery('#user-registration-form-62179 form [data-field-id="check_payable"], #user-registration-form-37978 form [data-field-id="check_payable"]').insertAfter('<div id="imageLoad"><label class="ur-label">Upload Profile Image or logo</label><div class="pview"><img class="preview-img" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png" alt="Preview Image" width="200" height="200" id="img-upload"><div class="browse-button"><i class="fa fa-pencil"></i><input class="browse-input" type="file" required="" name="UploadedFile" id="imgInp"></div></div></div>');
 		}
 	},300);
 	

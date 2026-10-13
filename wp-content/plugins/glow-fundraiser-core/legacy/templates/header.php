@@ -42,7 +42,7 @@ session_start();
 	<meta property="og:type" content="webpage"> 
 	<meta property="og:title" content="<?php the_title(); ?> | Glow Scented Candles">
 	<meta property="og:description" content="Our dreamy scents are inspired by nature and travel, moments and memories. We hand-pour our candles in our Glow shop using sustainable soy & coconut-waxes and phthalate-free perfume oils infused with essential oils." />
-	<meta property="og:image" content="https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png">
+	<meta property="og:image" content="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="628">
 	<meta property="og:image:type" content="image/png">
@@ -56,11 +56,11 @@ session_start();
 			"publisher": {
 				"@type": "Organization",
 				"name": "Glow Scented Candles",
-				"url" : "https://glowbrandscandles.com",
+				"url" : "<?php echo esc_url( glow_dynamic_url_base('root') ); ?>",
 				"logo" : {
 					"@type": "ImageObject",
-					"url":"https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png",
-					"contentUrl": "https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png"
+					"url":"<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png",
+					"contentUrl": "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png"
 				}
 			}
 		}
@@ -87,24 +87,24 @@ body.user-registration-page .user-registration:not(.user-registration-MyAccount)
 }
 /*@font-face {
     font-family: 'Noir Pro';
-    src: url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Regular.woff') format('woff'),
-		 url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Regular.woff2') format('woff2');
+    src: url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Regular.woff') format('woff'),
+		 url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: 'Noir Pro Semi';
-	src: url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-SemiBold.woff') format('woff'),
-		 url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-SemiBold.woff2') format('woff2');
+	src: url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-SemiBold.woff') format('woff'),
+		 url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
     font-family: 'Noir Pro';
-    src: url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Bold.woff2') format('woff2'),
-        url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Bold.woff') format('woff');
+    src: url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Bold.woff2') format('woff2'),
+        url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/fonts/noir-pro/np/NoirPro-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -376,7 +376,7 @@ jQuery(document).ready( function()
 	<?php if(!empty($_GET['frid'])) { ?>
 	jQuery("#user-registration-form-22005 form #seller_fundraiser").val(<?php echo $_GET['frid']; ?>);
 	<?php } ?>
-	jQuery("#user-registration-form-22005 form").before('<div id="imageLoad"><form class="fileUpload" enctype="multipart/form-data"><label class="ur-label">Upload your photo</label><div class="pview"><img class="preview-img" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/images/photo.jpg" alt="Preview Image" width="200" height="200" id="img-upload"/><div class="browse-button"><input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/></div></div></form>');
+	jQuery("#user-registration-form-22005 form").before('<div id="imageLoad"><form class="fileUpload" enctype="multipart/form-data"><label class="ur-label">Upload your photo</label><div class="pview"><img class="preview-img" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>images/photo.jpg" alt="Preview Image" width="200" height="200" id="img-upload"/><div class="browse-button"><input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/></div></div></form>');
 	
 	function getExtension(filename) 
 	{
@@ -435,7 +435,7 @@ jQuery(document).ready( function()
 					 var file = jQuery('#imgInp');
 					 if (!isImage(file.val())) 
 					 {
-						jQuery('#img-upload').attr('src', "https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png");
+						jQuery('#img-upload').attr('src', "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png");
 						jQuery('#imgInp').val("");
 						return failValidation('Only .jpg or .png formats are allowed.');
 					}
@@ -634,7 +634,7 @@ jQuery(document).ready( function()
 <script>
 jQuery(document).ready( function() 
 {
-	jQuery("#user-registration-form-21998 form").before('<div id="imageLoad"><form class="fileUpload" enctype="multipart/form-data"><label class="ur-label">Upload Profile Image or logo</label><div class="pview"><img class="preview-img" src="https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png" alt="Preview Image" width="200" height="200" id="img-upload"/><div class="browse-button"><i class="fa fa-pencil"></i><input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/></div></div></form></div>');
+	jQuery("#user-registration-form-21998 form").before('<div id="imageLoad"><form class="fileUpload" enctype="multipart/form-data"><label class="ur-label">Upload Profile Image or logo</label><div class="pview"><img class="preview-img" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png" alt="Preview Image" width="200" height="200" id="img-upload"/><div class="browse-button"><i class="fa fa-pencil"></i><input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/></div></div></form></div>');
 	/* Calculation of total sale on Fundraiser Register Form */
 	jQuery("#user-registration-form-21998 form .ur-field-item #fr_goal_field input").after("<span class='sale_require'>Total sales required = <b>$</b><b class='val'></b></span>");
 	jQuery(document).on('change', '#user-registration-form-21998 form .ur-field-item #fr_goal_field input', function() 
@@ -703,7 +703,7 @@ jQuery(document).ready( function()
 					 var file = jQuery('#imgInp');
 					 if (!isImage(file.val())) 
 					 {
-						jQuery('#img-upload').attr('src', "https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png");
+						jQuery('#img-upload').attr('src', "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png");
 						jQuery('#imgInp').val("");
 						return failValidation('Only .jpg or .png formats are allowed.');
 					}
@@ -741,7 +741,7 @@ jQuery(document).ready( function()
 		readURL(this);
 	}); 
 
-	jQuery("[data-field-id='check_payable']").before('<div id="imageLoad"><form class="fileUpload" enctype="multipart/form-data"><label class="ur-label">Upload Profile Image or logo</label><div class="pview"><img class="preview-img" src="https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png" alt="Preview Image" width="200" height="200" id="img-upload"/><div class="browse-button"><i class="fa fa-pencil"></i><input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/></div></div></form></div>');
+	jQuery("[data-field-id='check_payable']").before('<div id="imageLoad"><form class="fileUpload" enctype="multipart/form-data"><label class="ur-label">Upload Profile Image or logo</label><div class="pview"><img class="preview-img" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png" alt="Preview Image" width="200" height="200" id="img-upload"/><div class="browse-button"><i class="fa fa-pencil"></i><input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/></div></div></form></div>');
 		
 });
 </script>
@@ -1114,7 +1114,7 @@ jQuery(document).ready(function () {
 
                                                 <?php do_action( 'woocommerce_login_form_end' ); ?>
 													<p class="lost-password pull-left"><?php esc_html_e('Lost your password?', 'royal'); ?> <a href="<?php echo esc_url( wc_lostpassword_url() ); ?>"><?php esc_html_e( 'Remind password', 'royal' ); ?></a></p>
-                                                     <p class="pull-left login-page"><a href="https://glowbrandscandles.com/my-account">Login Page</a></p>
+                                                     <p class="pull-left login-page"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account">Login Page</a></p>
 										   </form>
 											
 											

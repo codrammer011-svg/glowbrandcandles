@@ -176,7 +176,7 @@
 					<?php for ($y = 1; $y <= 5; $y++) { ?> 
 						<div class="main-candles">
 							<div class="image">
-							   <img src="https://glowscentedcandles.com/wp-content/uploads/2024/02/GLOW_MELT_GOLDEN-SUMMER-GLOW-01.png" alt="classic">
+							   <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2024/02/GLOW_MELT_GOLDEN-SUMMER-GLOW-01.png" alt="classic">
 							</div>
 							<div class="heading">
 								<h4>CC1 Eucalyptus Candle</h4>
@@ -186,7 +186,7 @@
 							</div>
 							
 							<div class="add-cart">
-								<span><img src="https://glowscentedcandles.com/wp-content/uploads/2024/04/cart-regular-24.png" alt=""></span><h5>ADD TO CART</h5>
+								<span><img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2024/04/cart-regular-24.png" alt=""></span><h5>ADD TO CART</h5>
 							</div>
 						</div>
 					<?php }	?>

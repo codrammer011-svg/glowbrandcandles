@@ -630,9 +630,9 @@ table {
         console.log(response);
 		jQuery(".proccessloader2").addClass("success");
 				
-				jQuery(".proccessloader2.success img").attr("src","https://glowscentedcandles.com/wp-content/uploads/2020/12/giphy.gif");
+				jQuery(".proccessloader2.success img").attr("src","<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/giphy.gif");
 				jQuery(".proccessloader2.success").delay(4000).fadeOut();
-				setTimeout(function(){ jQuery(".proccessloader2").removeClass("success"); jQuery(".proccessloader2 img").attr("src","https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"); }, 5000);
+				setTimeout(function(){ jQuery(".proccessloader2").removeClass("success"); jQuery(".proccessloader2 img").attr("src","<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"); }, 5000);
 		/*jQuery(".admin-report").append('<p style="padding-top:10px;color:green;">'+response+'</p>');*/
 		}
 		});
@@ -1055,7 +1055,7 @@ if($_GET['page']=='fundraiser_operations' && $_GET['closed']=="closed_fundraiser
 				<td id="7_" style="vertical-align: top; text-align: center; "><?php if($rebook_yes=="yes"){ echo "Yes"; } ?></td>
 				<td id="9_" style="vertical-align: top; text-align: center; "><?php if(!empty($rebook_date)){ echo $rebook_date ; } ?></td>
 				<td id="10_" style="vertical-align: top; text-align: center; ">
-					<div class="btn-toolbar ram1"><div class="first-col" style="margin-bottom:10px;">&nbsp;<a href="https://glowbrandscandles.com/print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a></div></div>
+					<div class="btn-toolbar ram1"><div class="first-col" style="margin-bottom:10px;">&nbsp;<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a></div></div>
 				</td>
 			</tr>
 		<?php } ?>
@@ -1215,7 +1215,7 @@ echo paginate_links(array(
 								else if(response.data=="Catlog")
 								{
 									jQuery("#ajax-order").text("");
-									window.location="https://glowbrandscandles.com/print-order/?order_id="+orderid+"&q=full";
+									window.location="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print-order/?order_id="+orderid+"&q=full";
 								}
 								else
 								{
@@ -5935,7 +5935,7 @@ echo paginate_links( array(
 		</thead>
 		<tbody>
 		
-			<img id="loading_search" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load">
+			<img id="loading_search" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load">
 		
 		</tbody>
 		</table>
@@ -6076,14 +6076,14 @@ echo paginate_links( array(
 </script>
 <div class="proccessloader">
 	<div class="inner">
-		<img src="https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
+		<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
 		<p>Successfully Updated!!</p>
 		</div>
 	</div>
 	
 	 <div class="proccessloader2">
 	<div class="inner">
-		<img src="https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
+		<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
 		<p>Email Successfully Sent.</p>
 		</div>
 	</div>
@@ -6223,7 +6223,7 @@ echo paginate_links( array(
                 <td id="10_" class="" style="vertical-align: top; text-align: center; "><?php if($repre_status==1){?><span id="repre_action_status_<?php echo $ID;?>" class="label label-success">Paid</span><?php }  elseif($repre_status==2){?><span id="repre_action_status_<?php echo $ID;?>" class="label label-danger">Unpaid</span><?php }  else { ?><span id="repre_action_status_<?php echo $ID;?>" class="label label-danger">Unpaid</span><?php } ?></td>
                 <td id="8_" class="" style="vertical-align: top; text-align: center; "><?php if($action_status==1){?><span id="action_s" class="label label-success">Active</span><?php }  elseif($action_status==2){?><span id="action_s2" class="label label-danger">Inactive</span><?php }  else { ?><span id="action_st" class="label label-success">Active</span><?php } ?></td>
 				<td id="7_" style="vertical-align: top; text-align: center; ">
-					<div class="btn-toolbar ramsingh"><div class="first-col" style="margin-bottom:10px;">&nbsp;<a href="https://glowbrandscandles.com/print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a>&nbsp;
+					<div class="btn-toolbar ramsingh"><div class="first-col" style="margin-bottom:10px;">&nbsp;<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a>&nbsp;
 <?php
       $letter_path = "/wp-content/uploads/fundraisers/$ID/welcome-letter.docx";
       $letter_full = ABSPATH . "wp-content/uploads/fundraisers/$ID/welcome-letter.docx";

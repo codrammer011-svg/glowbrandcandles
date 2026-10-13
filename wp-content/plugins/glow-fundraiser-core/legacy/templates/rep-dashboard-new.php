@@ -194,12 +194,12 @@
 				<div class="col p-0 your-account-balance m-2">
 					<h1 class="inner-tab-label mb-2 "><?php echo $fundraiserTotal;?></h1>
 					<h5 class="inner-tab-title">Total Fundraisers</h5>
-					<img src="https://glowscentedcandles.com/wp-content/uploads/2023/04/avatar.png" class="account-info-img">
+					<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2023/04/avatar.png" class="account-info-img">
 				</div>
 				<div class="col p-0 your-account-balance m-2">
 					<h1 class="inner-tab-label mb-2 ">$<?php echo $total_referral_comm;?></h1>
 					<h5 class="inner-tab-title">Total Balance:</h5>
-					<img src="https://glowscentedcandles.com/wp-content/uploads/2023/04/money.png" class="account-info-img">
+					<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2023/04/money.png" class="account-info-img">
 				</div>
 				<!-- <div class="col p-0 your-account-balance m-2">
 					<h1 class="inner-tab-label mb-2 ">80$</h1>

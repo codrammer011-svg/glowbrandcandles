@@ -34,7 +34,7 @@ function build_fundraiser_docx_for_user(array $data): string
 
     $tp = new TemplateProcessor($template_path);
 // Fallback image if QR code doesn't exist
-$default_qr = "https://glowscentedcandles.com/wp-content/uploads/2025/09/logoempty.jpg";
+$default_qr = ("" . glow_dynamic_url_base('uploads') . "2025/09/logoempty.jpg");
 
     // Text placeholders
     $tp->setValue('organization_name', $org_name);

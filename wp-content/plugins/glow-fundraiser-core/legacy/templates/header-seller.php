@@ -35,25 +35,25 @@ session_start();
 	$description=get_user_meta($IDG,"description",true);
 	?>
 	<meta property="og:site_name" content="Glow Scented Candles">
-	<meta property="og:url" content="https://glowbrandscandles.com/seller/<?php echo $IDG; ?>">  
+	<meta property="og:url" content="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/<?php echo $IDG; ?>">  
 	<meta property="og:type" content="webpage"> 
 	<meta property="og:title" content="<?php echo $f." ".$l; ?> | Support Now | Fundraising">
 	<meta property="og:description" content="<?php if(!empty($description)){ echo $description; } else { ?> Help us reach our goal! Thank you for the support! <?php } ?>" />
-	<meta property="og:image" content="https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png">
+	<meta property="og:image" content="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png">
 	<!-- WebPage Schema -> Start -->
 	<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
 			"@type": "WebPage",
 			"name": "<?php echo $f." ".$l; ?> | Support Now | Fundraising",
-			"url" : "https://glowbrandscandles.com/seller/<?php echo $IDG; ?>",
+			"url" : "<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/<?php echo $IDG; ?>",
 			"publisher": {
 				"@type": "Organization",
 				"name": "Glow Scented Candles",
-				"url" : "https://glowbrandscandles.com",
+				"url" : "<?php echo esc_url( glow_dynamic_url_base('root') ); ?>",
 				"logo" : {
 					"@type": "ImageObject",
-					"contentUrl": "https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png"
+					"contentUrl": "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png"
 				}
 			}
 		}
@@ -72,25 +72,25 @@ session_start();
 	$description=get_user_meta($IDG,"description",true);
 		?>
 		<meta property="og:site_name" content="Glow Scented Candles">
-	<meta property="og:url" content="https://glowbrandscandles.com/seller/user/<?php echo $query; ?>">  
+	<meta property="og:url" content="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/user/<?php echo $query; ?>">  
 	<meta property="og:type" content="webpage"> 
 	<meta property="og:title" content="<?php echo $f." ".$l; ?> | Support Now | Fundraising">
 	<meta property="og:description" content="<?php if(!empty($description)){ echo $description; } else { ?> Help us reach our goal! Thank you for the support! <?php } ?>" />
-	<meta property="og:image" content="https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png">
+	<meta property="og:image" content="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png">
 	<!-- WebPage Schema -> Start -->
 	<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
 			"@type": "WebPage",
 			"name": "<?php echo $f." ".$l; ?> | Support Now | Fundraising",
-			"url" : "https://glowbrandscandles.com/seller/user/<?php echo $query; ?>",
+			"url" : "<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/user/<?php echo $query; ?>",
 			"publisher": {
 				"@type": "Organization",
 				"name": "Glow Scented Candles",
-				"url" : "https://glowbrandscandles.com",
+				"url" : "<?php echo esc_url( glow_dynamic_url_base('root') ); ?>",
 				"logo" : {
 					"@type": "ImageObject",
-					"contentUrl": "https://glowscentedcandles.com/wp-content/uploads/2025/08/IMG_2919.png"
+					"contentUrl": "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/08/IMG_2919.png"
 				}
 			}
 		}
@@ -411,7 +411,7 @@ margin: 20px;
 
                                                 <?php do_action( 'woocommerce_login_form_end' ); ?>
 													<p class="lost-password pull-left"><?php esc_html_e('Lost your password?', 'royal'); ?> <a href="<?php echo esc_url( wc_lostpassword_url() ); ?>"><?php esc_html_e( 'Remind password', 'royal' ); ?></a></p>
-                                                     <p class="pull-left login-page"><a href="https://glowbrandscandles.com/my-account">Login Page</a></p>
+                                                     <p class="pull-left login-page"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account">Login Page</a></p>
 										   </form>
 											
 											

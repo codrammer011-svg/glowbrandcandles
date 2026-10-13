@@ -6,7 +6,7 @@
 
 require_once( get_template_directory() . '/phpqrcode/qrlib.php' );
 $user_id=206552;
-$text = "https://glowbrandscandles.com/profile/".$user_id;
+$text = ("" . glow_dynamic_url_base('home') . "profile/").$user_id;
 $arrayUploadPath = wp_upload_dir();
 $fileUploadSubDir = $arrayUploadPath['basedir']."/qrcodes/image_".$user_id.".png";
 QRcode::png($text, $fileUploadSubDir, QR_ECLEVEL_L, 3, 4);
@@ -17,7 +17,7 @@ if(!empty($fileUpload_full_link)) {
 	<?php
 }
 /* Register link for dashboard */
-			$text2 = "https://glowbrandscandles.com/seller-register/?frid=" . $user_id;
+			$text2 = ("" . glow_dynamic_url_base('home') . "seller-register/?frid=") . $user_id;
 
 $arrayUploadPath2 = wp_upload_dir();
 $tempFile = $arrayUploadPath2['basedir'] . "/qrcodes/temp_" . $user_id . ".png";

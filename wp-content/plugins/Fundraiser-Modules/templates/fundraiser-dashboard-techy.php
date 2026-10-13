@@ -271,7 +271,7 @@
 		{
 			jQuery("#loading_r").removeClass("hide_load_restore");
 			jQuery("#loading_r").addClass("show_load_restore");
-			var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+			var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 			 jQuery.ajax({
 
 			 type : "post",
@@ -284,7 +284,7 @@
 							jQuery("#loading_r").removeClass("show_load_restore");
 							jQuery("#loading_r").addClass("hide_load_restore");
 							console.log(response);
-							window.location.href="https://glowbrandscandles.com/checkout/";
+							window.location.href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>checkout/";
 							}
 			});
 
@@ -563,7 +563,7 @@
 											  <?php } else { ?>
 											   <span class="status live style-scope fundraiser-status" style="color:red;">Inactive</span>
 											  <?php } ?>
-											 <a class="walk-through fa fa-file-pdf-o" data-toggle="tooltip" title="Print Fundraiser Instructions here" href="https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf" target=" _blank"></a>
+											 <a class="walk-through fa fa-file-pdf-o" data-toggle="tooltip" title="Print Fundraiser Instructions here" href="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf" target=" _blank"></a>
 										   <!--<div class="hoverbox"><span class="">Print Fundraiser instructions here.</span></div>-->
 										   </div>
 										</div>
@@ -585,8 +585,8 @@
 										 {
 										 }
 									   ?>
-											<img class="profile-seller extra_profile_image w-25" src="<?php if(!empty($fund_image)){  echo $crop_url_fund_image; } else if(!empty($image_url_profile)){  echo $crop_url_image_url_profile; } else{ ?>https://glowscentedcandles.com/wp-content/uploads/2021/02/3135715.png<?php } ?>"/>
-									   <a href="https://glowbrandscandles.com/upload-image-and-description/?type=image" class="btn btn-primary change-photo" > <i class="fa fa-fw fa-camera"></i> <span>Change photo</span> </a>
+											<img class="profile-seller extra_profile_image w-25" src="<?php if(!empty($fund_image)){  echo $crop_url_fund_image; } else if(!empty($image_url_profile)){  echo $crop_url_image_url_profile; } else{ ?><?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2021/02/3135715.png<?php } ?>"/>
+									   <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>upload-image-and-description/?type=image" class="btn btn-primary change-photo" > <i class="fa fa-fw fa-camera"></i> <span>Change photo</span> </a>
 									   </div>
 								</div>
 							</div>
@@ -668,7 +668,7 @@
                 </div>
                 <div class="col-md-4">
                    
-                   <a href="https://glowbrandscandles.com/docs/word.php?fund_id=<?php echo $u_id; ?>">
+                   <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>docs/word.php?fund_id=<?php echo $u_id; ?>">
                     <div class="boxWrpr box-seven">
                         <figure>
                             <img  class="img_icon" src="<?php echo plugin_dir_url(__FILE__); ?>assets/images/box-7.png" alt="*">
@@ -799,7 +799,7 @@
             </div>
             <div class="col-md-12">
                 
-                <a href="https://glowbrandscandles.com/fundraiser-dashboard/fundraiser-reports/">
+                <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser-dashboard/fundraiser-reports/">
                 	<div class="boxWrpr box-sixteen">
                     <figure class="bg-img">
                         <figcaption>
@@ -1069,7 +1069,7 @@
 							if(  $order_status == 'completed'){
 							
 							?>
-							<button style="border-radius:8px; background-color: #17c671;"><a style="color: white;" href="https://glowbrandscandles.com/wp-admin/admin-ajax.php?action=generate_wpo_wcpdf&document_type=invoice&order_ids=<?php echo $c_order->get_id();  ?>&access_key=wc_order_d3GG6Op7BmE3i" target="_blank">Invoice</a></button>
+							<button style="border-radius:8px; background-color: #17c671;"><a style="color: white;" href="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php?action=generate_wpo_wcpdf&document_type=invoice&order_ids=<?php echo $c_order->get_id();  ?>&access_key=wc_order_d3GG6Op7BmE3i" target="_blank">Invoice</a></button>
 							<?php  
 							}
 							?>
@@ -1506,7 +1506,7 @@ We look forward to working with you again!</li>
 								</div>
 								<div class="col-md-6 col-sm-6 col-xs-12 right-side-glow">
 									 <span>
-											<img src="https://glowscentedcandles.com/wp-content/uploads/2022/05/img56.png"/>
+											<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/05/img56.png"/>
 									 </span>
 								</div>
 						</div>
@@ -1515,7 +1515,7 @@ We look forward to working with you again!</li>
 						if((empty($fund_desc) || empty($fund_image)) && empty($image_url_profile)) { ?>
 <div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout">
 								<ul class="woocommerce-error" role="alert">
-									<li class="lastItem firstItem" >Please upload your profile image. <a class="uploadImage"href="https://glowbrandscandles.com/upload-image-and-description/?type=image" > Upload Now</a></li>
+									<li class="lastItem firstItem" >Please upload your profile image. <a class="uploadImage"href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>upload-image-and-description/?type=image" > Upload Now</a></li>
 								</ul>
 						</div>
 						<?php } if( $action_status ==2 ) { ?>
@@ -1545,7 +1545,7 @@ We look forward to working with you again!</li>
 				  <?php } else { ?>
 				   <span class="status live style-scope fundraiser-status" style="color:red;">Inactive</span>
 				  <?php } ?>
-				 <a class="walk-through fa fa-file-pdf-o" data-toggle="tooltip" title="Print Fundraiser Instructions here" href="https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf" target=" _blank"></a>
+				 <a class="walk-through fa fa-file-pdf-o" data-toggle="tooltip" title="Print Fundraiser Instructions here" href="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf" target=" _blank"></a>
                <!--<div class="hoverbox"><span class="">Print Fundraiser instructions here.</span></div>-->
 			   </div>
 			   
@@ -1646,8 +1646,8 @@ We look forward to working with you again!</li>
 					 {
 					 }
 				   ?>
-						<img class="profile-seller" src="<?php if(!empty($fund_image)){  echo $crop_url_fund_image; } else if(!empty($image_url_profile)){  echo $crop_url_image_url_profile; } else{ ?>https://glowscentedcandles.com/wp-content/uploads/2021/02/3135715.png<?php } ?>"/>
-					<a href="https://glowbrandscandles.com/upload-image-and-description/?type=image" class="btn btn-primary change-photo" > <i class="fa fa-fw fa-camera"></i> <span>Change photo</span> </a>
+						<img class="profile-seller" src="<?php if(!empty($fund_image)){  echo $crop_url_fund_image; } else if(!empty($image_url_profile)){  echo $crop_url_image_url_profile; } else{ ?><?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2021/02/3135715.png<?php } ?>"/>
+					<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>upload-image-and-description/?type=image" class="btn btn-primary change-photo" > <i class="fa fa-fw fa-camera"></i> <span>Change photo</span> </a>
 			   </div>
 			   
             </div>
@@ -1665,22 +1665,22 @@ We look forward to working with you again!</li>
 
 <div class="owl-carousel testimonial-slider">
   <div class="testimonial-item">
-<img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/fall-winter_2025_selling-GLOW_1200x628-01.png">
+<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/11/fall-winter_2025_selling-GLOW_1200x628-01.png">
   </div>
    <div class="testimonial-item">
-<img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/fall-winter_2025_selling-GLOW_1200x628-02.png">
+<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/11/fall-winter_2025_selling-GLOW_1200x628-02.png">
   </div>
    <div class="testimonial-item">
-<img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/fall-winter_2025_selling-GLOW_1200x628-03.png">
+<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/11/fall-winter_2025_selling-GLOW_1200x628-03.png">
   </div>
    <div class="testimonial-item">
-<img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/fall-winter_2025_selling-GLOW_1200x628-04.png">
+<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/11/fall-winter_2025_selling-GLOW_1200x628-04.png">
   </div>
    <div class="testimonial-item">
-<img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/fall-winter_2025_selling-GLOW_1200x628-05.png">
+<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/11/fall-winter_2025_selling-GLOW_1200x628-05.png">
   </div>
    <div class="testimonial-item">
-<img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/fall-winter_2025_selling-GLOW_1200x628-06.png">
+<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/11/fall-winter_2025_selling-GLOW_1200x628-06.png">
   </div>
  
 </div>
@@ -1733,11 +1733,11 @@ We look forward to working with you again!</li>
                          <?php  } ?>
                             <div class="item style-scope organizer-fundraisers-detail">
                               <span class="label style-scope organizer-fundraisers-detail">Participant Letter</span>
-                              <span class="value style-scope organizer-fundraisers-detail"><a href="https://glowbrandscandles.com/docs/word.php?fund_id=<?php echo $u_id; ?>" style="color: #4990e2;">Download Letter</a></span>
+                              <span class="value style-scope organizer-fundraisers-detail"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>docs/word.php?fund_id=<?php echo $u_id; ?>" style="color: #4990e2;">Download Letter</a></span>
                             </div>
                             <div class="item style-scope organizer-fundraisers-detail">
                               <span class="label style-scope organizer-fundraisers-detail">Change Password?</span>
-                              <span class="value style-scope organizer-fundraisers-detail"><a style="padding: 0px 4px;" href="https://glowbrandscandles.com/my-account/lost-password/"><?php  echo "Reset"; ?></a></span>
+                              <span class="value style-scope organizer-fundraisers-detail"><a style="padding: 0px 4px;" href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/lost-password/"><?php  echo "Reset"; ?></a></span>
                            </div>
                            <div class="item style-scope organizer-fundraisers-detail">
                               <span class="label style-scope organizer-fundraisers-detail">Chairperson</span>
@@ -1775,7 +1775,7 @@ We look forward to working with you again!</li>
                                 <span class="value style-scope organizer-fundraisers-detail share_c_btn"><div type="custom" class="style-scope copy-code x-scope dg-button-3" large-screen="">
                                        <div id="CopyProfileLink" class="custom filled style-scope dg-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" style="min-width: 90px;">
                                           <span class="center style-scope dg-button">
-                                          <span id="selectableAreaProfile" style="display:none;">https://glowbrandscandles.com/profile/<?php echo $u_id; ?></span>
+                                          <span id="selectableAreaProfile" style="display:none;"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $u_id; ?></span>
                                           <span id="ShareButton" class="" >Share</span>
                                           </span>
                                        </div>
@@ -1989,7 +1989,7 @@ My Catalog Report Totals section will show your total sales of Catalog orders pl
 							 if( $action_status == 2 ) { ?>
 							 	<span id="close_out"  data-id="<?php echo $current_user->ID; ?>" class="right-heading" style="float: revert;float: right;color: red;cursor: none;opacity: 0.4;">Closed Fundraiser</span>
 							  <?php }  else { ?>
-							<span id="close_out"  data-id="<?php echo $current_user->ID; ?>" class="right-heading" style="float: revert;float: right;color: red;"><?php if($fundraiser_preference=='Virtual Fundraiser - No Brochures.') { echo 'End Virtual Fundraiser'; }  ?> <img id="loading" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load"></span>
+							<span id="close_out"  data-id="<?php echo $current_user->ID; ?>" class="right-heading" style="float: revert;float: right;color: red;"><?php if($fundraiser_preference=='Virtual Fundraiser - No Brochures.') { echo 'End Virtual Fundraiser'; }  ?> <img id="loading" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load"></span>
 							  <?php } ?>
 						  <!--<div class="action style-scope dg-panel">
                               <span slot="action" class="style-scope event-payout">
@@ -2872,16 +2872,16 @@ My Catalog Report Totals section will show your total sales of Catalog orders pl
 							<div class="content style-scope dg-panel glow-report-section">
 								<div slot="content" class="style-scope organizer-fundraisers-detail">
 									<div class="item style-scope organizer-fundraisers-detail custom_first_grid">
-										<span class="label style-scope organizer-fundraisers-detail"><a class="store_pic"><img class="profile-seller2" style="width:60px;height:60px;" src="<?php if(!empty($fund_image)){  echo $crop_url_fund_image; } else if(!empty($image_url_profile)){  echo $crop_url_image_url_profile; } else{ ?>https://glowscentedcandles.com/wp-content/uploads/2021/02/3135715.png<?php } ?>"/></a></span>
-										<span class="value style-scope organizer-fundraisers-detail"><a href="https://glowbrandscandles.com/upload-image-and-description/?type=image" style="color: #4990e2;">Add/Change Logo/Image</a></span>
+										<span class="label style-scope organizer-fundraisers-detail"><a class="store_pic"><img class="profile-seller2" style="width:60px;height:60px;" src="<?php if(!empty($fund_image)){  echo $crop_url_fund_image; } else if(!empty($image_url_profile)){  echo $crop_url_image_url_profile; } else{ ?><?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2021/02/3135715.png<?php } ?>"/></a></span>
+										<span class="value style-scope organizer-fundraisers-detail"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>upload-image-and-description/?type=image" style="color: #4990e2;">Add/Change Logo/Image</a></span>
 									</div>
 									<div class="item style-scope organizer-fundraisers-detail">
 										<span class="label style-scope organizer-fundraisers-detail">Online Store Message</span>
-										<span class="value style-scope organizer-fundraisers-detail"><a href="https://glowbrandscandles.com/upload-image-and-description/?type=description" target="_blank">Add/Change Online Store Message</a></span>
+										<span class="value style-scope organizer-fundraisers-detail"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>upload-image-and-description/?type=description" target="_blank">Add/Change Online Store Message</a></span>
 									</div>
 									<div class="item no-border style-scope organizer-fundraisers-detail">
 										<span class="label style-scope organizer-fundraisers-detail ">View Your Online Store</span>
-										<span class="value style-scope organizer-fundraisers-detail view_store"><a href="https://glowbrandscandles.com/profile/<?php echo $u_id; ?>" class="cstm_btn_styl">View</a></span>
+										<span class="value style-scope organizer-fundraisers-detail view_store"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $u_id; ?>" class="cstm_btn_styl">View</a></span>
 									</div>
 								</div>
 							</div>
@@ -2967,7 +2967,7 @@ After submitting their registration, <br>sellers receive an email containing the
 						   <div type="custom" class="style-scope copy-code x-scope dg-button-3" large-screen="">
                                        <div id="SellerCopyLink2" class="custom filled style-scope dg-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" style="min-width: 90px;">
                                           <span class="center style-scope dg-button">
-										  <span id="sellerLink2" style="display:none;">https://glowbrandscandles.com/profile/<?php echo $u_id; ?></span>
+										  <span id="sellerLink2" style="display:none;"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $u_id; ?></span>
                                           <span  class="style-scope copy-code">Copy Link</span>
                                           </span>
                                        </div>
@@ -3024,7 +3024,7 @@ After submitting their registration, <br>sellers receive an email containing the
                                  Sales | Profit | Quantity
                                  </span>
                               </div>
-							  <div class="load_part"><img id="loading_p" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="show_load_p"></div>
+							  <div class="load_part"><img id="loading_p" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="show_load_p"></div>
                            </div>
                         </div>
                         <div class="footer style-scope dg-panel">
@@ -3126,7 +3126,7 @@ After submitting their registration, <br>sellers receive an email containing the
                                  Sales | Profit | Quantity
                                  </span>
                               </div>
-							  <div class="load_part"><img id="loading_p_m" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="show_load_p_m"></div>
+							  <div class="load_part"><img id="loading_p_m" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="show_load_p_m"></div>
 							
                            </div>
                         </div>
@@ -3153,7 +3153,7 @@ After submitting their registration, <br>sellers receive an email containing the
                         <div slot="content" class="style-scope organizer-fundraisers-detail">
                            <div class="item style-scope organizer-fundraisers-detail">
                               <span class="label style-scope organizer-fundraisers-detail">Fundraiser Report</span>
-                              <span class="value style-scope organizer-fundraisers-detail"><a href="https://glowbrandscandles.com/fundraiser-dashboard/fundraiser-reports/" style="color: #4990e2;">View Report</a></span>
+                              <span class="value style-scope organizer-fundraisers-detail"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser-dashboard/fundraiser-reports/" style="color: #4990e2;">View Report</a></span>
                            </div>
 						   <?php  /*if($u_id!=205821)
 							   { ?>
@@ -3164,7 +3164,7 @@ After submitting their registration, <br>sellers receive an email containing the
 							   <?php } */ ?>
 						   <div class="item no-border style-scope organizer-fundraisers-detail final-report">
                               <span class="label style-scope organizer-fundraisers-detail">Final Sales Report</span>
-                              <span class="value style-scope organizer-fundraisers-detail"><a href="https://glowbrandscandles.com/print/?fund_id=<?php echo $u_id; ?>" style="color: #4990e2;">View/Print Report</a></span>
+                              <span class="value style-scope organizer-fundraisers-detail"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print/?fund_id=<?php echo $u_id; ?>" style="color: #4990e2;">View/Print Report</a></span>
                            </div>
                         </div>
                      </div>
@@ -3203,7 +3203,7 @@ After submitting their registration, <br>sellers receive an email containing the
 							   <div type="custom" class="style-scope copy-code x-scope dg-button-3" large-screen="">
                                        <div id="savedOrder" class="custom filled style-scope dg-button x-scope paper-button-0" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" style="min-width: 120px;">
                                           <span class="center style-scope dg-button">
-											<span  class="style-scope copy-code">Move To Cart <img id="loading_r" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load_restore"></span>
+											<span  class="style-scope copy-code">Move To Cart <img id="loading_r" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load_restore"></span>
                                           </span>
                                        </div>
 								</div>
@@ -3457,7 +3457,7 @@ After submitting their registration, <br>sellers receive an email containing the
 							if(  $order_status == 'completed'){
 							
 							?>
-							<button style="border-radius:8px; background-color: #17c671;"><a style="color: white;" href="https://glowbrandscandles.com/wp-admin/admin-ajax.php?action=generate_wpo_wcpdf&document_type=invoice&order_ids=<?php echo $c_order->get_id();  ?>&access_key=wc_order_d3GG6Op7BmE3i" target="_blank">Invoice</a></button>
+							<button style="border-radius:8px; background-color: #17c671;"><a style="color: white;" href="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php?action=generate_wpo_wcpdf&document_type=invoice&order_ids=<?php echo $c_order->get_id();  ?>&access_key=wc_order_d3GG6Op7BmE3i" target="_blank">Invoice</a></button>
 							<?php  
 							}
 							?>
@@ -3648,7 +3648,7 @@ After submitting their registration, <br>sellers receive an email containing the
 				<input label="10" type="radio" id="10" name="friends" value="10">
 			</div>
 			</div>
-			<img id="loading_ajax" src="https://glowscentedcandles.com/wp-content/uploads/2022/05/ajax-loader.gif" class="">
+			<img id="loading_ajax" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/05/ajax-loader.gif" class="">
             <a id="feedback_ajax" class="txt-link" data-id="<?php echo $current_user->ID; ?>">Submit</a>
             <!--<a href="#" id="m-txt-link" class="txt-link">No</a> -->
         </div>
@@ -3661,13 +3661,13 @@ After submitting their registration, <br>sellers receive an email containing the
 	<div class="manual-mass-popup">
         <div class="manual-mass-order-popup-wrapper">
 		<h3>Share Profile Link</h3>
-           <!-- <a href="https://glowbrandscandles.com/profile/<?php echo $ID; ?>" class="fr-btn">https://glowbrandscandles.com/profile/<?php echo $ID; ?></a>-->
-			<a  title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=https://glowbrandscandles.com/profile/<?php echo $ID; ?>&t=<?php echo $org; ?> | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-			<a title="Click to share this profile on Twitter" href="http://twitter.com/intent/tweet?text=<?php echo $org; ?>&url=https://glowbrandscandles.com/profile/<?php echo $ID; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
-			<a title="Click to share this profile on Linkedin"  href="https://www.linkedin.com/shareArticle?mini=true&url=https://glowbrandscandles.com/profile/<?php echo $ID; ?>&t=<?php echo $org; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
-			<a title="Click to share this profile on Whatsapp"  href="whatsapp://send?text=https://glowbrandscandles.com/profile/<?php echo $ID; ?>" data-action="share/whatsapp/share"class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+           <!-- <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?>" class="fr-btn"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?></a>-->
+			<a  title="Click to share this profile on facebook" href="https://www.facebook.com/sharer.php?u=<?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?>&t=<?php echo $org; ?> | Support Now | Fundraising" class="fr-btn" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Twitter" href="http://twitter.com/intent/tweet?text=<?php echo $org; ?>&url=<?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Linkedin"  href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?>&t=<?php echo $org; ?>" class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a>
+			<a title="Click to share this profile on Whatsapp"  href="whatsapp://send?text=<?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?>" data-action="share/whatsapp/share"class="fr-btn"  target="_blank" rel="noopener noreferrer"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
 			<a id="CopyLinkpopup" class="fr-btn style-scope copy-code" ><i class="fa fa-clone" aria-hidden="true"></i></a>
-			<span id="fundLink" style="display:none;">https://glowbrandscandles.com/profile/<?php echo $ID; ?></span>
+			<span id="fundLink" style="display:none;"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>profile/<?php echo $ID; ?></span>
            <!-- <span id="CopyLink" class="style-scope copy-code">Copy Link</span>-->
 			 <a href="#" id="m-link" class="txt-link">Cancel</a>
         </div>
@@ -4246,7 +4246,7 @@ var goal = jQuery('#goal').text().trim();
 jQuery('#append_goal').text(goal);
 
 
-				var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+				var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 				 var id="<?php if(!empty($u_id)) { echo $u_id; } ?>";
 				 if(id!="")
 				 {
@@ -4303,7 +4303,7 @@ jQuery('#append_goal').text(goal);
 		});
 		jQuery('#rebook_request').click(function()
 		{
-				  var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+				  var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 				 var fid=jQuery(this).attr("data-id");
 				 var yes_action=jQuery(this).attr("data-action");
 				 /*var fid=<?php echo $u_id; ?>;*/
@@ -4318,14 +4318,14 @@ jQuery('#append_goal').text(goal);
 					success: function(response) {
 						console.log(response);
 						jQuery(".manual-mass-rebook-popup").removeClass("show");
-						 window.location.href = "https://glowbrandscandles.com/fundraiser-register/";
+						 window.location.href = "<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser-register/";
 					}
 				});
 	    });	
 		/* Merge Order Ajax by administrator */
 		jQuery('#merge_order_ajax').click(function()
 		{
-				 var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+				 var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 				 var fid=jQuery(this).attr("data-id");
 			
 				 jQuery.ajax({
@@ -4401,7 +4401,7 @@ jQuery('#append_goal').text(goal);
 				var cemail = jQuery('#cemail').val();
 				var number = jQuery('input[name="friends"]:checked').val();
 				var kindOfFeedback = jQuery("select#kindOfFeedback").val();
-				var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+				var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 				 <?php  
 							$current_user = wp_get_current_user();
 							$u_id = $current_user->ID;
@@ -4458,7 +4458,7 @@ jQuery('#append_goal').text(goal);
 			});
 			
 			/*jQuery("#loading_p").addClass("show_load_p");*/
-			var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+			var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 			var fid=<?php echo $u_id; ?>;
 			jQuery.ajax({
 
@@ -4508,7 +4508,7 @@ jQuery('#append_goal').text(goal);
 			e.preventDefault();
 			jQuery(".manual-mass-order-popup,.manual-mass-generation-popup,.manual-mass-close_out-popup").removeClass("show");
 		});
-		var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+		var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 	
 		jQuery(document).on('click', '#close_out_ajax', function (e) 
 		{
@@ -4930,7 +4930,7 @@ button.close
  <script src="<?php echo get_template_directory_uri(); ?>/assets_tour/js/dknotus-tour.js"></script>
  <script>
            jQuery(function(){
-			     var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+			     var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 			   jQuery('.sc-dEoRIm.joQcpv').on('click', function(){
 				   if(jQuery("#root-2 .endTourAnimate").hasClass("isOpen"))
 				   {

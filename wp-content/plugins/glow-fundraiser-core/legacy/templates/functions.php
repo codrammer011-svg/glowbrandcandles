@@ -504,7 +504,7 @@ add_filter( 'woocommerce_get_price_suffix', 'wc_get_price_suffix_filter', 10, 2 
 								<tr>
 									<td align="left">
 										<p style="font:17px/23px  PTSansRegular , Arial, Helvetica, sans-serif;color:#1b0f0e;">Hi </p>
-										<p  style="font:17px/23px PTSansRegular, Arial, Helvetica, sans-serif;color:#1b0f0e;">Fundraiser invite you to register as seller. Click here <?php echo '<a href="https://glowbrandscandles.com/seller-register/?frid='.$_POST['f_id'].'" target="_blank">Seller Register Form</a>';  ?> </p>
+										<p  style="font:17px/23px PTSansRegular, Arial, Helvetica, sans-serif;color:#1b0f0e;">Fundraiser invite you to register as seller. Click here <?php echo ('<a href="' . glow_dynamic_url_base('home') . 'seller-register/?frid=').$_POST['f_id'].'" target="_blank">Seller Register Form</a>';  ?> </p>
 											<p  style="font:17px/23px PTSansRegular, Arial, Helvetica, sans-serif;color:#1b0f0e;">Fundraiser ID: <?php echo $_POST['f_id']; ?> </p>
 										<p style="font:17px/23px  PTSansRegular , Arial, Helvetica, sans-serif;color:#1b0f0e;">Thanks! </p>
 								</td>
@@ -871,7 +871,7 @@ $m_body=stripslashes($body);
 							<strong>Glow Scented Candles:</strong><br>
 							3702 Cavalier Drive Suite 100<br>
 							Garland TX 75042<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							(972) 941-6874
 				</address>
@@ -2828,7 +2828,7 @@ $m_body=stripslashes($body);
 			$subject = "Your GLOW fundraiser has been registered!";
 			/* QR Code */
 			require_once( get_template_directory() . '/phpqrcode/qrlib.php' );
-			$text = "https://glowbrandscandles.com/profile/".$user_id;
+			$text = ("" . glow_dynamic_url_base('home') . "profile/").$user_id;
 			$arrayUploadPath = wp_upload_dir();
 			$fileUploadSubDir = $arrayUploadPath['basedir']."/qrcodes/image_".$user_id.".png";
 			QRcode::png($text, $fileUploadSubDir);
@@ -2845,7 +2845,7 @@ $m_body=stripslashes($body);
 			$fileUpload_full_link2 = $arrayUploadPath2['baseurl']."/qrcodes/image_seller_register".$user_id.".png";
 			*/
 			
-			$text2 = "https://glowbrandscandles.com/seller-register/?frid=" . $user_id;
+			$text2 = ("" . glow_dynamic_url_base('home') . "seller-register/?frid=") . $user_id;
 
 			$arrayUploadPath2 = wp_upload_dir();
 			$tempFile = $arrayUploadPath2['basedir'] . "/qrcodes/temp_" . $user_id . ".png";
@@ -2937,7 +2937,7 @@ $chair_name   = trim(($character[9]->value ?? '') . ' ' . ($character[10]->value
 //$chair_email  = $character[17]->value;
 $chair_email = $character[16]->value ?? '';
 $chair_phone = $character[11]->value ?? '';
-$seller_url   = 'https://glowbrandscandles.com/seller-register/?frid=' . $fund_id;
+$seller_url   = ('' . glow_dynamic_url_base('home') . 'seller-register/?frid=') . $fund_id;
 // QR code for Seller Register (if generated)
 $qr_path = WP_CONTENT_DIR . "/uploads/qrcodes/image_{$fund_id}.png";
 
@@ -3031,13 +3031,13 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
         <!-- DIRECTOR LOGIN -->
         <h2 style="color:#1f1f1f;font-size:18px;margin-top:25px;">💻 Your Director Login</h2>
         <p>Manage everything for your fundraiser online:</p>
-        <p><a href="https://glowbrandscandles.com/my-account/?email=<?php echo $character[16]->value; ?>&pass=<?php echo $character[17]->value; ?>" target="_blank" style="color:#4184f3;text-decoration:none;">🔗 Access Your Director Dashboard</a></p>
+        <p><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/?email=<?php echo $character[16]->value; ?>&pass=<?php echo $character[17]->value; ?>" target="_blank" style="color:#4184f3;text-decoration:none;">🔗 Access Your Director Dashboard</a></p>
 
         <p style="margin-top: 15px;"><b>Login Details:</b><br>
         📧 Email: <?php echo $character[16]->value; ?><br>
         🔑 Password: <?php echo $character[17]->value; ?><br>
         🪪 Fundraiser ID: <?php echo $user_id; ?><br>
-        🌐 Profile Link: <a href="<?php echo 'https://glowbrandscandles.com/profile/'.$user_id.'?reason_is='.$reason_for_fundraising; ?>" target="_blank" style="color:#4184f3;"><?php echo 'https://glowbrandscandles.com/profile/'.$user_id; ?></a></p>
+        🌐 Profile Link: <a href="<?php echo ('' . glow_dynamic_url_base('home') . 'profile/').$user_id.'?reason_is='.$reason_for_fundraising; ?>" target="_blank" style="color:#4184f3;"><?php echo ('' . glow_dynamic_url_base('home') . 'profile/').$user_id; ?></a></p>
 
         <p style="margin-top: 15px;"><b>Your Dashboard Lets You:</b></p>
         <ul style="margin:0 0 15px 18px;padding:0;list-style-type: none;">
@@ -3124,7 +3124,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
         💛 <b>Every item sold helps your cause shine bright!</b></p>
         <p style="font-size:14px;line-height:1.6; margin-top: 25px;">👉 <b>Pro Tip:</b> The more you share, the more you sell — post your link everywhere and watch your glow grow! 🌙</p>
         <p style="font-size:14px;line-height:1.6; margin-top: 25px;"><b>📣 Share your fundraiser!</b></p>
-        <p style="font-size:14px;line-height:1.6;">Send parents and supporters your <b><a href="<?php echo 'https://glowbrandscandles.com/profile/'.$user_id.'?reason_is='.$reason_for_fundraising; ?>" target="_blank" style="color:#4184f3;"><?php echo 'https://glowbrandscandles.com/profile/'.$user_id; ?></a></b> and <b><?php echo $user_id; ?></b> via email, text, or Facebook — and encourage them to “Shop & Support!”</p>
+        <p style="font-size:14px;line-height:1.6;">Send parents and supporters your <b><a href="<?php echo ('' . glow_dynamic_url_base('home') . 'profile/').$user_id.'?reason_is='.$reason_for_fundraising; ?>" target="_blank" style="color:#4184f3;"><?php echo ('' . glow_dynamic_url_base('home') . 'profile/').$user_id; ?></a></b> and <b><?php echo $user_id; ?></b> via email, text, or Facebook — and encourage them to “Shop & Support!”</p>
 
         <hr style="border:none;border-top:1px solid #eee;margin:25px 0;">
 
@@ -3213,7 +3213,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
         <p>Reach out to your <b>Glow Sales Representative</b> directly — they’re here to help guide you every step of the way with tips, reminders, and support throughout your fundraiser.</p>
         <p style="font-size:14px;line-height:1.6; margin-top: 25px;">If you need additional help or general assistance:</p>
         <p> 📧<b> Email:</b> <a href="mailto:contact@glowscentedcandles.com" style="color:#4184f3;">contact@glowscentedcandles.com</a><br>
-        🌐 <b>Website:</b><a href="https://glowbrandscandles.com" style="color:#4184f3;">www.glowscentedcandles.com</a></p>
+        🌐 <b>Website:</b><a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" style="color:#4184f3;">www.glowscentedcandles.com</a></p>
         <p style="font-size:14px;line-height:1.6; margin-top: 25px;">✨ Whether it’s tracking sales, ordering materials, or boosting participation — we’ve got your back every step of the way!</p>
       </td>
     </tr>
@@ -3268,7 +3268,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
 				<p>Glow will ship your brochures along with kick off product to you within 2 weeks of your sale start date via UPS to the address given below. Tracking information will be provided once it ships. In the meantime, you can set your online account below.  </p>
 			  
 				<p style="color: #000; text-decoration: underline;"><b>ONLINE "DIRECTOR LOGIN":</b></p>
-				<p>Click the following link <a href="https://glowbrandscandles.com/my-account/?email=<?php echo $user_email; ?>&pass=<?php echo $character[14]->value; ?>" target="_blank">https://glowbrandscandles.com/my-account</a> to access the Director Login. </p> 
+				<p>Click the following link <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/?email=<?php echo $user_email; ?>&pass=<?php echo $character[14]->value; ?>" target="_blank"><?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account</a> to access the Director Login. </p> 
 				<p><b>Login Details: </b></p>
 				 <p><b>Email Address: </b> <?php echo $user_email; ?> </p>
 				 <p><b>Password: </b> <?php echo $character[14]->value; ?> </p>
@@ -3332,7 +3332,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
 				<p><b>If you have any questions at all during your sale please feel free to contact us, we are here to help!</b></p>
 				<p>The Glow Team<font color="#888888"><br>Glow Scented Candles<br>
 				<a href="mailto:contact@glowscentedcandles.com" target="_blank">contact@glowscentedcandles.com</a><br>
-				<a href="https://glowbrandscandles.com" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
+				<a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
 			  </td>
 		</tr>
 	</table>
@@ -3381,7 +3381,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
 		}
 		/* QR Code */
 			require_once( get_template_directory() . '/phpqrcode/qrlib.php' );
-			$text = "https://glowbrandscandles.com/seller/user/".$username;
+			$text = ("" . glow_dynamic_url_base('home') . "seller/user/").$username;
 			$arrayUploadPath = wp_upload_dir();
 			$fileUploadSubDir = $arrayUploadPath['basedir']."/qrcodes/image_".$user_id.".png";
 			QRcode::png($text, $fileUploadSubDir);
@@ -3407,7 +3407,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
         <?php if(!empty($fileUpload_full_link)) { ?>
           <p><b>📸 Profile QR Code:</b><br><img src="<?php echo $fileUpload_full_link; ?>" alt="Profile QR Code" style="width:110px;border-radius:6px;margin:10px 0;"></p>
         <?php } ?>
-        <p><b>🔗 Your Seller Link:</b> <a href="<?php echo "https://glowbrandscandles.com/seller/user/".$username; ?>" target="_blank" style="color:#4184f3;text-decoration:none;"><?php echo "https://glowbrandscandles.com/seller/user/".$username; ?></a></p>
+        <p><b>🔗 Your Seller Link:</b> <a href="<?php echo ("" . glow_dynamic_url_base('home') . "seller/user/").$username; ?>" target="_blank" style="color:#4184f3;text-decoration:none;"><?php echo ("" . glow_dynamic_url_base('home') . "seller/user/").$username; ?></a></p>
         <p><b>📧 Email:</b> <?php echo $user_email; ?></p>
         <p><b>🔑 Password:</b> <?php echo $character[3]->value; ?></p>
         <p><b>🪪 Fundraiser ID:</b> <?php echo $fID; ?></p>
@@ -3419,13 +3419,13 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
         <h3 style="margin-top:35px;">🚀 Let’s Get Started!</h3>
         <p>🖥️ Log in to your Seller Dashboard.</p>
 
-        <p><b>👉 My Account Login:</b> <a href="<?php echo "https://glowbrandscandles.com/my-account/?email=".$user_email."&pass=".$character[3]->value; ?>" target="_blank" style="color:#4184f3;">Access Dashboard</a></p>
+        <p><b>👉 My Account Login:</b> <a href="<?php echo ("" . glow_dynamic_url_base('home') . "my-account/?email=").$user_email."&pass=".$character[3]->value; ?>" target="_blank" style="color:#4184f3;">Access Dashboard</a></p>
 
         <p>Here, you’ll see real-time updates of your sales and success!</p>
 
         <h4 style="margin-top:25px;">✅ Start Sharing Your Link Right Away</h4>
         <ol style="padding-left:20px;">
-          <li>Copy your Seller Link: <a href="<?php echo "https://glowbrandscandles.com/seller/user/".$username; ?>" target="_blank" style="color:#4184f3;"><?php echo "https://glowbrandscandles.com/seller/user/".$username; ?></a></li>
+          <li>Copy your Seller Link: <a href="<?php echo ("" . glow_dynamic_url_base('home') . "seller/user/").$username; ?>" target="_blank" style="color:#4184f3;"><?php echo ("" . glow_dynamic_url_base('home') . "seller/user/").$username; ?></a></li>
           <li>Share your link via email, text, and social media — include why you’re fundraising, your goal, and a photo/logo.</li>
         </ol>
         <p style="font-style:italic;">💡 The more you share, the more you sell!</p>
@@ -3438,7 +3438,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
 
         <h4 style="margin-top:30px;">🌟 Keep Your Momentum Going</h4>
         <ul style="padding-left:20px;">
-          <li>📣 Send your link every few days to family & friends:<br/><a href="https://glowbrandscandles.com/seller/user/tulip1936">🔗 https://glowbrandscandles.com/seller/user/tulip1936</a><br/><em>People get busy and forget — friendly reminders keep your fundraiser shining!</em></li>
+          <li>📣 Send your link every few days to family & friends:<br/><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/user/tulip1936">🔗 <?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/user/tulip1936</a><br/><em>People get busy and forget — friendly reminders keep your fundraiser shining!</em></li>
           <li>📱 Post, text, and email often for maximum visibility and support.</li>
           <li>💛 Remember: Each share is a chance to make a sale and help your cause glow brighter.</li>
         </ul>
@@ -3465,7 +3465,7 @@ wp_mail($admin_email, $admin_subject, $admin_message, $admin_headers);
           💌 <b>Happy Selling,</b><br>
           💛 The Glow Team<br>
           <!-- <a href="mailto:contact@glowscentedcandles.com" style="color:#4184f3;">contact@glowscentedcandles.com</a><br>
-          <a href="https://glowbrandscandles.com" target="_blank" style="color:#4184f3;">www.glowscentedcandles.com</a> -->
+          <a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" target="_blank" style="color:#4184f3;">www.glowscentedcandles.com</a> -->
         </p>
       </td>
     </tr>
@@ -3863,7 +3863,7 @@ $group_name=get_user_meta( $slrID, 'user_registration_name_of_school_business', 
    <table cellpadding="0" cellspacing="0" border="0" align="center" width="600px" bgcolor="#fff" style="background-color:#f7f7f7;margin:0 auto;padding:70px 0 70px 0;">
         <tr>
              <td align="center" style="padding:30px; text-align:center;background:#333;">
-			   <img style="width: 180px;" src="https://glowscentedcandles.com/wp-content/uploads/2020/10/unnamed-1.png">
+			   <img style="width: 180px;" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/10/unnamed-1.png">
 				
 		  	</td>
 		</tr>
@@ -4607,7 +4607,7 @@ function wc_new_orders($order_id)
 							<strong>Glow Scented Candles:</strong><br>
 							3702 Cavalier Drive Suite 100<br>
 							Garland TX 75042<br>
-							https://glowbrandscandles.com/<br>
+							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							(972) 941-6874
 				</address>
@@ -7336,18 +7336,18 @@ function redirect_to_specific_page() {
 
 if ( is_page('fundraiser-reports') && ! is_user_logged_in() ) {
 
-wp_redirect( 'https://glowbrandscandles.com/my-account', 301 ); 
+wp_redirect( ('' . glow_dynamic_url_base('home') . 'my-account'), 301 ); 
   //exit;
     }
 	if ( is_page('seller-reports') && ! is_user_logged_in() ) {
 
-wp_redirect( 'https://glowbrandscandles.com/my-account', 301 ); 
+wp_redirect( ('' . glow_dynamic_url_base('home') . 'my-account'), 301 ); 
   //exit;
     }
 	
 	if ( is_page('seller-dashboard') && ! is_user_logged_in() ) {
 
-wp_redirect( 'https://glowbrandscandles.com/my-account', 301 ); 
+wp_redirect( ('' . glow_dynamic_url_base('home') . 'my-account'), 301 ); 
   //exit;
     }
 }
@@ -7900,7 +7900,7 @@ if(!empty($_SESSION['sellername']) && $_SESSION['sellername']=='Catlog')
 
 <div class="woocommerce-info save-btn">
 	If you want to pay later then you can save order.<a id="save_order" style="">Save Order and Pay Later</a>
-<img id="loading_s" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load_save">
+<img id="loading_s" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load_save">
 </div>
 
 <script>
@@ -8716,25 +8716,25 @@ if (!function_exists('ajax_login')) {
             echo json_encode(array('loggedin'=>false, 'message'=> esc_html__('Wrong username or password.', 'yourtheme')));
         } else {
 			if(in_array( 'representative', (array) $user_signon->roles ) && in_array( 'fundraiser', (array) $user_signon->roles )){
-				$redirect_url="https://glowbrandscandles.com/my-dashboard/";
+				$redirect_url=("" . glow_dynamic_url_base('home') . "my-dashboard/");
 			}else if( in_array( 'representative', (array) $user_signon->roles ) && in_array( 'seller', (array) $user_signon->roles )){
-				$redirect_url="https://glowbrandscandles.com/my-dashboard/";
+				$redirect_url=("" . glow_dynamic_url_base('home') . "my-dashboard/");
 			} else{
 				if ( in_array( 'fundraiser', (array) $user_signon->roles ) ) {
-					$redirect_url="https://glowbrandscandles.com/fundraiser-dashboard/";
+					$redirect_url=("" . glow_dynamic_url_base('home') . "fundraiser-dashboard/");
 				}
 				
 				else if(in_array( 'representative', (array) $user_signon->roles ) ){
-					$redirect_url="https://glowbrandscandles.com/representative-dashboard/";
+					$redirect_url=("" . glow_dynamic_url_base('home') . "representative-dashboard/");
 				}
 				else if ( in_array( 'seller', (array) $user_signon->roles ) ) {
-					$redirect_url="https://glowbrandscandles.com/seller-dashboard/";
+					$redirect_url=("" . glow_dynamic_url_base('home') . "seller-dashboard/");
 				}
 				else if ( in_array( 'administrator', (array) $user_signon->roles ) ) {
 					$redirect_url="<?php echo admin_url(); ?>";
 				}
 				else {
-					$redirect_url="https://glowbrandscandles.com/my-account/";
+					$redirect_url=("" . glow_dynamic_url_base('home') . "my-account/");
 				}
 			}
             echo json_encode(array('loggedin'=>true, 'test'=>$user_signon, 'url'=> $redirect_url, 'message'=> esc_html__('Login successful, redirecting...', 'yourtheme')));
@@ -8745,7 +8745,7 @@ if (!function_exists('ajax_login')) {
 add_action( 'sendy_scheduled_cron', 'sendy_scheduled' );
 function sendy_scheduled()
 { 
-file_get_contents('https://glowbrandscandles.com/newsletter/scheduled.php');
+file_get_contents(('' . glow_dynamic_url_base('home') . 'newsletter/scheduled.php'));
 }
 function disable_coupon_field_on_cart( $enabled ) {
 	$user = wp_get_current_user();
@@ -10336,7 +10336,7 @@ div#brave_element--WWW {
 												}												
 												else {	
 												?>
-			 <img width="300" height="300" class="brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="https://glowscentedcandles.com/wp-content/uploads/2022/10/3d-cartoon-character-young-woman-call-center-customer-service-using-laptop_40876-3098.jpg" alt="">									
+			 <img width="300" height="300" class="brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/10/3d-cartoon-character-young-woman-call-center-customer-service-using-laptop_40876-3098.jpg" alt="">									
 												<?php } ?>
 										  </div>
                                        </div>
@@ -11441,7 +11441,7 @@ function custom_new_order_email_send_check($order_id)
    <table cellpadding="0" cellspacing="0" border="0" align="center" width="600px" bgcolor="#fff" style="background-color:#f7f7f7;margin:0 auto;padding:70px 0 70px 0;">
         <tr>
              <td align="center" style="padding:30px; text-align:center;background:#333;">
-			   <img style="width: 180px;" src="https://glowscentedcandles.com/wp-content/uploads/2020/10/unnamed-1.png">
+			   <img style="width: 180px;" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/10/unnamed-1.png">
 				
 		  	</td>
 		</tr>
@@ -12354,7 +12354,7 @@ $html = <<<EOD
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
             <tr class="dis-flex">
               <td class="header" style="padding:20px; width: 180px; ">
-                <img src="http://glowscentedcandles.com/wp-content/uploads/2025/11/logopdf.png" alt="Company Logo" class="logo" />     
+                <img src="{$GLOBALS['glow_dynamic_url_bases']['uploads']}2025/11/logopdf.png" alt="Company Logo" class="logo" />     
               </td> 
               <td class="header" style="padding:20px; font-size: 14px;">
                     DATE:$order_date<br>                            
@@ -14234,7 +14234,7 @@ function display_products_ajax_handler() {
 					<?php if (!empty($image)) { ?>
 						<img src="<?php echo $image[0]; ?>" class="card-image" />
 					<?php } else { ?>
-						<img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image" />
+						<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image" />
 					<?php } ?>
 				</div>
 				<div class="product-details">
@@ -14728,15 +14728,15 @@ function glowscented_users_login_redirect( $redirect_to, $request, $user ) {
         //check for subscribers
 		 if (in_array('fundraiser', $user->roles)) {
             // redirect them to another URL, in this case, the homepage 
-            $redirect_to =  "https://glowbrandscandles.com/fundraiser-dashboard/";
+            $redirect_to =  ("" . glow_dynamic_url_base('home') . "fundraiser-dashboard/");
         }
 		if (in_array('seller', $user->roles)) {
             // redirect them to another URL, in this case, the homepage 
-            $redirect_to =  "https://glowbrandscandles.com/seller-dashboard/";
+            $redirect_to =  ("" . glow_dynamic_url_base('home') . "seller-dashboard/");
         }
         if (in_array('representative', $user->roles)) {
             // redirect them to another URL, in this case, the homepage 
-            $redirect_to =  "https://glowbrandscandles.com/representative-dashboard/";
+            $redirect_to =  ("" . glow_dynamic_url_base('home') . "representative-dashboard/");
         }
     }
 
@@ -14907,7 +14907,7 @@ add_shortcode('fund', function ($atts = []) {
 
         // === Convenience: seller register URL with frid ===
         case 'register_url':
-            $url = add_query_arg('frid', $user_id, 'https://glowbrandscandles.com/seller-register/');
+            $url = add_query_arg('frid', $user_id, ('' . glow_dynamic_url_base('home') . 'seller-register/'));
             return esc_url($url);
 
         // === QR image: outputs an <img> tag if file exists ===

@@ -406,17 +406,17 @@ if($seller_name[$i]==$s_name_meta)
 	<span>Total Sellers: <?php echo count($seller_name); ?> </span>
 	</div>
 	<div class="sellerPagination">
-	<span class="btnSeller"><a href="https://glowbrandscandles.com/blank-pages/?order_id=<?php echo $id; ?>&q=blank">Blank Pages</a></span>
-	<span class="btnSeller"><a href="https://glowbrandscandles.com/print-order/?order_id=<?php echo $id; ?>&q=summary"> Order Summary</a></span>
-	<span class="btnSeller"><a href="https://glowbrandscandles.com/print-order/?order_id=<?php echo $id; ?>&q=full"> All Sellers</a></span>
+	<span class="btnSeller"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>blank-pages/?order_id=<?php echo $id; ?>&q=blank">Blank Pages</a></span>
+	<span class="btnSeller"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print-order/?order_id=<?php echo $id; ?>&q=summary"> Order Summary</a></span>
+	<span class="btnSeller"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print-order/?order_id=<?php echo $id; ?>&q=full"> All Sellers</a></span>
 	<?php for($i=0;$i<count($seller_name);$i++) { 
 	$c=$i;
 	$d=$c+1;
 	?>
-	<span class="btnSeller"><a href="https://glowbrandscandles.com/print-order/?order_id=<?php echo $id; ?>&q=<?php echo $i; ?>">Seller <?php echo $d; ?></a></span>
+	<span class="btnSeller"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>print-order/?order_id=<?php echo $id; ?>&q=<?php echo $i; ?>">Seller <?php echo $d; ?></a></span>
 	<?php } ?>
 	</div>
-	<script type='text/javascript' src='https://glowbrandscandles.com/wp-includes/js/jquery/jquery.js' id='jquery-core-js'></script>
+	<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('home') ); ?>wp-includes/js/jquery/jquery.js' id='jquery-core-js'></script>
 	<script>
 	function printData()
 {

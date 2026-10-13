@@ -630,7 +630,7 @@ table {
 		<h3>Fundraiser Outstanding</h3>
 	</div>
 	<div id="loading_fout" class="show_load_fout">
-		<img  src="https://glowscentedcandles.com/wp-content/uploads/2022/05/ajax-loader.gif">
+		<img  src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/05/ajax-loader.gif">
 		<p style="    font-size: 17px;margin: 0;">Please wait....</p>
 	</div>
 </div>

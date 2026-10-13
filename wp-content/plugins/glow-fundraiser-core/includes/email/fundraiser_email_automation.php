@@ -302,7 +302,7 @@ function func_mail_before_oneday_campaign_start_date($id, $email, $start_date, $
 
         <tr style="margin:0 0 12px 0;">
         <td>
-        <p style="font-size:15px;line-height:1.6;color:#343434;margin: 0"><a href="https://glowbrandscandles.com/seller-registers/" target="_blank"><img src="http://glowscentedcandles.com/wp-content/uploads/2025/10/Picture-pdf.png" style="width:100%;" alt="*"></a>
+        <p style="font-size:15px;line-height:1.6;color:#343434;margin: 0"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller-registers/" target="_blank"><img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/10/Picture-pdf.png" style="width:100%;" alt="*"></a>
          </p>
           </td>
         </tr>
@@ -534,7 +534,7 @@ function func_mail_before_fivedays_campaign_start_date($id, $email,$user_full_na
 
         <tr style="margin:0 0 12px 0;">
         <td>
-          <a href="https://glowbrandscandles.com/my-account/" target="_blank" style="color: blue; font-weight:700;font-size:15px;">👉 Click Here to Access Your Dashboard</a>
+          <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/" target="_blank" style="color: blue; font-weight:700;font-size:15px;">👉 Click Here to Access Your Dashboard</a>
         </td>
         </tr>
 
@@ -693,7 +693,7 @@ function func_mail_before_fivedays_campaign_start_date($id, $email,$user_full_na
 
         <tr style="margin:0 0 12px 0;">
         <td>
-          <a href="http://glowscentedcandles.com/wp-content/uploads/2025/10/GLOW_FUNDRAISING-DIRECTOR_GUIDE1.webp" target="_blank" style="color: blue; font-weight:700;font-size:15px;text-align: left;">👉 Click Here for the Directors Guide</a>
+          <a href="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2025/10/GLOW_FUNDRAISING-DIRECTOR_GUIDE1.webp" target="_blank" style="color: blue; font-weight:700;font-size:15px;text-align: left;">👉 Click Here for the Directors Guide</a>
         </td>
         </tr>
 
@@ -1360,7 +1360,7 @@ function send_email_after_few_mintues($user_id,$user_full_name)
 
         <tr style="margin:0 0 12px 0;">
         <td>
-          <a href="https://glowbrandscandles.com/my-account/" target="_blank" style="color: blue; font-weight:700;font-size:15px;">👉 Click Here to Access Your Dashboard</a>
+          <a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/" target="_blank" style="color: blue; font-weight:700;font-size:15px;">👉 Click Here to Access Your Dashboard</a>
         </td>
         </tr>
        </table>

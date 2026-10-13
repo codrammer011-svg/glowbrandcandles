@@ -44,11 +44,11 @@ a.btn.text-center.big.filled, a.btn.text-center.border-grey {
 }
 .has-icon.icon-candle .title_block:before 
 {
-	background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-p1.png') center center no-repeat !important;
+	background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-p1.png') center center no-repeat !important;
 }
 .has-icon.icon-jar .title_block:before 
 {
- background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-p2.png') center center no-repeat !important;
+ background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-p2.png') center center no-repeat !important;
 }
 .has-icon.icon-candle .title_block 
 {
@@ -87,10 +87,10 @@ a.add_to_cart_button.btn.border-grey.progress-button.etheme_add_to_cart_button.a
     overflow: hidden;
 }
 .has-icon.icon-letter .title_block:before {
-    background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-7.png') center center no-repeat  !important;
+    background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-7.png') center center no-repeat  !important;
 }
 .has-icon.icon-candle-taller .title_block:before {
-    background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-8.png') center center no-repeat  !important;
+    background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-8.png') center center no-repeat  !important;
 
 }
 #image-form_13733885599081795 img,
@@ -358,11 +358,11 @@ div#slide-47-layer-18 {
 </script>
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 -->
-<link rel="stylesheet" href="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/css/theme-a0c61315.css" type="text/css" media="all"/>
+<link rel="stylesheet" href="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/css/theme-a0c61315.css" type="text/css" media="all"/>
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,900&display=swap" rel="stylesheet">
-<!--<link rel="stylesheet" href="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/css/owl-gallery.css">
-<script type="text/javascript" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/js/bootstrap.min.js" ></script>
-<script type="text/javascript" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/js/owl-gallery.js" ></script>-->
+<!--<link rel="stylesheet" href="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/css/owl-gallery.css">
+<script type="text/javascript" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/js/owl-gallery.js" ></script>-->
 <style>
 .main-header .navbar-collapse { display:block; }
 .mh-ph .sub-title-widget {
@@ -528,8 +528,8 @@ a.add_to_cart_button.btn.border-grey.progress-button.etheme_add_to_cart_button.a
 <div class="row ApRow has-bg bg-boxed" style="background: no-repeat;" data-bg_data=" no-repeat">
 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-sp-12 first-wrap ApColumn ">
 <div class="footer_logo "><a title="Leo Olars" href="#">
- <!--<img class="logo img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2022/09/logo-d-1.png" alt="" />-->
-  <img class="logo img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2020/07/logo.png" alt="" />
+ <!--<img class="logo img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/logo-d-1.png" alt="" />-->
+  <img class="logo img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/07/logo.png" alt="" />
  </a></div>
 <div class="block address_w ApHtml">
 <div class="block_content">
@@ -541,9 +541,9 @@ Glow Scented Candles make it easy for you and your team to fundraise beyond your
 <div class="block ApLink ApBlockLink">
 <h4 class="title_block">Fundraise</h4>
 <ul>
- 	<li><a href="https://glowbrandscandles.com/online-fundraising/" target="_self" rel="noopener">Online Fundraising</a></li>
- 	<li><a href="https://glowbrandscandles.com/fundraiser_page/" target="_self" rel="noopener">Fundraiser</a></li>
-	<li><a href="https://glowbrandscandles.com/wholesale/" target="_self" rel="noopener">Wholesale</a></li>
+ 	<li><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>online-fundraising/" target="_self" rel="noopener">Online Fundraising</a></li>
+ 	<li><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser_page/" target="_self" rel="noopener">Fundraiser</a></li>
+	<li><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>wholesale/" target="_self" rel="noopener">Wholesale</a></li>
     <li><a href="/glow-policies/" target="_self" rel="noopener">Privacy Policy</a></li>
 
 </ul>
@@ -553,7 +553,7 @@ Glow Scented Candles make it easy for you and your team to fundraise beyond your
 <div class="block ApLink ApBlockLink">
 <h4 class="title_block">Need more help?</h4>
 <ul>
- 	<li><a href="https://glowbrandscandles.com/contact-us/" target="_self" rel="noopener">Contact Us</a></li>
+ 	<li><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>contact-us/" target="_self" rel="noopener">Contact Us</a></li>
  
 </ul>
 </div>

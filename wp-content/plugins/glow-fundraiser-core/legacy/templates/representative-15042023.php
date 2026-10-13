@@ -67,7 +67,7 @@ class Supporthost_List_Table extends WP_List_Table
             	'email' => $user->data->user_email,
             	'firstname' =>  get_user_meta($user->data->ID,'first_name',true),
             	'lastname' =>  get_user_meta($user->data->ID,'last_name',true),
-                'view_dashboard' =>  '<a href="https://glowbrandscandles.com/reprenstative-dashboard/?userid='.$user->data->ID.'" target="_blank">View</a>'
+                'view_dashboard' =>  ('<a href="' . glow_dynamic_url_base('home') . 'reprenstative-dashboard/?userid=').$user->data->ID.'" target="_blank">View</a>'
                 );
         }
                 return $data;

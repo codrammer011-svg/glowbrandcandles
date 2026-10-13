@@ -99,7 +99,7 @@ function isImage(filename) {
 					 var file = jQuery('#imgInp');
 					 if (!isImage(file.val())) 
 					 {
-						jQuery('#img-upload').attr('src', "https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png");
+						jQuery('#img-upload').attr('src', "<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png");
 						jQuery('#imgInp').val("");
 						return failValidation('Only .jpg or .png formats are allowed.');
 					}
@@ -245,7 +245,7 @@ textarea.error{
 				$desc=get_user_meta($u_id,'seller_profile_description',true);
 				$url=get_user_meta($u_id,'seller_profile_image',true);
 			?>
-                <img class="preview-img" src="<?php if(!empty($url)){ echo $url; } else{ ?>https://glowscentedcandles.com/wp-content/uploads/2020/11/account.png<?php } ?>" alt="Preview Image" width="200" height="200" id='img-upload'/>
+                <img class="preview-img" src="<?php if(!empty($url)){ echo $url; } else{ ?><?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/11/account.png<?php } ?>" alt="Preview Image" width="200" height="200" id='img-upload'/>
                 <div class="browse-button">
                     <i class="fa fa-pencil"></i>
                     <input class="browse-input" type="file" required name="UploadedFile" id="imgInp"/>
@@ -264,7 +264,7 @@ textarea.error{
 				<div id="preview" class="hide">
 					<p style='padding-top: 15px;color:green;text-align: center;'>Successfully Updated!!</p>
 					<p style="padding-top:0px;color: #fff;text-align: center;margin: 0;display: inline-block;width: 100%;">
-						<a href="https://glowbrandscandles.com/seller/<?php echo $u_id; ?>" style="text-decoration:none; background:#000;color: #fff;padding: 10px 30px;border-radius: 4px;">Preview Profile</a>
+						<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>seller/<?php echo $u_id; ?>" style="text-decoration:none; background:#000;color: #fff;padding: 10px 30px;border-radius: 4px;">Preview Profile</a>
 					</p>
 				</div>
             </div>

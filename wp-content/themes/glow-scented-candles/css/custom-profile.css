@@ -356,7 +356,7 @@ a.fr-btn {
     margin-left: 15px;
     width: 50px;
     height: 50px;
-    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-image: var(--glow-profile-pattern);
     background-size: cover;
     display: block;
     border-radius: 50%;
@@ -365,7 +365,7 @@ a.fr-btn {
     margin-left: 15px;
     width: 50px;
     height: 50px;
-    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-image: var(--glow-profile-pattern);
     background-size: cover;
     display: block;
     border-radius: 50%;
@@ -383,7 +383,7 @@ a.fr-btn {
     margin-left: 15px;
     width: 50px;
     height: 50px;
-    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-image: var(--glow-profile-pattern);
     background-size: cover;
     display: block;
     border-radius: 50%;
@@ -392,7 +392,7 @@ a.fr-btn {
     margin-left: 15px;
     width: 50px;
     height: 50px;
-    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-image: var(--glow-profile-pattern);
     background-size: cover;
     display: block;
     border-radius: 50%;
@@ -401,7 +401,7 @@ a.fr-btn {
     margin-left: 15px;
     width: 50px;
     height: 50px;
-    background-image: url(https://glowscentedcandles.com/wp-content/uploads/2021/11/3135715.png);
+    background-image: var(--glow-profile-pattern);
     background-size: cover;
     display: block;
     border-radius: 50%;
@@ -562,7 +562,7 @@ h4.seller-msg {
 }
 .progress-bar:after {
     content: "";
-    background-image: url(http://glowscentedcandles.com/wp-content/uploads/2025/10/84566287_9977709-removebg-preview-1.png);
+    background-image: var(--glow-profile-artwork);
     width: 50px;
     height: 95px;
     display: block;

@@ -8,20 +8,20 @@
 <style>
 @font-face {
     font-family: 'Beautiella';
-    src: url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/fonts/Beautiella.woff2') format('woff2'),
-        url('https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/fonts/Beautiella.woff') format('woff');
+    src: url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/fonts/Beautiella.woff2') format('woff2'),
+        url('<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/fonts/Beautiella.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 .has-icon.icon-candle .title_block:before 
 {
-	background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-p1.png') center center no-repeat !important;
+	background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-p1.png') center center no-repeat !important;
 
 }
 .has-icon.icon-jar .title_block:before 
 {
- background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-p2.png') center center no-repeat !important;
+ background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-p2.png') center center no-repeat !important;
 }
 .has-icon.icon-candle .title_block 
 {
@@ -60,10 +60,10 @@ a.add_to_cart_button.btn.border-grey.progress-button.etheme_add_to_cart_button.a
     overflow: hidden;
 }
 .has-icon.icon-letter .title_block:before {
-    background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-7.png') center center no-repeat  !important;
+    background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-7.png') center center no-repeat  !important;
 }
 .has-icon.icon-candle-taller .title_block:before {
-    background: url('https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/otitle-8.png') center center no-repeat  !important;
+    background: url('<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/otitle-8.png') center center no-repeat  !important;
 
 }
 #image-form_13733885599081795 img,
@@ -173,13 +173,13 @@ div#slide-49-layer-9 {
 /*	}); */
 
 </script>
-<link rel="stylesheet" href="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/css/theme-a0c61315.css" type="text/css" media="all"/>
+<link rel="stylesheet" href="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/css/theme-a0c61315.css" type="text/css" media="all"/>
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/css/owl-gallery.css">
+<link rel="stylesheet" href="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/css/owl-gallery.css">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-<script type="text/javascript" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/js/bootstrap.min.js" ></script>
-<script type="text/javascript" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/js/owl-gallery.js" ></script>
+<script type="text/javascript" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/js/owl-gallery.js" ></script>
 <style>
 .ApCategoryImage .view-all:after {
     font-family: "FontAwesome";
@@ -258,7 +258,7 @@ div#slide-49-layer-9 {
                                     <a href="#">
                                        <div class="cate_content">
                                           <div class="cover-img">
-                                             <img class="img-fluid" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/oc1.webp" alt="Pilars">
+                                             <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/oc1.webp" alt="Pilars">
                                           </div>
                                           <div class="nbproducts">
                                              <div class="cate-name">Pilars</div>
@@ -276,7 +276,7 @@ div#slide-49-layer-9 {
                                     <a href="#">
                                        <div class="cate_content">
                                           <div class="cover-img">
-                                             <img class="img-fluid" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/oc2.webp" alt="Gift Sets">
+                                             <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/oc2.webp" alt="Gift Sets">
                                           </div>
                                           <div class="nbproducts">
                                              <div class="cate-name">Gift Sets</div>
@@ -294,7 +294,7 @@ div#slide-49-layer-9 {
                                     <a href="#">
                                        <div class="cate_content">
                                           <div class="cover-img">
-                                             <img class="img-fluid" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/oc3.webp" alt="Acessories">
+                                             <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/oc3.webp" alt="Acessories">
                                           </div>
                                           <div class="nbproducts">
                                              <div class="cate-name">Acessories</div>
@@ -312,7 +312,7 @@ div#slide-49-layer-9 {
                                     <a href="#">
                                        <div class="cate_content">
                                           <div class="cover-img">
-                                             <img class="img-fluid" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/oc4.webp" alt="Home Accessories">
+                                             <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/oc4.webp" alt="Home Accessories">
                                           </div>
                                           <div class="nbproducts">
                                              <div class="cate-name">Home Accessories</div>
@@ -330,7 +330,7 @@ div#slide-49-layer-9 {
                                     <a href="#">
                                        <div class="cate_content">
                                           <div class="cover-img">
-                                             <img class="img-fluid" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/oc4.webp" alt="Home Accessories">
+                                             <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/oc4.webp" alt="Home Accessories">
                                           </div>
                                           <div class="nbproducts">
                                              <div class="cate-name">Home Accessories</div>
@@ -348,7 +348,7 @@ div#slide-49-layer-9 {
                                     <a href="#">
                                        <div class="cate_content">
                                           <div class="cover-img">
-                                             <img class="img-fluid" src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/oc4.webp" alt="Home Accessories">
+                                             <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/oc4.webp" alt="Home Accessories">
                                           </div>
                                           <div class="nbproducts">
                                              <div class="cate-name">Home Accessories</div>
@@ -419,13 +419,13 @@ div#slide-49-layer-9 {
             <div class="row flex-w ApRow  has-bg bg-boxed" style="background: no-repeat;" data-bg_data=" no-repeat">
                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-sp-12 no-padding ApColumn ">
                   <div id="image-form_17693274366222682" class="block ApImage">
-                     <img src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/block-left.webp" class="" title="" alt="" style=" width:100%; 
+                     <img src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/block-left.webp" class="" title="" alt="" style=" width:100%; 
                         height:auto">
                   </div>
                </div>
                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-sp-12 no-padding ApColumn ">
                   <div id="image-form_13733885599081795" class="block text-box-fourth text-xs-center  ApImage">
-                     <img src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/block-right-small-logo.avif" class="" title="" alt="" style=" width:auto; 
+                     <img src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/block-right-small-logo.avif" class="" title="" alt="" style=" width:auto; 
                         height:auto">
                      <div class="image_description">
                         <div class="flag">Best only £19.99&nbsp;</div>
@@ -439,7 +439,7 @@ div#slide-49-layer-9 {
             <div class="row flex-w ApRow  has-bg bg-boxed" style="background: no-repeat;" data-bg_data=" no-repeat">
                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-sp-12 no-padding ApColumn ">
                   <div id="image-form_5974431382296516" class="block text-box-fourth text-xs-center  ApImage">
-                     <img src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/block-left-small-logo.avif" class="" title="" alt="" style=" width:auto; 
+                     <img src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/block-left-small-logo.avif" class="" title="" alt="" style=" width:auto; 
                         height:auto">
                      <div class="image_description">
                         <div class="flag">Best only £59.95</div>
@@ -451,7 +451,7 @@ div#slide-49-layer-9 {
                </div>
                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 col-sp-12 no-padding ApColumn ">
                   <div id="image-form_6118828705127580" class="block ApImage">
-                     <img src="https://glowscentedcandles.com/wp-content/themes/glowscentedcandles/new-home-assets/images/block-left.webp" class="" title="" alt="" style=" width:100%; 
+                     <img src="<?php echo esc_url( glow_dynamic_url_base('theme') ); ?>new-home-assets/images/block-left.webp" class="" title="" alt="" style=" width:100%; 
                         height:auto">
                   </div>
                </div>
@@ -495,24 +495,24 @@ div#slide-49-layer-9 {
                      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 col-sp-12  ApColumn ">
                         <div id="image-form_8061757028094676" class="block ApImage">
 						<a href="#">
-                           <div><img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/nice_metalic.png" class="" title="" alt="" /></div>
+                           <div><img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/nice_metalic.png" class="" title="" alt="" /></div>
 							  </a>
                         </div>
                         <div id="image-form_5497523802487310" class="block ApImage">
                           <a href="#">
-                          <div> <img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" /></div>
+                          <div> <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" /></div>
 							  </a>
                         </div>
                      </div>
                      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 col-sp-12  ApColumn ">
                         <div id="image-form_26155117847947185" class="block ApImage">
                            <a href="#">
-                          <div> <img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" style=""/></div>
+                          <div> <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" style=""/></div>
 							  </a>
                         </div>
                         <div id="image-form_38417785383501585" class="block ApImage">
 						<a href="#" >
-                          <div> <img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" style=" "/></div>
+                          <div> <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" style=" "/></div>
 							  </a>
                          
                         </div>
@@ -520,24 +520,24 @@ div#slide-49-layer-9 {
                      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 col-sp-12  ApColumn ">
                         <div id="image-form_4898561287828256" class="block ApImage">
                           <a href="#">
-                         <div>  <img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/nice_metalic.png" class="" title="" alt="" style=" "/></div>
+                         <div>  <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/nice_metalic.png" class="" title="" alt="" style=" "/></div>
 							  </a>
                         </div>
                         <div id="image-form_9228800348979924" class="block ApImage">
                            <a href="#">
-                           <div><img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" style=" "/></div>
+                           <div><img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/Season-to-Sparkle_metalic.png" class="" title="" alt="" style=" "/></div>
 							  </a>
                         </div>
                      </div>
                      <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-xs-12 col-sp-12  ApColumn ">
                         <div id="image-form_38878241996381105" class="block ApImage">
                            <a href="#">
-                           <div><img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/ginger_metalic.png" class="" title="" alt="" style=" "/></div>
+                           <div><img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/ginger_metalic.png" class="" title="" alt="" style=" "/></div>
 							  </a>
                         </div>
                         <div id="image-form_19127469386647602" class="block ApImage">
                            <a href="#">
-                          <div> <img src="https://glowscentedcandles.com/wp-content/uploads/2022/09/ginger_metalic.png" class="" title="" alt="" style=" "/></div>
+                          <div> <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/ginger_metalic.png" class="" title="" alt="" style=" "/></div>
 							  </a>
                         </div>
                      </div>
@@ -585,7 +585,7 @@ div#slide-49-layer-9 {
                                                    <div class="left-block">
                                                       <div class="manufacturer-image-container image">
                                                          <a title="alisa" href="#" itemprop="url">
-                                                         <img class="img-fluid" src="https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/images/client/1-manu_default.jpg"alt="alisa" itemprop="image">
+                                                         <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/images/client/1-manu_default.jpg"alt="alisa" itemprop="image">
                                                          </a>
                                                       </div>
                                                    </div>
@@ -597,7 +597,7 @@ div#slide-49-layer-9 {
                                                    <div class="left-block">
                                                       <div class="manufacturer-image-container image">
                                                          <a title="Graphic Corner" href="#" itemprop="url">
-                                                         <img class="img-fluid" src="https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/images/client/2-manu_default.jpg" alt="Graphic Corner" itemprop="image">
+                                                         <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/images/client/2-manu_default.jpg" alt="Graphic Corner" itemprop="image">
                                                          </a>
                                                       </div>
                                                    </div>
@@ -610,7 +610,7 @@ div#slide-49-layer-9 {
                                                    <div class="left-block">
                                                       <div class="manufacturer-image-container image">
                                                          <a title="Handmade" href="#" itemprop="url">
-                                                         <img class="img-fluid" src="https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/images/client/3-manu_default.jpg" alt="Handmade" itemprop="image">
+                                                         <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/images/client/3-manu_default.jpg" alt="Handmade" itemprop="image">
                                                          </a>
                                                       </div>
                                                    </div>
@@ -623,7 +623,7 @@ div#slide-49-layer-9 {
                                                    <div class="left-block">
                                                       <div class="manufacturer-image-container image">
                                                          <a title="Jewerly" href="#" itemprop="url">
-                                                         <img class="img-fluid" src="https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/images/client/4-manu_default.jpg" alt="Jewerly" itemprop="image">
+                                                         <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/images/client/4-manu_default.jpg" alt="Jewerly" itemprop="image">
                                                          </a>
                                                       </div>
                                                    </div>
@@ -636,7 +636,7 @@ div#slide-49-layer-9 {
                                                    <div class="left-block">
                                                       <div class="manufacturer-image-container image">
                                                          <a title="reverland" href="#" itemprop="url">
-                                                         <img class="img-fluid" src="https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/images/client/5-manu_default.jpg" alt="reverland" itemprop="image">
+                                                         <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/images/client/5-manu_default.jpg" alt="reverland" itemprop="image">
                                                          </a>
                                                       </div>
                                                    </div>
@@ -649,7 +649,7 @@ div#slide-49-layer-9 {
                                                    <div class="left-block">
                                                       <div class="manufacturer-image-container image">
                                                          <a title="Studio Design" href="#" itemprop="url">
-                                                         <img class="img-fluid" src="https://glowbrandscandles.com//wp-content/themes/glowscentedcandles/new-home-assets/images/client/6-manu_default.jpg" alt="Studio Design" itemprop="image">
+                                                         <img class="img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>/wp-content/themes/glowscentedcandles/new-home-assets/images/client/6-manu_default.jpg" alt="Studio Design" itemprop="image">
                                                          </a>
                                                       </div>
                                                    </div>
@@ -734,7 +734,7 @@ function OwlLoaded(el){
          <div class="inner">
             <div class="row  ApRow  has-bg bg-boxed" style="background: no-repeat;" data-bg_data=" no-repeat">
                <div class="col-xl-4 col-lg-3 col-md-12 col-sm-12 col-xs-12 col-sp-12 first-wrap ApColumn ">
-                  <div class="footer_logo "> <a href="#" title="Leo Olars">  <img class="logo img-fluid" src="https://glowscentedcandles.com/wp-content/uploads/2022/09/logo-d-1.png" alt="Leo Olars"> </a></div>
+                  <div class="footer_logo "> <a href="#" title="Leo Olars">  <img class="logo img-fluid" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2022/09/logo-d-1.png" alt="Leo Olars"> </a></div>
                   <div class="block address_w ApHtml">
                      <div class="block_content">
                         <p>Nunc mi ipsum faucibus vitae aliquet nec&nbsp; ullamcorper sit amet. Accumsan in nisl nisi&nbsp; scelerisque eu ultrices vitae.</p>

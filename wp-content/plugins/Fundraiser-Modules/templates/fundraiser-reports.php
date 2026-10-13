@@ -2589,7 +2589,7 @@ if($ID == 205821) {?>
 			e.preventDefault();
 			jQuery(".manual-mass-order-popup").removeClass("show");
 	  });
-	  var ajaxurl="https://glowbrandscandles.com/wp-admin/admin-ajax.php";
+	  var ajaxurl="<?php echo esc_url( glow_dynamic_url_base('admin') ); ?>admin-ajax.php";
 	  jQuery('.send_report').click(function(){
 
 let fund_id = jQuery(this).data('fund_id');

@@ -239,7 +239,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 	</head>
 	<body style="background:#f2f2f2">
 		<span id="print_button">Print Out</span>
-		<span id="print_button2"><a href="https://glowbrandscandles.com/ship-print-order/?fund_id=<?php echo $fundr_id; ?>&q=compile">Compile</a></span>
+		<span id="print_button2"><a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>ship-print-order/?fund_id=<?php echo $fundr_id; ?>&q=compile">Compile</a></span>
 		<?php if(!empty($_GET['q']) && $_GET['q']=="compile"){ ?>
 		<div marginwidth="0" marginheight="0" style="font-family:Arial,sans-serif;width:100%; width: 384px;margin: 0 auto;">
 			<div id="printTable" style=" margin:0 auto; background:#fff;padding:25px;font-size:11pt; "> 
@@ -855,7 +855,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 	<span>Total Sellers: <?php echo count($totalseller); ?> </span>
 </div>
 	
-<script type='text/javascript' src='https://glowbrandscandles.com/wp-includes/js/jquery/jquery.js' id='jquery-core-js'></script>
+<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('home') ); ?>wp-includes/js/jquery/jquery.js' id='jquery-core-js'></script>
 <script>
 	function printData()
 	{
@@ -1037,7 +1037,7 @@ else { ?>
  }
 	else
 	{
-		$url="https://glowbrandscandles.com/my-account/";
+		$url=("" . glow_dynamic_url_base('home') . "my-account/");
 		wp_redirect($url);
 	}
 	

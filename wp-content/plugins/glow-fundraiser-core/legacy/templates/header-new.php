@@ -19,20 +19,20 @@
 
 			wp_head();
 		?>
-		<!--<link rel='stylesheet' id='datatable-css-css'  href='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.css' type='text/css' media='all' />
-		<link rel='stylesheet' id='quickster-public-css-css'  href='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/quickster-public.css' type='text/css' media='all' />-->
+		<!--<link rel='stylesheet' id='datatable-css-css'  href='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.css' type='text/css' media='all' />
+		<link rel='stylesheet' id='quickster-public-css-css'  href='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/quickster-public.css' type='text/css' media='all' />-->
        
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 		 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/catalog/custom-style.css" />
 	
-		<!--<script type='text/javascript' src='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.js' id='datatable-js-js'></script>
-		<script type='text/javascript' src='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/jquery.number.js' id='jquery-number-js-js'></script>
+		<!--<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.js' id='datatable-js-js'></script>
+		<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/jquery.number.js' id='jquery-number-js-js'></script>
 		<script type='text/javascript' id='quickster-public-js-js-extra'>
 		/* <![CDATA[ */
 		var quickster = {"ajax_url":"https:\/\/glowscentedcandles.com\/wp-admin\/admin-ajax.php","ajax_nonce":"2aed081707","home_url":"https:\/\/glowscentedcandles.com","cart_message":"","infinity_scroll_container_height":"0","search_placeholder":"Search..","activate_infinity":"0","currency":"$","currency_position":"left","number_decimals":"2","decimal_separator":".","thousand_separator":",","bulk_price_text":""};
 		/* ]]> */
 		</script>
-		<script type='text/javascript' src='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/quickster-public.js' id='quickster-public-js-js'></script>-->
+		<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/quickster-public.js' id='quickster-public-js-js'></script>-->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178428900-1"></script>
 <script>
@@ -114,14 +114,14 @@ padding-bottom:0px;
 			<div class="navbar" role="navigation">
 				<div class="container-fluid">
 					<div class="header-logo">
-					     <a href="https://glowbrandscandles.com"><img src="https://glowscentedcandles.com/wp-content/uploads/2020/07/logo.png" alt=""></a>
+					     <a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>"><img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/07/logo.png" alt=""></a>
 					</div>
 					<div class="backButton">
 					<?php  if ( is_user_logged_in() ) {
 											$user = wp_get_current_user();
 												if ( in_array( 'fundraiser', (array) $user->roles ) ) {
 									?>
-									<a href="https://glowbrandscandles.com/fundraiser-dashboard/">fundraiser dashboard</a>
+									<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>fundraiser-dashboard/">fundraiser dashboard</a>
 									<?php  }
 									else {
 									?>
@@ -129,7 +129,7 @@ padding-bottom:0px;
 									<?php 									
 									} }
 										else { ?>
-										<a href="https://glowbrandscandles.com/my-account/">Sign In</a>
+										<a href="<?php echo esc_url( glow_dynamic_url_base('home') ); ?>my-account/">Sign In</a>
 									<?php } ?>
 					</div>
 					<?php echo do_shortcode( '[et_top_cart]' ); ?>
@@ -142,7 +142,7 @@ padding-bottom:0px;
                     <div class="row">
                         <div class="col-md-12 a-center">
                             <h1 class="title"><span>Spring Summer Catalogue Mass Order</span></h1>
-                            <div class="breadcrumbs"><div id="breadcrumb"><a href="https://glowbrandscandles.com">Home</a> <span class="delimeter">/</span> <span class="current">Spring Summer Catalogue Mass Order</span></div></div></div>
+                            <div class="breadcrumbs"><div id="breadcrumb"><a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>">Home</a> <span class="delimeter">/</span> <span class="current">Spring Summer Catalogue Mass Order</span></div></div></div>
                     </div>
                 </div>
             </div>

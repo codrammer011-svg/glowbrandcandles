@@ -80,7 +80,7 @@ function glow_fd_config() {
 			'final_report'   => '/print/',
 			'participant_ltr'=> '/docs/word.php',
 			'reset_pw'       => '/my-account/lost-password/',
-			'instructions'   => 'https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf',
+			'instructions'   => ('' . glow_dynamic_url_base('uploads') . '2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf'),
 		),
 
 		'invoice_key'     => 'wc_order_d3GG6Op7BmE3i',
@@ -914,7 +914,7 @@ $is_admin_view = glow_fd_is_admin_view( $fid );
 			<div class="glow-fd-notice is-cart">
 				You have a saved brochure order waiting.
 				<a href="#" id="savedOrder">Move it to my cart</a>
-				<img id="loading_r" class="glow-fd-spin" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" alt="">
+				<img id="loading_r" class="glow-fd-spin" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" alt="">
 			</div>
 		<?php endif; ?>
 

@@ -108,7 +108,7 @@ $e = static function ( $v ) { return esc_html( (string) $v ); };
 		<p><b>If you have any questions at all during your sale please feel free to contact us, we are here to help!</b></p>
 		<p>The Glow Team<br>Glow Scented Candles<br>
 <a href="mailto:contact@glowscentedcandles.com" target="_blank">contact@glowscentedcandles.com</a><br>
-<a href="https://glowbrandscandles.com" target="_blank">www.glowscentedcandles.com</a></p>
+<a href="<?php echo esc_url( glow_dynamic_url_base('root') ); ?>" target="_blank">www.glowscentedcandles.com</a></p>
 	  </td>
 		</tr>
         </tbody></table>

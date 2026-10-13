@@ -694,9 +694,9 @@ table {
         console.log(response);
 		jQuery(".proccessloader2").addClass("success");
 				
-				jQuery(".proccessloader2.success img").attr("src","https://glowscentedcandles.com/wp-content/uploads/2020/12/giphy.gif");
+				jQuery(".proccessloader2.success img").attr("src","<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/giphy.gif");
 				jQuery(".proccessloader2.success").delay(4000).fadeOut();
-				setTimeout(function(){ jQuery(".proccessloader2").removeClass("success"); jQuery(".proccessloader2 img").attr("src","https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"); }, 5000);
+				setTimeout(function(){ jQuery(".proccessloader2").removeClass("success"); jQuery(".proccessloader2 img").attr("src","<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"); }, 5000);
 		/*jQuery(".admin-report").append('<p style="padding-top:10px;color:green;">'+response+'</p>');*/
 		}
 		});
@@ -1735,14 +1735,14 @@ table {
 </script>
 	<div class="proccessloader">
 		<div class="inner">
-		<img src="https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
+		<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
 		<p>Successfully Updated!!</p>
 		</div>
 	</div>
 	
 	 <div class="proccessloader2">
 		<div class="inner">
-			<img src="https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
+			<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
 			<p>Email Successfully Sent.</p>
 		</div>
 	</div>
@@ -1812,7 +1812,7 @@ table {
 		</thead>
 				<tbody>
 		
-					<img id="loading_search" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load">
+					<img id="loading_search" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load">
 		
 				</tbody>
 			</table>
@@ -4277,7 +4277,7 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 				</thead>
 				<tbody>
 		
-					<img id="loading_search" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load">
+					<img id="loading_search" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load">
 		
 				</tbody>
 			</table>
@@ -8877,7 +8877,7 @@ echo paginate_links( array(
 		</thead>
 		<tbody>
 		
-			<img id="loading_search" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load">
+			<img id="loading_search" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load">
 		
 		</tbody>
 		</table>
@@ -9107,14 +9107,14 @@ echo paginate_links( array(
 </script>
 <div class="proccessloader">
 	<div class="inner">
-		<img src="https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
+		<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
 		<p>Successfully Updated!!</p>
 		</div>
 	</div>
 	
 	 <div class="proccessloader2">
 	<div class="inner">
-		<img src="https://glowscentedcandles.com/wp-content/uploads/2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
+		<img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"/>
 		<p>Email Successfully Sent.</p>
 		</div>
 	</div>

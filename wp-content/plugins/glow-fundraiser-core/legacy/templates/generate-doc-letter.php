@@ -18,7 +18,7 @@ $templateProcessor->setValue('end_date', '2025-09-15');
 $templateProcessor->setValue('chairperson_name', 'Jane Doe');
 $templateProcessor->setValue('chairperson_contact', 'jane@example.com');
 $templateProcessor->setImageValue('qr_code', array(
-    'path' => 'https://glowscentedcandles.com/wp-content/uploads/qrcodes/image_seller_register214057.png',
+    'path' => ('' . glow_dynamic_url_base('uploads') . 'qrcodes/image_seller_register214057.png'),
     'width' => 100,
     'height' => 100,
     'ratio' => true,
@@ -60,7 +60,7 @@ $templateProcessor->setValue('chairperson_name', $user->first_name . ' ' . $user
 $templateProcessor->setValue('chairperson_contact', get_user_meta($fund_id, 'user_registration_input_box_phone', true) . ' / ' . $user->user_email);
 
 // Download QR image temporarily
-$qr_url = 'https://glowscentedcandles.com/wp-content/uploads/qrcodes/image_seller_register214057.png';
+$qr_url = ('' . glow_dynamic_url_base('uploads') . 'qrcodes/image_seller_register214057.png');
 
 
 // Insert QR image (template must have {{qr_code}} in a clean paragraph)

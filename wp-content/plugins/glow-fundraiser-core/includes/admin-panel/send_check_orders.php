@@ -787,7 +787,7 @@ jQuery(document).on('click', '#submit_status', function (e){
 				</thead>
 				<tbody>
 		
-					<img id="loading_search" src="https://glowscentedcandles.com/wp-content/uploads/2020/08/ajax-loader.gif" class="hide_load">
+					<img id="loading_search" src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/08/ajax-loader.gif" class="hide_load">
 		
 				</tbody>
 			</table>

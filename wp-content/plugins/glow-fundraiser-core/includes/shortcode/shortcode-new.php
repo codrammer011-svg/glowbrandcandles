@@ -133,7 +133,7 @@ table#DataTables_Table_0 span.woocommerce-Price-amount.amount {
 	display:none;
 }
 </style>
-<script type='text/javascript' src='https://glowscentedcandles.com/wp-content/plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.js'></script>
+<script type='text/javascript' src='<?php echo esc_url( glow_dynamic_url_base('content') ); ?>plugins/quick-orders-for-woocommerce/assets/public/datatables/datatables.min.js'></script>
 <div data-post="<?php echo $num; ?>" id="<?php echo $category;?>">
 <div id="DataTables_Table_0_filter" class="dataTables_filter"></div>
 <table id="DataTables_Table_0" class="dataTable no-footer dtr-inline hover stripe" role="grid" aria-describedby="DataTables_Table_0_info" style="width: 1140px;">
@@ -159,7 +159,7 @@ if(esc_html( $atts['season'] )==$w){
                          $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
                         <img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
                     <?php } else { ?>
-					 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+					 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 					<?php } ?>
 	</td>
 	<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>
@@ -181,7 +181,7 @@ if(esc_html( $atts['season'] )==$s){
                          $attachment = wp_get_attachment_image_src($attachment_ids[0], 'full' ); ?>    
                         <img src="<?php echo $attachment[0] ; ?>" class="card-image"  />
                     <?php } else { ?>
-					 <img src="https://glowscentedcandles.com/wp-content/uploads/2020/09/news-20190130-202923.png" class="card-image"  />
+					 <img src="<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/09/news-20190130-202923.png" class="card-image"  />
 					<?php } ?>
 	</td>
 	<td><input name="add" class="add" data-product="<?php echo $postid; ?>" data-price="<?php echo $price; ?>" type="checkbox" style="margin: 0;"></td>

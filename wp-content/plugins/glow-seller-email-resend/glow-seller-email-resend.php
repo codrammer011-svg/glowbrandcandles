@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 // Base used for the seller link. Matches the live site's original email (and the
 // URL encoded in each seller's existing QR code). Override in wp-config.php if needed.
 if ( ! defined( 'GLOW_SER_SELLER_BASE' ) ) {
-	define( 'GLOW_SER_SELLER_BASE', 'https://glowscentedcandles.com' );
+	define( 'GLOW_SER_SELLER_BASE', ('' . glow_dynamic_url_base('root') . '') );
 }
 
 const GLOW_SER_RESENT_META = '_glow_seller_email_resent';
