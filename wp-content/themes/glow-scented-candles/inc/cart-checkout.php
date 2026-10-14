@@ -671,7 +671,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		'glow-checkout-redesign',
 		get_stylesheet_directory_uri() . '/css/checkout-redesign.css',
 		array(),
-		'1.1.2'
+		'1.1.3'
 	);
 }, 20 );
 

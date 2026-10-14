@@ -330,10 +330,20 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 	max-width: 1400px;
 	margin: 0 auto;
 }
-.woocommerce-checkout form.checkout #customer_details { grid-area: customer; }
+.woocommerce-checkout form.checkout #customer_details {
+	grid-area: customer;
+	margin-top: 0 !important;
+	padding-top: 0 !important;
+	align-self: start;
+}
 /* the standalone "Your order" heading is hidden — the title is rendered INSIDE the card */
 .woocommerce-checkout form.checkout #order_review_heading { display: none !important; }
-.woocommerce-checkout form.checkout #order_review { grid-area: summary; }
+.woocommerce-checkout form.checkout #order_review {
+	grid-area: summary;
+	margin-top: 0 !important;
+	align-self: start;
+}
+.woocommerce-checkout form.checkout #customer_details .col-1 { margin-top: 0 !important; }
 .woocommerce-checkout .glow-os-title {
 	color: var(--glow-navy);
 	font-weight: 800;
