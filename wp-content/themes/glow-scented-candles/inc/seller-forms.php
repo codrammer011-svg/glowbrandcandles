@@ -73,104 +73,15 @@ function glow_handle_seller_form_submission($valid_form_data, $form_id, $user_id
     }
 }
 
-/**
- * Button trigger for the fundraiser popup.
- *
- * Auto-open is handled by glow_fc_auto_popup_trigger on /shop only.
- * This renderer supplies template content and manual opening on every page.
- */
-add_action('wp_footer', 'glow_shop_auto_popup_fundraiser', 35);
-function glow_shop_auto_popup_fundraiser()
+/** Load the native Elementor popup without adding another overlay or click handler. */
+add_action('wp_footer', 'glow_register_native_fundraiser_popup', 5);
+function glow_register_native_fundraiser_popup()
 {
-    if (is_admin()) {
+    if (is_admin() || !class_exists('\ElementorPro\Modules\Popup\Module')) {
         return;
     }
-
-    // Read the same popup ID that the shortcode stores
     $popup_id = (int) get_option('glow_fundraiser_popup_id', 61511);
-    if (!$popup_id) {
-        return;
+    if ($popup_id) {
+        \ElementorPro\Modules\Popup\Module::add_popup_to_location($popup_id);
     }
-
-    // Render the template for automatic and manual opening on any page.
-    $overlay_html = '';
-    if (class_exists('\Elementor\Plugin')) {
-        $overlay_html = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($popup_id, true);
-    }
-
-    ?>
-    <?php if (!empty($overlay_html)) : ?>
-    <div id="glow-fundraiser-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);overflow-y:auto;">
-        <div id="glow-fundraiser-overlay-inner" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
-            <div style="position:relative;width:100%;max-width:720px;background:#fff;border-radius:6px;overflow:hidden;">
-                <button id="glow-fundraiser-close" aria-label="Close" style="position:absolute;top:10px;right:10px;z-index:10;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.15);border:none;font-size:20px;line-height:1;cursor:pointer;">&times;</button>
-                <?php echo $overlay_html; ?>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
-
-    <script type="text/javascript">
-    (function () {
-        'use strict';
-
-        var popupId  = <?php echo $popup_id; ?>;
-
-        var overlay  = document.getElementById('glow-fundraiser-overlay');
-        var inner    = document.getElementById('glow-fundraiser-overlay-inner');
-        var closeBtn = document.getElementById('glow-fundraiser-close');
-
-        function openNative() {
-            if (
-                typeof elementorProFrontend !== 'undefined' &&
-                elementorProFrontend.modules &&
-                elementorProFrontend.modules.popup
-            ) {
-                elementorProFrontend.modules.popup.showPopup({ id: popupId });
-                return true;
-            }
-            return false;
-        }
-
-        function openOverlay() {
-            if (!overlay) return false;
-            overlay.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            return true;
-        }
-
-        function closeOverlay() {
-            if (!overlay) return;
-            overlay.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-
-        // Public API — works on any page
-        window.glowOpenFundraiserPopup = function () {
-            if (!openOverlay()) openNative();
-        };
-
-        // .glow-open-fundraiser-popup on any button/link
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('.continue_shopping')) closeOverlay();
-            var trigger = e.target.closest('.glow-open-fundraiser-popup');
-            if (trigger) {
-                e.preventDefault();
-                window.glowOpenFundraiserPopup();
-            }
-        });
-
-        // Overlay close handlers
-        if (closeBtn) closeBtn.addEventListener('click', closeOverlay);
-        if (overlay) {
-            overlay.addEventListener('click', function (e) {
-                if (e.target === overlay || e.target === inner) closeOverlay();
-            });
-        }
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeOverlay();
-        });
-    })();
-    </script>
-    <?php
 }

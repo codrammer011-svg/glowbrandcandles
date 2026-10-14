@@ -82,7 +82,14 @@ function glow_fc_auto_popup_trigger() {
 		if ( hasSession || ! popupId || /(?:^|;\s*)fundraiserID=([^;]+)/.test(document.cookie) ) { return; }
 
 		function tryOpen() {
-			if (typeof window.glowOpenFundraiserPopup === 'function') { window.glowOpenFundraiserPopup(); return true; }
+			if (window.elementorProFrontend && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
+                try {
+                    var documents = window.elementorFrontend && elementorFrontend.documentsManager;
+                    if (!documents || !documents.documents[popupId]) return false;
+                    elementorProFrontend.modules.popup.showPopup({ id: popupId });
+                    return true;
+                } catch (error) { return false; }
+            }
 			return false;
 		}
 
@@ -90,7 +97,7 @@ function glow_fc_auto_popup_trigger() {
 			var attempts = 0;
 			var iv = setInterval( function () {
 				attempts++;
-				if ( tryOpen() || attempts >= 20 ) { clearInterval( iv ); }
+				if ( tryOpen() || attempts >= 100 ) { clearInterval( iv ); }
 			}, 150 );
 		}
 	})();
