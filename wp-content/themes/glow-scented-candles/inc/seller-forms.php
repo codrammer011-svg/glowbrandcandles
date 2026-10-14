@@ -122,74 +122,72 @@ function glow_shop_auto_popup_fundraiser()
 
     $popup_id = 61511;
 
-    // Always render popup markup so button-triggered open works regardless of session state
+    // Render popup inside a custom CSS overlay — no dependency on Elementor's popup module
     if (class_exists('\Elementor\Plugin')) {
-        echo '<div style="display:none;" id="glow-popup-wrapper-' . esc_attr($popup_id) . '">';
-        echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($popup_id);
-        echo '</div>';
-    }
-
-    ?>
-    <script type="text/javascript">
+        $content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($popup_id);
+        if ($content) : ?>
+        <div id="glow-fundraiser-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.65);overflow-y:auto;">
+            <div id="glow-fundraiser-overlay-inner" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
+                <div style="position:relative;width:100%;max-width:700px;">
+                    <button id="glow-fundraiser-close" aria-label="Close" style="position:absolute;top:-14px;right:-14px;z-index:10;width:30px;height:30px;border-radius:50%;background:#fff;border:none;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.25);">&times;</button>
+                    <?php echo $content; ?>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
         (function () {
             'use strict';
 
-            var popupId = <?php echo (int) $popup_id; ?>;
             var autoOpen = <?php echo $has_fundraiser ? 'false' : 'true'; ?>;
+            var overlay   = document.getElementById('glow-fundraiser-overlay');
+            var inner     = document.getElementById('glow-fundraiser-overlay-inner');
+            var closeBtn  = document.getElementById('glow-fundraiser-close');
 
-            function openElementorPopup() {
-                if (
-                    typeof elementorProFrontend !== 'undefined' &&
-                    elementorProFrontend.modules &&
-                    elementorProFrontend.modules.popup
-                ) {
-                    elementorProFrontend.modules.popup.showPopup({
-                        id: popupId
-                    });
-
-                    return true;
-                }
-
-                return false;
+            function openPopup() {
+                if (!overlay) return;
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden';
             }
 
-            // Global function — call window.glowOpenFundraiserPopup() from any button
-            window.glowOpenFundraiserPopup = function () {
-                if (!openElementorPopup()) {
-                    var attempts = 0;
-                    var interval = setInterval(function () {
-                        attempts++;
-                        if (openElementorPopup() || attempts >= 30) {
-                            clearInterval(interval);
-                        }
-                    }, 200);
-                }
-            };
+            function closePopup() {
+                if (!overlay) return;
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }
 
-            // Wire up any button/link with class .glow-open-fundraiser-popup
+            // Global — call from anywhere: window.glowOpenFundraiserPopup()
+            window.glowOpenFundraiserPopup = openPopup;
+
+            // Close button
+            if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+            // Click on backdrop to close
+            if (overlay) {
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === overlay || e.target === inner) closePopup();
+                });
+            }
+
+            // ESC key to close
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closePopup();
+            });
+
+            // Wire any element with class .glow-open-fundraiser-popup
             document.addEventListener('click', function (e) {
                 var trigger = e.target.closest('.glow-open-fundraiser-popup');
                 if (trigger) {
                     e.preventDefault();
-                    window.glowOpenFundraiserPopup();
+                    openPopup();
                 }
             });
 
-            // Auto-open on page load only when no fundraiser is selected
+            // Auto-open on page load when no fundraiser selected
             if (autoOpen) {
-                if (!openElementorPopup()) {
-                    var attempts = 0;
-
-                    var popupInterval = setInterval(function () {
-                        attempts++;
-
-                        if (openElementorPopup() || attempts >= 30) {
-                            clearInterval(popupInterval);
-                        }
-                    }, 200);
-                }
+                openPopup();
             }
         })();
-    </script>
-    <?php
+        </script>
+        <?php endif;
+    }
 }
