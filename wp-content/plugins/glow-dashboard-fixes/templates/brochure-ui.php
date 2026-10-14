@@ -24,6 +24,159 @@ function glow_bu_kind() {
 	return '';
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Brochure product order (from the printed brochures)                  */
+/* ------------------------------------------------------------------ */
+function glow_bu_lists() {
+	static $lists = null;
+	if ( null !== $lists ) {
+		return $lists;
+	}
+	$ss_scents = array( 'Eucalyptus Rain Mint', 'Fresh Linen', 'Lemon Lavender', 'Stress Reliever', 'Cool as a Cucumber', "Mom You're Amazing", 'Lavender and Chamomile', 'Orange Blossom', 'Mermaid Wishes & Starfish Kisses', 'Warm Vanilla Sugar', 'Strawberry Lemonade', 'Coconut Beach', 'Mango Tango', 'Golden Summer Glow', 'Berrylicious', 'Baked Apple Crisp', 'Mahogany Teakwood' );
+	$ps_scents = array( 'Eucalyptus Rain Mint', 'Fresh Linen', 'Stress Reliever', 'Lavender Citrus Breeze', 'Ocean Mist', 'Coconut Beach', 'Mermaid Wishes & Starfish Kisses', 'Caribbean Escape', 'Berries & Woods', 'Warm Vanilla Sugar', 'Cotton Candy', 'Bonfire Butterscotch', 'Honeycrisp Apple', 'Caramel Pumpkin', 'Mahogany Teakwood', 'Walk In The Woods' );
+	$seq = function ( $prefix, $from, $names ) { $o = array(); foreach ( $names as $i => $n ) { $o[] = array( $prefix . ( $from + $i ), $n ); } return $o; };
+	$lists = array(
+		'summer'  => array(
+			'classic-candles'          => $seq( 'CC', 1, $ss_scents ),
+			'2-wick-signature-candles' => $seq( 'SC', 18, $ss_scents ),
+			'large-wax-melts-6-cubes'  => $seq( 'LM', 35, $ss_scents ),
+			'room-sprays-5oz'          => $seq( 'RS', 52, $ss_scents ),
+			'essential-oils'           => $seq( 'EO', 69, array( 'Cedarwood & Patchouli', 'Frankincense', 'Peppermint', 'Eucalyptus', 'Lavender' ) ),
+			'boxed-metallic'           => $seq( 'BC', 74, array( 'Crisp Morning Air', 'Apple Blossom & Lavender', 'Watermelon Fizz', 'Berries & Wild Flowers' ) ),
+		),
+		'perfect' => array(
+			'2-wick-signature-candles' => $seq( 'SC', 200, $ps_scents ),
+			'celebrate-the-moments'    => $seq( 'CTM', 217, array( 'Best Teacher Ever', 'Book Loft', 'Family', 'Friends', 'Happy Birthday', 'Love', 'Relax & Rewind', 'Sweater Weather', 'Thank You', 'Vacation Vibes' ) ),
+			'classic-candles'          => $seq( 'CC', 227, $ps_scents ),
+			'large-wax-melts-6-cubes'  => $seq( 'LM', 243, $ps_scents ),
+			'room-sprays-5oz'          => $seq( 'RM', 259, $ps_scents ),
+			'essential-oils'           => $seq( 'EO', 275, array( 'Cedarwood & Patchouli', 'Frankincense', 'Peppermint', 'Eucalyptus', 'Lavender' ) ),
+		),
+		/* Season to Sparkle 2026 — order form pages 6-8 of the printed brochure */
+		'sparkle' => array(
+			'celebrate-the-moments'    => array( array( 'CTM224', 'Sweater Weather' ), array( 'CTM340', 'Pumpkin Patch' ), array( 'CTM341', 'Apple Orchard Days' ), array( 'CTM342', 'Fireside Flannel' ), array( 'CTM343', 'Crisp Autumn Air' ), array( 'CTM344', 'Tree Farm' ), array( 'CTM345', 'Sugar Plum Fairy' ), array( 'CTM346', 'Letters to Santa' ), array( 'CTM347', 'Elf!' ), array( 'CTM348', 'North Pole Latte' ), array( 'CTM349', 'Christmas Morning' ), array( 'CTM350', 'Snow Day' ), array( 'CTM351', 'Silent Night' ), array( 'CTM352', 'Peace on Earth' ), array( 'CTM353', 'Nutcracker Suite' ) ),
+			'2-wick-signature-candles' => array( array( 'SC201', 'Fresh Linen' ), array( 'SC214', 'Mahogany Teakwood' ), array( 'SC310', 'Lavender Vanilla' ), array( 'SC200', 'Eucalyptus Rain Mint' ), array( 'SC209', 'Warm Vanilla Sugar' ), array( 'SC311', 'Baked Apple Crisp' ), array( 'SC213', 'Caramel Pumpkin' ), array( 'SC312', 'Cranberry Orange Spice' ), array( 'SC313', 'Falling Leaves' ), array( 'SC314', 'Christmas Tree' ), array( 'SC315', "Santa's Cookies" ), array( 'SC316', 'Candy Cane Lane' ), array( 'SC317', 'Holiday Home' ), array( 'SC318', 'Scent of Christmas' ), array( 'SC319', 'Winter Candy Apple' ) ),
+			'classic-candles'          => array( array( 'CC228', 'Fresh Linen' ), array( 'CC241', 'Mahogany Teakwood' ), array( 'CC300', 'Lavender Vanilla' ), array( 'CC227', 'Eucalyptus Rain Mint' ), array( 'CC236', 'Warm Vanilla Sugar' ), array( 'CC301', 'Baked Apple Crisp' ), array( 'CC240', 'Caramel Pumpkin' ), array( 'CC302', 'Cranberry Orange Spice' ), array( 'CC303', 'Falling Leaves' ), array( 'CC304', 'Christmas Tree' ), array( 'CC305', "Santa's Cookies" ), array( 'CC306', 'Candy Cane Lane' ), array( 'CC307', 'Holiday Home' ), array( 'CC308', 'Scent of Christmas' ), array( 'CC309', 'Winter Candy Apple' ) ),
+			'large-wax-melts-6-cubes'  => array( array( 'LM244', 'Fresh Linen' ), array( 'LM257', 'Mahogany Teakwood' ), array( 'LM320', 'Lavender Vanilla' ), array( 'LM243', 'Eucalyptus Rain Mint' ), array( 'LM252', 'Warm Vanilla Sugar' ), array( 'LM321', 'Baked Apple Crisp' ), array( 'LM256', 'Caramel Pumpkin' ), array( 'LM322', 'Cranberry Orange Spice' ), array( 'LM323', 'Falling Leaves' ), array( 'LM324', 'Christmas Tree' ), array( 'LM325', "Santa's Cookies" ), array( 'LM326', 'Candy Cane Lane' ), array( 'LM327', 'Holiday Home' ), array( 'LM328', 'Scent of Christmas' ), array( 'LM329', 'Winter Candy Apple' ) ),
+			'room-sprays-5oz'          => array( array( 'RS260', 'Fresh Linen' ), array( 'RS273', 'Mahogany Teakwood' ), array( 'RS330', 'Lavender Vanilla' ), array( 'RS259', 'Eucalyptus Rain Mint' ), array( 'RS268', 'Warm Vanilla Sugar' ), array( 'RS331', 'Baked Apple Crisp' ), array( 'RS272', 'Caramel Pumpkin' ), array( 'RS332', 'Cranberry Orange Spice' ), array( 'RS333', 'Falling Leaves' ), array( 'RS334', 'Christmas Tree' ), array( 'RS335', "Santa's Cookies" ), array( 'RS336', 'Candy Cane Lane' ), array( 'RS337', 'Holiday Home' ), array( 'RS338', 'Scent of Christmas' ), array( 'RS339', 'Winter Candy Apple' ) ),
+			'essential-oils'           => array( array( 'EO275', 'Cedarwood & Patchouli' ), array( 'EO276', 'Frankincense' ), array( 'EO277', 'Peppermint' ), array( 'EO278', 'Eucalyptus' ), array( 'EO279', 'Lavender' ), array( 'EO354', 'Holiday Cheer' ) ),
+		),
+	);
+	return apply_filters( 'glow_brochure_lists', $lists );
+}
+
+function glow_bu_norm( $s ) {
+	$s = html_entity_decode( (string) $s, ENT_QUOTES );
+	$s = strtolower( $s );
+	$s = str_replace( array( '&', ' and ' ), ' ', $s );
+	$s = preg_replace( '/\b(signature 2 wick candles?|signature candle|2-wick candle|classic candle|scented melts?|large wax melts?|6 cubes|room spray|essential oil|candle|melts?|boxed metallic|gift)\b/', ' ', $s );
+	$s = preg_replace( '/[^a-z0-9]+/', ' ', $s );
+	return trim( preg_replace( '/\s+/', ' ', $s ) );
+}
+
+/** Products of a category in brochure order (by SKU, else by scent name). */
+function glow_bu_resolve( $kind, $cat ) {
+	$lists = glow_bu_lists();
+	if ( empty( $lists[ $kind ][ $cat ] ) ) {
+		return null;
+	}
+	$key = 'glow_bu_' . $kind . '_' . $cat;
+	$ids = get_transient( $key );
+	if ( ! is_array( $ids ) ) {
+		$pool = wc_get_products( array( 'status' => 'publish', 'limit' => -1, 'category' => $cat, 'glow_bu_raw' => 1 ) );
+		$byname = array();
+		foreach ( $pool as $p ) {
+			$byname[ glow_bu_norm( $p->get_name() ) ][] = $p;
+		}
+		$ids = array();
+		foreach ( $lists[ $kind ][ $cat ] as $row ) {
+			list( $sku, $name ) = $row;
+			$pid = wc_get_product_id_by_sku( $sku );
+			if ( $pid && 'publish' === get_post_status( $pid ) ) {
+				$ids[] = (int) $pid;
+				continue;
+			}
+			$cands = $byname[ glow_bu_norm( $name ) ] ?? array();
+			if ( ! $cands ) {
+				continue;
+			}
+			usort( $cands, function ( $a, $b ) {
+				$da = substr_count( $a->get_sku(), '-' ); $db = substr_count( $b->get_sku(), '-' );
+				return $da === $db ? $a->get_id() - $b->get_id() : $da - $db;
+			} );
+			$ids[] = $cands[0]->get_id();
+		}
+		set_transient( $key, $ids, 10 * MINUTE_IN_SECONDS );
+	}
+	$out = array();
+	foreach ( $ids as $id ) {
+		$p = wc_get_product( $id );
+		if ( $p ) {
+			$out[] = $p;
+		}
+	}
+	return $out;
+}
+
+/** Which brochure is this page (chairperson templates + seller templates)? */
+function glow_bu_page_kind() {
+	$k = glow_bu_kind();
+	if ( $k ) {
+		return $k;
+	}
+	if ( ! is_page() ) {
+		return '';
+	}
+	$raw = (string) get_page_template_slug();
+	$tpl = basename( $raw );
+	$map = array(
+		'seller-spring-summer.php' => 'summer', 'seller-perfect-scents.php' => 'perfect', 'seller-fall-winter.php' => 'sparkle',
+		'glow-spring-summer' => 'summer', 'glow-perfect-scents' => 'perfect', 'glow-fall-winter' => 'sparkle',
+	);
+	if ( isset( $map[ $tpl ] ) ) {
+		return $map[ $tpl ];
+	}
+	if ( isset( $map[ $raw ] ) ) {
+		return $map[ $raw ];
+	}
+	/* fall back on the page slug used by the seller dashboard config */
+	if ( is_page() ) {
+		$slug = get_post_field( 'post_name', get_queried_object_id() );
+		$by_slug = array( 'seller-spring-summer' => 'summer', 'seller-perfect-scents' => 'perfect', 'seller-fall-winter' => 'sparkle' );
+		if ( isset( $by_slug[ $slug ] ) ) {
+			return $by_slug[ $slug ];
+		}
+	}
+	return '';
+}
+
+add_filter( 'woocommerce_product_object_query', function ( $results, $args ) {
+	if ( ! empty( $args['glow_bu_raw'] ) || empty( $args['category'] ) ) {
+		return $results;
+	}
+	$kind = glow_bu_page_kind();
+	if ( ! $kind ) {
+		return $results;
+	}
+	$cat = is_array( $args['category'] ) ? reset( $args['category'] ) : $args['category'];
+	if ( 'room-sprays-all-items' === $cat ) {
+		$cat = 'room-sprays-5oz';
+	}
+	$r = glow_bu_resolve( $kind, $cat );
+	return null === $r ? $results : $r;
+}, 10, 2 );
+
+/* Chairperson brochure tour: reuse the simple seller tour with chairperson selectors. */
+function glow_bu_tour_steps( $steps ) {
+	return array(
+		array( 'icon' => 'bag', 'color' => 'pink', 'label' => 'Pick a category', 'selector' => '#menu', 'title' => 'Pick a category', 'text' => 'Jump straight to the section of the brochure you are entering — Classic Candles, Signature 2 Wick, Wax Melts and so on.' ),
+		array( 'icon' => 'user', 'color' => 'orange', 'label' => 'Seller name', 'selector' => '.seller-cart-bar-wrap', 'title' => 'Choose the seller', 'text' => 'Every brochure order is saved under a seller\'s name, so you can hand the right candles to the right seller when they arrive.' ),
+		array( 'icon' => 'candle', 'color' => 'purple', 'label' => 'Enter quantities', 'selector' => '#fullpage .section', 'title' => 'Enter the quantities', 'text' => 'Use the + and − buttons (or type) next to each product. Totals update as you go.' ),
+		array( 'icon' => 'cart', 'color' => 'green', 'label' => 'Add to cart', 'selector' => '#box-glowscandal', 'title' => 'Add the order to your cart', 'text' => 'When the seller\'s form is entered, add it to your cart. Repeat for each seller, then check out once.' ),
+	);
+}
+
 add_action( 'wp_head', function () {
 	if ( ! glow_bu_kind() ) {
 		return;
@@ -54,6 +207,12 @@ add_action( 'wp_head', function () {
 	.catalog-subnav-sticky #menu a.bookmark.is-active{background:var(--gb-ink);color:#fff !important}
 	.catalog-subnav-sticky .seller-cart-bar-wrap{display:flex !important;gap:8px !important;align-items:center !important}
 	.catalog-subnav-sticky #nSeller{font:inherit !important;font-size:14px !important;padding:10px 14px !important;border:1.5px solid #d9d7e6 !important;border-radius:999px !important;background:#fff !important;min-width:200px !important;height:auto !important;box-shadow:none !important}
+	.catalog-subnav-sticky .seller-cart-bar-wrap select{font:inherit !important;font-size:14px !important;padding:10px 36px 10px 14px !important;border:1.5px solid #d9d7e6 !important;border-radius:999px !important;background:#fff !important;min-width:190px !important;max-width:240px;height:auto !important;box-shadow:none !important;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23181735' stroke-width='2'/></svg>") !important;background-repeat:no-repeat !important;background-position:right 14px center !important}
+	#root,#root-2,.dknotus-tour,#positionsBtn{display:none !important}
+	body .catalog-subnav-sticky .container{flex-wrap:wrap !important;row-gap:10px !important}
+	body .catalog-subnav-sticky #menu{flex:1 1 auto !important;flex-wrap:wrap !important;overflow:visible !important;row-gap:6px !important}
+	body .catalog-subnav-sticky .seller-cart-bar-wrap{margin-left:auto !important}
+	#fullpage table.summerTable th:nth-child(3),#fullpage table.summerTable td:nth-child(3){width:120px !important}#fullpage table.summerTable th:nth-child(5),#fullpage table.summerTable td:nth-child(5){width:170px !important}#fullpage table.summerTable th:last-child,#fullpage table.summerTable td:last-child{width:100px !important}
 	.catalog-subnav-sticky #nSeller:focus{outline:none;border-color:var(--gb-pink) !important;box-shadow:0 0 0 3px rgba(236,15,99,.12) !important}
 	#btn-summer-add-order,.catalogue-dynamic-popup-btn{background:var(--gb-pink) !important;color:#fff !important;border:0 !important;border-radius:999px !important;padding:11px 22px !important;font-size:13px !important;font-weight:800 !important;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 16px rgba(236,15,99,.25) !important;line-height:1.2 !important;height:auto !important}
 	#btn-summer-add-order:hover{filter:brightness(1.06)}
@@ -134,9 +293,33 @@ add_action( 'wp_footer', function () {
 	?>
 	<script id="glow-brochure-ui-js">
 	(function(){
+		/* kill the old React/dknotus brochure tour for good */
+		function glowKillOldTour(){ document.querySelectorAll('#root,#root-2,.dknotus-tour,#positionsBtn').forEach(function(e){ e.remove(); }); }
+		glowKillOldTour();
+		try { new MutationObserver(glowKillOldTour).observe(document.body, {childList:true}); } catch(e){}
 		var sticky = document.querySelector('.catalog-subnav-sticky');
 		var fullpage = document.getElementById('fullpage');
 		if (!sticky || !fullpage) return;
+
+		<?php if ( 'sparkle' === $kind ) : ?>
+		/* Season to Sparkle: category order as on the printed order form */
+		(function(){
+			var order = ['celebrate_the_moments','signature_wick','classic_candles','large_wax_melts','room-spray','essential-oils','let-it-snow'];
+			var menu = sticky.querySelector('#menu');
+			var tail = fullpage.querySelector('#back-top');
+			order.forEach(function(id){
+				var a = fullpage.querySelector('#' + CSS.escape(id));
+				while (a && a.parentNode !== fullpage) a = a.parentNode;
+				if (!a) return;
+				var s = a.nextElementSibling;
+				while (s && !s.classList.contains('section')) s = s.nextElementSibling;
+				var ref = tail && tail.parentNode === fullpage ? tail : null;
+				fullpage.insertBefore(a, ref);
+				if (s) fullpage.insertBefore(s, ref);
+				if (menu) { var l = menu.querySelector('a[href="#' + id + '"]'); if (l) menu.appendChild(l.closest('li') || l); }
+			});
+		})();
+		<?php endif; ?>
 
 		/* header */
 		var head = document.createElement('div');
@@ -180,7 +363,7 @@ add_action( 'wp_footer', function () {
 			box.insertAdjacentHTML('beforeend', '<div class="glow-bu-tot-label">Your brochure order</div><div class="glow-bu-tot-row"><small id="glow-bu-items">0 items</small><b id="glow-bu-total">$0.00</b></div>'
 				+ (mainBtn ? '<div class="glow-bu-tot-hint">Enter quantities to get started</div><button type="button" class="glow-bu-tot-btn" id="glow-bu-add" disabled>Add order to cart</button>' : ''));
 			var add = document.getElementById('glow-bu-add');
-			if (add) add.addEventListener('click', function(){ var s = document.getElementById('nSeller'); if (s && !s.value.trim()) { s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); return; } mainBtn.click(); });
+			if (add) add.addEventListener('click', function(){ var s = document.getElementById('nSeller') || document.querySelector('.seller-cart-bar-wrap select'); if (s && !s.value.trim()) { s.focus(); s.scrollIntoView({behavior:'smooth', block:'center'}); return; } mainBtn.click(); });
 		}
 		function refresh(){
 			var items = 0, total = 0;
@@ -193,13 +376,16 @@ add_action( 'wp_footer', function () {
 			var i = document.getElementById('glow-bu-items'), tt = document.getElementById('glow-bu-total'), add = document.getElementById('glow-bu-add'), hint = document.querySelector('.glow-bu-tot-hint');
 			if (i) i.textContent = items + (items === 1 ? ' item' : ' items');
 			if (tt) tt.textContent = '$' + total.toFixed(2);
-			var seller = document.getElementById('nSeller');
+			var seller = document.getElementById('nSeller') || document.querySelector('.seller-cart-bar-wrap select');
 			if (add) { add.disabled = !(items > 0); }
 			if (hint) { hint.textContent = items === 0 ? 'Enter quantities to get started' : (seller && !seller.value.trim() ? 'Fill in the seller name at the top first' : 'Ready when you are'); }
 		}
 		document.addEventListener('input', refresh, true); document.addEventListener('change', refresh, true); document.addEventListener('keyup', refresh, true);
 		refresh();
 
+		/* chairperson wording in the shared welcome modal */
+		var wm = document.getElementById('glowWelcome');
+		if (wm) { var w = document.createTreeWalker(wm, NodeFilter.SHOW_TEXT); var tn = []; while (w.nextNode()) tn.push(w.currentNode); tn.forEach(function(n){ n.nodeValue = n.nodeValue.replace(/Glow Seller!?/i, 'Chairperson!').replace(/\b5 simple steps\b/i, '4 simple steps').replace(/your chairperson knows/i, 'you know'); }); }
 		/* active category in the sticky bar */
 		var links = Array.prototype.slice.call(sticky.querySelectorAll('#menu a.bookmark'));
 		var sections = Array.prototype.slice.call(fullpage.querySelectorAll('.section'));

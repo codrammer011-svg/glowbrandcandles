@@ -90,7 +90,7 @@ add_action( 'template_redirect', function () {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
-	$src = ('' . glow_dynamic_url_base('uploads') . '2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf');
+	$src = 'https://glowscentedcandles.com/wp-content/uploads/2020/10/Fundraiser-Dashboard-Glow-Scented-Candles-4-copy.pdf';
 	$tmp = download_url( $src, 120 );
 	if ( is_wp_error( $tmp ) ) {
 		wp_die( 'Download failed: ' . esc_html( $tmp->get_error_message() ) );
@@ -302,7 +302,7 @@ add_action( 'template_redirect', function () {
 				$by[ (int) $r['sid'] ]['sum'] = ( $by[ (int) $r['sid'] ]['sum'] ?? 0 ) + (float) $r['total'];
 			}
 		}
-		$reg_link = home_url( '/register-as-a-seller/?frid=' . $fid );
+		$reg_link = ( function_exists( 'glow_tw_reg_url' ) ? glow_tw_reg_url( $fid ) : home_url( '/register-as-a-seller/?frid=' . $fid ) );
 		glow_ct_open( $fid, 'Registered Sellers', count( $sellers ) . ' seller' . ( 1 === count( $sellers ) ? '' : 's' ) . ' registered under your fundraiser. Share the registration link to add more.' );
 		?>
 		<div class="glow-ct-card">
@@ -422,7 +422,7 @@ add_action( 'wp_footer', function () {
 	$map = array(
 		'#glow-fd-sellers-card' => glow_ct_url( '/fundraiser-sellers/', $fid ),
 		'#glow-fd-orders'       => glow_ct_url( '/fundraiser-orders/', $fid ),
-		'#glow-fd-share'        => home_url( '/register-as-a-seller/?frid=' . $fid ),
+		'#glow-fd-share'        => ( function_exists( 'glow_tw_reg_url' ) ? glow_tw_reg_url( $fid ) : home_url( '/register-as-a-seller/?frid=' . $fid ) ),
 	);
 	?>
 	<script id="glow-fd-tiles">

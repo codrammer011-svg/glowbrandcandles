@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GLOW Dashboard Fixes
  * Description: Fixes for the chairperson fundraiser dashboard (seller registration link, hidden seller list, goal display, table and section styling). Deactivate to undo.
- * Version: 1.6.3
+ * Version: 1.7.8
  * Author: Glow
  */
 
@@ -37,6 +37,8 @@ require_once plugin_dir_path( __FILE__ ) . 'templates/seller-pages.php';
 require_once plugin_dir_path( __FILE__ ) . 'templates/chair-pages.php';
 require_once plugin_dir_path( __FILE__ ) . 'templates/chair-tools.php';
 require_once plugin_dir_path( __FILE__ ) . 'templates/brochure-ui.php';
+require_once plugin_dir_path( __FILE__ ) . 'templates/chair-tweaks.php';
+require_once plugin_dir_path( __FILE__ ) . 'templates/seller-tweaks.php';
 
 /* 2b. Fall/Winter brochure pages: use the rebuilt template (summer-catalogue design + winter products). */
 add_filter( 'template_include', function ( $template ) {
@@ -64,6 +66,23 @@ add_filter( 'template_include', function ( $template ) {
 	}
 	return $template;
 }, 100 );
+
+
+/* 2d. Spring/Summer brochure pages (chair + seller): plugin copies with brochure ordering + simple tour. */
+add_filter( 'template_include', function ( $template ) {
+	$b = basename( (string) $template );
+	$slug = is_page() ? basename( (string) get_page_template_slug() ) : '';
+	$map = array( 'template-summercatalog.php' => 'summer-catalogue.php' );
+	foreach ( $map as $from => $to ) {
+		if ( $from === $b || $from === $slug ) {
+			$mine = plugin_dir_path( __FILE__ ) . 'templates/' . $to;
+			if ( is_file( $mine ) ) {
+				return $mine;
+			}
+		}
+	}
+	return $template;
+}, 101 );
 
 /* 3. CSS: hidden data lists, invoice button contrast, brochure-permissions card matches the other cards. */
 add_action( 'wp_head', function () {

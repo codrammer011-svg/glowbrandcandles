@@ -1814,6 +1814,7 @@ jQuery(function($){
 	  <div class="sc-jtggT fQiUEz"></div>
 	</div>
 </div>  
+<?php /* GLOW fixes: simple chairperson tour */ if ( function_exists( 'glow_bu_tour_steps' ) ) { if ( ! defined( 'GLOW_TOUR_VERSION' ) ) { define( 'GLOW_TOUR_VERSION', 'chair1' ); } add_filter( 'glow_tour_steps', 'glow_bu_tour_steps' ); $glow_tour_file = WP_PLUGIN_DIR . '/Fundraiser-Modules/templates/glow-tour.php'; if ( is_file( $glow_tour_file ) ) { include $glow_tour_file; } } ?>
 <?php
 		/* Always have wp_footer() just before the closing </body>
 		 * tag of your theme, or you will break many plugins, which
