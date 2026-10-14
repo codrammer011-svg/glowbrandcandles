@@ -76,6 +76,7 @@ function glow_handle_seller_form_submission($valid_form_data, $form_id, $user_id
 /**
  * Automatically popup Elementor Template #61511 on WooCommerce Shop page
  * if the fundraiser ID does not exist in the session.
+ * Also exposes window.glowOpenFundraiserPopup() so any button can trigger it manually.
  */
 add_action('wp_footer', 'glow_shop_auto_popup_fundraiser', 30);
 function glow_shop_auto_popup_fundraiser()
@@ -119,14 +120,9 @@ function glow_shop_auto_popup_fundraiser()
         $has_fundraiser = true;
     }
 
-    // If fundraiser is already selected, do not trigger the popup
-    if ($has_fundraiser) {
-        return;
-    }
-
     $popup_id = 61511;
 
-    // Render Elementor template markup if not already present on page
+    // Always render popup markup so button-triggered open works regardless of session state
     if (class_exists('\Elementor\Plugin')) {
         echo '<div style="display:none;" id="glow-popup-wrapper-' . esc_attr($popup_id) . '">';
         echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($popup_id);
@@ -139,6 +135,7 @@ function glow_shop_auto_popup_fundraiser()
             'use strict';
 
             var popupId = <?php echo (int) $popup_id; ?>;
+            var autoOpen = <?php echo $has_fundraiser ? 'false' : 'true'; ?>;
 
             function openElementorPopup() {
                 if (
@@ -156,16 +153,41 @@ function glow_shop_auto_popup_fundraiser()
                 return false;
             }
 
-            if (!openElementorPopup()) {
-                var attempts = 0;
+            // Global function — call window.glowOpenFundraiserPopup() from any button
+            window.glowOpenFundraiserPopup = function () {
+                if (!openElementorPopup()) {
+                    var attempts = 0;
+                    var interval = setInterval(function () {
+                        attempts++;
+                        if (openElementorPopup() || attempts >= 30) {
+                            clearInterval(interval);
+                        }
+                    }, 200);
+                }
+            };
 
-                var popupInterval = setInterval(function () {
-                    attempts++;
+            // Wire up any button/link with class .glow-open-fundraiser-popup
+            document.addEventListener('click', function (e) {
+                var trigger = e.target.closest('.glow-open-fundraiser-popup');
+                if (trigger) {
+                    e.preventDefault();
+                    window.glowOpenFundraiserPopup();
+                }
+            });
 
-                    if (openElementorPopup() || attempts >= 30) {
-                        clearInterval(popupInterval);
-                    }
-                }, 200);
+            // Auto-open on page load only when no fundraiser is selected
+            if (autoOpen) {
+                if (!openElementorPopup()) {
+                    var attempts = 0;
+
+                    var popupInterval = setInterval(function () {
+                        attempts++;
+
+                        if (openElementorPopup() || attempts >= 30) {
+                            clearInterval(popupInterval);
+                        }
+                    }, 200);
+                }
             }
         })();
     </script>
