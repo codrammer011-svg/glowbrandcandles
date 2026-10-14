@@ -1146,7 +1146,8 @@ else {
 				$total_sale_so_far = 0;
 				$q=0;
 				$exist_fids_arr=array();
-				if($paidSt==0){
+				// Older unpaid records have no paid_status metadata; PHP 8 no longer treats '' == 0 as true.
+				if($paidSt === '' || $paidSt === '0' || $paidSt === 0){
 					
 				$fundraiser_ids=get_post_meta($current_payment_postid,"fundraiser_ids",true);
 				if(!empty($fundraiser_ids))
