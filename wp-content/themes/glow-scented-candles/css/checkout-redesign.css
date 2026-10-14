@@ -203,17 +203,29 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 .woocommerce-checkout #payment ul.payment_methods {
 	border: 1.5px solid var(--glow-card-border);
 	border-radius: var(--glow-radius-sm);
-	padding: 14px 16px;
+	padding: 16px 12px;
 	background: #fff;
 }
-.woocommerce-checkout #payment ul.payment_methods li { list-style: none; }
+.woocommerce-checkout #payment ul.payment_methods li { list-style: none; margin: 0; padding: 0; }
 .woocommerce-checkout #payment label { font-weight: 700; color: var(--glow-navy); }
-.woocommerce-checkout #payment .payment_box {
-	background: #f7f4f6;
+.woocommerce-checkout #payment div.payment_box {
+	background: #fff8fb;
+	border: 1px solid #f0e3ea;
 	border-radius: var(--glow-radius-sm);
 	color: #55555f;
-	font-size: 13px;
+	font-size: 14px;
+	line-height: 1.6;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px;
+	margin: 12px 0 0;
 }
+.woocommerce-checkout #payment ul.payment_methods { margin: 0; }
+.woocommerce-checkout #payment .payment_box p { margin: 0 0 12px; }
+.woocommerce-checkout #payment .payment_box p:last-child { margin-bottom: 0; }
+.woocommerce-checkout #payment .payment_box iframe { max-width: 100%; }
+.woocommerce-checkout #payment input[type="radio"] { accent-color: var(--glow-pink); }
+.woocommerce-checkout #payment ul.payment_methods > li + li { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0e3ea; }
 .woocommerce-checkout #payment .payment_box::before { display: none; }
 
 /* ---- Place order button ---- */
@@ -303,7 +315,7 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 /* Billing + fundraiser stack in the left column; order summary sits right.   */
 .woocommerce-checkout form.checkout.woocommerce-checkout {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) 400px;
+	grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
 	grid-template-areas: "customer summary" "customer extras";
 	gap: 4px 28px;
 	align-items: start;
