@@ -5,7 +5,7 @@ defined('ABSPATH') || exit;
 function glow_fc_cart_is_catalog() {
     if (!function_exists('WC') || !WC()->cart || !in_array('fundraiser', (array) wp_get_current_user()->roles, true)) return false;
     foreach (WC()->cart->get_cart() as $item) {
-        if (!empty($item['glow_seller_order_id']) || !empty($item['wdm_seller_name'])) return true;
+        if (($item['glow_order_type'] ?? '') === 'Catlog' || !empty($item['glow_seller_order_id']) || !empty($item['wdm_seller_name'])) return true;
     }
     return false;
 }

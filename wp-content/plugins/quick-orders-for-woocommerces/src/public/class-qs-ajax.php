@@ -145,12 +145,25 @@ class QS_Ajax {
 
 					$product_obj = wc_get_product( $product_id );
 					if ( $product_obj ) {
+						$cart_item_data = array();
+						// Brochure pages submit seller_name, including an intentionally blank name.
+						// Persist context on the line itself instead of depending on browser cookies.
+						if ( in_array( 'fundraiser', (array) wp_get_current_user()->roles, true )
+							&& ( array_key_exists( 'seller_name', $_POST ) || array_key_exists( 'seller_name', $item ) ) ) {
+							$seller = sanitize_text_field( wp_unslash( $item['seller_name'] ?? $_POST['seller_name'] ?? '' ) );
+							$cart_item_data = array(
+								'glow_order_type' => 'Catlog',
+								'wdm_seller_name' => $seller,
+								'wdm_seller_display' => $seller,
+								'restore_saved_order' => 'Yes',
+							);
+						}
 						if ( $product_obj->is_type( 'variation' ) ) {
 							$variation_id = $product_id;
 							$parent_id = $product_obj->get_parent_id();
-							$cart_item_key = WC()->cart->add_to_cart( $parent_id, $quantity, $variation_id );
+							$cart_item_key = WC()->cart->add_to_cart( $parent_id, $quantity, $variation_id, array(), $cart_item_data );
 						} else {
-							$cart_item_key = WC()->cart->add_to_cart( $product_id, $quantity );
+							$cart_item_key = WC()->cart->add_to_cart( $product_id, $quantity, 0, array(), $cart_item_data );
 						}
 
 						if ( $cart_item_key ) {
