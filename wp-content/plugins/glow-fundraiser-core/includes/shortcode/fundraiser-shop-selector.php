@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Fires in wp_footer on the WooCommerce shop page.
 // Suppressed when a fundraiser is already stored in the WC session.
 add_action( 'wp_footer', 'glow_fc_auto_popup_trigger', 30 );
-add_action( 'wp_footer', 'glow_fc_popup_cookie_guard', 20 );
+
 
 function glow_fc_is_popup_shop_page() {
 	$path = wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ), PHP_URL_PATH );
@@ -50,70 +50,7 @@ function glow_fc_is_popup_shop_page() {
 	return untrailingslashit( (string) $path ) === untrailingslashit( $shop_path );
 }
 
-add_action( 'wp_head', function() {
-	$popup_id = (int) get_option( 'glow_fundraiser_popup_id', 0 );
-	if ( $popup_id && ! glow_fc_is_popup_shop_page() ) {
-		echo '<style id="glow-shop-popup-page-guard">#elementor-popup-modal-' . $popup_id . '{display:none!important;}</style>';
-	}
-}, 20 );
 
-/**
- * Runs on EVERY page. Two jobs:
- *   1. When a ".continue_shopping" element (or its child) is clicked, remember it in a
- *      30-day cookie so the fundraiser popup is dismissed for future visits.
- *   2. If that cookie is set, close the Elementor popup the instant it shows — this
- *      catches Elementor's own "on page load" trigger, which the shop-only auto-trigger
- *      below cannot prevent.
- */
-function glow_fc_popup_cookie_guard() {
-	$popup_id = (int) get_option( 'glow_fundraiser_popup_id', 0 );
-	if ( ! $popup_id ) {
-		return;
-	}
-	?>
-	<script>
-	(function () {
-		var popupId = <?php echo $popup_id; ?>;
-		var allowedPage = <?php echo wp_json_encode( glow_fc_is_popup_shop_page() ); ?>;
-		function gsHas(n){ return new RegExp('(^|;\\s*)' + n + '=').test(document.cookie); }
-		function gsSet(n,v,days){ var d=new Date(); d.setTime(d.getTime()+days*86400000); document.cookie=n+'='+v+';expires='+d.toUTCString()+';path=/'; }
-
-		document.addEventListener('click', function (e) {
-			var b = ( e.target && e.target.closest ) ? e.target.closest('.continue_shopping') : null;
-			if ( b ) { gsSet('glow_shop_continue', '1', 30); }
-		}, true);
-
-		if ( ! allowedPage || gsHas('glow_shop_continue') ) {
-			// Bulletproof hide: CSS !important overrides Elementor's inline display:flex,
-			// so the popup never becomes visible regardless of which trigger opened it.
-			var st = document.createElement('style');
-			st.textContent = '#elementor-popup-modal-' + popupId + '{display:none!important;}';
-			( document.head || document.documentElement ).appendChild( st );
-
-			function gsDismiss() {
-				var m = document.getElementById('elementor-popup-modal-' + popupId);
-				if ( m ) { m.style.setProperty('display', 'none', 'important'); }
-				document.documentElement.style.overflow = '';
-				document.body.style.overflow = '';
-			}
-			if ( window.jQuery ) {
-				jQuery(document).on('elementor/popup/show', function (ev, id, instance) {
-					if ( id != popupId ) { return; }
-					try { if ( instance && instance.hide ) { instance.hide(); } else { elementorProFrontend.modules.popup.closePopup( {}, ev ); } } catch (err) {}
-					gsDismiss();
-				});
-			}
-			// Fallback poll in case the show event fired before this listener registered.
-			var gsT = 0, gsIv = setInterval(function () {
-				var m = document.getElementById('elementor-popup-modal-' + popupId);
-				if ( m && getComputedStyle(m).display !== 'none' ) { gsDismiss(); }
-				if ( ++gsT > 25 ) { clearInterval(gsIv); }
-			}, 300);
-		}
-	})();
-	</script>
-	<?php
-}
 
 function glow_fc_auto_popup_trigger() {
 	if ( ! glow_fc_is_popup_shop_page() ) {
@@ -131,7 +68,8 @@ function glow_fc_auto_popup_trigger() {
 		}
 	}
 
-	$popup_id = (int) get_option( 'glow_fundraiser_popup_id', 0 );
+	$has_session = $has_session || ! empty( $_SESSION['fridID'] ) || ! empty( $_COOKIE['fundraiserID'] );
+	$popup_id = (int) get_option( 'glow_fundraiser_popup_id', 61511 );
 
 	?>
 	<script>
@@ -140,36 +78,11 @@ function glow_fc_auto_popup_trigger() {
 		var hasSession = <?php echo $has_session ? 'true' : 'false'; ?>;
 		var popupId    = <?php echo $popup_id; ?>;
 
-		function gsHasCookie(n){ return new RegExp('(^|;\\s*)' + n + '=').test(document.cookie); }
-		function gsSetCookie(n,v,days){ var d=new Date(); d.setTime(d.getTime()+days*86400000); document.cookie=n+'='+v+';expires='+d.toUTCString()+';path=/'; }
-
-		// A "Continue Shopping" button (class .continue_shopping) dismisses the popup for
-		// future page loads/navigation. Delegated + capture phase so it works with the
-		// dynamically-loaded Elementor popup markup.
-		document.addEventListener('click', function (e) {
-			var btn = ( e.target && e.target.closest ) ? e.target.closest('.continue_shopping') : null;
-			if ( ! btn ) { return; }
-			gsSetCookie('glow_shop_continue', '1', 30);
-			try {
-				if ( typeof elementorProFrontend !== 'undefined' && elementorProFrontend.modules && elementorProFrontend.modules.popup && popupId ) {
-					elementorProFrontend.modules.popup.closePopup( {}, { currentTarget: btn } );
-				}
-			} catch ( err ) {}
-		}, true);
-
-		// Do NOT auto-open the popup if: a fundraiser session already exists, no popup is
-		// configured, or the visitor already clicked "Continue Shopping" on a prior view.
-		if ( hasSession || ! popupId || gsHasCookie('glow_shop_continue') ) { return; }
+		// Only fundraiser context suppresses automatic opening.
+		if ( hasSession || ! popupId || /(?:^|;\s*)fundraiserID=([^;]+)/.test(document.cookie) ) { return; }
 
 		function tryOpen() {
-			if (
-				typeof elementorProFrontend !== 'undefined' &&
-				elementorProFrontend.modules &&
-				elementorProFrontend.modules.popup
-			) {
-				elementorProFrontend.modules.popup.showPopup( { id: popupId } );
-				return true;
-			}
+			if (typeof window.glowOpenFundraiserPopup === 'function') { window.glowOpenFundraiserPopup(); return true; }
 			return false;
 		}
 

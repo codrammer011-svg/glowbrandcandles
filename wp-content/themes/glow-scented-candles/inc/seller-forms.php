@@ -76,12 +76,8 @@ function glow_handle_seller_form_submission($valid_form_data, $form_id, $user_id
 /**
  * Button trigger for the fundraiser popup.
  *
- * Auto-open on /shop is already handled by the [glow_fundraiser_shop] shortcode
- * (glow_fc_auto_popup_trigger). This function only adds:
- *   - A custom overlay for non-shop pages (Elementor's cookie guard hides the
- *     native popup on those pages, so we need a separate layer).
- *   - window.glowOpenFundraiserPopup() and .glow-open-fundraiser-popup class
- *     support so any button can open the popup manually.
+ * Auto-open is handled by glow_fc_auto_popup_trigger on /shop only.
+ * This renderer supplies template content and manual opening on every page.
  */
 add_action('wp_footer', 'glow_shop_auto_popup_fundraiser', 35);
 function glow_shop_auto_popup_fundraiser()
@@ -91,26 +87,19 @@ function glow_shop_auto_popup_fundraiser()
     }
 
     // Read the same popup ID that the shortcode stores
-    $popup_id = (int) get_option('glow_fundraiser_popup_id', 0);
+    $popup_id = (int) get_option('glow_fundraiser_popup_id', 61511);
     if (!$popup_id) {
         return;
     }
 
-    $request_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-    $is_shop =
-        (function_exists('is_shop') && is_shop())
-        || $request_path === 'shop'
-        || $request_path === 'candace_old/shop';
-
-    // On non-shop pages the shortcode's cookie guard blocks showPopup(),
-    // so render a standalone overlay with the template content as fallback.
+    // Render the template for automatic and manual opening on any page.
     $overlay_html = '';
-    if (!$is_shop && class_exists('\Elementor\Plugin')) {
+    if (class_exists('\Elementor\Plugin')) {
         $overlay_html = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($popup_id, true);
     }
 
     ?>
-    <?php if (!$is_shop && !empty($overlay_html)) : ?>
+    <?php if (!empty($overlay_html)) : ?>
     <div id="glow-fundraiser-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.7);overflow-y:auto;">
         <div id="glow-fundraiser-overlay-inner" style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
             <div style="position:relative;width:100%;max-width:720px;background:#fff;border-radius:6px;overflow:hidden;">
@@ -126,7 +115,7 @@ function glow_shop_auto_popup_fundraiser()
         'use strict';
 
         var popupId  = <?php echo $popup_id; ?>;
-        var isShop   = <?php echo $is_shop ? 'true' : 'false'; ?>;
+
         var overlay  = document.getElementById('glow-fundraiser-overlay');
         var inner    = document.getElementById('glow-fundraiser-overlay-inner');
         var closeBtn = document.getElementById('glow-fundraiser-close');
@@ -158,21 +147,12 @@ function glow_shop_auto_popup_fundraiser()
 
         // Public API — works on any page
         window.glowOpenFundraiserPopup = function () {
-            if (isShop) {
-                // Shop page: use Elementor's native popup (cookie guard allows it here)
-                if (!openNative()) {
-                    var n = 0, t = setInterval(function () {
-                        if (openNative() || ++n >= 20) clearInterval(t);
-                    }, 150);
-                }
-            } else {
-                // Non-shop: use standalone overlay
-                openOverlay();
-            }
+            if (!openOverlay()) openNative();
         };
 
         // .glow-open-fundraiser-popup on any button/link
         document.addEventListener('click', function (e) {
+            if (e.target.closest('.continue_shopping')) closeOverlay();
             var trigger = e.target.closest('.glow-open-fundraiser-popup');
             if (trigger) {
                 e.preventDefault();
