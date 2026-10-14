@@ -381,6 +381,12 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 	flex-direction: column;
 	gap: 22px;
 }
+/* Float clearfix elements become empty flex items and add a 22px gap above billing. */
+.woocommerce-checkout form.checkout #customer_details.col2-set::before,
+.woocommerce-checkout form.checkout #customer_details.col2-set::after {
+	content: none !important;
+	display: none !important;
+}
 
 .woocommerce table.shop_table{
 	border:none !important;
