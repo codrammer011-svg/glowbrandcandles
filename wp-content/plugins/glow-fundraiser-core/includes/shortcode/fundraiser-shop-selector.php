@@ -42,6 +42,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Fires in wp_footer on the WooCommerce shop page.
 // Suppressed when a fundraiser is already stored in the WC session.
 add_action( 'wp_footer', 'glow_fc_auto_popup_trigger', 30 );
+add_action( 'wp_footer', 'glow_fc_continue_shopping_choice', 20 );
+
+function glow_fc_continue_shopping_choice() {
+    $popup_id = (int) get_option('glow_fundraiser_popup_id', 61511);
+    ?>
+    <script>
+    (function () {
+        window.glowShopPopupDismissed = function () {
+            if (/(?:^|;\s*)glow_shop_continue=1(?:;|$)/.test(document.cookie)) return true;
+            try { return sessionStorage.getItem('glow_shop_continue') === '1'; } catch (error) { return false; }
+        };
+        document.addEventListener('click', function (event) {
+            var button = event.target && event.target.closest ? event.target.closest('.continue_shopping') : null;
+            if (!button) return;
+            // Save before the link navigates, including buttons inside dynamically loaded popups.
+            document.cookie = 'glow_shop_continue=1;max-age=2592000;path=/;SameSite=Lax' + (location.protocol === 'https:' ? ';Secure' : '');
+            try { sessionStorage.setItem('glow_shop_continue', '1'); } catch (error) {}
+            try {
+                if (window.elementorProFrontend && elementorProFrontend.modules.popup) {
+                    elementorProFrontend.modules.popup.closePopup({id: <?php echo $popup_id; ?>}, {currentTarget: button});
+                }
+            } catch (error) {}
+        }, true);
+    })();
+    </script>
+    <?php
+}
 
 
 function glow_fc_is_popup_shop_page() {
@@ -78,10 +105,11 @@ function glow_fc_auto_popup_trigger() {
 		var hasSession = <?php echo $has_session ? 'true' : 'false'; ?>;
 		var popupId    = <?php echo $popup_id; ?>;
 
-		// Only fundraiser context suppresses automatic opening.
-		if ( hasSession || ! popupId || /(?:^|;\s*)fundraiserID=([^;]+)/.test(document.cookie) ) { return; }
+		// A retail choice suppresses auto-opening only; native manual triggers remain available.
+		if ( hasSession || ! popupId || /(?:^|;\s*)fundraiserID=([^;]+)/.test(document.cookie) || window.glowShopPopupDismissed() ) { return; }
 
 		function tryOpen() {
+            if (window.glowShopPopupDismissed()) return true;
 			if (window.elementorProFrontend && elementorProFrontend.modules && elementorProFrontend.modules.popup) {
                 try {
                     var documents = window.elementorFrontend && elementorFrontend.documentsManager;
