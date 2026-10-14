@@ -74,14 +74,22 @@ function glow_handle_seller_form_submission($valid_form_data, $form_id, $user_id
 }
 
 /**
- * Automatically popup Elementor Template #61511 on WooCommerce Shop page
- * if the fundraiser ID does not exist in the session.
- * Also exposes window.glowOpenFundraiserPopup() so any button can trigger it manually.
+ * Render fundraiser popup overlay on every frontend page.
+ * Auto-open fires only on the shop page when no fundraiser is selected.
+ * Manual trigger: add class .glow-open-fundraiser-popup to any button/link,
+ * or call window.glowOpenFundraiserPopup() from JS.
  */
 add_action('wp_footer', 'glow_shop_auto_popup_fundraiser', 30);
 function glow_shop_auto_popup_fundraiser()
 {
-    // Only run on WooCommerce shop page OR /candace_old/shop
+    // Skip admin/editor context entirely
+    if (is_admin()) {
+        return;
+    }
+
+    $popup_id = 61511;
+
+    // Determine whether to auto-open (shop page + no fundraiser in session/cookie)
     $request_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
     $is_target_shop =
@@ -89,40 +97,35 @@ function glow_shop_auto_popup_fundraiser()
         || $request_path === 'shop'
         || $request_path === 'candace_old/shop';
 
-    if (!$is_target_shop) {
-        return;
-    }
-
-    // Check if Fundraiser ID exists in WC session, PHP session, or cookies
     $has_fundraiser = false;
 
-    if (function_exists('WC') && WC()->session) {
-        $fid = WC()->session->get('fridID');
-
-        if (empty($fid)) {
-            $fid = WC()->session->get('popup_fundraiser_id');
+    if ($is_target_shop) {
+        if (function_exists('WC') && WC()->session) {
+            $fid = WC()->session->get('fridID');
+            if (empty($fid)) {
+                $fid = WC()->session->get('popup_fundraiser_id');
+            }
+            if (!empty($fid)) {
+                $has_fundraiser = true;
+            }
         }
 
-        if (!empty($fid)) {
+        if (
+            !$has_fundraiser &&
+            session_status() === PHP_SESSION_ACTIVE &&
+            !empty($_SESSION['fridID'])
+        ) {
+            $has_fundraiser = true;
+        }
+
+        if (!$has_fundraiser && !empty($_COOKIE['fundraiserID'])) {
             $has_fundraiser = true;
         }
     }
 
-    if (
-        !$has_fundraiser &&
-        session_status() === PHP_SESSION_ACTIVE &&
-        !empty($_SESSION['fridID'])
-    ) {
-        $has_fundraiser = true;
-    }
+    $auto_open = $is_target_shop && !$has_fundraiser;
 
-    if (!$has_fundraiser && !empty($_COOKIE['fundraiserID'])) {
-        $has_fundraiser = true;
-    }
-
-    $popup_id = 61511;
-
-    // Render popup inside a custom CSS overlay — no dependency on Elementor's popup module
+    // Render popup overlay on every frontend page so button triggers work anywhere
     if (class_exists('\Elementor\Plugin')) {
         $content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display($popup_id);
         if ($content) : ?>
@@ -138,7 +141,7 @@ function glow_shop_auto_popup_fundraiser()
         (function () {
             'use strict';
 
-            var autoOpen = <?php echo $has_fundraiser ? 'false' : 'true'; ?>;
+            var autoOpen = <?php echo $auto_open ? 'true' : 'false'; ?>;
             var overlay   = document.getElementById('glow-fundraiser-overlay');
             var inner     = document.getElementById('glow-fundraiser-overlay-inner');
             var closeBtn  = document.getElementById('glow-fundraiser-close');
