@@ -18,6 +18,14 @@
 	--glow-radius-sm: 10px;
 }
 
+/* Match Elementor's outer checkout section to the form and heading width. */
+body.woocommerce-checkout .e-con.e-parent:has(form.checkout) {
+	--container-max-width: 1400px;
+}
+body.woocommerce-checkout .elementor-section.elementor-section-boxed:has(form.checkout) > .elementor-container {
+	max-width: 1400px;
+}
+
 /* page background behind the Elementor checkout section */
 body.woocommerce-checkout .e-checkout-layout-two-column,
 body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
@@ -26,7 +34,7 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 
 /* ---- Checkout heading injected by the hook ---- */
 .glow-checkout-head {
-	max-width: 1180px;
+	max-width: 1400px;
 	margin: 28px auto 6px;
 	padding: 0 12px;
 	display: flex;
@@ -319,7 +327,7 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 	grid-template-areas: "customer summary" "customer extras";
 	gap: 4px 28px;
 	align-items: start;
-	max-width: 1180px;
+	max-width: 1400px;
 	margin: 0 auto;
 }
 .woocommerce-checkout form.checkout #customer_details { grid-area: customer; }
