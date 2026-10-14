@@ -27,7 +27,7 @@ function glow_catalog_free_shipping_over_99( $rates, $package ) {
 	if ( PHP_SESSION_NONE === session_status() && ! headers_sent() ) {
 		@session_start();
 	}
-	$is_catalog = ! empty( $_SESSION['sellername'] ) && 'Catlog' === $_SESSION['sellername'];
+	 $is_catalog = glow_fc_cart_is_catalog();
 	if ( ! $is_catalog ) {
 		return $rates;
 	}

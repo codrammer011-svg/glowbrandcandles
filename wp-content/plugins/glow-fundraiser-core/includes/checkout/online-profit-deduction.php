@@ -36,7 +36,7 @@ function glow_fc_recompute_online_profit_deduction_meta() {
 	if ( PHP_SESSION_NONE === session_status() && ! headers_sent() ) {
 		@session_start();
 	}
-	if ( empty( $_SESSION['sellername'] ) || 'Catlog' !== $_SESSION['sellername'] ) {
+	if ( ! glow_fc_cart_is_catalog() ) {
 		return;
 	}
 
@@ -94,7 +94,7 @@ function glow_fc_recompute_online_profit_deduction_meta() {
 					  $order_type = get_post_meta($order->get_id(), 'wc_order_type', true );
 					  if($order_type=="Online")
 					  {
-						$total_sale_so_far+=$order->get_subtotal();
+						$total_sale_so_far += max(0, $order->get_subtotal() - $order->get_total_discount());
 
 					   foreach ($order->get_items() as $item_key => $item_values):
 								$item_data = $item_values->get_data();
@@ -138,7 +138,7 @@ function glow_fc_recompute_online_profit_deduction_meta() {
 						}
 						else
 						{
-						 $total_sale_so_far+=$order->get_subtotal();
+						 $total_sale_so_far += max(0, $order->get_subtotal() - $order->get_total_discount());
 						}
 
 					   foreach ($order->get_items() as $item_key => $item_values):
@@ -212,7 +212,7 @@ function glow_fc_recompute_online_profit_deduction_meta() {
 		}
 
 						$args = array(
-							 'status' => array('wc-waiting-call'),
+							 'status' => array('wc-waiting-call', 'wc-processing', 'wc-completed'),
 							'meta_key' => 'fundraiser_field',
 						'meta_value' => $ID,
 						'limit' => -1

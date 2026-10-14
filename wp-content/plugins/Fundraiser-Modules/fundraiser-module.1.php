@@ -404,7 +404,7 @@ function discount_when_quantity_greater_than_10()
 	$user = wp_get_current_user();
 	$new_catalog_order=get_user_meta( $user->ID, 'new_catalog_order_50_percent',true);
 		
-	if(!empty($_SESSION['sellername']) && $_SESSION['sellername']=='Catlog') 
+	if(glow_fc_cart_is_catalog())
 	{
 		if( in_array( 'fundraiser', (array) $user->roles ) ) 
 		{
@@ -1250,9 +1250,10 @@ function gsc_add_select_checkout_field( $checkout ) {
  function gsc_select_checkout_field_update_order_meta( $order_id ) {
 	   /* Save New Fields- */
 	   session_start();
+	   $_SESSION['sellername'] = glow_fc_cart_is_catalog() ? 'Catlog' : 'Online';
 	   $user = wp_get_current_user();
 	   
-	    if(!empty($_SESSION['sellername']) && $_SESSION['sellername']=='Catlog') 
+	    if(glow_fc_cart_is_catalog())
 	   {
 				
 				//$payment_title = $the_order_valid->get_payment_method_title();
@@ -1274,7 +1275,8 @@ function gsc_add_select_checkout_field( $checkout ) {
 		              update_post_meta( $order_id, 'test_paid_metakey', 'unPaid');
 				}
 
-				if($the_order->get_date_paid() || $payment_title=='Send Check (For Schools, Gyms &amp; Companies)')
+				// Checkout metadata precedes payment processing, including zero-total orders.
+			if ($the_order)
 				{
 				/* Save meta for cron job */
 				$check_first_catlog_order_for_cron_job=get_user_meta( $user->ID, 'wp_meta_first_catlog_order_for_cron_job', true);
@@ -1372,7 +1374,8 @@ function gsc_add_select_checkout_field( $checkout ) {
 					
 						if(!empty($post_id))
 						{
-							update_post_meta($post_id, 'close out_fundraiser_id', $user->ID);
+							update_post_meta($post_id, '_glow_profit_source_order', $order_id);
+						update_post_meta($post_id, 'close out_fundraiser_id', $user->ID);
 							update_post_meta($post_id, 'close out_fundraiser_date', $current_date); 
 							update_post_meta($post_id, 'close out_user_status_amt', $fee_total); // Paid amount
 							update_post_meta($post_id, 'close out_user_status_amt_rem', $rem);   // Remaining Amount

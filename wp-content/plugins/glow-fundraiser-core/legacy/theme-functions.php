@@ -12732,9 +12732,10 @@ function set_installment_fee( $cart ){
     if ( is_admin() && ! defined('DOING_AJAX') || ! is_checkout() )
         return;
 
-    if ( did_action('woocommerce_cart_calculate_fees') >= 2 )
+    if ( did_action('woocommerce_cart_calculate_fees') >= 2 && !glow_fc_cart_is_catalog() )
         return;
 	
+	if (!glow_fc_cart_is_catalog()) {
 	unset( WC()->session->chosen_shipping_methods );
 	$amount = WC()->cart->cart_contents_total;	
     if ( 1 == WC()->session->get('installment_fee') ) {
@@ -12766,10 +12767,11 @@ function set_installment_fee( $cart ){
 		   WC()->session->set('chosen_shipping_methods', array( 'flat_rate:1' ) );
 		}
 	  }
+	}
 	if (session_status() === PHP_SESSION_NONE && !headers_sent()) { @session_start(); }
     global $woocommerce;
 	$user = wp_get_current_user();  
-	if(!empty($_SESSION['sellername']) && $_SESSION['sellername']=='Catlog') 
+	if(glow_fc_cart_is_catalog())
 	{
 		if( in_array( 'fundraiser', (array) $user->roles ) ) 
 		{
@@ -12791,6 +12793,7 @@ function set_installment_fee( $cart ){
 add_action( 'woocommerce_after_cart_contents', 'woo_custom_shipping_method' );
 function woo_custom_shipping_method()
 {
+    if (glow_fc_cart_is_catalog()) return;
 	
 	unset( WC()->session->chosen_shipping_methods );
 	$amount = WC()->cart->cart_contents_total;	
