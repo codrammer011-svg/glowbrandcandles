@@ -49,3 +49,41 @@ function glow_choose_installment_shipping_method($cart) {
     $method = WC()->session->get('installment_fee') == 1 || $amount >= 100 ? 'shiptoschool' : 'flat_rate:1';
     WC()->session->set('chosen_shipping_methods', [$method]);
 }
+
+function glow_group_shipping_requested() {
+    return WC()->session && WC()->session->get('installment_fee') == 1
+        && glow_ship_to_group_customer_allowed() && !glow_checkout_ship_to_group_blocked()
+        && !glow_fc_cart_is_catalog();
+}
+
+// Eligibility must be part of the package hash: toggling the box changes available rates.
+add_filter('woocommerce_cart_shipping_packages', function ($packages) {
+    foreach ($packages as &$package) {
+        $package['glow_shipping_policy'] = 'minimum-100-v1';
+        $package['glow_group_shipping'] = glow_group_shipping_requested();
+    }
+    return $packages;
+}, PHP_INT_MAX);
+
+add_filter('woocommerce_package_rates', 'glow_checkout_shipping_rate_policy', PHP_INT_MAX, 2);
+function glow_checkout_shipping_rate_policy($rates, $package) {
+    $group = glow_group_shipping_requested();
+    $amount = (float)($package['contents_cost'] ?? WC()->cart->get_cart_contents_total());
+    if ($group || $amount >= 100) {
+        // Keep the existing eligible free rate; do not invent shipping charges or methods.
+        foreach ($rates as $key => $rate) {
+            if (in_array($rate->method_id, ['shiptoschool','free_shipping'], true)) return [$key=>$rate];
+        }
+        return $rates;
+    }
+    foreach ($rates as $key => $rate) {
+        if (in_array($rate->method_id, ['shiptoschool','free_shipping'], true)) unset($rates[$key]);
+    }
+    // Some plugins hide flat rate when a free rate exists. Recover the configured zone rate.
+    foreach ($rates as $rate) if ($rate->method_id === 'flat_rate') return $rates;
+    $zone = WC_Shipping_Zones::get_zone_matching_package($package);
+    foreach ($zone->get_shipping_methods(true) as $method) {
+        if ($method->id === 'flat_rate') $rates += $method->get_rates_for_package($package);
+    }
+    return $rates;
+}
