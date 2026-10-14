@@ -6924,7 +6924,7 @@ function wc_seller() {
 							
 						}
 						/* Error on Ship to school order */
-						if($fundr_status!=2 && $_POST['installment_fee']==1 && $fundr_preference=="Virtual Fundraiser - No Brochures.")
+						if($fundr_status!=2 && $_POST['installment_fee']==1 && glow_is_virtual_preference($fundr_preference))
 						{
 							
 							wc_add_notice( 
@@ -12614,6 +12614,7 @@ function custom_orders_list_column_content( $column, $post_id )
 // Display the custom checkbow field in checkout
 add_action( 'woocommerce_review_order_before_order_total', 'fee_installment_checkbox_field', 20 );
 function fee_installment_checkbox_field(){
+    if (glow_checkout_ship_to_group_blocked() || !glow_ship_to_group_customer_allowed()) { WC()->session->set('installment_fee', 0); return; }
 	$user = wp_get_current_user();
 	if(!is_user_logged_in() || in_array( 'seller', (array) $user->roles ))
 	{
@@ -12638,8 +12639,6 @@ function checkout_fee_script() {
 
     if( is_checkout() && ! is_wc_endpoint_url() ) :
 
-    if( WC()->session->__isset('installment_fee') )
-        WC()->session->__unset('installment_fee')
     ?>
     <script type="text/javascript">
 	 
@@ -12648,6 +12647,7 @@ function checkout_fee_script() {
         if (typeof wc_checkout_params === 'undefined')
             return false;
 		
+        $('form.checkout').on('change', '#fundraiser_field', function(){ $('body').trigger('update_checkout'); });
         $('form.checkout').on('change', 'input[name=installment_fee]', function(){
             var fee = $(this).prop('checked') === true ? '1' : '0';
 
@@ -12732,42 +12732,9 @@ function set_installment_fee( $cart ){
     if ( is_admin() && ! defined('DOING_AJAX') || ! is_checkout() )
         return;
 
-    if ( did_action('woocommerce_cart_calculate_fees') >= 2 && !glow_fc_cart_is_catalog() )
-        return;
-	
-	if (!glow_fc_cart_is_catalog()) {
-	unset( WC()->session->chosen_shipping_methods );
-	$amount = WC()->cart->cart_contents_total;	
-    if ( 1 == WC()->session->get('installment_fee') ) {
-	
-       // $cart->set_shipping_total(0);
-       // $items_count = WC()->cart->get_cart_contents_count();
-        $fee_label   = sprintf( __( "Processing Fee" ));
-		$fee =1.95;
-        $fee_amount  = $fee;
-        WC()->cart->add_fee( $fee_label, $fee_amount );
-		
-		WC()->session->set('chosen_shipping_methods', array( 'shiptoschool' ) );
-		
-	 }
-	else if ( WC()->session->get('installment_fee') == 0 ) {
-		if($amount<100)
-		{
-		   WC()->session->set('chosen_shipping_methods', array( 'flat_rate:1' ) );
-		}
-		if($amount>=100)
-		{
-		   WC()->session->set('chosen_shipping_methods', array( 'shiptoschool' ) );
-		}
-	  }
-	   else
-	  {
-		  if($amount<100)
-		{
-		   WC()->session->set('chosen_shipping_methods', array( 'flat_rate:1' ) );
-		}
-	  }
-	}
+    if (!glow_fc_cart_is_catalog() && glow_ship_to_group_customer_allowed() && !glow_checkout_ship_to_group_blocked() && WC()->session->get('installment_fee') == 1) {
+        $cart->add_fee(__('Processing Fee'), 1.95);
+    }
 	if (session_status() === PHP_SESSION_NONE && !headers_sent()) { @session_start(); }
     global $woocommerce;
 	$user = wp_get_current_user();  
