@@ -209,8 +209,8 @@ body.woocommerce-checkout .e-con.e-parent:has(.e-checkout__container) {
 /* ---- Payment box (Send Check etc.) ---- */
 .woocommerce-checkout #payment { background: transparent; border-radius: 0; }
 .woocommerce-checkout #payment ul.payment_methods {
-	border: 1.5px solid var(--glow-card-border);
-	border-radius: var(--glow-radius-sm);
+	border: 0 !important;
+	border-radius: 0;
 	padding: 16px 12px;
 	background: #fff;
 }
