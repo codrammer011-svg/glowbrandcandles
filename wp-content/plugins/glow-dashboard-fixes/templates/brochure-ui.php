@@ -81,7 +81,7 @@ function glow_bu_resolve( $kind, $cat ) {
 	if ( empty( $lists[ $kind ][ $cat ] ) ) {
 		return null;
 	}
-	$key = 'glow_bu_' . $kind . '_' . $cat;
+	$key = 'glow_bu_' . $kind . '_' . $cat . '_v2';
 	$ids = get_transient( $key );
 	if ( ! is_array( $ids ) ) {
 		$pool = wc_get_products( array( 'status' => 'publish', 'limit' => -1, 'category' => $cat, 'glow_bu_raw' => 1 ) );
@@ -89,12 +89,12 @@ function glow_bu_resolve( $kind, $cat ) {
 		foreach ( $pool as $p ) {
 			$byname[ glow_bu_norm( $p->get_name() ) ][] = $p;
 		}
-		$ids = array();
+		$ids = array(); // product id => brochure SKU
 		foreach ( $lists[ $kind ][ $cat ] as $row ) {
 			list( $sku, $name ) = $row;
 			$pid = wc_get_product_id_by_sku( $sku );
 			if ( $pid && 'publish' === get_post_status( $pid ) ) {
-				$ids[] = (int) $pid;
+				$ids[ (int) $pid ] = $sku;
 				continue;
 			}
 			$cands = $byname[ glow_bu_norm( $name ) ] ?? array();
@@ -102,15 +102,20 @@ function glow_bu_resolve( $kind, $cat ) {
 				continue;
 			}
 			usort( $cands, function ( $a, $b ) {
-				$da = substr_count( $a->get_sku(), '-' ); $db = substr_count( $b->get_sku(), '-' );
+				$da = substr_count( glow_bu_raw_sku( $a ), '-' ); $db = substr_count( glow_bu_raw_sku( $b ), '-' );
 				return $da === $db ? $a->get_id() - $b->get_id() : $da - $db;
 			} );
-			$ids[] = $cands[0]->get_id();
+			$ids[ (int) $cands[0]->get_id() ] = $sku;
 		}
 		set_transient( $key, $ids, 10 * MINUTE_IN_SECONDS );
 	}
+	/* remember brochure SKUs so the page shows the brochure's item numbers */
+	if ( ! isset( $GLOBALS['glow_bu_skumap'] ) ) {
+		$GLOBALS['glow_bu_skumap'] = array();
+	}
+	$GLOBALS['glow_bu_skumap'] += $ids;
 	$out = array();
-	foreach ( $ids as $id ) {
+	foreach ( array_keys( $ids ) as $id ) {
 		$p = wc_get_product( $id );
 		if ( $p ) {
 			$out[] = $p;
@@ -118,6 +123,20 @@ function glow_bu_resolve( $kind, $cat ) {
 	}
 	return $out;
 }
+
+/** Store SKU without the brochure override. */
+function glow_bu_raw_sku( $product ) {
+	return (string) $product->get_sku( 'edit' );
+}
+
+/* On brochure pages show the brochure's item number instead of the store SKU (display only; cart uses product IDs). */
+add_filter( 'woocommerce_product_get_sku', function ( $sku, $product ) {
+	if ( empty( $GLOBALS['glow_bu_skumap'] ) || ! glow_bu_page_kind() ) {
+		return $sku;
+	}
+	$id = $product->get_id();
+	return isset( $GLOBALS['glow_bu_skumap'][ $id ] ) ? $GLOBALS['glow_bu_skumap'][ $id ] : $sku;
+}, 10, 2 );
 
 /** Which brochure is this page (chairperson templates + seller templates)? */
 function glow_bu_page_kind() {
@@ -304,9 +323,15 @@ add_action( 'wp_footer', function () {
 		<?php if ( 'sparkle' === $kind ) : ?>
 		/* Season to Sparkle: category order as on the printed order form */
 		(function(){
-			var order = ['celebrate_the_moments','signature_wick','classic_candles','large_wax_melts','room-spray','essential-oils','let-it-snow'];
+			var order = ['celebrate_the_moments','signature_wick','classic_candles','large_wax_melts','room-spray','essential-oils'];
 			var menu = sticky.querySelector('#menu');
 			var tail = fullpage.querySelector('#back-top');
+			/* "Let it Snow" is not in the 2026 Season to Sparkle brochure — remove it */
+			(function(){
+				var a = fullpage.querySelector('#let-it-snow'); while (a && a.parentNode !== fullpage) a = a.parentNode;
+				if (a) { var s = a.nextElementSibling; while (s && !s.classList.contains('section')) s = s.nextElementSibling; if (s) s.remove(); a.remove(); }
+				if (menu) { var l = menu.querySelector('a[href="#let-it-snow"]'); if (l) (l.closest('li') || l).remove(); }
+			})();
 			order.forEach(function(id){
 				var a = fullpage.querySelector('#' + CSS.escape(id));
 				while (a && a.parentNode !== fullpage) a = a.parentNode;

@@ -150,7 +150,6 @@ add_action('elementor/theme/after_do_single', function () {
     unset($GLOBALS['glow_current_loop_term']);
 });
 
-
 add_shortcode('hover_product_image', function ($atts) {
     $atts = shortcode_atts([
         'size'   => 'large',

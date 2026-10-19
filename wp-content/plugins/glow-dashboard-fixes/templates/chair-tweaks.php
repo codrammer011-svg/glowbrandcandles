@@ -102,6 +102,30 @@ add_action( 'wp_head', function () {
 	.glow-fd-top .glow-fd-days{font-size:26px !important;font-weight:900 !important;color:#ffd84d !important;letter-spacing:.03em;text-shadow:0 2px 8px rgba(0,0,0,.25)}
 	.glow-fd-top .glow-fd-hero-end{font-size:17px;font-weight:800;color:#fff;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28)}
 	.glow-fd-thanks p{font-size:17.5px !important;line-height:1.5 !important;font-weight:600 !important}
+	/* Row 1: fill the white space — bigger logo, name, donut, dollar amounts (client request) */
+	.glow-fd-row1 .glow-fd-profile{display:flex;flex-direction:column;justify-content:center}
+	.glow-fd-row1 .glow-fd-avatar{width:170px !important;height:170px !important;padding:5px !important;box-shadow:0 0 0 4px #ffb7cd !important;margin-bottom:18px !important}
+	.glow-fd-row1 .glow-fd-hi{font-size:44px !important;margin-bottom:10px !important}
+	.glow-fd-row1 .glow-fd-role{font-size:18px !important;margin-bottom:22px !important}
+	.glow-fd-row1 .glow-fd-store-btn{padding:17px 18px !important;font-size:16px !important}
+	.glow-fd-row1 .glow-fd-edit-link{font-size:15.5px !important}
+	.glow-fd-row1 .glow-fd-progress{display:flex;flex-direction:column}
+	.glow-fd-row1 .glow-fd-progress-body{margin:22px 0 10px !important;gap:28px !important;flex:1 1 auto}
+	.glow-fd-row1 .glow-fd-donut{flex:0 0 210px !important;width:210px !important;height:210px !important}
+	.glow-fd-row1 .glow-fd-donut::after{inset:20px !important}
+	.glow-fd-row1 .glow-fd-donut-in .pct{font-size:48px !important}
+	.glow-fd-row1 .glow-fd-donut-in .of{font-size:16px !important;margin-top:6px !important}
+	.glow-fd-row1 .glow-fd-donut-in .of a{font-size:13px !important}
+	.glow-fd-row1 .glow-fd-raised-amt{font-size:68px !important}
+	.glow-fd-row1 .glow-fd-raised-sub{font-size:20px !important;margin:8px 0 18px !important}
+	.glow-fd-row1 .glow-fd-bar{height:14px !important}
+	.glow-fd-row1 .glow-fd-bar-goal{font-size:16px !important;margin-top:8px !important}
+	.glow-fd-row1 .glow-fd-split{margin-top:22px !important}
+	.glow-fd-row1 .glow-fd-split div{padding:14px 8px !important;gap:8px !important}
+	.glow-fd-row1 .glow-fd-split svg{width:34px !important;height:34px !important}
+	.glow-fd-row1 .glow-fd-split b{font-size:34px !important;font-weight:900 !important}
+	.glow-fd-row1 .glow-fd-split span{font-size:15px !important;line-height:1.3 !important}
+	@media(max-width:1100px){.glow-fd-row1 .glow-fd-donut{flex-basis:170px !important;width:170px !important;height:170px !important}.glow-fd-row1 .glow-fd-raised-amt{font-size:52px !important}.glow-fd-row1 .glow-fd-split b{font-size:26px !important}.glow-fd-row1 .glow-fd-avatar{width:130px !important;height:130px !important}}
 	.glow-fd-thanks .glow-fd-thanks-script .a{font-size:1.25em}
 	.glow-fd-settings a.glow-fd-setrow[href*="edit-fundraiser"]{display:none !important}
 	/* QR */
@@ -283,6 +307,7 @@ add_action( 'template_redirect', function () {
 	$logo  = $v( 'user_registration_image_url_profile' );
 	$d = function ( $s ) { $t = $s ? strtotime( $s ) : false; return $t ? date( 'Y-m-d', $t ) : ''; };
 	status_header( 200 ); nocache_headers();
+	if ( function_exists( 'glow_vp_title' ) ) { glow_vp_title( 'Edit Fundraiser Info' ); }
 	get_header();
 	?>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">

@@ -220,7 +220,14 @@ function glow_ct_invoice_url( $row ) {
 	), admin_url( 'admin-ajax.php' ) );
 }
 
+if ( ! function_exists( 'glow_vp_title' ) ) {
+function glow_vp_title( $title ) {
+	add_filter( 'pre_get_document_title', function () use ( $title ) { return $title . ' – ' . get_bloginfo( 'name' ); }, 99 );
+	if ( isset( $GLOBALS['wp_query'] ) ) { $GLOBALS['wp_query']->is_404 = false; }
+}
+}
 function glow_ct_open( $fid, $title, $subtitle, $icon = '' ) {
+	glow_vp_title( $title );
 	get_header();
 	$u = get_userdata( $fid );
 	?>

@@ -95,6 +95,7 @@ add_action( 'template_redirect', function () {
 /* Shared chrome                                                        */
 /* ------------------------------------------------------------------ */
 function glow_sp_open( $sid, $title, $subtitle = '' ) {
+	if ( function_exists( 'glow_vp_title' ) ) { glow_vp_title( $title ); }
 	get_header();
 	$name = trim( get_user_meta( $sid, 'first_name', true ) . ' ' . get_user_meta( $sid, 'last_name', true ) );
 	if ( '' === $name ) {

@@ -60,7 +60,8 @@ add_action( 'wp_head', function () {
 	/* header */
 	.glow-sd-top .glow-sd-code{display:none !important}
 	.glow-sd-top .glow-st-days{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:#fff}
-	.glow-sd-top .glow-st-days .glow-st-clock{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff3d7f,#ff7a3d);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(255,61,127,.35)}
+	.glow-sd-top .glow-st-days .glow-st-clock{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff3d7f,#ff7a3d);display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(255,61,127,.35);font-size:0;line-height:0}
+	.glow-sd-top .glow-st-days .glow-st-clock svg{display:block}
 	.glow-sd-top .glow-st-days b{font-size:30px;font-weight:900;color:#ffd84d;letter-spacing:.03em;text-shadow:0 2px 8px rgba(0,0,0,.25)}
 	.glow-sd-top .glow-st-days span.glow-st-end{font-size:18px;font-weight:800;color:#fff}
 	.glow-sd-top .glow-st-days span.glow-st-end:before{content:"·";margin:0 10px 0 2px;opacity:.7}
@@ -102,8 +103,10 @@ add_action( 'wp_head', function () {
 	.glow-sd-lower{display:grid !important;grid-template-columns:3fr 1fr !important;gap:18px !important}
 	.glow-sd-lower .glow-sd-checklist{grid-column:1}
 	.glow-sd-lower .glow-sd-thanks{grid-column:2;grid-row:1}
-	.glow-sd-lower .glow-sd-tools{grid-column:1;grid-row:2}
-	.glow-sd-lower .glow-sd-settings{grid-column:2;grid-row:2}
+	/* Additional Tools & Resources hidden until the client supplies the content (set to block to restore) */
+	.glow-sd-lower .glow-sd-tools{display:none !important;grid-column:1;grid-row:2}
+	.glow-sd-lower .glow-sd-settings{grid-column:1/-1;grid-row:2}
+	.glow-sd-lower .glow-sd-settings .glow-sd-setrow{max-width:420px}
 	.glow-sd-tools-grid{grid-template-columns:repeat(6,1fr) !important}
 	@media(max-width:1100px){.glow-sd-row2{grid-template-columns:1fr 1fr !important}.glow-st-team{grid-column:1/-1;grid-template-columns:1fr}.glow-sd-lower{grid-template-columns:1fr !important}.glow-sd-lower .glow-sd-checklist,.glow-sd-lower .glow-sd-thanks,.glow-sd-lower .glow-sd-tools,.glow-sd-lower .glow-sd-settings{grid-column:auto;grid-row:auto}.glow-sd-tools-grid{grid-template-columns:repeat(3,1fr) !important}}
 	@media(max-width:640px){.glow-st-stats{grid-template-columns:1fr}.glow-sd-row2{grid-template-columns:1fr !important}.glow-st-row2b{grid-template-columns:1fr}.glow-sd-tools-grid{grid-template-columns:1fr 1fr !important}}
@@ -134,7 +137,7 @@ add_action( 'wp_footer', function () {
 		. ( $d['rank'] ? '<p class="glow-st-rank">You\'re #' . (int) $d['rank'] . ' of ' . (int) $d['sellers'] . ' ' . _n( 'seller', 'sellers', (int) $d['sellers'] ) . ' &#127942;</p>' : '<p class="glow-st-rank" style="color:#6f6c85">' . (int) $d['sellers'] . ' ' . _n( 'seller', 'sellers', (int) $d['sellers'] ) . ' on your team &mdash; make your first sale to get on the board!</p>' )
 		. '</div><div class="glow-st-top"><h4>&#10084;&#65039; Top 5 Customers</h4>' . $top . '</div></div>';
 	$days = $d['days'] >= 0
-		? '<div class="glow-st-days"><span class="glow-st-clock">&#9200;</span><b>' . (int) $d['days'] . ' DAYS LEFT</b>' . ( $d['end'] ? '<span class="glow-st-end">Ends ' . esc_html( $d['end'] ) . '</span>' : '' ) . '</div>'
+		? '<div class="glow-st-days"><span class="glow-st-clock"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.6 1.6"/><path d="M5 3.5 2.5 6M19 3.5 21.5 6"/></svg></span><b>' . (int) $d['days'] . ' DAYS LEFT</b>' . ( $d['end'] ? '<span class="glow-st-end">Ends ' . esc_html( $d['end'] ) . '</span>' : '' ) . '</div>'
 		: '';
 	?>
 	<script id="glow-sd-mock-js">

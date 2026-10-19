@@ -2709,7 +2709,7 @@ $m_body=stripslashes($body);
 	<?php 
 	$body= ob_get_clean();
 	$m_body=stripslashes($body);
-	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
+   	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 	/* Referral Recipients */
 	if(!empty($referral_email))
 	{
@@ -3536,7 +3536,7 @@ foreach ( $items as $item_id => $item ) :
 	<?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
+   	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
     if (wp_mail($multiple_recipients, $subject, $m_body, $headers)) {
       error_log("email has been successfully sent to user whose email is " . $user_email);
     }else{

@@ -45,12 +45,7 @@ $glow_sections = array(
 		'category' => 'essential-oils',
 	),
 
-	array(
-		'menu'     => 'Let it Snow',
-		'heading'  => 'Let it Snow $40.00',
-		'category' => 'let-it-snow-candle-16-oz',
-		/* no allow list — whole category */
-	),
+	/* "Let it Snow" removed — not in the 2026 Season to Sparkle brochure */
 
 );
 
