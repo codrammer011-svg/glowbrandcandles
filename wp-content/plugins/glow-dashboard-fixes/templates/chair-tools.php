@@ -71,6 +71,16 @@ add_filter( 'get_user_metadata', function ( $value, $object_id, $meta_key, $sing
 /* ------------------------------------------------------------------ */
 function glow_ct_toolbox_filter( $c ) {
 	$u = get_option( 'glow_toolbox_pdf_url' );
+	// A migrated option can still contain the development site's uploads URL.
+	if ( $u && 'glow.local' === wp_parse_url( $u, PHP_URL_HOST ) ) {
+		$path   = wp_parse_url( $u, PHP_URL_PATH );
+		$marker = '/wp-content/uploads/';
+		$offset = is_string( $path ) ? strpos( $path, $marker ) : false;
+		if ( false !== $offset ) {
+			$uploads = wp_get_upload_dir();
+			$u = trailingslashit( $uploads['baseurl'] ) . substr( $path, $offset + strlen( $marker ) );
+		}
+	}
 	if ( $u && isset( $c['urls'] ) && is_array( $c['urls'] ) ) {
 		foreach ( $c['urls'] as $k => $v ) {
 			if ( false !== strpos( (string) $v, 'Fundraiser-Dashboard-Glow-Scented-Candles' ) ) {
