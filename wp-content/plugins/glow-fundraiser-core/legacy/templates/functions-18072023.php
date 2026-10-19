@@ -608,10 +608,10 @@ add_filter( 'woocommerce_get_price_suffix', 'wc_get_price_suffix_filter', 10, 2 
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 		$mailSuc= wp_mail( $to, $subject, $m_body, $headers );
 	 	if($mailSuc){
 		echo "Your message has been successfully sent.";
@@ -2457,10 +2457,10 @@ $m_body=stripslashes($body);
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 		$mailSuc= wp_mail( $to, $subject, $m_body, $headers );
 	 	if($mailSuc){
 		echo "Your report has been successfully sent.";
@@ -2709,7 +2709,7 @@ $m_body=stripslashes($body);
 	<?php 
 	$body= ob_get_clean();
 	$m_body=stripslashes($body);
-   	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 	/* Referral Recipients */
 	if(!empty($referral_email))
 	{
@@ -3536,7 +3536,7 @@ foreach ( $items as $item_id => $item ) :
 	<?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-   	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+	$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
     if (wp_mail($multiple_recipients, $subject, $m_body, $headers)) {
       error_log("email has been successfully sent to user whose email is " . $user_email);
     }else{
@@ -5393,10 +5393,10 @@ function wc_new_orders($order_id)
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 		$mailSuc= wp_mail( $to, $subject, $m_body, $headers );
 	 	if($mailSuc){
 		echo "Your report has been successfully sent.";
@@ -6254,10 +6254,10 @@ function wp_close_out_send_email( $email)
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 		$mailSuc= wp_mail( $to, $subject, $m_body, $headers );
 	 	/*if($mailSuc){
 		echo "Your message has been successfully sent.";
@@ -6365,10 +6365,10 @@ add_action('wp_ajax_nopriv_close_out_fundraiser', 'close_out_fundraiser'); // fo
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
-		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowscentedcandles.com');
+		$headers = array('Content-Type: text/html; charset=UTF-8','From: Glow Scented Candles <info@glowglowscentedcandles.com');
 		$mailSuc= wp_mail( $to, $subject, $m_body, $headers );
 	 	if($mailSuc){
 		echo "Close out request sent.";

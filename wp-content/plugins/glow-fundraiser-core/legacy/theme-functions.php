@@ -532,7 +532,7 @@ add_filter( 'woocommerce_get_price_suffix', 'wc_get_price_suffix_filter', 10, 2 
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
 		$headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
@@ -2741,7 +2741,7 @@ $m_body=stripslashes($body);
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
 		$headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
@@ -6498,7 +6498,7 @@ function wc_new_orders($order_id)
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
 		$headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
@@ -7565,7 +7565,7 @@ function wp_close_out_send_email( $email)
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
 		$headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
@@ -7686,7 +7686,7 @@ $org = get_user_meta($ID, 'user_registration_name_of_school_business' , true );
 <?php 
 $body= ob_get_clean();
 $m_body=stripslashes($body);
-		/*$headers = "From: Glow Scented Candles <info@glowscentedcandles.com> \r\n";
+		/*$headers = "From: Glow Scented Candles <info@glowglowscentedcandles.com> \r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";*/
 		$headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);

@@ -1,5 +1,9 @@
 # Sync live data into local
 
+For the current workflow (**keep local pages/products/Elementor and refresh recent production orders**), use [sync-recent-production.ps1](sync-recent-production.ps1). Commands and scope: [README-recent-production.md](README-recent-production.md).
+
+The older full-replacement command below does not preserve the current local pages/catalog.
+
 Start the Glow site in Local, then run from the project root:
 
 ```powershell

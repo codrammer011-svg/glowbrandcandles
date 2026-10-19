@@ -82,7 +82,7 @@ if (file_exists($seller_qr)) {
 
 // $headers = array(
 //     'Content-Type: text/html; charset=UTF-8',
-//     'From: Glow Scented Candles <info@glowscentedcandles.com>'
+//     'From: Glow Scented Candles <info@glowglowscentedcandles.com>'
 // );
 
 // // Attach the generated file
