@@ -357,7 +357,7 @@ function glow_email_admin_fundraiser_summary($valid_form_data, $form_id, $user_i
     $subject = 'New Fundraiser Registration - ' . ($school_name !== '' ? $school_name : trim($first_name . ' ' . $last_name));
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
-        'From: ' . (defined('GLOW_FROM_EMAIL') ? GLOW_FROM_EMAIL : 'Glow Scented Candles <info@glowglowscentedcandles.com>'),
+        'From: ' . (defined('GLOW_FROM_EMAIL') ? GLOW_FROM_EMAIL : 'Glow Scented Candles <info@glowscentedcandles.com>'),
     );
 
     glow_fc_queue_mail($to, $subject, $message, $headers);
@@ -635,7 +635,7 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
     $subject = 'Welcome to the Glow Fundraiser Family! Lets Light Up Your Success!';
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
-        'From: ' . (defined('GLOW_FROM_EMAIL') ? GLOW_FROM_EMAIL : 'Glow Scented Candles <info@glowglowscentedcandles.com>'),
+        'From: ' . (defined('GLOW_FROM_EMAIL') ? GLOW_FROM_EMAIL : 'Glow Scented Candles <info@glowscentedcandles.com>'),
     );
 
     // Queue both emails async so AJAX hook returns before SMTP connects.

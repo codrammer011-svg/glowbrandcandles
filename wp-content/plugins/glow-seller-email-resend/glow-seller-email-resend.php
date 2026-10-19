@@ -583,7 +583,7 @@ function glow_ser_compose( WP_User $user, $outage_note, $subject = '' ) {
 	return array(
 		'subject' => '' !== $subject ? $subject : 'Seller Registered',
 		'body'    => glow_ser_build_email( $user, $outage_note ),
-		'headers' => array( 'Content-Type: text/html; charset=UTF-8', 'From: Glow Scented Candles <info@glowglowscentedcandles.com>' ),
+		'headers' => array( 'Content-Type: text/html; charset=UTF-8', 'From: Glow Scented Candles <info@glowscentedcandles.com>' ),
 		'source'  => 'built-in',
 	);
 }

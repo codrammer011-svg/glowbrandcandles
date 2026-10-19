@@ -13,7 +13,7 @@ require_once ABSPATH . WPINC . '/option.php';
 require_once ABSPATH . WPINC . '/class-wp-error.php';
 require ABSPATH . 'wp-content/mu-plugins/glow-sender-email.php';
 glow_migrate_sender_email_settings();
-$target = 'info@glowglowscentedcandles.com';
+$target = 'info@glowscentedcandles.com';
 $results = array(
     'configured_from' => GLOW_FROM_EMAIL,
     'wordpress_from' => apply_filters('wp_mail_from', 'wordpress@example.com'),

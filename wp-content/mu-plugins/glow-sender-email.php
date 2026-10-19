@@ -6,7 +6,7 @@
 defined('ABSPATH') || exit;
 
 function glow_sender_email_address() {
-    return 'info@glowglowscentedcandles.com';
+    return 'info@glowscentedcandles.com';
 }
 add_filter('wp_mail_from', 'glow_sender_email_address', PHP_INT_MAX);
 add_filter('woocommerce_email_from_address', 'glow_sender_email_address', PHP_INT_MAX);
