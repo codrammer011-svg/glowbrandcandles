@@ -31,7 +31,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 		$bcountry = get_user_meta($fundr_id, 'billing_country', true );
 		$countries = new WC_Countries(); // Get an instance of the WC_Countries Object
 		$countries_array = $countries->get_countries();
-		$country = $countries_array[$bcountry];
+		$country = isset($countries_array[$bcountry]) ? $countries_array[$bcountry] : $bcountry;
 	
 		/* End */
 		
@@ -576,6 +576,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 				
 				$totalseller=array();
 				$itmCount=array();
+				$ship_orders_ID=array();
 				
 				for($s=0;$s<count($sort_id); $s++){
 				//$sellerName_n_arr=array();
@@ -778,7 +779,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 		$quanty = $item_data['quantity'];
 		echo '<p id='.$prID.' class="productName '.$countItem.'" ><span class="pName"> <span class="p-name">'.$quanty.' '.$prName.'</span> <i class="fa fa-edit"></i></span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
 	} 
-	if(($countItem < $itmCount[$s] && $countItem==8) || ($countItem < $itmCount[$s] && $countItem==16 ) || ($countItem < $itmCount[$s] && $countItem==24) || ($countItem < $itmCount[$s] && $countItem==32) || ($countItem < $itmCount[$s] && $countItem==40) || ($countItem < $itmCount[$s] && $countItem==48) || ($countItem < $itmCount[$s] && $countItem==56) || ($countItem < $itmCount[$i] && $countItem==64) || ($countItem < $itmCount[$s] && $countItem==72) || ($countItem < $itmCount[$s] && $countItem==80) || ($countItem < $itmCount[$s] && $countItem==88) || ($countItem < $itmCount[$s] && $countItem==96) || ($countItem < $itmCount[$s] && $countItem==104) || ($countItem < $itmCount[$s] && $countItem==112) || ($countItem < $itmCount[$s] && $countItem==120) || ($countItem < $itmCount[$s] && $countItem==128) || ($countItem < $itmCount[$s] && $countItem==136) || ($countItem < $itmCount[$s] && $countItem==144) || ($countItem < $itmCount[$s] && $countItem==152))
+	if(($countItem < $itmCount[$s] && $countItem==8) || ($countItem < $itmCount[$s] && $countItem==16 ) || ($countItem < $itmCount[$s] && $countItem==24) || ($countItem < $itmCount[$s] && $countItem==32) || ($countItem < $itmCount[$s] && $countItem==40) || ($countItem < $itmCount[$s] && $countItem==48) || ($countItem < $itmCount[$s] && $countItem==56) || ($countItem < $itmCount[$s] && $countItem==64) || ($countItem < $itmCount[$s] && $countItem==72) || ($countItem < $itmCount[$s] && $countItem==80) || ($countItem < $itmCount[$s] && $countItem==88) || ($countItem < $itmCount[$s] && $countItem==96) || ($countItem < $itmCount[$s] && $countItem==104) || ($countItem < $itmCount[$s] && $countItem==112) || ($countItem < $itmCount[$s] && $countItem==120) || ($countItem < $itmCount[$s] && $countItem==128) || ($countItem < $itmCount[$s] && $countItem==136) || ($countItem < $itmCount[$s] && $countItem==144) || ($countItem < $itmCount[$s] && $countItem==152))
 	{
 	
 	?>
@@ -802,9 +803,9 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 	{
 		if(!in_array($sort_id[$s],$ship_orders_ID))
 		{
-			$ship_orders_ID[]=$sort_id[$s];
 			if($total_soldItems[$w]['orderID'] == $sort_id[$s])
 			{
+				$ship_orders_ID[]=$sort_id[$s];
 ?>
 	<span class="border-line border-line-2"></span>
 	<h4 class="item_sold test1">Total Items Sold: <?php echo $total_soldItems[$w]['orderQuanty']; ?></h4>
@@ -824,9 +825,9 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 	{
 		if(!in_array($sort_id[$s],$ship_orders_ID))
 		{
-			$ship_orders_ID[]=$sort_id[$s];
 			if($total_soldItems[$w]['orderID'] == $sort_id[$s])
 			{
+				$ship_orders_ID[]=$sort_id[$s];
 ?>
 	<span class="border-line border-line-2"></span>
 	<h4 class="item_sold test1">Total Items Sold: <?php echo $total_soldItems[$w]['orderQuanty']; ?></h4>
