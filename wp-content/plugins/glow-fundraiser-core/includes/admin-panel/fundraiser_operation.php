@@ -677,31 +677,34 @@ table {
 		});
 	
 		});
-		jQuery(document).on('click', '#send_report', function (e){
-			e.preventDefault();
-			jQuery(".proccessloader2").css("display","block");
-			let fund_id = jQuery(this).data('fund_id');
-         jQuery.ajax({
-
-         type : "post",
-
-         url : ajaxurl,
-
-         data : {action: 'custom_fund_report_mail', fund_id:fund_id},
-
-         success: function(response) {
-		/*alert(response);*/
-        console.log(response);
-		jQuery(".proccessloader2").addClass("success");
-				
-				jQuery(".proccessloader2.success img").attr("src","<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/giphy.gif");
-				jQuery(".proccessloader2.success").delay(4000).fadeOut();
-				setTimeout(function(){ jQuery(".proccessloader2").removeClass("success"); jQuery(".proccessloader2 img").attr("src","<?php echo esc_url( glow_dynamic_url_base('uploads') ); ?>2020/12/fd420f3a680e39cde8bda39f5f996964.gif"); }, 5000);
-		/*jQuery(".admin-report").append('<p style="padding-top:10px;color:green;">'+response+'</p>');*/
-		}
-		});
-
-});
+        jQuery(document).on('click', '#send_report', function (e) {
+            e.preventDefault();
+            var button = jQuery(this);
+            if (button.data('sending')) { return; }
+            var loader = jQuery('.proccessloader2');
+            button.data('sending', true).attr('aria-disabled', 'true');
+            loader.removeClass('success').show();
+            jQuery.ajax({
+                type: 'POST',
+                url: ajaxurl,
+                dataType: 'text',
+                timeout: 120000,
+                data: {action: 'custom_fund_report_mail', fund_id: button.data('fund_id')}
+            }).done(function (response) {
+                if (jQuery.trim(response) === 'Your report has been successfully sent.') {
+                    window.alert('Your report has been successfully sent.');
+                } else {
+                    window.alert('The report could not be sent. Please try again or contact support.');
+                }
+            }).fail(function (xhr, status) {
+                window.alert(status === 'timeout'
+                    ? 'The report request timed out. Please check whether the email arrived before retrying.'
+                    : 'The report could not be sent. Please refresh the page and try again.');
+            }).always(function () {
+                loader.hide().removeClass('success');
+                button.removeData('sending').removeAttr('aria-disabled');
+            });
+        });
 </script>
 <?php  if($_GET['page']=='fundraiser_operations' && ( $_GET['closed'] ?? '' )=="closed_fundraisers"){ ?>
 <style>

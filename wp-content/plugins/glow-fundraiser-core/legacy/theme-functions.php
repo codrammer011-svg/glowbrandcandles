@@ -556,8 +556,15 @@ $m_body=stripslashes($body);
 	add_action('wp_ajax_custom_fund_report_mail', 'custom_fund_report_mail');
 	function custom_fund_report_mail( )
 	{
-		$ID = $_POST['fund_id'];
+		$ID = isset( $_POST['fund_id'] ) ? absint( $_POST['fund_id'] ) : 0;
 		$user_info = get_userdata($ID);
+		if ( ! $user_info || ! is_email( $user_info->user_email ) ) {
+			wp_die( 'Invalid fundraiser or email address.', '', array( 'response' => 400 ) );
+		}
+		// Empty/manual-seller reports must also work on PHP 8.
+		$seller_name = array();
+		$total_sale_so_far = $rebate_so_far = 0;
+		$total_sale_so_far2 = $rebate_so_far2 = 0;
 		$user_email = $user_info->user_email;
 		
 		 $to = $user_email; 
