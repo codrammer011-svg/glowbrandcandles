@@ -13,6 +13,7 @@ if (!$u_id || !get_user_by('id', $u_id)) {
 	exit;
 }
 
+
 $fpid = get_user_meta($u_id, 'fundraiser_post_id', true);
 
 // Handle form submit
