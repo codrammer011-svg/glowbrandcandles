@@ -44,7 +44,7 @@ $db->query('CREATE TABLE IF NOT EXISTS glow_post_map(old_id BIGINT UNSIGNED PRIM
 function insertRow($table,$r){global $db;$c=array_keys($r);$s=$db->prepare("INSERT INTO `$table` (`".implode('`,`',$c)."`) VALUES(".implode(',',array_fill(0,count($c),'?')).")");$v=array_values($r);$s->bind_param(str_repeat('s',count($v)),...$v);$s->execute();$id=$db->insert_id;$s->close();return $id;}
 function remapMeta($value,$key){global $map,$products;
  if(in_array($key,['_product_id','_variation_id','product_id','variation_id'],true))return (string)($products[(int)$value]??0);
- if(preg_match('/order_?id|post_?id|um_unique_payment_id/i',$key)){
+ if($key==='ship_orders_ids'||preg_match('/order_?id|post_?id|um_unique_payment_id/i',$key)){
   if(ctype_digit((string)$value))return (string)($map[(int)$value]??$value);
   if(preg_match('/^\d+(,\d+)+$/',(string)$value))return implode(',',array_map(fn($v)=>$map[(int)$v]??$v,explode(',',$value)));
   $decoded=@unserialize($value,['allowed_classes'=>false]);
