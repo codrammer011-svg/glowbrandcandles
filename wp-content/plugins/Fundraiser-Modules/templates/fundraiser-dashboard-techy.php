@@ -3159,7 +3159,7 @@ After submitting their registration, <br>sellers receive an email containing the
 							   { ?>
                            <div class="item style-scope organizer-fundraisers-detail">
                               <span class="label style-scope organizer-fundraisers-detail">Seller Report</span>
-                              <span class="value style-scope organizer-fundraisers-detail"><a href="https://glowbrandscandles.com/seller-reports/" style="color: #4990e2;">View Report</a></span>
+                              <span class="value style-scope organizer-fundraisers-detail"><a href="https://glowscentedcandles.com/seller-reports/" style="color: #4990e2;">View Report</a></span>
                            </div>
 							   <?php } */ ?>
 						   <div class="item no-border style-scope organizer-fundraisers-detail final-report">

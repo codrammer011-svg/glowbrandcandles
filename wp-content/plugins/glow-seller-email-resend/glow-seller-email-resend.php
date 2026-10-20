@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GLOW - Resend Seller Emails
  * Description: Re-sends the seller registration ("Seller Registered") email to sellers who registered during an email outage. Users → Resend Seller Emails.
- * Version:     1.5.0
+ * Version:     1.6.0
  * Author:      Saad Ahmed
  * Author URI:  mailto:saad@flywebsolutions.com
  *
@@ -304,11 +304,13 @@ function glow_ser_registered_is_local() {
 		if ( $regs ) {
 			$pad  = abs( $offset ) + HOUR_IN_SECONDS;
 			$rows = $wpdb->get_col( $wpdb->prepare(
-				"SELECT created_at FROM `{$table}` WHERE created_at BETWEEN %s AND %s AND ( initiator LIKE %s OR initiator LIKE %s )",
+				"SELECT created_at FROM `{$table}` WHERE created_at BETWEEN %s AND %s AND ( initiator LIKE %s OR initiator LIKE %s OR initiator LIKE %s )",
 				gmdate( 'Y-m-d H:i:s', min( $regs ) - $pad ),
 				gmdate( 'Y-m-d H:i:s', max( $regs ) + $pad ),
 				'%' . $wpdb->esc_like( 'send_welcome_email_to_new_user' ) . '%',
-				'%' . $wpdb->esc_like( 'user-registration' ) . '%'
+				'%' . $wpdb->esc_like( 'user-registration' ) . '%',
+				// New site: registration emails go out via the Glow Email Worker right after the request.
+				'%' . $wpdb->esc_like( 'glow-email-worker' ) . '%'
 			) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$events = array_map( function ( $r ) { return strtotime( $r . ' UTC' ); }, $rows );
 			sort( $events );
@@ -489,6 +491,13 @@ function glow_ser_insert_outage_note( $body ) {
  * available (e.g. a different theme) or didn't produce a seller email.
  */
 function glow_ser_theme_email( WP_User $user ) {
+	// New site: the theme has a proper seller email builder (inc/seller-forms.php).
+	// Use it directly — no form-post faking or mail interception needed.
+	if ( function_exists( 'glow_build_seller_welcome_email' ) ) {
+		$mail = glow_build_seller_welcome_email( $user->ID );
+		return $mail ? array( 'subject' => (string) $mail['subject'], 'body' => (string) $mail['body'], 'headers' => $mail['headers'] ) : null;
+	}
+	// Old site: capture the legacy theme function's seller email (below).
 	if ( ! function_exists( 'send_welcome_email_to_new_user' ) ) {
 		return null;
 	}
@@ -550,7 +559,7 @@ function glow_ser_theme_email( WP_User $user ) {
 	$link  = $s['seller_link'];
 	$reset = 'the password you created when you registered (<a href="' . esc_url( wp_lostpassword_url() ) . '" target="_blank" style="color:#4184f3;">forgot it? reset it here</a>)';
 	$body  = str_replace(
-		array( '&pass=' . $marker, '&amp;pass=' . $marker, $marker, 'https://glowscentedcandles.com/seller/user/tulip1936', 'https://glowbrandscandles.com/seller/user/tulip1936' ),
+		array( '&pass=' . $marker, '&amp;pass=' . $marker, $marker, 'https://glowscentedcandles.com/seller/user/tulip1936', 'https://glowscentedcandles.com/seller/user/tulip1936' ),
 		array( '', '', $reset, $link, $link ),
 		(string) $mine['message']
 	);
@@ -699,6 +708,10 @@ function glow_ser_record_resent( $user_id, $by, $background = false ) {
 	$log[] = array( 'at' => current_time( 'mysql' ), 'by' => (int) $by, 'background' => (bool) $background );
 	update_user_meta( $user_id, GLOW_SER_RESENT_META, $log );
 	delete_user_meta( $user_id, GLOW_SER_BG_ERROR_META );
+	// Keep the theme's own "seller welcome sent" flag in step (new site).
+	if ( ! get_user_meta( $user_id, '_glow_seller_welcome_sent', true ) ) {
+		update_user_meta( $user_id, '_glow_seller_welcome_sent', current_time( 'mysql' ) );
+	}
 }
 
 // Send a batch (a few at a time, driven by the page's JS).
@@ -942,9 +955,17 @@ function glow_ser_render_page() {
 			$resent  = array_filter( (array) get_user_meta( $u->ID, GLOW_SER_RESENT_META, true ) );
 			$last    = $resent ? end( $resent ) : null;
 			$status  = null === $times ? 'unknown' : ( glow_ser_has_failure( glow_ser_registered_ts( $s['registered'] ), $times ) ? 'failed' : 'ok' );
+			// New site: sellers who registered while no seller email existed (Oct 19, 2026
+			// onward, before glow_email_user_seller_welcome) have neither the "sent" flag
+			// nor a QR code — the seller email is the only thing that creates either.
+			if ( 'failed' !== $status && function_exists( 'glow_build_seller_welcome_email' )
+				&& ! get_user_meta( $u->ID, '_glow_seller_welcome_sent', true )
+				&& ! get_user_meta( $u->ID, 'seller_barcode_link', true ) ) {
+				$status = 'never';
+			}
 			$only_failed     = in_array( $show, array( 'failed', 'failed_not_resent' ), true );
 			$only_not_resent = in_array( $show, array( 'failed_not_resent', 'not_resent' ), true );
-			if ( ( $only_failed && 'failed' !== $status ) || ( $only_not_resent && $resent ) ) {
+			if ( ( $only_failed && ! in_array( $status, array( 'failed', 'never' ), true ) ) || ( $only_not_resent && $resent ) ) {
 				continue;
 			}
 			$dup         = glow_ser_dup_info( $u );
@@ -970,6 +991,7 @@ function glow_ser_render_page() {
 	$me      = wp_get_current_user();
 	$labels  = array(
 		'failed'  => '<span style="color:#b32d2e;font-weight:600;">✗ Failed</span>',
+		'never'   => '<span style="color:#b32d2e;font-weight:600;" title="Registered while the site had no seller email — no QR code or seller email was ever sent">✗ Never sent</span>',
 		'ok'      => '<span style="color:#2e7d32;">✓ No error logged</span>',
 		'unknown' => '<span style="color:#777;">? Unknown</span>',
 	);
@@ -1057,7 +1079,7 @@ function glow_ser_render_page() {
 			<?php endif; ?>
 			<?php foreach ( $rows as $r ) : ?>
 				<tr data-id="<?php echo (int) $r['id']; ?>"<?php echo $r['is_dup'] ? ' style="opacity:.55;"' : ''; ?>>
-					<th class="check-column"><input type="checkbox" class="glow-ser-cb" value="<?php echo (int) $r['id']; ?>" <?php checked( ! $r['is_dup'] && ! $r['queued'] && 'failed' === $r['status'] && '' === $r['resent'] ); ?> <?php disabled( $r['is_dup'] || $r['queued'] || '' !== $r['resent'] ); ?> title="<?php echo esc_attr( '' !== $r['resent'] ? 'Already re-sent — will not be sent again' : ( $r['queued'] ? 'Queued for background sending' : '' ) ); ?>"></th>
+					<th class="check-column"><input type="checkbox" class="glow-ser-cb" value="<?php echo (int) $r['id']; ?>" <?php checked( ! $r['is_dup'] && ! $r['queued'] && in_array( $r['status'], array( 'failed', 'never' ), true ) && '' === $r['resent'] ); ?> <?php disabled( $r['is_dup'] || $r['queued'] || '' !== $r['resent'] ); ?> title="<?php echo esc_attr( '' !== $r['resent'] ? 'Already re-sent — will not be sent again' : ( $r['queued'] ? 'Queued for background sending' : '' ) ); ?>"></th>
 					<td><a href="<?php echo esc_url( get_edit_user_link( $r['id'] ) ); ?>"><?php echo esc_html( $r['full_name'] !== '' ? $r['full_name'] : $r['login'] ); ?></a></td>
 					<td><?php echo esc_html( $r['email'] ); ?></td>
 					<td><?php echo esc_html( trim( $r['fid'] . ( $r['org'] !== '' ? ' — ' . $r['org'] : '' ) ) ); ?></td>

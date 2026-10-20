@@ -547,7 +547,7 @@ add_filter( 'woocommerce_get_price_suffix', 'wc_get_price_suffix_filter', 10, 2 
 	{
 		$to = $_POST['email'];
 		$fid = strval($_POST['f_id']);
-		//$register_link = 'https://glowbrandscandles.com/seller-register/?frid='.$f_id;
+		//$register_link = 'https://glowscentedcandles.com/seller-register/?frid='.$f_id;
 		//$link= "<a href=".$register_link.">Seller Registration</a>";
 		$subject = "Fundraiser Invite! You To Register As Seller. ";
 		$body ='';
@@ -6193,7 +6193,7 @@ function wp_close_out_send_email( $email)
 	{
 		$to = $email;
 		$fid = strval($_POST['f_id']);
-		//$register_link = 'https://glowbrandscandles.com/seller-register/?frid='.$f_id;
+		//$register_link = 'https://glowscentedcandles.com/seller-register/?frid='.$f_id;
 		//$link= "<a href=".$register_link.">Seller Registration</a>";
 		$subject = "Close Out request Successfully Sent!";
 		$body ='';

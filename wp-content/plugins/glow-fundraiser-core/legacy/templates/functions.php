@@ -469,7 +469,7 @@ add_filter( 'woocommerce_get_price_suffix', 'wc_get_price_suffix_filter', 10, 2 
 	{
 		$to = $_POST['email'];
 		$fid = strval($_POST['f_id']);
-		//$register_link = 'https://glowbrandscandles.com/seller-register/?frid='.$f_id;
+		//$register_link = 'https://glowscentedcandles.com/seller-register/?frid='.$f_id;
 		//$link= "<a href=".$register_link.">Seller Registration</a>";
 		$subject = "Fundraiser Invite! You To Register As Seller. ";
 		$body ='';
@@ -2838,7 +2838,7 @@ $m_body=stripslashes($body);
 			}
 			/* Register link for dashboard */
 			
-		/*	$text2 = "https://glowbrandscandles.com/seller-register/?frid=".$user_id;
+		/*	$text2 = "https://glowscentedcandles.com/seller-register/?frid=".$user_id;
 			$arrayUploadPath2 = wp_upload_dir();
 			$fileUploadSubDir2 = $arrayUploadPath2['basedir']."/qrcodes/image_seller_register".$user_id.".png";
 			QRcode::png($text2, $fileUploadSubDir2);
@@ -7494,7 +7494,7 @@ function wp_close_out_send_email( $email)
 	{
 		$to = $email;
 		$fid = strval($_POST['f_id']);
-		//$register_link = 'https://glowbrandscandles.com/seller-register/?frid='.$f_id;
+		//$register_link = 'https://glowscentedcandles.com/seller-register/?frid='.$f_id;
 		//$link= "<a href=".$register_link.">Seller Registration</a>";
 		$subject = "Close Out request Successfully Sent!";
 		$body ='';
@@ -10943,7 +10943,7 @@ include_once( 'representative.php' );
         //check for subscribers
         if (in_array('representative', $user->roles)) {
             // redirect them to another URL, in this case, the homepage 
-            $redirect_to =  "https://glowbrandscandles.com/reprenstative-dashboard/";
+            $redirect_to =  "https://glowscentedcandles.com/reprenstative-dashboard/";
         }
     }
 
@@ -11301,7 +11301,7 @@ foreach($users as $user)
 // 		<p>Glow will ship your brochures along with kick off product to you within 2 weeks of your sale start date via UPS to the address given below. Tracking information will be provided once it ships. In the meantime, you can set your online account below.  </p>
       
 // 		<p style="color: rgb(0, 0, 0); text-decoration: underline;"><b>ONLINE "DIRECTOR LOGIN":</b></p>
-// 		<p>Click the following link <a href="https://glowbrandscandles.com/my-account/?email='.$user_email.'&amp;pass='.$user_pass.'" target="_blank">https://glowbrandscandles.com/my-account</a> to access the Director Login. </p> 
+// 		<p>Click the following link <a href="https://glowscentedcandles.com/my-account/?email='.$user_email.'&amp;pass='.$user_pass.'" target="_blank">https://glowscentedcandles.com/my-account</a> to access the Director Login. </p> 
 // 		<p><b>Login Details: </b></p>
 //          <p><b>Email Address: </b> '.$user_email.' </p>
 // 	     <p><b>Password: </b> admin@123 </p>
@@ -11355,7 +11355,7 @@ foreach($users as $user)
 // 		<p><b>Reason for Fundraising (A message to be read by your customers for why you are fundraising/how the funds raised will be used.) : </b>'.$reason_for_fundraising.'</p>
 // 		<p><b>Profit Check for Online Store will be payable to : </b>.'.$input_box_1693293590.'.</p>
 	
-// 		<p><b>Profile Link: <a href="https://glowbrandscandles.com/profile/'.$uid.'?reason_is='.$reason_for_fundraising.'" target="_blank">https://'.$user_email.'/profile/'.$uid.'</a></b></p>
+// 		<p><b>Profile Link: <a href="https://glowscentedcandles.com/profile/'.$uid.'?reason_is='.$reason_for_fundraising.'" target="_blank">https://'.$user_email.'/profile/'.$uid.'</a></b></p>
 		
 // 		<ul>
 //  	<li>Boost sales and reach everyone with or online shopping option. This is the perfect solution to out of town family &amp; friends. Customer pays for their order online via credit card, their order drop ships directly to the customer within 7 days.</li>
@@ -11368,7 +11368,7 @@ foreach($users as $user)
 // 		<p><b>If you have any questions at all during your sale please feel free to contact us, we are here to help!</b></p>
 // 		<p>The Glow Team<font color="#888888"><br>Glow Scented Candles<br>
 // <a href="mailto:contact@glowscentedcandles.com" target="_blank">contact@glowscentedcandles.com</a><br>
-// <a href="https://glowbrandscandles.com" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
+// <a href="https://glowscentedcandles.com" target="_blank">www.glowscentedcandles.com</a><u></u><u></u></font></p>
 // 	  </td>
 // 		</tr>
 //         </tbody></table>
