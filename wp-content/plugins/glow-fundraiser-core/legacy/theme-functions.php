@@ -3799,11 +3799,11 @@ $group_name=get_user_meta( $slrID, 'user_registration_name_of_school_business', 
 	}
 	$checkbox=get_post_meta( $order_id, 'wc_checkbox_field', true );
     $slr_info  = get_userdata($slrID);
-	$user_email = $slr_info->user_email;
+	$user_email = $slr_info ? $slr_info->user_email : '';
 	if(is_numeric($sellerid))
 	{
 		$slr_info1  = get_userdata($sellerid);
-	    $seller_email = $slr_info1->user_email;
+	    $seller_email = $slr_info1 ? $slr_info1->user_email : '';
 	}
     /*$to= $referral_email;*/
 	if(!empty($seller_email) && !empty($referral_email))
@@ -3833,10 +3833,25 @@ $group_name=get_user_meta( $slrID, 'user_registration_name_of_school_business', 
 	}
 	else
 	{
-		$multiple_recipients = "";
+		$multiple_recipients = array( $user_email );
 			
 	}
 	
+	// Always include the purchaser, even when no seller/referral email exists.
+	$recipient_order = wc_get_order( $order_id );
+	if ( $recipient_order ) {
+		$customer_email = $recipient_order->get_billing_email();
+		if ( ! is_email( $customer_email ) ) {
+			$customer = $recipient_order->get_user();
+			$customer_email = $customer ? $customer->user_email : '';
+		}
+		$multiple_recipients[] = $customer_email;
+	}
+	$multiple_recipients = array_values( array_unique( array_filter( $multiple_recipients, 'is_email' ) ) );
+	if ( ! $multiple_recipients ) {
+		error_log( 'Glow order email has no valid recipients for order ' . absint( $order_id ) );
+		return;
+	}
 	//  $subject = "Glow Scented Candles - Fundraiser Order";
 	
 	if($orderType=="Online")
