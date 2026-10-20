@@ -34,6 +34,14 @@ function glow_temporary_admin_email_redirect( $mail ) {
         $mail['to'] = array( $destination );
     }
 
+    // Elementor forms (Wholesale, Contact Us, footer) still notify a developer inbox; send them to Candace.
+    if ( isset( $mail['to'] ) ) {
+        $developer = '/(?<![a-z0-9.!#$%&\x27*+\/=?^_`{|}~@-])saadtflames@gmail\.com(?![a-z0-9.@-])/i';
+        $mail['to'] = is_array( $mail['to'] )
+            ? array_values( array_unique( preg_replace( $developer, $destination, $mail['to'] ) ) )
+            : preg_replace( $developer, $destination, $mail['to'] );
+    }
+
     // Admin notifications addressed to either Candace inbox go to both.
     $recipients = isset($mail['to']) ? (is_array($mail['to']) ? $mail['to'] : preg_split('/\s*,\s*/', $mail['to'])) : array();
     foreach ($recipients as $recipient) {
