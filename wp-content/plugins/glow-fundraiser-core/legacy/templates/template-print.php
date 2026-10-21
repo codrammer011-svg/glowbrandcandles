@@ -6,6 +6,11 @@
 
 
   if ( is_user_logged_in() ) {
+// These collections can remain empty when a campaign has no matching seller orders.
+// PHP 8 requires arrays for in_array() and count(), including empty report sections.
+$seller_name = array();
+$seller_name_ship = array();
+$item_qty_arr = array();
 $ID=$_GET['fund_id'];
 $u_id=$ID;
 if($u_id==205821)
