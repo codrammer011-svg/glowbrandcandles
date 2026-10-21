@@ -164,10 +164,15 @@
         // CSS hides the gate popup at once; closing it through Elementor also releases its scroll lock.
         document.documentElement.classList.add('grb-skip-gate');
         if (window.jQuery) {
-            window.jQuery(document).on('elementor/popup/show', (event, id) => {
+            window.jQuery(document).on('elementor/popup/show', (event, id, instance) => {
                 const modal = document.getElementById('elementor-popup-modal-' + id);
-                const api = window.elementorProFrontend && window.elementorProFrontend.modules.popup;
-                if (modal && modal.querySelector('[data-grb][data-mode=gate]') && api) api.closePopup({ id: id }, event);
+                if (!modal || !modal.querySelector('[data-grb][data-mode=gate]')) return;
+                // closePopup() finds the popup from a click target, so hide the popup's modal directly.
+                setTimeout(() => {
+                    const doc = instance || (window.elementorFrontend && window.elementorFrontend.documentsManager.documents[id]);
+                    if (doc && doc.getModal) doc.getModal().hide();
+                    document.querySelectorAll('.dialog-prevent-scroll').forEach(node => node.classList.remove('dialog-prevent-scroll'));
+                }, 0);
             });
         }
         const fill = () => prefillRegistration(skip.email);
