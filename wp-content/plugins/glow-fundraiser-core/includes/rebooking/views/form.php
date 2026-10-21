@@ -1,8 +1,10 @@
 <?php defined('ABSPATH') || exit; ?>
 <section class="grb" data-grb data-mode="<?php echo esc_attr($mode); ?>" aria-label="Fundraiser registration">
+    <?php if ($mode === 'dashboard') : // The Elementor popup supplies its own heading for the gate. ?>
     <span class="grb-eyebrow">GLOW SCENTED CANDLES</span>
-    <h2><?php echo $mode === 'dashboard' ? 'Book Next Year' : 'Let’s start your next fundraiser'; ?></h2>
-    <p class="grb-intro"><?php echo $mode === 'dashboard' ? 'Choose your new campaign dates. Your organization details, email and password will carry over.' : 'Have you fundraised with GLOW before? Enter your email so we can guide you to the right place.'; ?></p>
+    <h2>Book Next Year</h2>
+    <p class="grb-intro">Choose your new campaign dates. Your organization details, email and password will carry over.</p>
+    <?php endif; ?>
     <form data-grb-lookup <?php echo $mode === 'dashboard' ? 'hidden' : ''; ?>>
         <label>Email address<input type="email" name="email" autocomplete="email" required maxlength="100" placeholder="you@example.com"></label>
         <button class="grb-button" type="submit">Continue <span aria-hidden="true">&rarr;</span></button>

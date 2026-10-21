@@ -7,3 +7,5 @@
 .grb .grb-status{margin:16px 0 0;font-size:14px}.grb .grb-status:empty{display:none}.grb .is-error{color:#b42318}.grb .grb-text-link,.grb .grb-back{color:var(--grb-pink);font-size:13px;text-decoration:underline}.grb .grb-back{border:0;background:transparent;padding:14px 0 0;cursor:pointer}.grb .grb-email{font-weight:650;overflow-wrap:anywhere}
 .grb-dialog{width:min(580px,calc(100% - 24px));max-height:90vh;padding:0;border:0;border-radius:22px;box-shadow:0 24px 80px #20102433;overflow:auto}.grb-dialog::backdrop{background:#20102499}.grb-close{position:absolute;right:10px;top:7px;background:transparent;border:0;color:#72677d;font-size:26px;cursor:pointer;padding:0 9px}.grb-dialog .grb{padding-top:38px}
 @media(max-width:440px){.grb{padding:24px 20px}.grb .grb-dates{grid-template-columns:1fr;gap:0}}
+/* Popup gate sits directly on the Elementor design: no card, padding or shadow. */
+.grb[data-mode=gate],.elementor-widget-shortcode:has(.grb[data-mode=gate]),.elementor-widget-shortcode:has(.grb[data-mode=gate])>.elementor-widget-container{padding:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important}
