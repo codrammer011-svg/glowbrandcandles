@@ -10,6 +10,7 @@
 !/wp-content/mu-plugins/
 /wp-content/themes/*
 !/wp-content/themes/glow-scented-candles/
+!/wp-content/themes/hello-elementor/
 /wp-content/plugins/*
 !/wp-content/plugins/glow-fundraiser-core/
 !/wp-content/plugins/Fundraiser-Modules/

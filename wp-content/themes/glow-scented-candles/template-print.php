@@ -6,6 +6,10 @@
 
 
   if ( is_user_logged_in() ) {
+// Empty seller sections must still supply arrays to PHP 8's in_array()/count().
+$seller_name = array();
+$seller_name_ship = array();
+$item_qty_arr = array();
 $ID=$_GET['fund_id'];
 $u_id=$ID;
 if($u_id==205821)
