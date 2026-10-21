@@ -26,7 +26,7 @@ The old `wp_rebooking_ajax` compatibility handler now rejects direct legacy requ
 
 The new fundraiser receives a distinct user ID, the same email/username/password hash, the selected dates, profile/contact/organization details and the existing representative's current payment link. The explicit profile allowlist is in `class-glow-fc-rebooking-campaigns.php`.
 
-Old orders, sellers, reports, payments, carts and close-out metadata stay with the previous ID. The previous login/email is archived and linked to the new account; its sessions are revoked after a successful transaction. Original identity information remains in private audit metadata. Archived accounts cannot sign in. Historical records remain available to administrators.
+Old orders, sellers, reports, payments, carts and close-out metadata stay with the previous ID. The previous login/email is archived (email becomes `rebook_<Y-m-d_His>_<original email>`, as with the legacy handler) and linked to the new account; its sessions are revoked after a successful transaction. Original identity information remains in private audit metadata. Archived accounts cannot sign in. Historical records remain available to administrators.
 
 The transfer uses InnoDB transactions and a database lock; repeat clicks reuse the new campaign. Guest rebooking requires WordPress password authentication; dashboard rebooking uses the current session's user ID. Requests require nonce validation, confirmation, date validation and same-origin checks; public lookup/password attempts are rate-limited.
 

@@ -128,6 +128,7 @@ expect((int) username_exists('chair@example.invalid') === $next, 'same username 
 expect(get_userdata($next)->user_pass === $original_hash, 'password hash preserved exactly');
 expect((int) wp_authenticate('chair@example.invalid', 'Test! Same password 123')->ID === $next, 'same password authenticates new account');
 expect(is_wp_error(wp_authenticate(get_userdata($source)->user_login, 'Test! Same password 123')), 'archived login is blocked');
+expect((bool) preg_match('/^rebook_\d{4}-\d{2}-\d{2}_\d{6}_chair@example\.invalid$/', get_userdata($source)->user_email), 'archived email uses rebook_date_time_email format');
 expect(!WP_Session_Tokens::get_instance($source)->verify($token), 'old sessions revoked after commit');
 expect(get_user_meta($next, 'user_registration_name_of_school_business', true) === 'A School', 'organization copied');
 expect(get_user_meta($next, 'billing_address_1', true) === '123 School Road', 'contact address copied');

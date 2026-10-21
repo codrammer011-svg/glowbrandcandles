@@ -136,10 +136,16 @@ final class Glow_FC_Rebooking_Campaigns {
             }
             $transaction = true;
             $archive_login = 'grb_archive_' . $source_id . '_' . strtolower(wp_generate_password(10, false));
+            // Same format as the legacy handler, e.g. rebook_2024-05-08_015256_chair@example.com.
+            $archive_email = 'rebook_' . current_time('Y-m-d_His') . '_' . $source->user_email;
+            // Query the table directly: the user cache can still hold a rolled-back archive email.
+            if (strlen($archive_email) > 100 || $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->users} WHERE user_email = %s", $archive_email))) {
+                $archive_email = $archive_login . '@rebook.invalid';
+            }
             // Update directly: archive identity must not send an email-change notification.
             $changed = $wpdb->update($wpdb->users, array(
                 'user_login' => $archive_login,
-                'user_email' => $archive_login . '@rebook.invalid',
+                'user_email' => $archive_email,
                 'user_activation_key' => '',
             ), array('ID' => $source_id));
             if (1 !== $changed) {
