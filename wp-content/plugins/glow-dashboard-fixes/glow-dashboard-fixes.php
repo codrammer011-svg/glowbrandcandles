@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GLOW Dashboard Fixes
  * Description: Fixes for the chairperson fundraiser dashboard (seller registration link, hidden seller list, goal display, table and section styling). Deactivate to undo.
- * Version: 1.7.14
+ * Version: 1.7.15
  * Author: Glow
  */
 

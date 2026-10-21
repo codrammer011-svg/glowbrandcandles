@@ -102,6 +102,11 @@ add_action( 'wp_head', function () {
 	.glow-fd-top .glow-fd-days{font-size:26px !important;font-weight:900 !important;color:#ffd84d !important;letter-spacing:.03em;text-shadow:0 2px 8px rgba(0,0,0,.25)}
 	.glow-fd-top .glow-fd-hero-end{font-size:17px;font-weight:800;color:#fff;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28)}
 	.glow-fd-thanks p{font-size:17.5px !important;line-height:1.5 !important;font-weight:600 !important}
+	.glow-fd-profile .glow-fd-msg{margin:0 0 20px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid #ffd3e0;text-align:left}
+	.glow-fd-profile .glow-fd-msg-k{display:block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ec0f63;margin-bottom:6px}
+	.glow-fd-profile .glow-fd-msg p{margin:0;font-size:15px;line-height:1.5;color:#3a3752;font-style:italic;max-height:9.2em;overflow:auto}
+	.glow-fd-profile .glow-fd-msg p.is-empty{font-style:normal;color:#6f6c85;font-size:14px}
+	.glow-fd-profile .glow-fd-msg p a{color:#ec0f63 !important;font-weight:700}
 	/* Row 1: fill the white space — bigger logo, name, donut, dollar amounts (client request) */
 	.glow-fd-row1 .glow-fd-profile{display:flex;flex-direction:column;justify-content:center}
 	.glow-fd-row1 .glow-fd-avatar{width:170px !important;height:170px !important;padding:5px !important;box-shadow:0 0 0 4px #ffb7cd !important;margin-bottom:18px !important}
@@ -188,6 +193,12 @@ add_action( 'wp_footer', function () {
 	</section>
 	<?php
 	$top5 = ob_get_clean();
+	/* group message typed in Edit Fundraiser Info / Customize store */
+	$msg = trim( (string) get_user_meta( $fid, 'fund_profile_description', true ) );
+	if ( '' === $msg ) { $msg = trim( (string) get_user_meta( $fid, 'user_registration_reason_for_fundraising', true ) ); }
+	$msg_html = '<div class="glow-fd-msg">' . ( '' !== $msg
+		? '<span class="glow-fd-msg-k">Our message</span><p>' . nl2br( esc_html( wp_strip_all_tags( $msg ) ) ) . '</p>'
+		: '<span class="glow-fd-msg-k">Our message</span><p class="is-empty">Tell supporters why you are raising funds. <a href="' . esc_url( home_url( '/fundraiser-info/' ) ) . '">Add your message</a></p>' ) . '</div>';
 	?>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 	<script id="glow-fd-tweaks-js">
@@ -196,6 +207,9 @@ add_action( 'wp_footer', function () {
 		/* hero: end date */
 		var end = fd.querySelector('.glow-fd-enddate'), row = fd.querySelector('.glow-fd-statusrow');
 		if (end && row && !row.querySelector('.glow-fd-hero-end')) { var e = document.createElement('span'); e.className = 'glow-fd-hero-end'; e.textContent = end.textContent.replace(/\s+/g,' ').trim(); row.appendChild(e); }
+		/* group message under the logo in the Hi card */
+		var prof = fd.querySelector('.glow-fd-profile'), role = prof && prof.querySelector('.glow-fd-role');
+		if (prof && !prof.querySelector('.glow-fd-msg')) { var m = document.createElement('div'); m.innerHTML = <?php echo wp_json_encode( $msg_html ); ?>; var btn = prof.querySelector('.glow-fd-store-btn'); prof.insertBefore(m.firstElementChild, btn || null); }
 		/* order status card above seller brochure orders */
 		var orders = document.getElementById('glow-fd-orders'), sbo = fd.querySelector('.glow-sbo');
 		if (orders && sbo && sbo.parentNode) sbo.parentNode.insertBefore(orders, sbo);

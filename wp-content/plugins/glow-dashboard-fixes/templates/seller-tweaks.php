@@ -69,6 +69,15 @@ add_action( 'wp_head', function () {
 	/* profile */
 	.glow-sd-profile .glow-sd-role{font-size:16px !important;color:#4a4766 !important;line-height:1.35}
 	.glow-sd-profile .glow-sd-role b{display:block;font-weight:800;color:#181735;font-size:17px}
+	/* messages */
+	.glow-sd-profile .glow-st-msg{margin:0 0 18px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid #ffd3e0;text-align:left}
+	.glow-st-msg-k{display:block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ec0f63;margin-bottom:6px}
+	.glow-sd-profile .glow-st-msg p{margin:0;font-size:14.5px;line-height:1.5;color:#3a3752;font-style:italic;max-height:9em;overflow:auto}
+	.glow-sd-profile .glow-st-msg p.is-empty{font-style:normal;color:#6f6c85;font-size:13.5px}
+	.glow-sd-profile .glow-st-msg p a{color:#ec0f63 !important;font-weight:700}
+	.glow-st-team .glow-st-grpmsg{margin-top:12px;padding:12px 14px;border-radius:14px;background:#f7f6fb;border:1px solid #ecebf3}
+	.glow-st-team .glow-st-grpmsg .glow-st-msg-k{color:#6c3df5}
+	.glow-st-team .glow-st-grpmsg p{margin:0;font-size:14.5px;line-height:1.5;color:#3a3752;font-style:italic}
 	/* goal card stat tiles */
 	.glow-st-stats{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:10px;margin-top:14px}
 	.glow-st-stats .glow-st-stat{display:flex;align-items:center;gap:10px;padding:12px 12px;border-radius:14px;background:#f7f6fb;border:1px solid #ecebf3}
@@ -120,6 +129,19 @@ add_action( 'wp_footer', function () {
 	$d   = $sid ? glow_st_data( $sid ) : null;
 	if ( ! $d ) { return; }
 	$me   = trim( get_user_meta( $sid, 'first_name', true ) . ' ' . get_user_meta( $sid, 'last_name', true ) );
+	/* messages: the seller's own (Customize my store) and the group's (chairperson) */
+	$own = '';
+	if ( function_exists( 'glow_sd_meta' ) ) {
+		$own = trim( (string) get_user_meta( $sid, glow_sd_meta( 'description' ), true ) );
+		if ( '' === $own ) { $own = trim( (string) get_user_meta( $sid, glow_sd_meta( 'description_2' ), true ) ); }
+	}
+	if ( '' === $own ) { $own = trim( (string) get_user_meta( $sid, 'fund_profile_description', true ) ); }
+	$grp = trim( (string) get_user_meta( $d['fid'], 'fund_profile_description', true ) );
+	if ( '' === $grp ) { $grp = trim( (string) get_user_meta( $d['fid'], 'user_registration_reason_for_fundraising', true ) ); }
+	$own_html = '<div class="glow-st-msg">' . ( '' !== $own
+		? '<span class="glow-st-msg-k">My message</span><p>' . nl2br( esc_html( wp_strip_all_tags( $own ) ) ) . '</p>'
+		: '<span class="glow-st-msg-k">My message</span><p class="is-empty">Add a short message for your supporters. <a href="' . esc_url( function_exists( 'glow_sd_url' ) ? glow_sd_url( 'customize' ) : home_url( '/seller-upload-image-and-description/' ) ) . '">Add it now</a></p>' ) . '</div>';
+	$grp_html = '' !== $grp ? '<div class="glow-st-grpmsg"><span class="glow-st-msg-k">Why we are raising funds</span><p>' . nl2br( esc_html( wp_strip_all_tags( $grp ) ) ) . '</p></div>' : '';
 	$top  = '';
 	if ( $d['top'] ) {
 		$i = 0;
@@ -135,6 +157,7 @@ add_action( 'wp_footer', function () {
 		. '<p class="glow-st-team-line"><b>' . esc_html( $d['org'] ? $d['org'] : 'Your group' ) . '</b> has raised <b>' . wp_strip_all_tags( wc_price( $d['raised'] ) ) . '</b> of ' . wp_strip_all_tags( wc_price( $d['goal'] ) ) . '</p>'
 		. '<div class="glow-st-bar"><span style="width:' . (int) $d['pct'] . '%"></span></div><div class="glow-st-pct">' . (int) $d['pct'] . '%</div>'
 		. ( $d['rank'] ? '<p class="glow-st-rank">You\'re #' . (int) $d['rank'] . ' of ' . (int) $d['sellers'] . ' ' . _n( 'seller', 'sellers', (int) $d['sellers'] ) . ' &#127942;</p>' : '<p class="glow-st-rank" style="color:#6f6c85">' . (int) $d['sellers'] . ' ' . _n( 'seller', 'sellers', (int) $d['sellers'] ) . ' on your team &mdash; make your first sale to get on the board!</p>' )
+		. $grp_html
 		. '</div><div class="glow-st-top"><h4>&#10084;&#65039; Top 5 Customers</h4>' . $top . '</div></div>';
 	$days = $d['days'] >= 0
 		? '<div class="glow-st-days"><span class="glow-st-clock"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.6 1.6"/><path d="M5 3.5 2.5 6M19 3.5 21.5 6"/></svg></span><b>' . (int) $d['days'] . ' DAYS LEFT</b>' . ( $d['end'] ? '<span class="glow-st-end">Ends ' . esc_html( $d['end'] ) . '</span>' : '' ) . '</div>'
@@ -149,6 +172,9 @@ add_action( 'wp_footer', function () {
 		/* profile: selling for */
 		var role = $('.glow-sd-profile .glow-sd-role'); var org = <?php echo wp_json_encode( $d['org'] ); ?>;
 		if (role && org) { role.innerHTML = 'Selling for:<b>' + org.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }) + '</b>'; }
+		/* seller's own message under the photo */
+		var prof = $('.glow-sd-profile');
+		if (prof && !prof.querySelector('.glow-st-msg')) { var om = document.createElement('div'); om.innerHTML = <?php echo wp_json_encode( $own_html ); ?>; prof.insertBefore(om.firstElementChild, prof.querySelector('.glow-sd-store-btn') || null); }
 		/* goal card: stat tiles from the snapshot card */
 		var snap = $('.glow-sd-snapshot'), goal = $('.glow-sd-goal');
 		if (snap && goal) {
