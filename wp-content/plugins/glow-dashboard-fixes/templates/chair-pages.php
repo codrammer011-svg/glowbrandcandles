@@ -271,9 +271,10 @@ add_action( 'wp_footer', function () {
 
 /* ------------------------------------------------------------------ */
 /* A2. Store welcome popup: a fundraising message longer than one line */
-/*     ran over the "Support Now" progress block. Clamp it and nudge   */
-/*     the blocks below it down (popup is 440px tall, OK button had    */
-/*     40px of slack).                                                  */
+/*     ran over the "Support Now" progress block. Nudge the blocks     */
+/*     below it down (popup is 440px tall, OK button had 40px of       */
+/*     slack); the script grows the popup for longer messages so the   */
+/*     whole message shows.                                             */
 /* ------------------------------------------------------------------ */
 add_action( 'wp_head', function () {
 	if ( ! get_query_var( 'profile' ) && ! get_query_var( 'user' ) && ! get_query_var( 'seller' ) ) {
@@ -281,11 +282,55 @@ add_action( 'wp_head', function () {
 	}
 	echo '<style id="glow-cp-popup">@media(min-width:768px){'
 		. '#brave_popup_12975 #brave_element--N3sYSN7DAn8xy7o0Mnh{top:158px !important}'
-		. '#brave_popup_12975 #brave_element--N3sYSN7DAn8xy7o0Mnh .brave_element__text_inner{font-size:14px !important;line-height:1.3 !important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}'
+		. '#brave_popup_12975 #brave_element--N3sYSN7DAn8xy7o0Mnh .brave_element__text_inner{font-size:14px !important;line-height:1.3 !important}'
 		. '#brave_popup_12975 #brave_element--WWW{top:204px !important}'
 		. '#brave_popup_12975 .exit-intent-popup-button{top:383px !important}'
 		. '}</style>';
 } );
+
+add_action( 'wp_footer', function () {
+	if ( ! get_query_var( 'profile' ) && ! get_query_var( 'user' ) && ! get_query_var( 'seller' ) ) {
+		return;
+	}
+	?>
+	<script id="glow-cp-popup-fit">
+	(function () {
+		var pop = document.getElementById('brave_popup_12975');
+		if (!pop) return;
+		var inner = pop.querySelector('.brave_popup__step__inner'), wrap = pop.querySelector('.brave_popupSections__wrap');
+		var title = document.getElementById('brave_element--N3sYSN7DAn8xy7o0Mng'), desc = document.getElementById('brave_element--N3sYSN7DAn8xy7o0Mnh'), support = document.getElementById('brave_element--WWW'), ok = pop.querySelector('.exit-intent-popup-button');
+		if (!inner || !wrap || !title || !desc || !support || !ok) return;
+		var chain = [title, desc, support, ok];
+		// Top to bottom: wherever a block (a two-line name, a long message) runs into the next one, push everything below it
+		// down by that much, and grow the popup by the same amount.
+		function fit() {
+			chain.forEach(function (el) { el.style.removeProperty('top'); });
+			['height', 'max-height', 'overflow-y', 'margin-top'].forEach(function (p) { inner.style.removeProperty(p); });
+			wrap.style.removeProperty('height');
+			if (!desc.offsetHeight) return;
+			var extra = 0;
+			for (var i = 1; i < chain.length; i++) {
+				var prev = chain[i - 1], el = chain[i], base = el.offsetTop;
+				var overlap = prev.offsetTop + prev.offsetHeight + 6 - (base + extra);
+				if (overlap > 0) extra += overlap;
+				if (extra) el.style.setProperty('top', (base + extra) + 'px', 'important');
+			}
+			if (extra <= 0) return;
+			var h = inner.offsetHeight + extra, max = window.innerHeight - 40;
+			wrap.style.height = h + 'px';
+			inner.style.height = 'auto';
+			inner.style.maxHeight = max + 'px';
+			inner.style.overflowY = 'auto';
+			inner.style.marginTop = (-Math.min(h, max) / 2) + 'px';
+		}
+		fit();
+		window.addEventListener('load', fit);
+		window.addEventListener('resize', fit);
+		if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+	})();
+	</script>
+	<?php
+}, 100 );
 
 /* ------------------------------------------------------------------ */
 /* B. Legacy templates query orders with status "published" (invalid)  */

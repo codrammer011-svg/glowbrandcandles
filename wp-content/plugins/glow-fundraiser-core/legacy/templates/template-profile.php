@@ -10,6 +10,26 @@ get_header();
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 		.sc-feJyhm.jqEzoc.txt { line-height: 145%; font-size: 19px; font-family: 'Winnie PERSONAL USE' !important; font-weight: 400; color: #000; }
+
+	/* Site typography (Elementor globals, as on the home page): Plus Jakarta Sans for headings, DM Sans for all other text.
+	   Icon fonts keep their own family. The :not(#glow-ff-N) parts only raise specificity above the older !important font rules below. */
+	:is(.main-page-banner, .sc-jtRfpW, .manual-mass-popup, #brave_popup_12975):not(#glow-ff-1):not(#glow-ff-2),
+	:is(.main-page-banner, .sc-jtRfpW, .manual-mass-popup, #brave_popup_12975) :not(i, .fa, [class*="fa-"], [class*="sli-"], [class*="icon"], .star-rating, .star-rating *):not(#glow-ff-1):not(#glow-ff-2) {
+		font-family: "DM Sans", sans-serif !important;
+	}
+	:is(.main-page-banner, .sc-jtRfpW, .manual-mass-popup, #brave_popup_12975) :is(h1, .mainHeading, .sc-RefOD.jFdVyI, .sc-rBLzX.kLuVwd, #brave_element--N3sYSN7DAn8xy7o0Mng .brave_element__text_inner):not(#glow-ff-1):not(#glow-ff-2):not(#glow-ff-3) {
+		font-family: "Plus Jakarta Sans", sans-serif !important;
+		font-weight: 800 !important;
+	}
+	/* These fonts run wider than the ones the welcome popup was spaced for. */
+	#brave_popup_12975 #brave_element--N3sYSN7DAn8xy7o0Mng .brave_element__text_inner:not(#glow-ff-1):not(#glow-ff-2) {
+		font-size: min(26px, 6vw) !important;
+		letter-spacing: 0 !important;
+		line-height: 1.2 !important;
+	}
+	#brave_popup_12975 #brave_element--WWW .eYHKCV:not(#glow-ff-1) {
+		letter-spacing: 0 !important;
+	}
 		
 	.progress-bar:before { content: ""; background: repeating-linear-gradient(100deg, /* angle of slash */ #ffffff3d, /* color of slash */ #0800E4 8px, /* thickness of slash */ #ffffff21 20px, /* space between slashes */ #ffffff21 8px);   width: 100%; display: block; height: 100%; border-radius: 16px; }
 		.main-page-banner img { width: 100%; }
@@ -1750,26 +1770,36 @@ get_header();
 </div>
 <?php
 $image_url_profile=get_user_meta($u_id,"user_registration_image_url_profile",true);
-if(!empty($fund_image)) { 
+$profile_img_url = '';
+if(!empty($fund_image)) {
 $crop_url_profile1=profile_image_resize_crop( $src=$fund_image, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );
-?>
-<style>
-.kKkoMh
-{
-	background: url(<?php echo $crop_url_profile1; ?>) 50% 0px / cover rgb(255, 255, 255) !important;
+$profile_img_url = $crop_url_profile1;
 }
-</style>
-<?php } 
 else if(!empty($image_url_profile)) {
 	$crop_url_profile2=profile_image_resize_crop( $src=$image_url_profile, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );
+	$profile_img_url = $crop_url_profile2;
+}
+// Fallback when the fundraiser has no image, or its file won't load: the same "heart hands" image the welcome popup falls back to.
+$profile_img_fallback = get_theme_file_uri( '/images/Frame-92-1.png' );
 ?>
 <style>
 .kKkoMh
 {
-	background: url(<?php echo $crop_url_profile2; ?>) 50% 0px / cover rgb(255, 255, 255) !important;
+	background: url("<?php echo esc_url_raw( $profile_img_url ? $profile_img_url : $profile_img_fallback ); ?>") 50% 0px / cover rgb(255, 255, 255) !important;
 }
 </style>
-<?php } else {  }?>
+<?php if ( $profile_img_url ) { ?>
+<script>
+(function () {
+	var img = new Image();
+	img.onerror = function () {
+		var bg = 'url("' + <?php echo wp_json_encode( esc_url_raw( $profile_img_fallback ) ); ?> + '") 50% 0px / cover rgb(255, 255, 255)';
+		document.querySelectorAll('.kKkoMh').forEach(function (el) { el.style.setProperty('background', bg, 'important'); });
+	};
+	img.src = <?php echo wp_json_encode( esc_url_raw( $profile_img_url ) ); ?>;
+})();
+</script>
+<?php } ?>
 
 <style>
 .manual-mass-popup, 
@@ -2744,12 +2774,12 @@ div#brave_element--WWW .sc-hwwEjo.eoCznv
 												if(!empty($fund_image)) { 
 												$crop_url_profile1=profile_image_resize_crop( $src=$fund_image, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );
 												?>
-												 <img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile1; ?>" alt="">
+												 <img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile1; ?>" onerror="this.onerror=null;this.src='<?php echo esc_url( get_theme_file_uri( '/images/Frame-92-1.png' ) ); ?>';" alt="">
 												<?php }
 												else if(!empty($image_url_profile)) {
 													$crop_url_profile2=profile_image_resize_crop( $src=$image_url_profile, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );		
 												?>
-												 <img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile2; ?>" alt="">
+												 <img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile2; ?>" onerror="this.onerror=null;this.src='<?php echo esc_url( get_theme_file_uri( '/images/Frame-92-1.png' ) ); ?>';" alt="">
 												<?php 
 												}
 												else {	
@@ -2831,7 +2861,7 @@ div#brave_element--WWW .sc-hwwEjo.eoCznv
                                  <div class="brave_element__wrap ">
                                     <div class="brave_element__styler ">
                                        <div class="brave_element__inner">
-                                          <div class="brave_element__text_inner"><?php if(!empty($fund_desc)){ echo wp_trim_words($fund_desc,30,' [...]'); } else { echo "Help us reach our goal! Thank you for the support!"; } ?></div>
+                                          <div class="brave_element__text_inner"><?php if(!empty($fund_desc)){ echo esc_html( wp_strip_all_tags( $fund_desc ) ); } else { echo "Help us reach our goal! Thank you for the support!"; } ?></div>
                                        </div>
                                     </div>
                                  </div>
