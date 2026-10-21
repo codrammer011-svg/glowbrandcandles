@@ -75,6 +75,9 @@ require_once GLOW_FC_DIR . 'includes/checkout/online-profit-deduction.php';
  */
 require_once GLOW_FC_DIR . 'includes/routing/login-redirect.php';
 
+/** Fundraiser registration gate and campaign rebooking, including Elementor shortcodes. */
+require_once GLOW_FC_DIR . 'includes/rebooking/fundraiser-rebooking.php';
+
 /**
  * Load the fundraiser/admin modules on 'after_setup_theme'.
  *
