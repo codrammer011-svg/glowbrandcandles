@@ -28,7 +28,11 @@
             <label>New start date<input type="date" name="start_date" min="<?php echo esc_attr(current_time('Y-m-d')); ?>" required></label>
             <label>New end date<input type="date" name="end_date" min="<?php echo esc_attr(current_time('Y-m-d')); ?>" required></label>
         </div>
-        <label class="grb-confirm"><input type="checkbox" name="confirm" value="yes" required><span><strong>Before you continue, print or save everything you need from your previous fundraiser</strong> (reports, seller lists and orders). Once your new fundraiser opens, your previous campaign will no longer be available from your dashboard. I have saved my records and want to start my new fundraiser on these dates.</span></label>
+        <?php
+        // Only the signed-in owner sees the name; the public gate must not reveal it for any typed email.
+        $org = $mode === 'dashboard' ? trim((string) get_user_meta(get_current_user_id(), 'user_registration_name_of_school_business', true)) : '';
+        ?>
+        <label class="grb-confirm"><input type="checkbox" name="confirm" value="yes" required><span>You will no longer be able to view orders or reports for <strong><?php echo $org !== '' ? esc_html($org) : 'your previous fundraiser'; ?></strong>. Print any reports you need first.</span></label>
         <button class="grb-button" type="submit">Book my fundraiser <span aria-hidden="true">&rarr;</span></button>
         <p class="grb-note">Same email. Same password. A fresh campaign.</p>
     </form>
