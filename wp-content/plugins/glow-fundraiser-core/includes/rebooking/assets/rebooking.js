@@ -4,6 +4,28 @@
     if (!config) return;
     let bootstrapPromise;
     const states = new WeakMap();
+    // A new email chose to register: keep the gate popup away while they fill in the form.
+    const SKIP_KEY = 'grbNewRegistration';
+    const SKIP_MS = 24 * 60 * 60 * 1000;
+
+    function skipped() {
+        try {
+            const value = JSON.parse(window.localStorage.getItem(SKIP_KEY));
+            return value && value.until > Date.now() ? value : null;
+        } catch (_) { return null; }
+    }
+
+    function remember(email) {
+        try {
+            if (email) window.localStorage.setItem(SKIP_KEY, JSON.stringify({ email: email, until: Date.now() + SKIP_MS }));
+            else window.localStorage.removeItem(SKIP_KEY);
+        } catch (_) { /* storage blocked: the popup simply shows again */ }
+    }
+
+    function prefillRegistration(email) {
+        const field = document.querySelector('.ur-frontend-form input[type=email], .user-registration-form input[type=email]');
+        if (field && !field.value) field.value = email;
+    }
 
     async function request(data) {
         const response = await fetch(config.ajax, {
@@ -67,6 +89,7 @@
                     root.querySelector('[data-grb-email]').textContent = state.email;
                     root.querySelector('[data-grb-login]').href = result.login;
                     root.querySelector('[data-grb-register]').href = result.register;
+                    remember(result.state === 'new' ? state.email : '');
                     showState(root, result.state === 'closed' ? 'rebook' : result.state);
                     status(root, '');
                 } else {
@@ -93,6 +116,7 @@
         root.querySelector('[data-grb-back]').addEventListener('click', () => {
             if (state.busy) return;
             rebook.reset();
+            remember('');
             status(root, '');
             showState(root, 'lookup');
         });
@@ -105,6 +129,7 @@
                 event.preventDefault();
                 const id = Number(popup.id.replace('elementor-popup-modal-', ''));
                 api.closePopup({ id: id }, event);
+                prefillRegistration(state.email);
                 const form = document.querySelector('.ur-frontend-form input:not([type=hidden]), .user-registration-form input:not([type=hidden])');
                 if (form) { form.focus(); form.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
             }
@@ -134,6 +159,20 @@
             event.target.closest('dialog').close();
         }
     });
+    const skip = skipped();
+    if (skip) {
+        // CSS hides the gate popup at once; closing it through Elementor also releases its scroll lock.
+        document.documentElement.classList.add('grb-skip-gate');
+        if (window.jQuery) {
+            window.jQuery(document).on('elementor/popup/show', (event, id) => {
+                const modal = document.getElementById('elementor-popup-modal-' + id);
+                const api = window.elementorProFrontend && window.elementorProFrontend.modules.popup;
+                if (modal && modal.querySelector('[data-grb][data-mode=gate]') && api) api.closePopup({ id: id }, event);
+            });
+        }
+        const fill = () => prefillRegistration(skip.email);
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fill); else fill();
+    }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan); else scan();
     new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
 })();
