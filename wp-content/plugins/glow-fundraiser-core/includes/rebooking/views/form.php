@@ -28,7 +28,7 @@
             <label>New start date<input type="date" name="start_date" min="<?php echo esc_attr(current_time('Y-m-d')); ?>" required></label>
             <label>New end date<input type="date" name="end_date" min="<?php echo esc_attr(current_time('Y-m-d')); ?>" required></label>
         </div>
-        <label class="grb-confirm"><input type="checkbox" name="confirm" value="yes" required><span>I confirm these dates and want to create a new fundraiser. My previous campaign’s orders and reports will stay with that campaign.</span></label>
+        <label class="grb-confirm"><input type="checkbox" name="confirm" value="yes" required><span><strong>Before you continue, print or save everything you need from your previous fundraiser</strong> (reports, seller lists and orders). Once your new fundraiser opens, your previous campaign will no longer be available from your dashboard. I have saved my records and want to start my new fundraiser on these dates.</span></label>
         <button class="grb-button" type="submit">Book my fundraiser <span aria-hidden="true">&rarr;</span></button>
         <p class="grb-note">Same email. Same password. A fresh campaign.</p>
     </form>
