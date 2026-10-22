@@ -226,7 +226,9 @@ add_action( 'wp_footer', function () {
 		fd.querySelectorAll('.glow-fd-profile a[href*="edit-fundraiser"]').forEach(function(a){ a.href = <?php echo wp_json_encode( function_exists( 'glow_ct_url' ) ? glow_ct_url( '/fundraiser-info/', $fid ) : home_url( '/fundraiser-info/' ) ); ?>; });
 		/* QR codes in the share card */
 		var share = document.getElementById('glow-fd-share');
-		if (share && window.QRCode && !share.querySelector('.glow-fd-qr')) {
+		if (share && window.QRCode && !share.querySelector('.glow-fd-qr-box')) {
+			/* Replaces the template's small side QR codes (shown when fundraiser_barcode_link meta exists) — never show both. */
+			var old = share.querySelector('.glow-fd-qr-wrap'); if (old) old.style.display = 'none';
 			var wrap = document.createElement('div'); wrap.className = 'glow-fd-qr';
 			wrap.innerHTML = '<div class="glow-fd-qr-box"><h4>Seller registration QR</h4><div id="glow-qr-reg"></div><a class="glow-fd-qr-dl" href="#" data-for="glow-qr-reg" data-name="seller-registration-qr.png">Download</a></div>'
 				+ '<div class="glow-fd-qr-box"><h4>Store link QR</h4><div id="glow-qr-store"></div><a class="glow-fd-qr-dl" href="#" data-for="glow-qr-store" data-name="store-link-qr.png">Download</a></div>';
@@ -408,6 +410,8 @@ add_action( 'wp_footer', function () {
 	(function(){
 		var share = document.getElementById('glow-sd-share'); if (!share || !window.QRCode || share.querySelector('.glow-fd-qr')) return;
 		var inp = document.getElementById('glow-sd-link'); if (!inp || !inp.value) return;
+		/* This box replaces the template's small QR (shown when seller_barcode_link meta exists) — never show both. */
+		var old = share.querySelector('.glow-sd-qr-wrap'); if (old) old.style.display = 'none';
 		var url = inp.value.trim(); if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 		var wrap = document.createElement('div'); wrap.className = 'glow-fd-qr';
 		wrap.innerHTML = '<div class="glow-fd-qr-box"><h4>My store QR code</h4><div id="glow-qr-seller"></div><a class="glow-fd-qr-dl" href="#">Download</a></div>';
