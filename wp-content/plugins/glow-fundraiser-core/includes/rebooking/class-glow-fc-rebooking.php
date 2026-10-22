@@ -186,10 +186,28 @@ final class Glow_FC_Rebooking {
     }
 
     public static function gate() {
+        if (is_user_logged_in()) {
+            return self::signed_in();
+        }
         ob_start();
         $mode = 'gate';
         require __DIR__ . '/views/form.php';
         return ob_get_clean();
+    }
+
+    /** Signed-in visitors skip the email check and go straight to their own dashboard. */
+    private static function signed_in() {
+        $user = wp_get_current_user();
+        $fallback = home_url('/fundraiser-dashboard/');
+        $to = user_can($user, 'manage_options') ? admin_url() : apply_filters('login_redirect', $fallback, '', $user);
+        $to = wp_validate_redirect($to, $fallback);
+        $logout = wp_logout_url(home_url('/fundraiser-register/'));
+        // No data-grb attribute: the email/rebook script must not initialize or hide this view.
+        return '<section class="grb grb-signed-in" data-mode="gate" aria-label="Fundraiser registration">'
+            . '<p>You’re signed in as <strong>' . esc_html($user->user_email) . '</strong>.</p>'
+            . '<a class="grb-button" href="' . esc_url($to) . '">Access Dashboard <span aria-hidden="true">&rarr;</span></a>'
+            . '<p class="grb-note">Not you? <a class="grb-text-link" href="' . esc_url($logout) . '">Log out</a></p>'
+            . '</section>';
     }
 
     public static function dashboard() {
