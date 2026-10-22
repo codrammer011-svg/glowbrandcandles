@@ -110,12 +110,14 @@
                 root.removeAttribute('aria-busy');
             }
         }
-        lookup.addEventListener('submit', event => { event.preventDefault(); submit(lookup, 'lookup'); });
         rebook.addEventListener('submit', event => { event.preventDefault(); submit(rebook, 'rebook'); });
-        login.addEventListener('submit', event => { event.preventDefault(); submit(login, 'login'); });
         const start = rebook.elements.start_date;
         const end = rebook.elements.end_date;
         start.addEventListener('change', () => { end.min = start.value || start.min; });
+        // The signed-in (dashboard) form has only the rebook step.
+        if (!lookup) return;
+        lookup.addEventListener('submit', event => { event.preventDefault(); submit(lookup, 'lookup'); });
+        login.addEventListener('submit', event => { event.preventDefault(); submit(login, 'login'); });
         root.querySelector('[data-grb-back]').addEventListener('click', () => {
             if (state.busy) return;
             rebook.reset();

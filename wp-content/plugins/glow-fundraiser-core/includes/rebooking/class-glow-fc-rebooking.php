@@ -195,14 +195,30 @@ final class Glow_FC_Rebooking {
         return ob_get_clean();
     }
 
-    /** Signed-in visitors skip the email check and go straight to their own dashboard. */
+    /**
+     * Signed-in visitors skip the email check:
+     * closed fundraiser → session rebook form; active fundraiser → close out first; other roles → not a fundraiser account.
+     */
     private static function signed_in() {
         $user = wp_get_current_user();
-        $to = home_url('/fundraiser-dashboard/');
+        $fundraiser = Glow_FC_Rebooking_Campaigns::is_fundraiser($user);
+        if ($fundraiser && Glow_FC_Rebooking_Campaigns::is_closed($user->ID)) {
+            return self::dashboard();
+        }
+        if ($fundraiser) {
+            $to = home_url('/fundraiser-dashboard/');
+            $message = 'Your fundraiser is still active. Please close it out from your dashboard before booking a new fundraiser.';
+        } else {
+            $fallback = home_url('/my-account/');
+            $to = user_can($user, 'manage_options') ? admin_url() : apply_filters('login_redirect', $fallback, '', $user);
+            $to = wp_validate_redirect($to, $fallback);
+            $message = 'The account you are signed in with is not a fundraiser account. Log out and sign in with your fundraiser account to book a fundraiser.';
+        }
         $logout = wp_logout_url(home_url('/fundraiser-register/'));
         // No data-grb attribute: the email/rebook script must not initialize or hide this view.
         return '<section class="grb grb-signed-in" data-mode="gate" aria-label="Fundraiser registration">'
             . '<p>You’re signed in as <strong>' . esc_html($user->user_email) . '</strong>.</p>'
+            . '<p>' . esc_html($message) . '</p>'
             . '<a class="grb-button" href="' . esc_url($to) . '">Access Dashboard <span aria-hidden="true">&rarr;</span></a>'
             . '<p class="grb-note">Not you? <a class="grb-text-link" href="' . esc_url($logout) . '">Log out</a></p>'
             . '</section>';

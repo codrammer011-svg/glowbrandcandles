@@ -5,7 +5,8 @@
     <h2>Book Next Year</h2>
     <p class="grb-intro">Choose your new campaign dates. Your organization details, email and password will carry over.</p>
     <?php endif; ?>
-    <form data-grb-lookup <?php echo $mode === 'dashboard' ? 'hidden' : ''; ?>>
+    <?php if ($mode !== 'dashboard') : // Email check, new-account and sign-in steps exist only in the public gate. ?>
+    <form data-grb-lookup>
         <label>Email address<input type="email" name="email" autocomplete="email" required maxlength="100" placeholder="you@example.com"></label>
         <button class="grb-button" type="submit">Continue <span aria-hidden="true">&rarr;</span></button>
     </form>
@@ -20,6 +21,7 @@
         <a class="grb-text-link" href="<?php echo esc_url(wp_lostpassword_url()); ?>">Forgot your password?</a>
         <button class="grb-button" type="submit">Log in <span aria-hidden="true">&rarr;</span></button>
     </form>
+    <?php endif; ?>
     <form data-grb-rebook <?php echo $mode !== 'dashboard' ? 'hidden' : ''; ?>>
         <?php if ($mode !== 'dashboard') : ?>
         <p>Your previous fundraiser is closed out. Rebook with your existing email and password.</p>

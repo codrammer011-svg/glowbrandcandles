@@ -9,4 +9,4 @@
 @media(max-width:440px){.grb{padding:24px 20px}.grb .grb-dates{grid-template-columns:1fr;gap:0}}
 .grb-skip-gate .elementor-popup-modal:has(.grb[data-mode=gate]){display:none!important}
 /* Popup gate sits directly on the Elementor design: no card, padding or shadow. */
-.grb[data-mode=gate],.elementor-widget-shortcode:has(.grb[data-mode=gate]),.elementor-widget-shortcode:has(.grb[data-mode=gate])>.elementor-widget-container{padding:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important}
+.grb[data-mode=gate],.elementor-popup-modal .grb,.elementor-widget-shortcode:has(.grb[data-mode=gate]),.elementor-widget-shortcode:has(.grb[data-mode=gate])>.elementor-widget-container{padding:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important}
