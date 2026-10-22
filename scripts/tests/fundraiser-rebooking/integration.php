@@ -140,7 +140,7 @@ expect(get_user_meta($next, 'description', true) === 'Our \\school and "team"', 
 expect(get_user_meta($next, 'ur_form_id', true) === '62316' && get_user_meta($next, 'ur_confirm_email', true) === '1', 'registration form and email approval carry over');
 expect(get_user_meta($next, 'user_registration_start_date', true) === $today && get_user_meta($next, 'user_registration_end_date', true) === $end, 'requested dates saved');
 expect(get_user_meta($next, 'user_action_status', true) === '1', 'new campaign is active');
-foreach (array('cart-restore', 'wc_ship_mergeOrderID', 'paid_status', 'user_close_out_date_inactive', '_glow_welcome_email_sent', 'fundraiser_barcode_link') as $key) {
+foreach (array('cart-restore', 'wc_ship_mergeOrderID', 'paid_status', 'user_close_out_date_inactive', '_glow_welcome_email_sent', 'fundraiser_barcode_link', 'fundraiser_seller_register_barcode_link') as $key) {
     expect(!metadata_exists('user', $next, $key), 'does not copy ' . $key);
 }
 expect((int) get_user_meta($seller, 'user_registration_seller_fundraiser', true) === $source, 'previous sellers remain on previous campaign');
