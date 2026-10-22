@@ -30,7 +30,7 @@ Old orders, sellers, reports, payments, carts and close-out metadata stay with t
 
 The transfer uses InnoDB transactions and a database lock; repeat clicks reuse the new campaign. Guest rebooking requires WordPress password authentication; dashboard rebooking uses the current session's user ID. Requests require nonce validation, confirmation, date validation and same-origin checks; public lookup/password attempts are rate-limited.
 
-Rebooking does not replay the original registration email sequence or create another automatic $0 kit order. New QR codes are generated when the existing Core QR library/GD are available. User Registration form/approval markers carry over. Disabled accounts cannot rebook.
+After a successful rebooking Core fires `glow_fc_fundraiser_rebooked($new_id, $previous_id)`. The theme hooks it to send the same registration emails (admin summary, welcome, family welcome) for the new ID, titled "Rebooked" instead of "Registered". Repeat clicks that reuse an existing campaign do not resend them. Rebooking does not create another automatic $0 kit order. New QR codes are generated when the existing Core QR library/GD are available. User Registration form/approval markers carry over. Disabled accounts cannot rebook.
 
 ## Local verification
 

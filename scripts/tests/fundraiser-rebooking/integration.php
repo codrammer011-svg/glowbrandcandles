@@ -120,8 +120,11 @@ expect(!get_user_meta($source, '_grb_next_campaign', true), 'rollback clears cam
 expect(WP_Session_Tokens::get_instance($source)->verify($token), 'rollback preserves previous session');
 expect(get_post_meta($rep_post, 'fundraiser_ids', true) === (string) $source, 'rollback restores representative list');
 
+$rebooked_events = array();
+add_action('glow_fc_fundraiser_rebooked', function ($new_id, $previous_id) use (&$rebooked_events) { $rebooked_events[] = array($new_id, $previous_id); }, 10, 2);
 $result = Glow_FC_Rebooking_Campaigns::rebook($source, $today, $end);
 $next = $result['id'];
+expect($rebooked_events === array(array($next, $source)), 'rebooked hook fires once with new and previous IDs');
 expect($result['created'] && $next !== $source, 'creates a distinct fundraiser ID');
 expect((int) email_exists('chair@example.invalid') === $next, 'same email belongs to new account');
 expect((int) username_exists('chair@example.invalid') === $next, 'same username belongs to new account');
@@ -148,6 +151,7 @@ expect((int) get_user_meta($source, 'referral_payment_postid', true) === $histor
 expect((int) get_user_meta($next, '_grb_previous_campaign', true) === $source && (int) get_user_meta($source, '_grb_next_campaign', true) === $next, 'audit links are bidirectional');
 $again = Glow_FC_Rebooking_Campaigns::rebook($source, $today, $end);
 expect($again['id'] === $next && !$again['created'], 'repeat click returns same campaign');
+expect(count($rebooked_events) === 1, 'repeat click does not resend rebooking emails');
 
 $missing = fundraiser('missing-rep@example.invalid');
 update_user_meta($missing, 'user_registration_referral_email', 'rep@example.invalid');

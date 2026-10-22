@@ -241,6 +241,12 @@ final class Glow_FC_Rebooking_Campaigns {
         // Revoke sessions on the old campaign only after the transfer succeeds.
         WP_Session_Tokens::get_instance($source_id)->destroy_all();
         self::qr_codes($new_id);
+        // Registration emails are sent by the theme; a mail failure must not undo or hide a completed rebooking.
+        try {
+            do_action('glow_fc_fundraiser_rebooked', $new_id, $source_id);
+        } catch (Throwable $error) {
+            error_log('[GLOW Rebooking] Rebooking emails failed for campaign ' . (int) $new_id);
+        }
         return array('id' => $new_id, 'created' => true);
     }
 
