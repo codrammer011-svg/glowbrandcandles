@@ -13,10 +13,13 @@
         <p>Welcome! You can register a new fundraiser using this email.</p>
         <a class="grb-button" href="<?php echo esc_url(home_url('/fundraiser-register/')); ?>" data-grb-register>Continue to registration</a>
     </div>
-    <div data-grb-active hidden>
+    <form data-grb-active hidden>
         <p>You already have an account. Sign in to continue to your dashboard. An existing fundraiser must be closed out before it can be rebooked.</p>
-        <a class="grb-button" href="<?php echo esc_url(wp_login_url(home_url('/fundraiser-dashboard/'))); ?>" data-grb-login>Log in</a>
-    </div>
+        <label>Email address<input type="email" name="email" autocomplete="username" readonly data-grb-login-email></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required maxlength="4096"></label>
+        <a class="grb-text-link" href="<?php echo esc_url(wp_lostpassword_url()); ?>">Forgot your password?</a>
+        <button class="grb-button" type="submit">Log in <span aria-hidden="true">&rarr;</span></button>
+    </form>
     <form data-grb-rebook <?php echo $mode !== 'dashboard' ? 'hidden' : ''; ?>>
         <?php if ($mode !== 'dashboard') : ?>
         <p>Your previous fundraiser is closed out. Rebook with your existing email and password.</p>

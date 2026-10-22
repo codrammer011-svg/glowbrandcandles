@@ -52,7 +52,7 @@
             root.querySelector('[data-grb-' + name + ']').hidden = name !== state;
         });
         root.querySelector('[data-grb-back]').hidden = state === 'lookup';
-        const field = root.querySelector('[data-grb-' + state + '] input');
+        const field = root.querySelector('[data-grb-' + state + '] input:not([readonly])');
         if (field) field.focus();
     }
 
@@ -68,6 +68,9 @@
         states.set(root, state);
         const lookup = root.querySelector('[data-grb-lookup]');
         const rebook = root.querySelector('[data-grb-rebook]');
+        const login = root.querySelector('[data-grb-active]');
+        const pending = { lookup: 'Checking your account…', login: 'Signing you in…', rebook: 'Creating your new fundraiser. Please keep this window open…' };
+        const done = { login: 'Signed in. Opening your dashboard…', rebook: 'Your fundraiser is ready. Opening your dashboard…' };
         bootstrap().then(data => {
             root.querySelectorAll('input[type=date]').forEach(input => { input.min = data.today; });
         }).catch(error => status(root, error.message, true));
@@ -77,7 +80,7 @@
             state.busy = true;
             form.querySelector('button[type=submit]').disabled = true;
             root.setAttribute('aria-busy', 'true');
-            status(root, operation === 'lookup' ? 'Checking your account…' : 'Creating your new fundraiser. Please keep this window open…');
+            status(root, pending[operation]);
             try {
                 const boot = await bootstrap();
                 const data = Object.fromEntries(new FormData(form).entries());
@@ -87,16 +90,15 @@
                 if (operation === 'lookup') {
                     state.email = data.email.trim();
                     root.querySelector('[data-grb-email]').textContent = state.email;
-                    root.querySelector('[data-grb-login]').href = result.login;
+                    root.querySelector('[data-grb-login-email]').value = state.email;
                     root.querySelector('[data-grb-register]').href = result.register;
                     remember(result.state === 'new' ? state.email : '');
                     showState(root, result.state === 'closed' ? 'rebook' : result.state);
                     status(root, '');
                 } else {
-                    const password = root.querySelector('input[name=password]');
-                    if (password) password.value = '';
-                    status(root, 'Your fundraiser is ready. Opening your dashboard…');
-                    // Only navigate after the backend confirms that the transfer succeeded.
+                    root.querySelectorAll('input[name=password]').forEach(input => { input.value = ''; });
+                    status(root, done[operation]);
+                    // Only navigate after the backend confirms the sign-in or transfer succeeded.
                     window.location.assign(result.redirect);
                     return;
                 }
@@ -110,12 +112,14 @@
         }
         lookup.addEventListener('submit', event => { event.preventDefault(); submit(lookup, 'lookup'); });
         rebook.addEventListener('submit', event => { event.preventDefault(); submit(rebook, 'rebook'); });
+        login.addEventListener('submit', event => { event.preventDefault(); submit(login, 'login'); });
         const start = rebook.elements.start_date;
         const end = rebook.elements.end_date;
         start.addEventListener('change', () => { end.min = start.value || start.min; });
         root.querySelector('[data-grb-back]').addEventListener('click', () => {
             if (state.busy) return;
             rebook.reset();
+            login.reset();
             remember('');
             status(root, '');
             showState(root, 'lookup');

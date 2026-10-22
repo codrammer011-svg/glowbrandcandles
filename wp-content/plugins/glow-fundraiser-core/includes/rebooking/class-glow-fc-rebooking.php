@@ -64,6 +64,23 @@ final class Glow_FC_Rebooking {
                     'register' => home_url('/fundraiser-register/'),
                 ));
             }
+            if ($op === 'login') {
+                self::rate_limit('password', 10);
+                $email = sanitize_email(self::input('email'));
+                if (!is_email($email)) {
+                    self::fail('Please check your email and password.', 401);
+                }
+                self::rate_limit('account:' . strtolower($email), 8, false);
+                // wp_signon runs the normal authenticate filters (User Registration approval, archived campaigns).
+                $user = wp_signon(array('user_login' => $email, 'user_password' => self::input('password'), 'remember' => true), is_ssl());
+                if (is_wp_error($user)) {
+                    $code = $user->get_error_code();
+                    $known = in_array($code, array('invalid_email', 'invalid_username', 'incorrect_password', 'empty_password', 'empty_username'), true);
+                    self::fail($known ? 'Please check your email and password.' : wp_strip_all_tags($user->get_error_message()), 401);
+                }
+                $to = apply_filters('login_redirect', home_url('/fundraiser-dashboard/'), '', $user);
+                wp_send_json_success(array('redirect' => wp_validate_redirect($to, home_url('/fundraiser-dashboard/'))));
+            }
             if ($op !== 'rebook') {
                 self::fail('Please choose a valid action.');
             }
