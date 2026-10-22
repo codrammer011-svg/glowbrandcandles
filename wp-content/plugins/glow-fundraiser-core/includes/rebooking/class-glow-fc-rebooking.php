@@ -198,9 +198,7 @@ final class Glow_FC_Rebooking {
     /** Signed-in visitors skip the email check and go straight to their own dashboard. */
     private static function signed_in() {
         $user = wp_get_current_user();
-        $fallback = home_url('/fundraiser-dashboard/');
-        $to = user_can($user, 'manage_options') ? admin_url() : apply_filters('login_redirect', $fallback, '', $user);
-        $to = wp_validate_redirect($to, $fallback);
+        $to = home_url('/fundraiser-dashboard/');
         $logout = wp_logout_url(home_url('/fundraiser-register/'));
         // No data-grb attribute: the email/rebook script must not initialize or hide this view.
         return '<section class="grb grb-signed-in" data-mode="gate" aria-label="Fundraiser registration">'
