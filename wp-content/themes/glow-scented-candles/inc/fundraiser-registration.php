@@ -465,8 +465,12 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
             if (!file_exists($qr_dir)) {
                 wp_mkdir_p($qr_dir);
             }
-            require_once $qrlib;
-            if (class_exists('QRcode')) {
+            // Another plugin (User Registration Pro's TCPDF) may already define a different QRcode class;
+            // loading phpqrcode on top of it is an uncatchable fatal error.
+            if (!class_exists('QRcode', false)) {
+                require_once $qrlib;
+            }
+            if (method_exists('QRcode', 'png')) {
                 QRcode::png($profile_url, $profile_qr_path, QR_ECLEVEL_L, 4, 2);
                 if (is_file($profile_qr_path)) {
                     $profile_qr_url = $qr_url . 'image_' . $user_id . '.png';

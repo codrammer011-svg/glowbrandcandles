@@ -253,10 +253,11 @@ final class Glow_FC_Rebooking_Campaigns {
     private static function qr_codes($id) {
         try {
             $lib = defined('GLOW_FC_DIR') ? GLOW_FC_DIR . 'includes/phpqrcode/qrlib.php' : '';
-            if (!class_exists('QRcode') && $lib && is_file($lib)) {
+            // User Registration Pro's TCPDF also declares a global QRcode (without png()); never load phpqrcode over it.
+            if (!class_exists('QRcode', false) && $lib && is_file($lib)) {
                 require_once $lib;
             }
-            if (!class_exists('QRcode') || !function_exists('imagepng')) {
+            if (!method_exists('QRcode', 'png') || !function_exists('imagepng')) {
                 return;
             }
             $uploads = wp_upload_dir();
