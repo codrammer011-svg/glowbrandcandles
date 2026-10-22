@@ -310,6 +310,7 @@ function glow_email_admin_fundraiser_summary($valid_form_data, $form_id, $user_i
     ));
 
     $school_name = $m('user_registration_name_of_school_business');
+    $rebooked = (bool) get_user_meta($user_id, '_grb_previous_campaign', true);
 
     $fields = array(
         'School / Group Name'            => $school_name,
@@ -346,7 +347,7 @@ function glow_email_admin_fundraiser_summary($valid_form_data, $form_id, $user_i
     }
 
     $message = '<div style="font-family:Arial,sans-serif;">'
-        . '<h2 style="margin:0 0 10px;">New Fundraiser Registration</h2>'
+        . '<h2 style="margin:0 0 10px;">' . ($rebooked ? 'Fundraiser Rebooked' : 'New Fundraiser Registration') . '</h2>'
         . '<p style="margin:0 0 15px;">User ID: ' . (int) $user_id . ' &mdash; <a href="'
         . esc_url(admin_url('user-edit.php?user_id=' . $user_id)) . '">View user in admin</a></p>'
         . '<table style="border-collapse:collapse;width:100%;max-width:700px;">' . $rows . '</table>'
@@ -354,7 +355,9 @@ function glow_email_admin_fundraiser_summary($valid_form_data, $form_id, $user_i
 
     // 'candace@glowscentedcandles.com' and 'candacethompson12@gmail.com' temporarily disabled for testing.
     $to      = array('codrammer011@gmail.com');
-    $subject = 'New Fundraiser Registration - ' . ($school_name !== '' ? $school_name : trim($first_name . ' ' . $last_name));
+    // Keep the "New Fundraiser Registration - " prefix: glow-admin-email-redirect routes admin mail by it.
+    $subject = 'New Fundraiser Registration - ' . ($school_name !== '' ? $school_name : trim($first_name . ' ' . $last_name))
+        . ($rebooked ? ' (Rebooked)' : '');
     $headers = array(
         'Content-Type: text/html; charset=UTF-8',
         'From: ' . (defined('GLOW_FROM_EMAIL') ? GLOW_FROM_EMAIL : 'Glow Scented Candles <info@glowscentedcandles.com>'),
@@ -412,6 +415,7 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
     $last_name   = $m('last_name');
     $full_name   = trim($first_name . ' ' . $last_name);
     $user_email  = $user->user_email;
+    $rebooked    = (bool) get_user_meta($user_id, '_grb_previous_campaign', true);
 
     $school_name = $m('user_registration_name_of_school_business');
     $school_phone = $m('user_registration_input_box_phone');
@@ -461,8 +465,12 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
             if (!file_exists($qr_dir)) {
                 wp_mkdir_p($qr_dir);
             }
-            require_once $qrlib;
-            if (class_exists('QRcode')) {
+            // Another plugin (User Registration Pro's TCPDF) may already define a different QRcode class;
+            // loading phpqrcode on top of it is an uncatchable fatal error.
+            if (!class_exists('QRcode', false)) {
+                require_once $qrlib;
+            }
+            if (method_exists('QRcode', 'png')) {
                 QRcode::png($profile_url, $profile_qr_path, QR_ECLEVEL_L, 4, 2);
                 if (is_file($profile_qr_path)) {
                     $profile_qr_url = $qr_url . 'image_' . $user_id . '.png';
@@ -513,7 +521,7 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
   <table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:900px;margin:30px auto;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.1);">
     <tr>
       <td style="background:#333;padding:25px 30px;text-align:left;">
-        <h1 style="color:#fff;font-size:26px;margin:0;font-weight:400;">🎉 Your Glow Fundraiser Has Been Registered!</h1>
+        <h1 style="color:#fff;font-size:26px;margin:0;font-weight:400;">🎉 Your Glow Fundraiser Has Been <?php echo $rebooked ? 'Rebooked' : 'Registered'; ?>!</h1>
       </td>
     </tr>
     <tr>
@@ -642,6 +650,18 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
     glow_fc_queue_mail($user_email, $subject, $message, $headers, $attachments);
     update_user_meta($user_id, '_glow_welcome_email_sent', current_time('mysql'));
     glow_fc_queue_family_mail($user_id, $full_name !== '' ? $full_name : $user->display_name);
+}
+
+/**
+ * A rebooked fundraiser (new user ID from glow-fundraiser-core's rebooking) gets the
+ * same registration emails; the helpers above switch the title to "Rebooked" via
+ * the _grb_previous_campaign marker. Form ID 0: the fundraiser guards use user meta.
+ */
+add_action('glow_fc_fundraiser_rebooked', 'glow_email_fundraiser_rebooked', 10, 2);
+function glow_email_fundraiser_rebooked($user_id, $previous_id)
+{
+    glow_email_admin_fundraiser_summary(array(), 0, $user_id);
+    glow_email_user_fundraiser_welcome(array(), 0, $user_id);
 }
 
 /**

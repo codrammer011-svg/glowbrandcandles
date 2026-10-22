@@ -99,8 +99,11 @@ function glow_seller_qr_url($user_id)
                 return '';
             }
             wp_mkdir_p($dir);
-            require_once $qrlib;
-            if (!class_exists('QRcode')) {
+            // A different QRcode class (User Registration Pro's TCPDF) may already be loaded; redeclaring it is fatal.
+            if (!class_exists('QRcode', false)) {
+                require_once $qrlib;
+            }
+            if (!method_exists('QRcode', 'png')) {
                 return '';
             }
             QRcode::png(home_url('/seller/user/' . $user->user_login), $file);

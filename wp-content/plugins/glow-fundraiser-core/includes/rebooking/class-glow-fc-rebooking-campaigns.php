@@ -240,38 +240,14 @@ final class Glow_FC_Rebooking_Campaigns {
         }
         // Revoke sessions on the old campaign only after the transfer succeeds.
         WP_Session_Tokens::get_instance($source_id)->destroy_all();
-        self::qr_codes($new_id);
-        return array('id' => $new_id, 'created' => true);
-    }
-
-    private static function qr_codes($id) {
+        // No QR meta here: like a new registration, the dashboard draws its own QR codes below the share links
+        // (fundraiser_barcode_link meta would switch it to the older side-by-side layout).
+        // Registration emails are sent by the theme; a mail failure must not undo or hide a completed rebooking.
         try {
-            $lib = defined('GLOW_FC_DIR') ? GLOW_FC_DIR . 'includes/phpqrcode/qrlib.php' : '';
-            if (!class_exists('QRcode') && $lib && is_file($lib)) {
-                require_once $lib;
-            }
-            if (!class_exists('QRcode') || !function_exists('imagepng')) {
-                return;
-            }
-            $uploads = wp_upload_dir();
-            if ($uploads['error']) {
-                return;
-            }
-            $dir = trailingslashit($uploads['basedir']) . 'qrcodes/';
-            if (!wp_mkdir_p($dir)) {
-                return;
-            }
-            foreach (array(
-                'fundraiser_barcode_link' => array('image_' . $id . '.png', home_url('/profile/' . $id)),
-                'fundraiser_seller_register_barcode_link' => array('image_seller_register' . $id . '.png', add_query_arg('frid', $id, home_url('/seller-register/'))),
-            ) as $key => $data) {
-                QRcode::png($data[1], $dir . $data[0], 'L', 4, 2);
-                if (is_file($dir . $data[0])) {
-                    update_user_meta($id, $key, trailingslashit($uploads['baseurl']) . 'qrcodes/' . $data[0]);
-                }
-            }
+            do_action('glow_fc_fundraiser_rebooked', $new_id, $source_id);
         } catch (Throwable $error) {
-            error_log('[GLOW Rebooking] QR generation failed for campaign ' . (int) $id);
+            error_log('[GLOW Rebooking] Rebooking emails failed for campaign ' . (int) $new_id);
         }
+        return array('id' => $new_id, 'created' => true);
     }
 }

@@ -64,6 +64,23 @@ final class Glow_FC_Rebooking {
                     'register' => home_url('/fundraiser-register/'),
                 ));
             }
+            if ($op === 'login') {
+                self::rate_limit('password', 10);
+                $email = sanitize_email(self::input('email'));
+                if (!is_email($email)) {
+                    self::fail('Please check your email and password.', 401);
+                }
+                self::rate_limit('account:' . strtolower($email), 8, false);
+                // wp_signon runs the normal authenticate filters (User Registration approval, archived campaigns).
+                $user = wp_signon(array('user_login' => $email, 'user_password' => self::input('password'), 'remember' => true), is_ssl());
+                if (is_wp_error($user)) {
+                    $code = $user->get_error_code();
+                    $known = in_array($code, array('invalid_email', 'invalid_username', 'incorrect_password', 'empty_password', 'empty_username'), true);
+                    self::fail($known ? 'Please check your email and password.' : wp_strip_all_tags($user->get_error_message()), 401);
+                }
+                $to = apply_filters('login_redirect', home_url('/fundraiser-dashboard/'), '', $user);
+                wp_send_json_success(array('redirect' => wp_validate_redirect($to, home_url('/fundraiser-dashboard/'))));
+            }
             if ($op !== 'rebook') {
                 self::fail('Please choose a valid action.');
             }
@@ -169,10 +186,42 @@ final class Glow_FC_Rebooking {
     }
 
     public static function gate() {
+        if (is_user_logged_in()) {
+            return self::signed_in();
+        }
         ob_start();
         $mode = 'gate';
         require __DIR__ . '/views/form.php';
         return ob_get_clean();
+    }
+
+    /**
+     * Signed-in visitors skip the email check:
+     * closed fundraiser → session rebook form; active fundraiser → close out first; other roles → not a fundraiser account.
+     */
+    private static function signed_in() {
+        $user = wp_get_current_user();
+        $fundraiser = Glow_FC_Rebooking_Campaigns::is_fundraiser($user);
+        if ($fundraiser && Glow_FC_Rebooking_Campaigns::is_closed($user->ID)) {
+            return self::dashboard();
+        }
+        if ($fundraiser) {
+            $to = home_url('/fundraiser-dashboard/');
+            $message = 'Your fundraiser is still active. Please close it out from your dashboard before booking a new fundraiser.';
+        } else {
+            $fallback = home_url('/my-account/');
+            $to = user_can($user, 'manage_options') ? admin_url() : apply_filters('login_redirect', $fallback, '', $user);
+            $to = wp_validate_redirect($to, $fallback);
+            $message = 'The account you are signed in with is not a fundraiser account. Log out and sign in with your fundraiser account to book a fundraiser.';
+        }
+        $logout = wp_logout_url(home_url('/fundraiser-register/'));
+        // No data-grb attribute: the email/rebook script must not initialize or hide this view.
+        return '<section class="grb grb-signed-in" data-mode="gate" aria-label="Fundraiser registration">'
+            . '<p>You’re signed in as <strong>' . esc_html($user->user_email) . '</strong>.</p>'
+            . '<p>' . esc_html($message) . '</p>'
+            . '<a class="grb-button" href="' . esc_url($to) . '">Access Dashboard <span aria-hidden="true">&rarr;</span></a>'
+            . '<p class="grb-note">Not you? <a class="grb-text-link" href="' . esc_url($logout) . '">Log out</a></p>'
+            . '</section>';
     }
 
     public static function dashboard() {

@@ -120,8 +120,11 @@ expect(!get_user_meta($source, '_grb_next_campaign', true), 'rollback clears cam
 expect(WP_Session_Tokens::get_instance($source)->verify($token), 'rollback preserves previous session');
 expect(get_post_meta($rep_post, 'fundraiser_ids', true) === (string) $source, 'rollback restores representative list');
 
+$rebooked_events = array();
+add_action('glow_fc_fundraiser_rebooked', function ($new_id, $previous_id) use (&$rebooked_events) { $rebooked_events[] = array($new_id, $previous_id); }, 10, 2);
 $result = Glow_FC_Rebooking_Campaigns::rebook($source, $today, $end);
 $next = $result['id'];
+expect($rebooked_events === array(array($next, $source)), 'rebooked hook fires once with new and previous IDs');
 expect($result['created'] && $next !== $source, 'creates a distinct fundraiser ID');
 expect((int) email_exists('chair@example.invalid') === $next, 'same email belongs to new account');
 expect((int) username_exists('chair@example.invalid') === $next, 'same username belongs to new account');
@@ -137,7 +140,7 @@ expect(get_user_meta($next, 'description', true) === 'Our \\school and "team"', 
 expect(get_user_meta($next, 'ur_form_id', true) === '62316' && get_user_meta($next, 'ur_confirm_email', true) === '1', 'registration form and email approval carry over');
 expect(get_user_meta($next, 'user_registration_start_date', true) === $today && get_user_meta($next, 'user_registration_end_date', true) === $end, 'requested dates saved');
 expect(get_user_meta($next, 'user_action_status', true) === '1', 'new campaign is active');
-foreach (array('cart-restore', 'wc_ship_mergeOrderID', 'paid_status', 'user_close_out_date_inactive', '_glow_welcome_email_sent', 'fundraiser_barcode_link') as $key) {
+foreach (array('cart-restore', 'wc_ship_mergeOrderID', 'paid_status', 'user_close_out_date_inactive', '_glow_welcome_email_sent', 'fundraiser_barcode_link', 'fundraiser_seller_register_barcode_link') as $key) {
     expect(!metadata_exists('user', $next, $key), 'does not copy ' . $key);
 }
 expect((int) get_user_meta($seller, 'user_registration_seller_fundraiser', true) === $source, 'previous sellers remain on previous campaign');
@@ -148,6 +151,7 @@ expect((int) get_user_meta($source, 'referral_payment_postid', true) === $histor
 expect((int) get_user_meta($next, '_grb_previous_campaign', true) === $source && (int) get_user_meta($source, '_grb_next_campaign', true) === $next, 'audit links are bidirectional');
 $again = Glow_FC_Rebooking_Campaigns::rebook($source, $today, $end);
 expect($again['id'] === $next && !$again['created'], 'repeat click returns same campaign');
+expect(count($rebooked_events) === 1, 'repeat click does not resend rebooking emails');
 
 $missing = fundraiser('missing-rep@example.invalid');
 update_user_meta($missing, 'user_registration_referral_email', 'rep@example.invalid');
@@ -162,6 +166,15 @@ wp_set_current_user($active);
 expect(Glow_FC_Rebooking::dashboard() === '', 'active account does not see dashboard rebook form');
 wp_set_current_user($missing);
 expect(strpos(Glow_FC_Rebooking::dashboard(), 'name="start_date"') !== false, 'closed account sees date form');
+wp_set_current_user($active);
+$signed_in_gate = Glow_FC_Rebooking::gate();
+expect(strpos($signed_in_gate, 'Access Dashboard') !== false && strpos($signed_in_gate, 'still active') !== false && strpos($signed_in_gate, 'data-grb-lookup') === false, 'signed-in active fundraiser sees Access Dashboard and close-out message');
+wp_set_current_user($missing);
+$closed_gate = Glow_FC_Rebooking::gate();
+expect(strpos($closed_gate, 'name="start_date"') !== false && strpos($closed_gate, 'name="password"') === false, 'signed-in closed fundraiser sees rebook form without password');
+wp_set_current_user($seller);
+$other_gate = Glow_FC_Rebooking::gate();
+expect(strpos($other_gate, 'Access Dashboard') !== false && strpos($other_gate, 'not a fundraiser account') !== false, 'signed-in non-fundraiser is told the account is not a fundraiser');
 wp_set_current_user(0);
 expect(strpos(Glow_FC_Rebooking::gate(), 'data-grb-lookup') !== false, 'popup shortcode renders email check');
 require dirname(__DIR__, 3) . '/wp-content/plugins/glow-fundraiser-core/includes/rebooking/rebooking-post-ajax.php';
@@ -231,6 +244,13 @@ try {
         $response = http_call($url, '/ajax', array('operation' => 'lookup', 'nonce' => $nonce, 'email' => $email), $cookies, $url);
         expect($response['body']['data']['state'] === $state, 'email lookup routes ' . $state . ' account correctly');
     }
+    $login_cookies = array();
+    $login_nonce = http_call($url, '/ajax', array('operation' => 'bootstrap'), $login_cookies, $url)['body']['data']['nonce'];
+    $bad_login = http_call($url, '/ajax', array('operation' => 'login', 'nonce' => $login_nonce, 'email' => 'active@example.invalid', 'password' => 'wrong'), $login_cookies, $url);
+    expect($bad_login['status'] === 401 && $bad_login['body']['data']['message'] === 'Please check your email and password.', 'inline login rejects wrong password');
+    $good_login = http_call($url, '/ajax', array('operation' => 'login', 'nonce' => $login_nonce, 'email' => 'active@example.invalid', 'password' => 'Test! Same password 123'), $login_cookies, $url);
+    expect($good_login['status'] === 200 && !empty($good_login['body']['data']['redirect']), 'inline login succeeds and returns a redirect');
+    expect(http_call($url, '/whoami', null, $login_cookies)['body']['data']['id'] === $active, 'inline login signs the browser in');
     $booking = array('operation' => 'rebook', 'nonce' => $nonce, 'mode' => 'gate', 'email' => 'http-chair@example.invalid', 'password' => 'wrong', 'start_date' => $today, 'end_date' => $end, 'confirm' => 'yes');
     $wrong = http_call($url, '/ajax', $booking, $cookies, $url);
     expect($wrong['status'] === 401, 'wrong password returns HTTP 401');
