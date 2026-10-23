@@ -13470,6 +13470,22 @@ add_filter('woocommerce_email_heading_customer_processing_order', 'my_filter_ema
  *   woocommerce_email_subject_customer_new_account
  *   woocommerce_email_subject_customer_invoice_paid
  **/
+
+/**
+ * Brochure (Catlog) orders already get the Glow Fundraiser Core order email
+ * (custom_new_order_email_send_check), so skip WooCommerce's own copies.
+ */
+add_filter('woocommerce_email_enabled_new_order', 'glow_skip_wc_email_for_brochure_order', 10, 2);
+add_filter('woocommerce_email_enabled_customer_on_hold_order', 'glow_skip_wc_email_for_brochure_order', 10, 2);
+add_filter('woocommerce_email_enabled_customer_processing_order', 'glow_skip_wc_email_for_brochure_order', 10, 2);
+
+function glow_skip_wc_email_for_brochure_order( $enabled, $order ) {
+	if ( $enabled && $order instanceof WC_Order && $order->get_meta( 'wc_order_type' ) === 'Catlog' ) {
+		return false;
+	}
+	return $enabled;
+}
+
 add_filter('woocommerce_email_subject_new_order', 'change_admin_email_subject', 1, 2);
 
 function change_admin_email_subject( $subject, $order ) {
