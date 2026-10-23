@@ -15069,23 +15069,72 @@ function glow_create_zero_order_after_registration( $valid_form_data, $form_id, 
 
     // Only run for Fundraiser registration form IDs
     if ( ! in_array( (int) $form_id, array( 62179, 37978, 21998, 62316 ), true ) ) return;
-    $product_id = 58612;   // your product ID
-    $quantity   = 1;
-    //$user_id    = get_current_user_id(); // or manually set a user ID
 
     if ( empty( $user_id ) ) {
         return;
     }
+
+    // Read a UR field value safely (missing keys must not warn/fatal here).
+    $glow_fd = function( ...$keys ) use ( $valid_form_data ) {
+        foreach ( $keys as $key ) {
+            if ( isset( $valid_form_data[ $key ] ) && isset( $valid_form_data[ $key ]->value ) && '' !== trim( (string) $valid_form_data[ $key ]->value ) ) {
+                return $valid_form_data[ $key ]->value;
+            }
+        }
+        return '';
+    };
+
+    // The LIVE form (62316) uses street_address / City2 / select_state /
+    // input_box_zip; older forms used the billing_* keys.
+    glow_create_fundraiser_shipping_order( $user_id, array(
+        'first_name' => $glow_fd( 'first_name' ),
+        'last_name'  => $glow_fd( 'last_name' ),
+        'company'    => $glow_fd( 'name_of_school_business' ),
+        'email'      => $glow_fd( 'user_email' ),
+        'phone'      => $glow_fd( 'input_box_1595312762', 'input_box_phone' ),
+        'address_1'  => $glow_fd( 'street_address', 'billing_address_1' ),
+        'city'       => $glow_fd( 'City2', 'billing_city' ),
+        'state'      => $glow_fd( 'select_state', 'billing_state' ),
+        'postcode'   => $glow_fd( 'input_box_zip', 'billing_postcode' ),
+    ) );
+}
+
+/**
+ * The $0 "Fundraiser product". Its ID differs per database (58612 before the
+ * Oct 2026 migration, 60634 after), so fall back to finding it by title.
+ */
+function glow_fundraiser_shipping_product() {
+    foreach ( array( 60634, 58612 ) as $product_id ) {
+        $product = wc_get_product( $product_id );
+        if ( $product instanceof WC_Product && 'Fundraiser product' === $product->get_name() ) {
+            return $product;
+        }
+    }
+    $ids = get_posts( array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'title'          => 'Fundraiser product',
+        'posts_per_page' => 1,
+        'fields'         => 'ids',
+    ) );
+    return $ids ? wc_get_product( $ids[0] ) : false;
+}
+
+/**
+ * Create the $0 Processing order ShipStation imports to ship the fundraiser's kit.
+ */
+function glow_create_fundraiser_shipping_order( $user_id, $billing_data ) {
+    $quantity = 1;
 
     // Bail SAFELY if the product is missing on this environment. Previously a
     // missing product made $order->add_product( false, ... ) fatal; because this
     // runs on the post-registration hook, that fatal turned the registration AJAX
     // response into an HTML error page, so User Registration's JS threw
     // "Unexpected token '<' ... is not valid JSON" on submit.
-    $product = wc_get_product( $product_id );
+    $product = glow_fundraiser_shipping_product();
     if ( ! $product instanceof WC_Product ) {
-        error_log( 'glow_create_zero_order_after_registration: product ' . $product_id . ' not found; skipping zero-order for user ' . $user_id );
-        return;
+        error_log( 'glow_create_zero_order_after_registration: Fundraiser product not found; skipping zero-order for user ' . $user_id );
+        return false;
     }
 
     // Create order
@@ -15094,31 +15143,21 @@ function glow_create_zero_order_after_registration( $valid_form_data, $form_id, 
     ));
     if ( is_wp_error( $order ) || ! $order instanceof WC_Order ) {
         error_log( 'glow_create_zero_order_after_registration: wc_create_order failed for user ' . $user_id );
-        return;
+        return false;
     }
 
     // Add product
     $order->add_product( $product, $quantity );
 
-    // Read a UR field value safely (missing keys must not warn/fatal here).
-    $glow_fd = function( $key ) use ( $valid_form_data ) {
-        return ( isset( $valid_form_data[ $key ] ) && isset( $valid_form_data[ $key ]->value ) )
-            ? $valid_form_data[ $key ]->value
-            : '';
-    };
-
-    // Set billing info (required)
-    $billing_data = array(
-        'first_name' => $glow_fd( 'first_name' ),
-        'last_name'  => $glow_fd( 'last_name' ),
-        'email'      => $glow_fd( 'user_email' ),
-        'phone'      => $glow_fd( 'input_box_1595312762' ),
-        'address_1'  => $glow_fd( 'billing_address_1' ),
-        'city'       => $glow_fd( 'billing_city' ),
-        'state'      => $glow_fd( 'billing_state' ),
-        'postcode'   => $glow_fd( 'billing_postcode' ),
-        'country'    => 'USA'
-    );
+    // WooCommerce and ShipStation expect the two-letter state code.
+    $state = trim( (string) ( $billing_data['state'] ?? '' ) );
+    if ( 0 === stripos( $state, 'Please select' ) ) {
+        $state = '';
+    }
+    $us_states = WC()->countries->get_states( 'US' );
+    $code      = array_search( strtolower( $state ), array_map( 'strtolower', (array) $us_states ), true );
+    $billing_data['state']   = false !== $code ? $code : $state;
+    $billing_data['country'] = 'US';
 
     foreach ( $billing_data as $key => $value ) {
         $order->{"set_billing_$key"}($value);
@@ -15142,6 +15181,63 @@ function glow_create_zero_order_after_registration( $valid_form_data, $form_id, 
     $order->update_status( 'processing', 'Moved back to processing for ShipStation.' );
 	$order_id = $order->get_id();
 	update_post_meta( $order_id, 'fundraiser_field', $user_id );
+	return $order_id;
+}
+
+/**
+ * Create the missing shipping order for a fundraiser who already registered,
+ * from the address saved on their account. Skips fundraisers who already have
+ * one. Sends no emails. Usage (WP-CLI):
+ *   wp eval 'var_dump( glow_backfill_fundraiser_shipping_order( 216778 ) );'
+ */
+function glow_backfill_fundraiser_shipping_order( $user_id ) {
+    $user_id = (int) $user_id;
+    $user    = get_userdata( $user_id );
+    $product = glow_fundraiser_shipping_product();
+    if ( ! $user || ! in_array( 'fundraiser', (array) $user->roles, true ) || ! $product ) {
+        return false;
+    }
+
+    $existing = wc_get_orders( array(
+        'limit'      => -1,
+        'return'     => 'ids',
+        'meta_key'   => 'fundraiser_field',
+        'meta_value' => $user_id,
+        'status'     => array_keys( wc_get_order_statuses() ),
+    ) );
+    foreach ( $existing as $existing_id ) {
+        foreach ( wc_get_order( $existing_id )->get_items() as $item ) {
+            if ( (int) $item->get_product_id() === $product->get_id() ) {
+                return 'exists:' . $existing_id;
+            }
+        }
+    }
+
+    $meta = function( ...$keys ) use ( $user_id ) {
+        foreach ( $keys as $key ) {
+            $value = trim( (string) get_user_meta( $user_id, $key, true ) );
+            if ( '' !== $value ) {
+                return $value;
+            }
+        }
+        return '';
+    };
+
+    add_filter( 'pre_wp_mail', '__return_true', PHP_INT_MAX );
+    $order_id = glow_create_fundraiser_shipping_order( $user_id, array(
+        'first_name' => $meta( 'first_name' ),
+        'last_name'  => $meta( 'last_name' ),
+        'company'    => $meta( 'user_registration_name_of_school_business' ),
+        'email'      => $user->user_email,
+        'phone'      => $meta( 'user_registration_input_box_1595312762', 'user_registration_input_box_phone' ),
+        'address_1'  => $meta( 'user_registration_street_address', 'billing_address_1' ),
+        'city'       => $meta( 'user_registration_City2', 'billing_city' ),
+        'state'      => $meta( 'user_registration_select_state', 'billing_state' ),
+        'postcode'   => $meta( 'user_registration_input_box_zip', 'billing_postcode' ),
+    ) );
+    remove_filter( 'pre_wp_mail', '__return_true', PHP_INT_MAX );
+
+    return $order_id;
 }
 
 
