@@ -33,6 +33,10 @@ $uid = 'glow_sreg_' . wp_rand( 1000, 9999 );
 ?>
 <div class="glow-seller-register-wrap" id="<?php echo esc_attr( $uid ); ?>">
 	<style>
+	/* Hide the "Seller Phone" helper text under the phone field. */
+	#<?php echo esc_attr( $uid ); ?> .field-billing_phone .description {
+		display: none;
+	}
 	#<?php echo esc_attr( $uid ); ?> {
 		width: 100%;
 		max-width: 780px;
