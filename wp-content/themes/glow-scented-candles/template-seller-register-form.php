@@ -528,4 +528,29 @@ $uid = 'glow_sreg_' . wp_rand( 1000, 9999 );
 		})(jQuery);
 		</script>
 	<?php endif; ?>
+	<script type="text/javascript">
+	/* Phone field: start on United States instead of the visitor's IP country. */
+	(function ($) {
+		function forceUs() {
+			var original = $.fn.intlTelInput;
+			if (!original || original.glowForceUs) return !!original;
+			$.fn.intlTelInput = function (options) {
+				if (options && typeof options === 'object') {
+					options = $.extend({}, options, { initialCountry: 'us' });
+				}
+				return original.apply(this, [options].concat([].slice.call(arguments, 1)));
+			};
+			$.extend($.fn.intlTelInput, original, { glowForceUs: true });
+			return true;
+		}
+		if (!forceUs()) $(forceUs);
+		// Fields set up before the override existed.
+		$(window).on('load', function () {
+			$('.ur-smart-phone-field').each(function () {
+				var $el = $(this);
+				if (!$el.val() && $el.data('plugin_intlTelInput')) $el.intlTelInput('setCountry', 'us');
+			});
+		});
+	})(jQuery);
+	</script>
 </div>
