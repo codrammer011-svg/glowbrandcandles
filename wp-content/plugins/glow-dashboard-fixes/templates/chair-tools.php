@@ -420,7 +420,7 @@ add_action( 'template_redirect', function () {
 			<div class="glow-ct-tw"><table><thead><tr><th>Order</th><th>Date</th><th>Customer</th><th>Seller</th><th>Type</th><th>Total</th><th>Status</th><th>Tracking</th></tr></thead><tbody>
 			<?php foreach ( $orders as $r ) :
 				$trk = $r['tracking'] ? '<a target="_blank" rel="noopener" href="https://www.ups.com/track?loc=en_US&tracknum=' . rawurlencode( $r['tracking'] ) . '">' . esc_html( $r['tracking'] ) . '</a>' : '<span class="glow-ct-muted">Not shipped yet</span>'; ?>
-				<tr><td><b>#<?php echo (int) $r['id']; ?></b></td><td><?php echo esc_html( $r['date'] ); ?></td><td><?php echo esc_html( $r['customer'] ); ?></td><td><?php echo esc_html( $r['seller'] ? $r['seller'] : '—' ); ?></td><td><?php echo esc_html( $r['type'] ); ?></td><td><?php echo wp_kses_post( wc_price( $r['total'] ) ); ?></td><td><span class="glow-ct-tag is-<?php echo esc_attr( $r['raw'] ); ?>"><?php echo esc_html( $r['status'] ); ?></span></td><td><?php echo $trk; ?></td></tr>
+				<tr><td><b>#<?php echo esc_html( glow_order_display_id( $r['id'] ) ); ?></b></td><td><?php echo esc_html( $r['date'] ); ?></td><td><?php echo esc_html( $r['customer'] ); ?></td><td><?php echo esc_html( $r['seller'] ? $r['seller'] : '—' ); ?></td><td><?php echo esc_html( $r['type'] ); ?></td><td><?php echo wp_kses_post( wc_price( $r['total'] ) ); ?></td><td><span class="glow-ct-tag is-<?php echo esc_attr( $r['raw'] ); ?>"><?php echo esc_html( $r['status'] ); ?></span></td><td><?php echo $trk; ?></td></tr>
 			<?php endforeach; ?>
 			</tbody></table></div>
 		<?php endif; ?>

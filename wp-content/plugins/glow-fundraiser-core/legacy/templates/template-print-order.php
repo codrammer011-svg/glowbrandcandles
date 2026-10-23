@@ -6,7 +6,7 @@
 	$user = wp_get_current_user();
 	if ( in_array( 'administrator', (array) $user->roles ) ) 
 	{
-	$order_id=$_GET['order_id'];
+	$order_id=glow_order_id_from_number($_GET['order_id']);
  
  	global $woocommerce;
 	$id=$order_id;

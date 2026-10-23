@@ -18,7 +18,7 @@ function glow_local_replace($value, $local, $depth = 0) {
 }
 if (($argv[1] ?? '') === '--self-test') {
     $local = 'http://glow.local';
-    $plain = 'https://glowbrandscandles.com/profile/1/';
+    $plain = 'https://glowscentedcandles.com/profile/1/';
     $nested = serialize(array('url' => $plain, 'json' => json_encode(array('url' => $plain))));
     $result = unserialize(glow_local_replace($nested, $local));
     if ($result['url'] !== $local . '/profile/1/' || json_decode($result['json'], true)['url'] !== $result['url']) { throw new RuntimeException('URL test failed'); }

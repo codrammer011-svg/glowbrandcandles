@@ -10948,7 +10948,7 @@ add_action('wp_ajax_nopriv_order_ajax', 'order_ajax'); // for not logged in user
 add_action('wp_ajax_order_ajax', 'order_ajax');
 function order_ajax()
 {
-	$o_id=$_POST['orderid'];
+	$o_id=glow_order_id_from_number($_POST['orderid']);
 	$order_type = get_post_meta($o_id,'wc_order_type',true);
 	if($order_type=='Online')
 	{
