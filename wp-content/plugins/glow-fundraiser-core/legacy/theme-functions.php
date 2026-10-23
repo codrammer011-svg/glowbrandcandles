@@ -13477,13 +13477,70 @@ add_filter('woocommerce_email_heading_customer_processing_order', 'my_filter_ema
  */
 add_filter('woocommerce_email_enabled_new_order', 'glow_skip_wc_email_for_brochure_order', 10, 2);
 add_filter('woocommerce_email_enabled_customer_on_hold_order', 'glow_skip_wc_email_for_brochure_order', 10, 2);
-add_filter('woocommerce_email_enabled_customer_processing_order', 'glow_skip_wc_email_for_brochure_order', 10, 2);
 
 function glow_skip_wc_email_for_brochure_order( $enabled, $order ) {
 	if ( $enabled && $order instanceof WC_Order && $order->get_meta( 'wc_order_type' ) === 'Catlog' ) {
 		return false;
 	}
 	return $enabled;
+}
+
+/**
+ * When an order is paid, custom_new_order_email (woocommerce_payment_complete)
+ * mails the customer, so skip WooCommerce's customer copy in that case.
+ */
+add_action('woocommerce_pre_payment_complete', 'glow_mark_order_payment_completing');
+
+function glow_mark_order_payment_completing( $order_id ) {
+	$GLOBALS['glow_payment_completing'][ (int) $order_id ] = true;
+}
+
+add_filter('woocommerce_email_enabled_customer_processing_order', 'glow_skip_wc_customer_email_when_glow_sends', 10, 2);
+
+function glow_skip_wc_customer_email_when_glow_sends( $enabled, $order ) {
+	if ( ! $enabled || ! $order instanceof WC_Order || empty( $GLOBALS['glow_payment_completing'][ $order->get_id() ] ) ) {
+		return $enabled;
+	}
+	if ( ! has_action( 'woocommerce_payment_complete', 'custom_new_order_email' ) || ! is_email( $order->get_billing_email() ) ) {
+		return $enabled;
+	}
+	// custom_new_order_email only sends for active fundraisers.
+	$action_status = get_user_meta( (int) $order->get_meta( 'fundraiser_field' ), 'user_action_status', true );
+	return ( $action_status == 1 || empty( $action_status ) ) ? false : $enabled;
+}
+
+/**
+ * One email per person per order: drop recipients who already got an order
+ * email ("... (# 12345)") for the same order earlier in this request.
+ */
+add_filter('wp_mail', 'glow_one_order_email_per_recipient', PHP_INT_MAX);
+
+function glow_one_order_email_per_recipient( $mail ) {
+	static $sent = array();
+	if ( empty( $mail['to'] ) || ! preg_match( '/\(#\s*(\d+)\)/', (string) ( $mail['subject'] ?? '' ), $match ) ) {
+		return $mail;
+	}
+	$order_id = (int) $match[1];
+	if ( get_post_type( $order_id ) !== 'shop_order' ) {
+		return $mail;
+	}
+	$keep = array();
+	foreach ( (array) ( is_array( $mail['to'] ) ? $mail['to'] : explode( ',', $mail['to'] ) ) as $recipient ) {
+		$email = strtolower( trim( preg_replace( '/^.*<([^>]+)>.*$/', '$1', (string) $recipient ) ) );
+		if ( $email === '' || isset( $sent[ $order_id ][ $email ] ) ) {
+			continue;
+		}
+		$sent[ $order_id ][ $email ] = true;
+		$keep[] = $recipient;
+	}
+	$mail['to'] = $keep;
+	return $mail;
+}
+
+add_filter('pre_wp_mail', 'glow_skip_order_email_without_recipients', 10, 2);
+
+function glow_skip_order_email_without_recipients( $return, $atts ) {
+	return ( null === $return && isset( $atts['to'] ) && array() === $atts['to'] ) ? true : $return;
 }
 
 add_filter('woocommerce_email_subject_new_order', 'change_admin_email_subject', 1, 2);
