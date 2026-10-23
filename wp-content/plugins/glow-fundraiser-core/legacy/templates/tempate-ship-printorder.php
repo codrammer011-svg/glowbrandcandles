@@ -507,7 +507,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 						<h3 style="font-size: 14pt;line-height: 16pt;padding:0;margin: 8px 0px;margin-bottom: 3px;"><?php echo $sellerName_n; ?></h3>
 					<?php } ?>
 						<h5 style="padding-top: 3px;margin: 0;padding-bottom: 3px;font-size: 11pt;font-weight: 600;line-height: 13pt;"><?php echo "Customer Name: ".$customer_name[$s]; ?></h5>
-						<h5 style="margin: 0;padding-bottom: 3px;font-size: 11pt;font-weight: 600;line-height: 13pt;"><?php echo "Order #ID: ".$sort_id[$s]; ?></h5>
+						<h5 style="margin: 0;padding-bottom: 3px;font-size: 11pt;font-weight: 600;line-height: 13pt;"><?php echo "Order #ID: ".glow_order_display_id($sort_id[$s]); ?></h5>
 						<hr style="font-size: 11pt;line-height: 13pt;border: 1px dashed #333;width: 100%;display: inline-block;" />
 					</div>
 				
@@ -743,7 +743,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 		<div class="SellerName">
 			<h5><?php echo "Seller Name: ".$sellerName_n; ?></h5>
 			<h5><?php echo "Customer Name: ".$customer_name[$s]; ?></h5>
-			<h5><?php echo "Order #ID: ".$sort_id[$s]; ?></h5>
+			<h5><?php echo "Order #ID: ".glow_order_display_id($sort_id[$s]); ?></h5>
 			<span class="border-line"></span>
 		</div>
 	 <?php }
@@ -756,7 +756,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 		<div class="SellerName page-incr">
 			<h5><?php echo "Seller Name: ".$sellerName_n; ?> <span class="pageNo">(Page <?php echo $pageCount; ?>)</span></h5>
 			<h5><?php echo "Customer Name: ".$customer_name[$s]; ?></h5>
-			<h5><?php echo "Order #ID: ".$sort_id[$s]; ?></h5>
+			<h5><?php echo "Order #ID: ".glow_order_display_id($sort_id[$s]); ?></h5>
 			<span class="border-line"></span>
 		</div>
 	<?php 

@@ -251,7 +251,7 @@ if($ID == 205821) {?>
                                   ?>
 
                                 <div class="fundraiser-order-row">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
 
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?>
@@ -381,7 +381,7 @@ if($ID == 205821) {?>
                                   ?>
 
                                 <div class="fundraiser-order-row">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
 
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?>
@@ -582,7 +582,7 @@ if($ID == 205821) {?>
 									if(!empty($rebook_date) && $extract_date > $rebook_date ){
                                 if ($order_customer_id != $frID2) { ?>
                                 <div class="fundraiser-order-row sellermatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
                                     <div class="fr-order-col fr-order-seller">
@@ -692,7 +692,7 @@ if($ID == 205821) {?>
 								
 								?>
                                 <div class="fundraiser-order-row sellermatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
                                     <div class="fr-order-col fr-order-seller">
@@ -970,7 +970,7 @@ if($ID == 205821) {?>
 								
 								?>
                                 <div class="fundraiser-order-row itemmatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
 
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
@@ -1452,7 +1452,7 @@ if($ID == 205821) {?>
                                   ?>
 
                                 <div class="fundraiser-order-row">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
 
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?>
@@ -1582,7 +1582,7 @@ if($ID == 205821) {?>
                                   ?>
 
                                 <div class="fundraiser-order-row">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
 
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?>
@@ -1781,7 +1781,7 @@ if($ID == 205821) {?>
                                         endforeach; 
                                 if ($order_customer_id != $frID2) { ?>
                                 <div class="fundraiser-order-row sellermatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
                                     <div class="fr-order-col fr-order-seller">
@@ -1888,7 +1888,7 @@ if($ID == 205821) {?>
 								
 								?>
                                 <div class="fundraiser-order-row sellermatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
                                     <div class="fr-order-col fr-order-seller">
@@ -2175,7 +2175,7 @@ if($ID == 205821) {?>
 								
 								?>
                                 <div class="fundraiser-order-row itemmatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
 
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
@@ -2385,7 +2385,7 @@ if($ID == 205821) {?>
 									
                                 if ($order_customer_id != $frID2) {   ?>
                                 <div class="fundraiser-order-row sellermatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
                                     <div class="fr-order-col fr-order-seller"><?php 
@@ -2451,7 +2451,7 @@ if($ID == 205821) {?>
 								
 								?>
                                 <div class="fundraiser-order-row sellermatch">
-                                    <div class="fr-order-col fr-order-id"><?php echo $order->ID; ?></div>
+                                    <div class="fr-order-col fr-order-id"><?php echo glow_order_display_id($order->ID); ?></div>
                                     <div class="fr-order-col fr-order-date"><?php echo $order_data['date_created']->date('Y-m-d'); ?></div>
                                     <div class="fr-order-col fr-order-customer"><?php echo $order_data['billing']['first_name']; ?> <?php echo $order_data['billing']['last_name']; ?></div>
                                     <div class="fr-order-col fr-order-seller"><?php 
