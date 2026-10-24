@@ -10,7 +10,27 @@ get_header();
 	<style>
 		
 .sc-feJyhm.jqEzoc.txt { line-height: 145%; font-size: 19px; font-family: 'Winnie PERSONAL USE' !important; font-weight: 400; color: #000; }
-		
+
+	/* Site typography (Elementor globals, as on the home page): Plus Jakarta Sans for headings, DM Sans for all other text.
+	   Icon fonts keep their own family. The :not(#glow-ff-N) parts only raise specificity above the older !important font rules below. */
+	:is(.main-page-banner, .sc-jtRfpW, .manual-mass-popup, #brave_popup_12975):not(#glow-ff-1):not(#glow-ff-2),
+	:is(.main-page-banner, .sc-jtRfpW, .manual-mass-popup, #brave_popup_12975) :not(i, .fa, [class*="fa-"], [class*="sli-"], [class*="icon"], .star-rating, .star-rating *):not(#glow-ff-1):not(#glow-ff-2) {
+		font-family: "DM Sans", sans-serif !important;
+	}
+	:is(.main-page-banner, .sc-jtRfpW, .manual-mass-popup, #brave_popup_12975) :is(h1, .mainHeading, .sc-RefOD.jFdVyI, .sc-rBLzX.kLuVwd, #brave_element--N3sYSN7DAn8xy7o0Mng .brave_element__text_inner):not(#glow-ff-1):not(#glow-ff-2):not(#glow-ff-3) {
+		font-family: "Plus Jakarta Sans", sans-serif !important;
+		font-weight: 800 !important;
+	}
+	/* These fonts run wider than the ones the welcome popup was spaced for. */
+	#brave_popup_12975 #brave_element--N3sYSN7DAn8xy7o0Mng .brave_element__text_inner:not(#glow-ff-1):not(#glow-ff-2) {
+		font-size: min(26px, 6vw) !important;
+		letter-spacing: 0 !important;
+		line-height: 1.2 !important;
+	}
+	#brave_popup_12975 #brave_element--WWW .eYHKCV:not(#glow-ff-1) {
+		letter-spacing: 0 !important;
+	}
+
 	.progress-bar:before {
     content: "";
     background: repeating-linear-gradient(100deg, /* angle of slash */ #ffffff3d, /* color of slash */ #0800E4 8px, /* thickness of slash */ #ffffff21 20px, /* space between slashes */ #ffffff21 8px);
@@ -1318,7 +1338,7 @@ get_header();
 								<p>
 								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-01.png' ); ?>" alt="hexagon-jars">-->
 								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-11.png' ); ?>" alt="hexagon-jars">-->
-								<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/classic-banner.jpg' ); ?>" alt="Classic">
+								<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/10/classic-candles.jpg' ); ?>" alt="Classic">
 								</p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/classic-candles/">SHOP</a></div>
 							</div>
@@ -1327,7 +1347,7 @@ get_header();
 							<div class="cover-img">
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-02.png' ); ?>" alt="16oz-round-classic"></p>-->
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/09/Main-Banner_1920x851-10-3.png' ); ?>" alt="16oz-round-classic"></p>-->
-								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/melt-banner.jpg' ); ?>" alt="Melt"></p>
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/10/melts.jpg' ); ?>" alt="Melt"></p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/large-wax-melts-6-cubes/">SHOP</a></div>
 							</div>
 						</div>
@@ -1335,7 +1355,7 @@ get_header();
 							<div class="cover-img">
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-04.png' ); ?>" alt="flameless-scented-melts"></p>-->
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-08.png' ); ?>" alt="melts"></p>-->
-								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/oils-banner.jpg' ); ?>" alt="Oils"></p>
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/10/Essential-oils.jpg' ); ?>" alt="Oils"></p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/essential-oils/">SHOP</a></div>
 							</div>
 						</div>
@@ -1348,7 +1368,7 @@ get_header();
 							<div class="cover-img">
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-03.png' ); ?>" alt="room-spray"></p>-->
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-05.png' ); ?>" alt="room-spray"></p>-->
-								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/signature-banner-1.jpg' ); ?>" alt="Signature Candles"></p>
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/10/signature-candles.jpg' ); ?>" alt="Signature Candles"></p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/2-wick-signature-candles/">SHOP</a></div>
 							</div>
 						</div>
@@ -1357,7 +1377,7 @@ get_header();
 								<p>
 								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-05.png' ); ?>" alt="essential-oils">-->
 								<!--<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-09.png' ); ?>" alt="essential-oils">-->
-								<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/spray-banner.jpg' ); ?>" alt="Room Spray">
+								<img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/10/room-sprays.jpg' ); ?>" alt="Room Spray">
 								</p>
 								<div class="overlay"><a href="<?php echo home_url(); ?>/product-category/all-items/room-sprays-all-items/">SHOP</a></div>
 							</div>
@@ -1366,7 +1386,7 @@ get_header();
 							<div class="cover-img">
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2023/08/296x420-06.png' ); ?>" alt="boxed-metallic"></p>-->
 								<!--<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2024/08/Main-Banner_1920x851-07.png' ); ?>" alt="boxed-metallic"></p>-->
-								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/01/boxed-image.jpg' ); ?>" alt="boxed-metallic"></p>
+								<p><img class="img-fluid" src="<?php echo esc_url( trailingslashit( wp_get_upload_dir()['baseurl'] ) . '2026/10/celebrate-tha-moments.jpg' ); ?>" alt="boxed-metallic"></p>
 								<div class="overlay"><a href="<?php echo esc_url( home_url( '/product-category/celebrate-the-moments/' ) ); ?>">SHOP</a></div>
 							</div>
 						</div>
@@ -2046,29 +2066,36 @@ get_header();
 <?php
 $image_url_profile=get_user_meta($u_id,"user_registration_image_url_profile",true);
 $seller_imageUrl=get_user_meta($u_id,'seller_profile_image',true);
+$profile_img_url = '';
 if(!empty($seller_imageUrl)) {
 $crop_url_profile2=profile_image_resize_crop( $src=$seller_imageUrl, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );
-?>
-<style>
-.kKkoMh
-{
-	background: url(<?php echo $crop_url_profile2; ?>) 50% 0px / cover rgb(255, 255, 255) !important;
-}
-</style>
-
-<?php
+$profile_img_url = $crop_url_profile2;
 }
 else if(!empty($image_url_profile)) {
 	$crop_url_profile1=profile_image_resize_crop( $src=$image_url_profile, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true);
+	$profile_img_url = $crop_url_profile1;
+}
+// Fallback when the seller has no image, or its file won't load: the same "heart hands" image the welcome popup falls back to.
+$profile_img_fallback = get_theme_file_uri( '/images/Frame-92-1.png' );
 ?>
 <style>
 .kKkoMh
 {
-	background: url(<?php echo $crop_url_profile1; ?>) 50% 0px / cover rgb(255, 255, 255) !important;
+	background: url("<?php echo esc_url_raw( $profile_img_url ? $profile_img_url : $profile_img_fallback ); ?>") 50% 0px / cover rgb(255, 255, 255) !important;
 }
 </style>
-<?php }
-else { }?>
+<?php if ( $profile_img_url ) { ?>
+<script>
+(function () {
+	var img = new Image();
+	img.onerror = function () {
+		var bg = 'url("' + <?php echo wp_json_encode( esc_url_raw( $profile_img_fallback ) ); ?> + '") 50% 0px / cover rgb(255, 255, 255)';
+		document.querySelectorAll('.kKkoMh').forEach(function (el) { el.style.setProperty('background', bg, 'important'); });
+	};
+	img.src = <?php echo wp_json_encode( esc_url_raw( $profile_img_url ) ); ?>;
+})();
+</script>
+<?php } ?>
 
 <style>
 .manual-mass-popup, 
@@ -3144,15 +3171,15 @@ div#brave_element--WWW .sc-hwwEjo.eoCznv
 											-->
 										 <?php
 												$image_url_profile=get_user_meta($u_id,"user_registration_image_url_profile",true);
-												if(!empty($fund_image)) { 
-												$crop_url_profile1=profile_image_resize_crop( $src=$fund_image, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );
+												if(!empty($seller_imageUrl)) {
+												$crop_url_profile1=profile_image_resize_crop( $src=$seller_imageUrl, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true );
 												?>
-												 <img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile1; ?>" alt="">
+												 <img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile1; ?>" onerror="this.onerror=null;this.src='<?php echo esc_url( get_theme_file_uri( '/images/Frame-92-1.png' ) ); ?>';" alt="">
 												<?php }
 												else if(!empty($image_url_profile)) {
 													$crop_url_profile2=profile_image_resize_crop( $src=$image_url_profile, $w=512, $h=512, $dest = null, $override = true, $createNewIfExists = true);
 												?>
-													<img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile2; ?>" alt="">
+													<img width="300" height="300" class=" brave_element__image  brave_element_img_item skip-lazy no-lazyload" data-lazy="" src="<?php echo $crop_url_profile2; ?>" onerror="this.onerror=null;this.src='<?php echo esc_url( get_theme_file_uri( '/images/Frame-92-1.png' ) ); ?>';" alt="">
 												<?php
 												}
 												else {	
@@ -3235,7 +3262,7 @@ div#brave_element--WWW .sc-hwwEjo.eoCznv
 
                               <div class="sc-kafWEX civCQf kj small-screen-hide">
 			 
-             <div class="sc-feJyhm jqEzoc txt"><?php if(!empty($description) && !empty($seller_desc)){ echo $excerpt = wp_trim_words( $seller_desc, 30, ' [...]' ); } else if(!empty($description)){ echo $excerpt = wp_trim_words( $description, 30, ' [...]' ); } else if(!empty($seller_desc)){ echo $excerpt = wp_trim_words( $seller_desc, 30, ' [...]' );  } else { ?> Help us reach our goal! Thank you for the support! <?php } ?></div>
+             <div class="sc-feJyhm jqEzoc txt"><?php if(!empty($description) && !empty($seller_desc)){ echo esc_html( wp_strip_all_tags( $seller_desc ) ); } else if(!empty($description)){ echo esc_html( wp_strip_all_tags( $description ) ); } else if(!empty($seller_desc)){ echo esc_html( wp_strip_all_tags( $seller_desc ) );  } else { ?> Help us reach our goal! Thank you for the support! <?php } ?></div>
           </div>
                                  <div class="brave_element__wrap ">
                                     <div class="brave_element__styler ">
