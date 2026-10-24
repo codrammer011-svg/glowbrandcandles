@@ -916,8 +916,8 @@ function gsc_cookie_for_fundraiser() {
 								type: 'POST',
 								data : {action:'seller_drop_down_list', request_id:newFridValue, glow_seller:glow_seller},
 								success: function (res) {
-								
-									jQuery("select#wc_seller_field").append(res);
+									// The response has its own "No Seller" option, so replace the field's default one.
+									jQuery("select#wc_seller_field").empty().append(res);
 									jQuery('.woocommerce-checkout select#wc_seller_field option#selectSeller').prop('selected', true);	
 									jQuery('.woocommerce-checkout select#wc_seller_field option#selectCustom').prop('selected', true);
 								}
