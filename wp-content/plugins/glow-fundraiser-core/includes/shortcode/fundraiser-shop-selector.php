@@ -243,6 +243,10 @@ if ( ! function_exists( 'seller_drop_down_list' ) ) {
 			'order'      => 'ASC',
 		) );
 
+		// Checkout passes the seller saved in the session; mark that option
+		// id="selectSeller" so checkout's JS selects it.
+		$wanted = isset( $_POST['glow_seller'] ) ? strtolower( trim( preg_replace( '/\s+/', ' ', wp_unslash( (string) $_POST['glow_seller'] ) ) ) ) : '';
+
 		foreach ( $sellers as $s ) {
 			$first = get_user_meta( $s->ID, 'first_name', true );
 			$last  = get_user_meta( $s->ID, 'last_name', true );
@@ -253,10 +257,15 @@ if ( ! function_exists( 'seller_drop_down_list' ) ) {
 			if ( '' === $name ) {
 				continue;
 			}
+			$selected = ( '' !== $wanted && strtolower( preg_replace( '/\s+/', ' ', $name ) ) === $wanted );
+			if ( $selected ) {
+				$wanted = ''; // Only the first match.
+			}
 			printf(
-				'<option frdata="%s" value="%d">%s</option>',
+				'<option frdata="%s" value="%d"%s>%s</option>',
 				esc_attr( $fid ),
 				(int) $s->ID,
+				$selected ? ' id="selectSeller"' : '',
 				esc_html( $name )
 			);
 		}
@@ -291,32 +300,79 @@ function glow_fc_save_session_sync() {
 	}
 
 	if ( ! empty( $fid ) ) {
-		// 1. WooCommerce Session
-		if ( function_exists( 'WC' ) && WC()->session ) {
-			WC()->session->set( 'fridID', $fid );
-			WC()->session->set( 'popup_fundraiser_id', $fid );
-			if ( ! empty( $seller ) ) {
-				WC()->session->set( 'seller_name', $seller );
-			}
-		}
+		glow_fc_store_fundraiser_session( $fid, $seller );
+	}
+}
 
-		// 2. Native PHP Session
-		if ( session_status() === PHP_SESSION_NONE && ! headers_sent() ) {
-			session_start();
+/**
+ * Store the fundraiser ID and seller name for checkout in the WooCommerce
+ * session, the native PHP session and fallback cookies.
+ */
+function glow_fc_store_fundraiser_session( $fid, $seller ) {
+	// 1. WooCommerce Session
+	if ( function_exists( 'WC' ) && WC()->session ) {
+		// Guests without a cart have no WC session cookie yet; start one so the values persist.
+		if ( ! WC()->session->has_session() && ! headers_sent() ) {
+			WC()->session->set_customer_session_cookie( true );
 		}
-		if ( isset( $_SESSION ) ) {
-			$_SESSION['fridID']      = $fid;
-			$_SESSION['seller_name'] = $seller;
-		}
-
-		// 3. Fallback Cookies (30 days)
-		if ( ! headers_sent() ) {
-			setcookie( 'fundraiserID', $fid, time() + 30 * DAY_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
-			if ( ! empty( $seller ) ) {
-				setcookie( 'seller_name', $seller, time() + 30 * DAY_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
-			}
+		WC()->session->set( 'fridID', $fid );
+		WC()->session->set( 'popup_fundraiser_id', $fid );
+		if ( ! empty( $seller ) ) {
+			WC()->session->set( 'seller_name', $seller );
 		}
 	}
+
+	// 2. Native PHP Session
+	if ( session_status() === PHP_SESSION_NONE && ! headers_sent() ) {
+		session_start();
+	}
+	if ( isset( $_SESSION ) ) {
+		$_SESSION['fridID']      = $fid;
+		$_SESSION['seller_name'] = $seller;
+	}
+
+	// 3. Fallback Cookies (30 days)
+	if ( ! headers_sent() ) {
+		setcookie( 'fundraiserID', $fid, time() + 30 * DAY_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
+		if ( ! empty( $seller ) ) {
+			setcookie( 'seller_name', $seller, time() + 30 * DAY_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
+		}
+	}
+}
+
+/**
+ * Visiting a seller's public profile (/seller/{id|login}/, /seller/user/{login}/
+ * or /profile/{seller}/) means the shopper is buying for that seller, so remember
+ * the seller and their fundraiser for checkout.
+ */
+add_action( 'template_redirect', 'glow_fc_remember_seller_from_profile' );
+function glow_fc_remember_seller_from_profile() {
+	$query = get_query_var( 'seller' ) ? get_query_var( 'seller' ) : get_query_var( 'user' );
+	if ( ! $query ) {
+		$query = get_query_var( 'profile' );
+	}
+	if ( ! $query ) {
+		return;
+	}
+
+	$seller = is_numeric( $query )
+		? get_user_by( 'id', (int) $query )
+		: ( get_user_by( 'login', $query ) ?: get_user_by( 'slug', $query ) );
+	if ( ! $seller || ! in_array( 'seller', (array) $seller->roles, true ) ) {
+		return;
+	}
+
+	$fid = preg_replace( '/\D/', '', (string) get_user_meta( $seller->ID, 'user_registration_seller_fundraiser', true ) );
+	if ( strlen( $fid ) !== 6 ) {
+		return;
+	}
+
+	$name = trim( get_user_meta( $seller->ID, 'first_name', true ) . ' ' . get_user_meta( $seller->ID, 'last_name', true ) );
+	if ( '' === $name ) {
+		$name = $seller->display_name;
+	}
+
+	glow_fc_store_fundraiser_session( $fid, $name );
 }
 
 // Prefill checkout fields from session
