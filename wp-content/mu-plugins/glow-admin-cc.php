@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: Glow Admin CC
- * Description: Copies both admin inboxes on every email the site sends.
+ * Description: Copies the admin inbox on every email the site sends.
  */
 defined('ABSPATH') || exit;
 
 function glow_admin_cc_addresses() {
-    return array('candace@glowscentedcandles.com', 'candacethompson12@gmail.com');
+    return array('candace@glowscentedcandles.com');
 }
 
 // Runs before the admin routing and the one-email-per-order filters (both PHP_INT_MAX),
@@ -30,9 +30,10 @@ function glow_admin_cc_every_email($mail) {
     $lines    = $is_array ? $headers : preg_split('/\r\n|\r|\n/', (string) $headers);
     $lines    = array_values(array_filter($lines, 'strlen'));
 
-    // Skip any admin address already in To, Cc or Bcc.
+    // Skip any admin address already in To, Cc or Bcc. The old Gmail inbox counts as the admin
+    // inbox, since glow-admin-email-redirect rewrites it to candace@glowscentedcandles.com.
     $to      = is_array($mail['to'] ?? '') ? implode(',', $mail['to']) : (string) ($mail['to'] ?? '');
-    $present = strtolower($to . ' ' . implode(' ', $lines));
+    $present = str_replace('candacethompson12@gmail.com', 'candace@glowscentedcandles.com', strtolower($to . ' ' . implode(' ', $lines)));
     $missing = array();
     foreach (glow_admin_cc_addresses() as $address) {
         if (false === strpos($present, $address)) {

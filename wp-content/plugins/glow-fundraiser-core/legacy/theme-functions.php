@@ -2970,8 +2970,7 @@ $docx_path = build_fundraiser_docx_for_user([
 ]);
 
 $admin_email = array(
-    "candace@glowscentedcandles.com",
-    "candacethompson12@gmail.com"
+    "candace@glowscentedcandles.com"
 );
 
 
@@ -3493,8 +3492,7 @@ if (!empty($docx_path)) {
 }
 	wp_mail('akshaywalia770@gmail.com', $subject, $m_body, $headers,$attachments);
 $admin_email = array(
-    "candace@glowscentedcandles.com",
-    "candacethompson12@gmail.com"
+    "candace@glowscentedcandles.com"
 );
 	wp_mail($rmail, $subject, $m_body, $headers,$attachments);
 	wp_mail($admin_email, $subject, $m_body, $headers,$attachments); 
@@ -12048,7 +12046,6 @@ function custom_new_order_email_send_check($order_id)
 // );
    	$admin_email = array_filter(array(
     "candace@glowscentedcandles.com",
-    "candacethompson12@gmail.com",
     $user_email ?? '',
     $referral_email ?? ''
 ));

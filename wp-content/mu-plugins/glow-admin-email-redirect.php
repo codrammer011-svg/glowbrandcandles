@@ -42,20 +42,21 @@ function glow_temporary_admin_email_redirect( $mail ) {
             : preg_replace( $developer, $destination, $mail['to'] );
     }
 
-    // Admin notifications addressed to either Candace inbox go to both.
-    $recipients = isset($mail['to']) ? (is_array($mail['to']) ? $mail['to'] : preg_split('/\s*,\s*/', $mail['to'])) : array();
-    foreach ($recipients as $recipient) {
-        if (preg_match('/(?<![a-z0-9.!#$%&\x27*+\/=?^_`{|}~@-])(?:candace@glowscentedcandles\.com|candacethompson12@gmail\.com)(?![a-z0-9.@-])/i', $recipient)) {
-            foreach (array('candace@glowscentedcandles.com', 'candacethompson12@gmail.com') as $address) {
-                $present = false;
-                foreach ($recipients as $existing) {
-                    if (preg_match('/(?<![a-z0-9.@-])' . preg_quote($address, '/') . '(?![a-z0-9.@-])/i', $existing)) { $present = true; break; }
-                }
-                if (!$present) { $recipients[] = $address; }
-            }
-            $mail['to'] = $recipients;
-            break;
+    // Admin mail goes to candace@glowscentedcandles.com only: the old Gmail inbox is replaced
+    // wherever it still appears (code, plugin settings, Cc or Bcc).
+    $gmail = '/(?<![a-z0-9.!#$%&\x27*+\/=?^_`{|}~@-])candacethompson12@gmail\.com(?![a-z0-9.@-])/i';
+    if ( isset( $mail['to'] ) ) {
+        $mail['to'] = is_array( $mail['to'] )
+            ? array_values( array_unique( preg_replace( $gmail, $destination, $mail['to'] ) ) )
+            : preg_replace( $gmail, $destination, $mail['to'] );
+        if ( ! is_array( $mail['to'] ) ) {
+            $mail['to'] = implode( ', ', array_unique( array_map( 'trim', explode( ',', $mail['to'] ) ) ) );
         }
+    }
+    if ( ! empty( $mail['headers'] ) ) {
+        $mail['headers'] = is_array( $mail['headers'] )
+            ? preg_replace( $gmail, $destination, $mail['headers'] )
+            : preg_replace( $gmail, $destination, (string) $mail['headers'] );
     }
 
     // Redirect copies as well, while preserving sender and reply-to headers.
