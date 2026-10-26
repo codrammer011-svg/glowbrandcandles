@@ -36,7 +36,29 @@
         <?php
         // Only the signed-in owner sees the name; the public gate must not reveal it for any typed email.
         $org = $mode === 'dashboard' ? trim((string) get_user_meta(get_current_user_id(), 'user_registration_name_of_school_business', true)) : '';
+        // The same rule applies to the seller count and address prefilled below.
+        $current = function ($key) use ($mode) {
+            return $mode === 'dashboard' ? trim((string) get_user_meta(get_current_user_id(), $key, true)) : '';
+        };
+        $sellers = (int) $current('user_registration_participants_no');
+        $state   = $current('user_registration_select_state');
         ?>
+        <label>Number of sellers<input type="number" name="sellers" min="1" max="9999" step="1" inputmode="numeric" required value="<?php echo $sellers > 0 ? esc_attr($sellers) : ''; ?>" placeholder="e.g. 25"></label>
+        <label class="grb-confirm"><input type="checkbox" name="address_changed" value="yes" data-grb-address-toggle><span>Our shipping address has changed</span></label>
+        <fieldset class="grb-address" data-grb-address hidden disabled>
+            <legend>New shipping address</legend>
+            <label>Street address<input type="text" name="street" maxlength="120" autocomplete="address-line1" required value="<?php echo esc_attr($current('user_registration_street_address')); ?>"></label>
+            <div class="grb-dates">
+                <label>City<input type="text" name="city" maxlength="60" autocomplete="address-level2" required value="<?php echo esc_attr($current('user_registration_City2')); ?>"></label>
+                <label>State<select name="state" autocomplete="address-level1" required>
+                    <option value="">Select state</option>
+                    <?php foreach (Glow_FC_Rebooking_Campaigns::us_states() as $name) : ?>
+                    <option value="<?php echo esc_attr($name); ?>"<?php selected($state, $name); ?>><?php echo esc_html($name); ?></option>
+                    <?php endforeach; ?>
+                </select></label>
+            </div>
+            <label>Zip code<input type="text" name="zip" maxlength="10" inputmode="numeric" autocomplete="postal-code" pattern="\d{5}(-\d{4})?" title="5-digit zip code, e.g. 75001" required value="<?php echo esc_attr($current('user_registration_input_box_zip')); ?>"></label>
+        </fieldset>
         <label class="grb-confirm"><input type="checkbox" name="confirm" value="yes" required><span>You will no longer be able to view orders or reports for <strong><?php echo $org !== '' ? esc_html($org) : 'your previous fundraiser'; ?></strong>. Print any reports you need first.</span></label>
         <button class="grb-button" type="submit">Book my fundraiser <span aria-hidden="true">&rarr;</span></button>
         <p class="grb-note">Same email. Same password. A fresh campaign.</p>

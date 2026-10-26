@@ -90,6 +90,12 @@ final class Glow_FC_Rebooking {
             $start = self::input('start_date');
             $end = self::input('end_date');
             Glow_FC_Rebooking_Campaigns::validate_dates($start, $end);
+            $details = Glow_FC_Rebooking_Campaigns::campaign_details(
+                self::input('sellers'),
+                self::input('address_changed') === 'yes'
+                    ? array('street' => self::input('street'), 'city' => self::input('city'), 'state' => self::input('state'), 'zip' => self::input('zip'))
+                    : null
+            );
             if (self::input('mode') === 'dashboard') {
                 $user = wp_get_current_user();
                 if (!is_user_logged_in() || !Glow_FC_Rebooking_Campaigns::is_fundraiser($user)) {
@@ -118,7 +124,7 @@ final class Glow_FC_Rebooking {
                     self::fail('Your fundraiser is still active. Please log in to your current dashboard.', 409);
                 }
             }
-            $result = Glow_FC_Rebooking_Campaigns::rebook($user->ID, $start, $end);
+            $result = Glow_FC_Rebooking_Campaigns::rebook($user->ID, $start, $end, $details);
             self::sign_in($result['id']);
             wp_send_json_success(array('redirect' => home_url('/fundraiser-dashboard/'), 'created' => $result['created']));
         } catch (Throwable $error) {
