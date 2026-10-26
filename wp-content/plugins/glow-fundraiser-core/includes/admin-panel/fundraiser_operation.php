@@ -3479,7 +3479,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 								    <!--<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php echo count($arr_order_id);?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?> </td>-->
-								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php $a=count($arr_order_id); $b=count($arr_order_id2); echo $c=$a+$b; ?></td>
+								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php $a=count((array) $arr_order_id); $b=count((array) $arr_order_id2); echo $c=$a+$b; ?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); $total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', ''); $totatC=$total_sale_so_far+$total_sale_so_far2; echo $totatC = number_format($totatC, 2, '.', ''); ?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php  $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); $rebate_so_far2 = number_format($rebate_so_far2, 2, '.', ''); $rebC=$rebate_so_far+$rebate_so_far2; echo $rebC = number_format($rebC, 2, '.', '');  ?> </td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><div class="btn-toolbar">&nbsp;<a href="?page=fundraiser_operations&view=true&fund_id=<?php echo $ID2;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom" style="">View</a></div>
@@ -3487,7 +3487,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
 						</tr>
 						<?php  }  } } }
-                             if(count($total_sale)>0) { ?>
+                             if(!empty($total_sale)) { ?>
 							   <tr>
 							  <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><b> Total Fundraisers: <?php echo $totalF=count($total_sale); ?></b></td>
