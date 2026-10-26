@@ -3482,7 +3482,6 @@ $attachments = [];
 if (!empty($docx_path)) {
     $attachments[] = $docx_path;
 }
-	wp_mail('akshaywalia770@gmail.com', $subject, $m_body, $headers,$attachments);
 $admin_email = array(
     "candace@glowscentedcandles.com",
     "candacethompson12@gmail.com"
