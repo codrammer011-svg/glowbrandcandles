@@ -8,8 +8,178 @@ if ( ! function_exists( 'glow_fc_number_format' ) ) {
 		return number_format( is_numeric( $num ) ? (float) $num : 0.0, (int) $decimals, $decimal_separator, $thousands_separator );
 	}
 }
+
+/** Fundraiser search term from the Fundraiser Operations search box (?fs=). */
+function glow_fo_search_term() {
+	return isset( $_GET['fs'] ) ? trim( sanitize_text_field( wp_unslash( $_GET['fs'] ) ) ) : '';
+}
+
+/** Fundraiser IDs matching a search term: ID, login, email, name, organization or rep name. */
+function glow_fo_search_ids( $term ) {
+	global $wpdb;
+	$like = '%' . $wpdb->esc_like( $term ) . '%';
+	$ids  = $wpdb->get_col( $wpdb->prepare(
+		"SELECT DISTINCT u.ID FROM {$wpdb->users} u
+		 LEFT JOIN {$wpdb->usermeta} m ON m.user_id = u.ID AND m.meta_key IN (
+		     'user_registration_name_of_school_business', 'user_registration_input_company',
+		     'first_name', 'last_name', 'user_registration_referral_name' )
+		 WHERE u.ID = %d OR u.user_login LIKE %s OR u.user_email LIKE %s OR u.display_name LIKE %s OR m.meta_value LIKE %s
+		 LIMIT 5000",
+		ctype_digit( $term ) ? (int) $term : 0, $like, $like, $like, $like
+	) );
+	return $ids ? array_map( 'intval', $ids ) : array( 0 );
+}
+
+/**
+ * WP_User_Query for the paged fundraiser lists. With a search term it keeps only the matching
+ * fundraisers and recalculates the page count. Leaves a marker so the page shows the search box.
+ */
+function glow_fo_user_query( $args, $per_page, &$total_pages ) {
+	$term = glow_fo_search_term();
+	if ( '' !== $term ) {
+		$args['include']     = glow_fo_search_ids( $term );
+		$args['count_total'] = true;
+	}
+	$query = new WP_User_Query( $args );
+	if ( '' !== $term ) {
+		$total_pages = max( 1, (int) ceil( $query->get_total() / max( 1, (int) $per_page ) ) );
+	}
+	echo '<span hidden data-glow-fo-server-search="' . esc_attr( $term ) . '"></span>';
+	return $query;
+}
+
+/**
+ * Search box, 25 / 50 / 100 / All per page and page links for the Fundraiser Operations lists.
+ * Lists already paged on the server get a search box that searches all pages instead.
+ */
+function glow_fo_table_tools() {
+	?>
+<style id="glow-fo-table-tools">
+.glow-fo-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0}
+.glow-fo-tools input[type=search]{min-width:240px;padding:6px 10px;border:1px solid #c3c4c7;border-radius:4px}
+.glow-fo-tools select{padding:4px 8px}
+.glow-fo-tools .glow-fo-count{color:#50575e}
+.glow-fo-pager{display:flex;flex-wrap:wrap;gap:4px;margin:12px 0}
+.glow-fo-pager button{min-width:34px;padding:5px 9px;border:1px solid #c3c4c7;background:#fff;border-radius:4px;cursor:pointer}
+.glow-fo-pager button[aria-current=page]{background:#2c3e50;border-color:#2c3e50;color:#fff}
+.glow-fo-pager button:disabled{opacity:.45;cursor:default}
+.glow-fo-pager span{padding:5px 4px}
+</style>
+<script id="glow-fo-table-tools-js">
+document.addEventListener('DOMContentLoaded', function () {
+	var serverMarker = document.querySelector('[data-glow-fo-server-search]');
+	var topTables = Array.prototype.filter.call(document.querySelectorAll('table.table-bordered'), function (t) {
+		return !t.parentElement.closest('table');
+	});
+	var tables = topTables.filter(function (t) { return t.tHead && t.tBodies.length && t.tBodies[0].rows.length > 0; });
+	if (!serverMarker && !tables.length) { return; }
+
+	function el(tag, attrs, text) {
+		var n = document.createElement(tag);
+		Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+		if (text !== undefined) { n.textContent = text; }
+		return n;
+	}
+
+	// Lists paged on the server: search on the server so every page is searched.
+	if (serverMarker) {
+		var params = new URLSearchParams(window.location.search);
+		var form = el('form', { method: 'get', 'class': 'glow-fo-tools', role: 'search' });
+		params.forEach(function (value, key) {
+			if (['fs', 'pg', 'paged'].indexOf(key) === -1) { form.appendChild(el('input', { type: 'hidden', name: key, value: value })); }
+		});
+		var input = el('input', { type: 'search', name: 'fs', id: 'glow-fo-search', placeholder: 'Search by fundraiser ID, name, school, email or rep', 'aria-label': 'Search fundraisers' });
+		input.value = serverMarker.getAttribute('data-glow-fo-server-search');
+		form.appendChild(input);
+		form.appendChild(el('button', { type: 'submit', 'class': 'button' }, 'Search'));
+		if (input.value) {
+			params.delete('fs'); params.delete('pg'); params.delete('paged');
+			form.appendChild(el('a', { href: '?' + params.toString(), 'class': 'button' }, 'Clear'));
+		}
+		// Above the list; with no matches the list may be missing, so fall back to the marker.
+		var anchor = topTables[0] || serverMarker;
+		anchor.parentNode.insertBefore(form, anchor);
+		return;
+	}
+
+	var saved = 50;
+	try {
+		var stored = parseInt(localStorage.getItem('glowFoPerPage'), 10);
+		if ([25, 50, 100, 0].indexOf(stored) !== -1) { saved = stored; }
+	} catch (e) {}
+
+	tables.forEach(function (table, index) {
+		var body = table.tBodies[0];
+		var rows = Array.prototype.slice.call(body.rows);
+		if (rows.length < 10) { return; }
+		// Total rows stay visible under every page.
+		var isTotal = function (row) { return /^\s*(grand\s+)?total\b/i.test(row.textContent) || /\bTotal Fundraisers\b/.test(row.textContent); };
+		var data = rows.filter(function (r) { return !isTotal(r); });
+		var texts = data.map(function (r) { return r.textContent.replace(/\s+/g, ' ').toLowerCase(); });
+		var state = { page: 1, per: saved, term: '' };
+
+		var tools = el('div', { 'class': 'glow-fo-tools' });
+		var search = el('input', { type: 'search', id: 'glow-fo-search-' + index, placeholder: 'Search this list', 'aria-label': 'Search this list' });
+		var per = el('select', { id: 'glow-fo-per-' + index, 'aria-label': 'Rows per page' });
+		[25, 50, 100, 0].forEach(function (n) {
+			var o = el('option', { value: String(n) }, n ? n + ' per page' : 'All');
+			if (n === state.per) { o.selected = true; }
+			per.appendChild(o);
+		});
+		var count = el('span', { 'class': 'glow-fo-count', 'aria-live': 'polite' });
+		tools.appendChild(search); tools.appendChild(per); tools.appendChild(count);
+		var pager = el('nav', { 'class': 'glow-fo-pager', 'aria-label': 'Pages' });
+		table.parentNode.insertBefore(tools, table);
+		table.parentNode.insertBefore(pager, table.nextSibling);
+
+		function render() {
+			var matches = [];
+			data.forEach(function (r, i) { if (!state.term || texts[i].indexOf(state.term) !== -1) { matches.push(r); } });
+			var pages = state.per ? Math.max(1, Math.ceil(matches.length / state.per)) : 1;
+			state.page = Math.min(state.page, pages);
+			var from = state.per ? (state.page - 1) * state.per : 0;
+			var to = state.per ? from + state.per : matches.length;
+			data.forEach(function (r) { r.hidden = true; });
+			matches.slice(from, to).forEach(function (r) { r.hidden = false; });
+			count.textContent = matches.length
+				? 'Showing ' + (from + 1) + '–' + Math.min(to, matches.length) + ' of ' + matches.length + (state.term ? ' matching' : '')
+				: 'No matching rows';
+			pager.innerHTML = '';
+			if (pages < 2) { return; }
+			function btn(label, page, opts) {
+				var b = el('button', { type: 'button' }, label);
+				if (opts && opts.current) { b.setAttribute('aria-current', 'page'); }
+				if (opts && opts.disabled) { b.disabled = true; }
+				b.addEventListener('click', function () { state.page = page; render(); tools.scrollIntoView({ block: 'start' }); });
+				pager.appendChild(b);
+			}
+			btn('‹ Previous', state.page - 1, { disabled: state.page === 1 });
+			var last = 0;
+			for (var p = 1; p <= pages; p++) {
+				if (p === 1 || p === pages || Math.abs(p - state.page) <= 2) {
+					if (last && p - last > 1) { pager.appendChild(el('span', {}, '…')); }
+					btn(String(p), p, { current: p === state.page });
+					last = p;
+				}
+			}
+			btn('Next ›', state.page + 1, { disabled: state.page === pages });
+		}
+		search.addEventListener('input', function () { state.term = search.value.trim().toLowerCase(); state.page = 1; render(); });
+		per.addEventListener('change', function () {
+			state.per = parseInt(per.value, 10); state.page = 1;
+			try { localStorage.setItem('glowFoPerPage', String(state.per || 0)); } catch (e) {}
+			render();
+		});
+		render();
+	});
+});
+</script>
+	<?php
+}
+
 function theme_fundraiser_operations_options()
 {
+	glow_fo_table_tools();
 ?>
 <style>
 .widget {
@@ -896,7 +1066,7 @@ table {
 		$page = isset($_GET['pg']) ? $_GET['pg'] : 1;
 
 		// how many users to show per page
-		$users_per_page = 10;
+		$users_per_page = 50;
 
 		// calculate the total number of pages.
 		$total_pages = 1;
@@ -914,7 +1084,7 @@ table {
 				);
 			/*$users = get_users( $args ); */
 			// Create the WP_User_Query object
-				$wp_user_query = new WP_User_Query($args);
+				$wp_user_query = glow_fo_user_query( $args, $users_per_page, $total_pages );
 
 				// Get the results
 				$authors = $wp_user_query->get_results();
@@ -2436,22 +2606,9 @@ table {
 				//print_r($total_data);
 				if(!empty($total_users2))
 				{		
-					if (isset($_GET["lastindex"])) {
-						$lastindex = $_GET["lastindex"];  
-					} 
-					else{
-						$lastindex=1; 
-					}
-					if($lastindex<20)
-					{						
-						$total_records=$per_page_record;	
-					}
-					else if($lastindex>20){
-						$total_records=$lastindex+20;
-					}
-					else{
-						$total_records=$per_page_record;
-					}
+					// Show every owed fundraiser; the page splits them into pages of 50 and searches them.
+					$lastindex     = 1;
+					$total_records = $total_users2;
 				}				
 				else {    
 				   $lastindex=1;  
@@ -2607,6 +2764,7 @@ table {
 		</div>
 		<?php } */
 		$c_page="";
+		$total_pages = 0; // Every row is on the page now; the browser pages them (glow_fo_table_tools).
 		for($y=1;$y<=$total_pages;$y++)
 		{
 			if($y==1)
@@ -3636,7 +3794,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 				);
 			/*$users = get_users( $args ); */
 			// Create the WP_User_Query object
-				$wp_user_query = new WP_User_Query($args);
+				$wp_user_query = glow_fo_user_query( $args, $users_per_page, $total_pages );
 
 				// Get the results
 				$authors = $wp_user_query->get_results();
@@ -4333,7 +4491,7 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 		$page = isset($_GET['pg']) ? $_GET['pg'] : 1;
 
 		// how many users to show per page
-		$users_per_page = 20;
+		$users_per_page = 50;
 
 		// calculate the total number of pages.
 		$total_pages = 1;
@@ -4351,7 +4509,7 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 				);
 			/*$users = get_users( $args ); */
 			// Create the WP_User_Query object
-				$wp_user_query = new WP_User_Query($args);
+				$wp_user_query = glow_fo_user_query( $args, $users_per_page, $total_pages );
 
 				// Get the results
 				$authors = $wp_user_query->get_results();
@@ -9240,7 +9398,7 @@ echo paginate_links( array(
 		} else {
 			// Normal paginated query
 			$paged     = ( isset($_GET['paged']) ) ? absint($_GET['paged']) : 1;
-			$per_page  = 10;
+			$per_page  = 50;
 			$offset    = ( $paged - 1 ) * $per_page;
 
 			$args = array(
@@ -9250,11 +9408,11 @@ echo paginate_links( array(
 				'number'  => $per_page,
 				'offset'  => $offset
 			);
-			$all_meta_for_users = get_users($args);
-
 			$total_users = count_users();
 			$total_fundraisers = isset($total_users['avail_roles']['fundraiser']) ? $total_users['avail_roles']['fundraiser'] : 0;
 			$total_pages = ceil( $total_fundraisers / $per_page );
+			// A search term (?fs=) narrows the list and its page count.
+			$all_meta_for_users = glow_fo_user_query( $args, $per_page, $total_pages )->get_results();
 		}
 
 				foreach ( $all_meta_for_users as $all_meta_for_user ) {
@@ -9351,6 +9509,9 @@ echo paginate_links( array(
 			$base_args = array( 'page' => 'fundraiser_operations' );
 			if ( $search_id ) {
 				$base_args['search_id'] = $search_id;
+			}
+			if ( '' !== glow_fo_search_term() ) {
+				$base_args['fs'] = rawurlencode( glow_fo_search_term() );
 			}
 			if ( $total_pages > 1 ) {
 			echo paginate_links( array(
