@@ -112,20 +112,58 @@ function glow_render_catalog_seller_field()
             'order'      => 'ASC',
         ) );
 
-        echo '<select id="nSeller" name="mass-seller-name-new-test" class="mass-seller-name-new-test" style="padding:6px 10px;border:1px solid #ccc;border-radius:3px;font-size:13px;min-width:160px;background:#fff;">';
-        echo '<option value="">— Select Seller —</option>';
-        echo '<option value="Catalog"' . selected($preset, 'Catalog', false) . '>Catalog (group order)</option>';
+        $names = array();
         foreach ( $sellers as $s ) {
             $name = trim( get_user_meta($s->ID, 'first_name', true) . ' ' . get_user_meta($s->ID, 'last_name', true) );
             if ( '' === $name ) {
                 $name = $s->display_name;
             }
-            if ( '' === $name ) {
-                continue;
+            if ( '' !== $name ) {
+                $names[] = $name;
             }
+        }
+        // A preset name that is not a registered seller opens in "Add Seller" mode.
+        $custom = ( '' !== $preset && 'Catalog' !== $preset && ! in_array($preset, $names, true) ) ? $preset : '';
+
+        $style = 'padding:6px 10px;border:1px solid #ccc;border-radius:3px;font-size:13px;background:#fff;';
+        echo '<select ' . ( $custom ? '' : 'id="nSeller" name="mass-seller-name-new-test" class="mass-seller-name-new-test" ' ) . 'data-glow-seller-select style="' . $style . 'min-width:160px;">';
+        echo '<option value="">— Select Seller —</option>';
+        echo '<option value="Catalog"' . selected($preset, 'Catalog', false) . '>Catalog (group order)</option>';
+        foreach ( $names as $name ) {
             echo '<option value="' . esc_attr($name) . '"' . selected($preset, $name, false) . '>' . esc_html($name) . '</option>';
         }
+        echo '<option value="__glow_add_seller__"' . selected((bool) $custom, true, false) . '>+ Add Seller</option>';
         echo '</select>';
+        // Seller not registered on the site: the typed name is saved on the order lines and
+        // reported with the manually added sellers.
+        echo '<input type="text" ' . ( $custom ? 'id="nSeller" name="mass-seller-name-new-test" class="mass-seller-name-new-test" ' : 'hidden ' ) . 'data-glow-new-seller value="' . esc_attr($custom) . '" placeholder="Enter seller name" aria-label="Seller name" maxlength="60" style="' . $style . 'width:160px;margin-left:6px;">';
+        ?>
+<script>
+jQuery(function ($) {
+    var $sel = $('select[data-glow-seller-select]'), $txt = $('input[data-glow-new-seller]');
+    if (!$sel.length || !$txt.length) { return; }
+    function sync(v) { $('.seller-buyer-cookie-form .mass-seller-name-new').val(v); }
+    // Only the control in use carries the id, name and class the catalogue scripts read.
+    function activate($on, $off) {
+        $off.removeAttr('id name').removeClass('mass-seller-name-new-test');
+        $on.attr({ id: 'nSeller', name: 'mass-seller-name-new-test' }).addClass('mass-seller-name-new-test');
+    }
+    $sel.on('change', function () {
+        if ($sel.val() === '__glow_add_seller__') {
+            activate($txt, $sel);
+            $txt.prop('hidden', false).val('').trigger('focus');
+        } else {
+            activate($sel, $txt);
+            $txt.prop('hidden', true).val('');
+        }
+        // After the catalogue's own change handler, which copies the raw select value.
+        setTimeout(function () { sync($.trim($('#nSeller').val() || '')); }, 0);
+    });
+    $txt.on('input change', function () { sync($.trim($txt.val())); });
+    if (!$txt.prop('hidden')) { sync($.trim($txt.val())); }
+});
+</script>
+        <?php
     } else {
         echo '<input id="nSeller" type="text" name="mass-seller-name-new-test" value="' . esc_attr($preset) . '" class="mass-seller-name-new-test" placeholder="Seller Name" style="padding:6px 10px;border:1px solid #ccc;border-radius:3px;font-size:13px;width:140px;background:#fff;">';
     }
