@@ -13524,16 +13524,41 @@ function glow_one_order_email_per_recipient( $mail ) {
 	if ( get_post_type( $order_id ) !== 'shop_order' ) {
 		return $mail;
 	}
-	$keep = array();
-	foreach ( (array) ( is_array( $mail['to'] ) ? $mail['to'] : explode( ',', $mail['to'] ) ) as $recipient ) {
-		$email = strtolower( trim( preg_replace( '/^.*<([^>]+)>.*$/', '$1', (string) $recipient ) ) );
-		if ( $email === '' || isset( $sent[ $order_id ][ $email ] ) ) {
-			continue;
+	$take = function ( $recipients ) use ( &$sent, $order_id ) {
+		$keep = array();
+		foreach ( $recipients as $recipient ) {
+			$email = strtolower( trim( preg_replace( '/^.*<([^>]+)>.*$/', '$1', (string) $recipient ) ) );
+			if ( $email === '' || isset( $sent[ $order_id ][ $email ] ) ) {
+				continue;
+			}
+			$sent[ $order_id ][ $email ] = true;
+			$keep[] = trim( (string) $recipient );
 		}
-		$sent[ $order_id ][ $email ] = true;
-		$keep[] = $recipient;
+		return $keep;
+	};
+	$mail['to'] = $take( (array) ( is_array( $mail['to'] ) ? $mail['to'] : explode( ',', $mail['to'] ) ) );
+
+	// Cc copies (such as the admin copy from glow-admin-cc) count too.
+	$headers  = $mail['headers'] ?? array();
+	$is_array = is_array( $headers );
+	$lines    = $is_array ? $headers : preg_split( '/\r\n|\r|\n/', (string) $headers );
+	$cc       = array();
+	foreach ( $lines as $i => $line ) {
+		if ( preg_match( '/^\s*cc\s*:(.*)$/i', (string) $line, $cc_match ) ) {
+			$cc = array_merge( $cc, $take( explode( ',', $cc_match[1] ) ) );
+			unset( $lines[ $i ] );
+		}
 	}
-	$mail['to'] = $keep;
+	if ( $cc ) {
+		if ( $mail['to'] ) {
+			$lines[] = 'Cc: ' . implode( ', ', $cc );
+		} else {
+			// Everyone in To already got this order's email; send it to the Cc recipients instead.
+			$mail['to'] = $cc;
+		}
+	}
+	$lines           = array_values( array_filter( $lines, 'strlen' ) );
+	$mail['headers'] = $is_array ? $lines : implode( "\r\n", $lines );
 	return $mail;
 }
 
