@@ -42,6 +42,54 @@ final class Glow_FC_Rebooking_Campaigns {
         );
     }
 
+    /** Meta the rebooking form may set on the new campaign (see campaign_details()). */
+    const DETAIL_KEYS = array(
+        'user_registration_participants_no',
+        'user_registration_street_address', 'user_registration_City2',
+        'user_registration_select_state', 'user_registration_input_box_zip',
+        'billing_address_1', 'billing_address_2', 'billing_city', 'billing_state', 'billing_postcode', 'billing_country',
+        'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_postcode', 'shipping_country',
+    );
+
+    /** US state names, as the registration form stores them (code => name). */
+    public static function us_states() {
+        $states = function_exists('WC') && WC()->countries ? WC()->countries->get_states('US') : array();
+        return array_map('html_entity_decode', (array) $states);
+    }
+
+    /**
+     * Seller count and (optional) new address entered on the rebooking form, as meta for the new campaign.
+     * The address is written to the registration fields and to the billing and shipping address.
+     */
+    public static function campaign_details($sellers, $address = null) {
+        $sellers = trim((string) $sellers);
+        if (!preg_match('/^\d{1,4}$/', $sellers) || (int) $sellers < 1) {
+            throw new RuntimeException('Please enter the number of sellers (1 or more).');
+        }
+        $meta = array('user_registration_participants_no' => (string) (int) $sellers);
+        if ($address === null) {
+            return $meta;
+        }
+        $street = sanitize_text_field($address['street'] ?? '');
+        $city   = sanitize_text_field($address['city'] ?? '');
+        $state  = sanitize_text_field($address['state'] ?? '');
+        $zip    = sanitize_text_field($address['zip'] ?? '');
+        $code   = array_search($state, self::us_states(), true);
+        if ($street === '' || $city === '' || $code === false || !preg_match('/^\d{5}(-\d{4})?$/', $zip)) {
+            throw new RuntimeException('Please enter the full new address: street, city, state and a 5-digit zip code.');
+        }
+        return $meta + array(
+            'user_registration_street_address' => $street,
+            'user_registration_City2'          => $city,
+            'user_registration_select_state'   => $state,
+            'user_registration_input_box_zip'  => $zip,
+            'billing_address_1'  => $street, 'billing_address_2'  => '', 'billing_city'  => $city,
+            'billing_state'      => $code,   'billing_postcode'   => $zip, 'billing_country'  => 'US',
+            'shipping_address_1' => $street, 'shipping_address_2' => '', 'shipping_city' => $city,
+            'shipping_state'     => $code,   'shipping_postcode'  => $zip, 'shipping_country' => 'US',
+        );
+    }
+
     public static function validate_dates($start, $end) {
         $zone = wp_timezone();
         $dates = array();
@@ -84,7 +132,7 @@ final class Glow_FC_Rebooking_Campaigns {
     }
 
     /** Caller must authenticate the source account before entering this service. */
-    public static function rebook($source_id, $start, $end) {
+    public static function rebook($source_id, $start, $end, $details = array()) {
         global $wpdb;
         self::validate_dates($start, $end);
         self::require_transactions();
@@ -190,6 +238,8 @@ final class Glow_FC_Rebooking_Campaigns {
                 '_grb_previous_campaign' => (int) $source_id,
                 '_grb_booked_at' => current_time('mysql', true),
             );
+            // Seller count and changed address from the form replace the copied values.
+            $new_meta = array_intersect_key((array) $details, array_flip(self::DETAIL_KEYS)) + $new_meta;
             foreach ($new_meta as $key => $value) {
                 update_user_meta($new_id, $key, $value);
                 self::check_db();

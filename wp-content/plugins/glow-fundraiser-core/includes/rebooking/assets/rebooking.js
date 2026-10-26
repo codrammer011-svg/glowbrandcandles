@@ -114,6 +114,21 @@
         const start = rebook.elements.start_date;
         const end = rebook.elements.end_date;
         start.addEventListener('change', () => { end.min = start.value || start.min; });
+        // A disabled fieldset is neither validated nor submitted, so the address is only sent when it changed.
+        const addressToggle = rebook.querySelector('[data-grb-address-toggle]');
+        const address = rebook.querySelector('[data-grb-address]');
+        if (addressToggle && address) {
+            const syncAddress = () => {
+                address.hidden = !addressToggle.checked;
+                address.disabled = !addressToggle.checked;
+            };
+            addressToggle.addEventListener('change', () => {
+                syncAddress();
+                if (addressToggle.checked) address.querySelector('input').focus();
+            });
+            rebook.addEventListener('reset', () => setTimeout(syncAddress, 0));
+            syncAddress();
+        }
         // The signed-in (dashboard) form has only the rebook step.
         if (!lookup) return;
         lookup.addEventListener('submit', event => { event.preventDefault(); submit(lookup, 'lookup'); });

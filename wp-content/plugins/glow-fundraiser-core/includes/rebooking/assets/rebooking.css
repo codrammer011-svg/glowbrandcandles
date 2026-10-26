@@ -10,3 +10,4 @@
 .grb-skip-gate .elementor-popup-modal:has(.grb[data-mode=gate]){display:none!important}
 /* Popup gate sits directly on the Elementor design: no card, padding or shadow. */
 .grb[data-mode=gate],.elementor-popup-modal .grb,.elementor-widget-shortcode:has(.grb[data-mode=gate]),.elementor-widget-shortcode:has(.grb[data-mode=gate])>.elementor-widget-container{padding:0!important;background:transparent!important;border-radius:0!important;box-shadow:none!important}
+.grb .grb-address{border:1px solid #ddd3df;border-radius:12px;padding:16px 16px 2px;margin:0 0 18px;min-width:0}.grb .grb-address legend{padding:0 6px;font-size:13px;font-weight:700;color:#72677d}.grb select{display:block;width:100%;min-width:0;background:#fcfafc;color:#30283f;border:1px solid #ddd3df;border-radius:10px;padding:12px 14px;margin-top:7px;font:inherit;font-weight:400}.grb .grb-address .grb-dates{margin-top:0}
