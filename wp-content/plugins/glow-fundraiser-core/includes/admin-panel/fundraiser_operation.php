@@ -1,4 +1,13 @@
-<?php 
+<?php
+/**
+ * number_format() for values read from post/user meta: PHP 8 throws a fatal TypeError
+ * when meta is missing ('') or not numeric, which stopped these admin reports mid-page.
+ */
+if ( ! function_exists( 'glow_fc_number_format' ) ) {
+	function glow_fc_number_format( $num, $decimals = 0, $decimal_separator = '.', $thousands_separator = ',' ) {
+		return number_format( is_numeric( $num ) ? (float) $num : 0.0, (int) $decimals, $decimal_separator, $thousands_separator );
+	}
+}
 function theme_fundraiser_operations_options()
 {
 ?>
@@ -1000,13 +1009,13 @@ table {
                              
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS){
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 $rebate_so_far+=$Discount;
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -1057,13 +1066,13 @@ table {
 										 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 										 {
 											$Discount    = ($percentFifty / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											$rebate_so_far+=$Discount;
 										 }
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									}
@@ -1436,14 +1445,14 @@ table {
 				{	
 					 $glow_profit_deduct_user_metakey_orderID = get_user_meta($ID, "glow_profit_deduct_user_metakey_orderID", true); //orderID
 					 $glow_profit_deduct_TotalRebate = get_post_meta( $glow_profit_deduct_user_metakey_orderID, 'glow_profit_deduct_metakey_totalRebate', true); // Total fees
-					 $glow_profit_deduct_TotalRebate = number_format($glow_profit_deduct_TotalRebate, 2, '.', '');	
+					 $glow_profit_deduct_TotalRebate = glow_fc_number_format($glow_profit_deduct_TotalRebate, 2, '.', '');	
 					 
 					 $rem=get_post_meta($glow_profit_deduct_user_metakey_orderID, "glow_profit_deduct_metakey_rem", true); //Remaining fees
-					 $rem = number_format($rem, 2, '.', '');	
+					 $rem = glow_fc_number_format($rem, 2, '.', '');	
 					 
 					 $glow_profit_deduct_user_metakey_amount=get_user_meta($ID, "glow_profit_deduct_user_metakey_amount", true);
 					 $amt_paid=abs($glow_profit_deduct_user_metakey_amount);  //paid fees
-					 $amt_paidNew = number_format($amt_paid, 2, '.', '');	
+					 $amt_paidNew = glow_fc_number_format($amt_paid, 2, '.', '');	
 				}
 					 $glow_profit_deduct_user_metakey_orderID = get_user_meta($ID, "glow_profit_deduct_user_metakey_orderID", true); //orderID
 					 
@@ -2099,14 +2108,14 @@ table {
 				{	
 					 $glow_profit_deduct_user_metakey_orderID = get_user_meta($ID, "glow_profit_deduct_user_metakey_orderID", true); //orderID
 					 $glow_profit_deduct_TotalRebate = get_post_meta( $glow_profit_deduct_user_metakey_orderID, 'glow_profit_deduct_metakey_totalRebate', true); // Total fees
-					 $glow_profit_deduct_TotalRebate = number_format($glow_profit_deduct_TotalRebate, 2, '.', '');	//Use 1
+					 $glow_profit_deduct_TotalRebate = glow_fc_number_format($glow_profit_deduct_TotalRebate, 2, '.', '');	//Use 1
 					 
 					 $rem_val=get_post_meta($glow_profit_deduct_user_metakey_orderID, "glow_profit_deduct_metakey_rem", true); //Remaining fees
-					 $rem_val = number_format($rem_val, 2, '.', '');	 //Use 2
+					 $rem_val = glow_fc_number_format($rem_val, 2, '.', '');	 //Use 2
 					 
 					 $glow_profit_deduct_user_metakey_amount=get_user_meta($ID, "glow_profit_deduct_user_metakey_amount", true);
 					 $amt_paid=abs($glow_profit_deduct_user_metakey_amount);  //paid fees
-					 $amt_paidNew = number_format($amt_paid, 2, '.', '');	 //Use 3
+					 $amt_paidNew = glow_fc_number_format($amt_paid, 2, '.', '');	 //Use 3
 				}
 			
 		}
@@ -2186,13 +2195,13 @@ table {
 									 
 										 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS){
 											$Discount    = ($percentFifty / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 										 $rebate_so_far+=$Discount;
 										 }
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									   
@@ -2243,13 +2252,13 @@ table {
 												 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 												 {
 													$Discount    = ($percentFifty / 100) * $totalAmount;
-													$Discount = number_format($Discount, 2, '.', '');
+													$Discount = glow_fc_number_format($Discount, 2, '.', '');
 													$rebate_so_far+=$Discount;
 												 }
 												 else
 												 {
 													$Discount    = ($percentage / 100) * $totalAmount;
-													$Discount = number_format($Discount, 2, '.', '');
+													$Discount = glow_fc_number_format($Discount, 2, '.', '');
 													 $rebate_so_far+=$Discount;
 												 }
 											}
@@ -2346,7 +2355,7 @@ table {
 										{
 										 $total_sale_so_far2+=$order->get_subtotal();
 										}
-										$total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');
+										$total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -2366,13 +2375,13 @@ table {
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFiftyNEW / 100) * $total_sale_so_far2;
-							$rebate_so_far2 = number_format($Discount, 2, '.', '');
+							$rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentageNEW / 100) * $total_sale_so_far2;
-                            $rebate_so_far2 = number_format($Discount, 2, '.', '');
+                            $rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						 // End Ship to school
@@ -2381,18 +2390,18 @@ table {
 		/*Total NEW Rebate with Ship to school orders */
 		
 		$rebateSoFar = $rebate_so_far+$rebate_so_far2;
-		$glow_profit_deduct_TotalRebate = number_format($rebateSoFar, 2, '.', '');		 //use 1 -total rebate	
+		$glow_profit_deduct_TotalRebate = glow_fc_number_format($rebateSoFar, 2, '.', '');		 //use 1 -total rebate	
 		if(!empty($glow_profit_deduct_TotalRebate))
 		{
 			$amt_paid = get_user_meta($ID,'user_rebate', true);
 			if(!empty($amt_paid))
 			{
-				$amt_paidNew = number_format($amt_paid, 2, '.', '');	//use 3 - paid rebate
+				$amt_paidNew = glow_fc_number_format($amt_paid, 2, '.', '');	//use 3 - paid rebate
 				$rem_val = $glow_profit_deduct_TotalRebate-$amt_paid; // use 2 - unpaid rebate
 			}
 			else{
 				$amt_paid=0;
-				$amt_paidNew = number_format($amt_paid, 2, '.', '');
+				$amt_paidNew = glow_fc_number_format($amt_paid, 2, '.', '');
 				$rem_val=$glow_profit_deduct_TotalRebate;
 			}
 		}
@@ -2528,7 +2537,7 @@ table {
 							//$registered = $udata->user_registered;
 					
 					?>
-			<tr id="<?php echo "fund_".$ID; ?>" class="<?php echo $startDate; ?> <?php if($rebate_so_far>0){ echo 'payDue'; } ?>" <?php if($rebate_so_far>0){ echo 'data-rebate="'.$rebate_so_far.'"';  echo 'data-sale="'.number_format($total_sale_so_far, 2, '.', '').'"'; } ?>>
+			<tr id="<?php echo "fund_".$ID; ?>" class="<?php echo $startDate; ?> <?php if($rebate_so_far>0){ echo 'payDue'; } ?>" <?php if($rebate_so_far>0){ echo 'data-rebate="'.$rebate_so_far.'"';  echo 'data-sale="'.glow_fc_number_format($total_sale_so_far, 2, '.', '').'"'; } ?>>
 				<td id="0_" style="vertical-align: top; text-align: center; "><?php echo $ID;?></td>
 				<td id="1_" style="vertical-align: top; text-align: left;width: 180px;"><?php echo $org; ?></td>
 				<td id="2_" style="vertical-align: top; text-align: left;"><?php echo $first_name; ?> <?php echo $last_name; ?></td>
@@ -2542,7 +2551,7 @@ table {
 				<td id="7_" style="vertical-align: top; text-align: center; width: 240px;">
 					<div class="btn-toolbar"><div class="first-col" style="margin-bottom:10px;">
 					<a href="<?php echo home_url('/print/'); ?>?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a>&nbsp;
-					<a href="#" class="btn btn-inverse btn-mini padtop btn-custom status" data-id="<?php echo $ID;?>" data-action="<?php echo $status;?>" data-rebate="<?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?>">Status</a>&nbsp;
+					<a href="#" class="btn btn-inverse btn-mini padtop btn-custom status" data-id="<?php echo $ID;?>" data-action="<?php echo $status;?>" data-rebate="<?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?>">Status</a>&nbsp;
 					<a id="send_report" class="btn btn-inverse btn-mini padtop btn-custom" data-fund_id="<?php echo $ID; ?>">Email Report</a></div><div class="second-col">
 					
 					</div></div>
@@ -3208,7 +3217,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 										else
 										{
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											$rebate_so_far+=$Discount;
 										}
                                  /*} */
@@ -3255,13 +3264,13 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 										 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 										 {
 											$Discount    = ($percentFifty / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											$rebate_so_far+=$Discount;
 										 }
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									}
@@ -3358,7 +3367,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 											{
 												$total_sale_so_far2+=$order->get_subtotal();
 											}
-											$total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');
+											$total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -3379,32 +3388,32 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFifty / 100) * $total_sale_so_far2;
-							$rebate_so_far2 = number_format($Discount, 2, '.', '');
+							$rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentage / 100) * $total_sale_so_far2;
-                            $rebate_so_far2 = number_format($Discount, 2, '.', '');
+                            $rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						// End Ship to school
 						
 						//Ship to School
 						
-						$total_sale_fundraiser = number_format($total_sale_so_far, 2, '.', ''); 
-						$total_rebate_fundraiser = number_format($rebate_so_far, 2, '.', '');
+						$total_sale_fundraiser = glow_fc_number_format($total_sale_so_far, 2, '.', ''); 
+						$total_rebate_fundraiser = glow_fc_number_format($rebate_so_far, 2, '.', '');
 						
-						$total_sale_fundraiser2 = number_format($total_sale_so_far2, 2, '.', ''); 
-						$total_rebate_fundraiser2 = number_format($rebate_so_far2, 2, '.', '');
+						$total_sale_fundraiser2 = glow_fc_number_format($total_sale_so_far2, 2, '.', ''); 
+						$total_rebate_fundraiser2 = glow_fc_number_format($rebate_so_far2, 2, '.', '');
 						
 						$total_sale_fundraiser3 = $total_sale_fundraiser + $total_sale_fundraiser2;
 						
-						$total_sale_fundraiser3 = number_format($total_sale_fundraiser3, 2, '.', '');
+						$total_sale_fundraiser3 = glow_fc_number_format($total_sale_fundraiser3, 2, '.', '');
 						
 						$total_rebate_fundraiser3 = $rebate_so_far + $rebate_so_far2;
 						
-						$total_rebate_fundraiser3 = number_format($total_rebate_fundraiser3, 2, '.', '');
+						$total_rebate_fundraiser3 = glow_fc_number_format($total_rebate_fundraiser3, 2, '.', '');
 						
 						//End Ship to school
 						  
@@ -3477,11 +3486,11 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><?php echo $ID2; ?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><?php echo $org; ?></td>
 								    <!--<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php echo count($arr_order_id);?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?> </td>-->
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?> </td>-->
 								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php $a=count((array) $arr_order_id); $b=count((array) $arr_order_id2); echo $c=$a+$b; ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); $total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', ''); $totatC=$total_sale_so_far+$total_sale_so_far2; echo $totatC = number_format($totatC, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php  $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); $rebate_so_far2 = number_format($rebate_so_far2, 2, '.', ''); $rebC=$rebate_so_far+$rebate_so_far2; echo $rebC = number_format($rebC, 2, '.', '');  ?> </td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); $total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', ''); $totatC=$total_sale_so_far+$total_sale_so_far2; echo $totatC = glow_fc_number_format($totatC, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php  $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); $rebate_so_far2 = glow_fc_number_format($rebate_so_far2, 2, '.', ''); $rebC=$rebate_so_far+$rebate_so_far2; echo $rebC = glow_fc_number_format($rebC, 2, '.', '');  ?> </td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><div class="btn-toolbar">&nbsp;<a href="?page=fundraiser_operations&view=true&fund_id=<?php echo $ID2;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom" style="">View</a></div>
 									</td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
@@ -3492,8 +3501,8 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 							  <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><b> Total Fundraisers: <?php echo $totalF=count($total_sale); ?></b></td>
 								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> </td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><b>Total Sales : $<?php $totalSales=array_sum($total_sale); echo $Total_sale_so_far=number_format($totalSales, 2, '.', ''); ?></b></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><b>Total Rebate : $<?php $totalRebate=array_sum($total_rebate);echo $Total_rebate_so_far=number_format($totalRebate, 2, '.', ''); ?> </b></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><b>Total Sales : $<?php $totalSales=array_sum($total_sale); echo $Total_sale_so_far=glow_fc_number_format($totalSales, 2, '.', ''); ?></b></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><b>Total Rebate : $<?php $totalRebate=array_sum($total_rebate);echo $Total_rebate_so_far=glow_fc_number_format($totalRebate, 2, '.', ''); ?> </b></td>
 								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"></div>
 									</td>
 							  </tr>
@@ -3749,7 +3758,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									$rebate_so_far+=$Discount;
 								 }
                                
@@ -3799,13 +3808,13 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 										 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 										 {
 											$Discount    = ($percentFifty / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											$rebate_so_far+=$Discount;
 										 }
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									}
@@ -3905,7 +3914,7 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 										{
 										 $total_sale_so_far2+=$order->get_subtotal();
 										}
-										$total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');
+										$total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -3926,30 +3935,30 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFifty / 100) * $total_sale_so_far2;
-							$rebate_so_far2 = number_format($Discount, 2, '.', '');
+							$rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentage / 100) * $total_sale_so_far2;
-                            $rebate_so_far2 = number_format($Discount, 2, '.', '');
+                            $rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						
 						//Ship to School
-						$total_sale_fundraiser = number_format($total_sale_so_far, 2, '.', ''); 
-						$total_rebate_fundraiser = number_format($rebate_so_far, 2, '.', '');
+						$total_sale_fundraiser = glow_fc_number_format($total_sale_so_far, 2, '.', ''); 
+						$total_rebate_fundraiser = glow_fc_number_format($rebate_so_far, 2, '.', '');
 						
-						$total_sale_fundraiser2 = number_format($total_sale_so_far2, 2, '.', ''); 
-						$total_rebate_fundraiser2 = number_format($rebate_so_far2, 2, '.', '');
+						$total_sale_fundraiser2 = glow_fc_number_format($total_sale_so_far2, 2, '.', ''); 
+						$total_rebate_fundraiser2 = glow_fc_number_format($rebate_so_far2, 2, '.', '');
 						
 						$total_sale_fundraiser3 = $total_sale_fundraiser + $total_sale_fundraiser2;
 						
-						$total_sale_fundraiser3 = number_format($total_sale_fundraiser3, 2, '.', '');
+						$total_sale_fundraiser3 = glow_fc_number_format($total_sale_fundraiser3, 2, '.', '');
 						
 						$total_rebate_fundraiser3 = $rebate_so_far + $rebate_so_far2;
 						
-						$total_rebate_fundraiser3 = number_format($total_rebate_fundraiser3, 2, '.', '');
+						$total_rebate_fundraiser3 = glow_fc_number_format($total_rebate_fundraiser3, 2, '.', '');
 						
 						 // End Ship to school
 						  
@@ -4027,11 +4036,11 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 									<td class="fr-order-col fr-order-id <?php echo $new_rebate." ".$total_rebate_fundraiser3." ".$rebate; ?>" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><?php echo $ID.$title; ?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><?php echo $org; ?></td>
 								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php echo count($arr_order_id);?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far = number_format($total_sale_so_far, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far = number_format($rebate_so_far, 2, '.', ''); ?> </td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far = glow_fc_number_format($rebate_so_far, 2, '.', ''); ?> </td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php echo count($arr_order_id2);?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far2 = number_format($rebate_so_far2, 2, '.', ''); ?> </td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far2 = glow_fc_number_format($rebate_so_far2, 2, '.', ''); ?> </td>
 								     <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><div class="btn-toolbar">&nbsp;<a href="?page=fundraiser_operations&rebate=true&fund_id=<?php echo $ID;?>"  class="btn btn-inverse btn-mini padtop btn-custom" style="">View</a></div>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><div class="btn-toolbar">&nbsp;<a href="?page=fundraiser_operations&view=true&fund_id=<?php echo $ID;?>"  class="btn btn-inverse btn-mini padtop btn-custom" style="">View</a></div>
 									</td>
@@ -4450,7 +4459,7 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -4501,13 +4510,13 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 										 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 										 {
 											$Discount    = ($percentFifty / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											$rebate_so_far+=$Discount;
 										 }
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									}
@@ -4608,7 +4617,7 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 										{
 										 $total_sale_so_far2+=$order->get_subtotal();
 										}
-										$total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');
+										$total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -4628,30 +4637,30 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFifty / 100) * $total_sale_so_far2;
-							$rebate_so_far2 = number_format($Discount, 2, '.', '');
+							$rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentage / 100) * $total_sale_so_far2;
-                            $rebate_so_far2 = number_format($Discount, 2, '.', '');
+                            $rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						
 						//Ship to School
-						$total_sale_fundraiser = number_format($total_sale_so_far, 2, '.', ''); 
-						$total_rebate_fundraiser = number_format($rebate_so_far, 2, '.', '');
+						$total_sale_fundraiser = glow_fc_number_format($total_sale_so_far, 2, '.', ''); 
+						$total_rebate_fundraiser = glow_fc_number_format($rebate_so_far, 2, '.', '');
 						
-						$total_sale_fundraiser2 = number_format($total_sale_so_far2, 2, '.', ''); 
-						$total_rebate_fundraiser2 = number_format($rebate_so_far2, 2, '.', '');
+						$total_sale_fundraiser2 = glow_fc_number_format($total_sale_so_far2, 2, '.', ''); 
+						$total_rebate_fundraiser2 = glow_fc_number_format($rebate_so_far2, 2, '.', '');
 						
 						$total_sale_fundraiser3 = $total_sale_fundraiser + $total_sale_fundraiser2;
 						
-						$total_sale_fundraiser3 = number_format($total_sale_fundraiser3, 2, '.', '');
+						$total_sale_fundraiser3 = glow_fc_number_format($total_sale_fundraiser3, 2, '.', '');
 						
 						$total_rebate_fundraiser3 = $rebate_so_far + $rebate_so_far2;
 						
-						$total_rebate_fundraiser3 = number_format($total_rebate_fundraiser3, 2, '.', '');
+						$total_rebate_fundraiser3 = glow_fc_number_format($total_rebate_fundraiser3, 2, '.', '');
 					?>
 						  
 					<?php if($total_sale_fundraiser3!=0 && $total_rebate_fundraiser3!=0){ ?>
@@ -4714,15 +4723,15 @@ elseif($_GET['page']=='fundraiser_operations' && ( $_GET['paid'] ?? '' )=="true"
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><?php echo $ID; ?></td>
 									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><?php echo $org; ?></td>
 								    <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php echo count($arr_order_id);?></td>
-									<!--<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far = number_format($total_sale_so_far, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far = number_format($rebate_so_far, 2, '.', ''); ?></td>-->
+									<!--<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far = glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></td>-->
 									 <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: left;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"> <?php echo $b=count($arr_order_id2); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far = number_format($total_sale_so_far, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_fundraiserNew = number_format($total_sale_fundraiser3, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far = number_format($rebate_so_far, 2, '.', ''); ?> </td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far2 = number_format($rebate_so_far2, 2, '.', ''); ?></td>
-									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_rebate_fundraiserNew = number_format($total_rebate_fundraiser3, 2, '.', ''); ?></td>										
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', '');?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_sale_fundraiserNew = glow_fc_number_format($total_sale_fundraiser3, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far = glow_fc_number_format($rebate_so_far, 2, '.', ''); ?> </td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $rebate_so_far2 = glow_fc_number_format($rebate_so_far2, 2, '.', ''); ?></td>
+									<td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;">$<?php echo $total_rebate_fundraiserNew = glow_fc_number_format($total_rebate_fundraiser3, 2, '.', ''); ?></td>										
 								   <td class="fr-order-col fr-order-id" style="vertical-align: top; text-align: center;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;"><div class="btn-toolbar">&nbsp;<a href="?page=fundraiser_operations&view=true&fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom" style="">View</a></div>
 									</td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
@@ -4910,7 +4919,7 @@ echo paginate_links( array(
 										 $total_sale_so_far+=$order->get_subtotal();
 										}
 									/*$total_sale_so_far+=$order->get_subtotal();*/
-									$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+									$total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', '');
 
                                        foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -4939,13 +4948,13 @@ echo paginate_links( array(
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount_d = number_format($Discount, 2, '.', '');
+									$Discount_d = glow_fc_number_format($Discount, 2, '.', '');
 									$rebate_so_far+=$Discount_d;
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount_d = number_format($Discount, 2, '.', '');
+                                    $Discount_d = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount_d;
 								 }
                                
@@ -4965,10 +4974,10 @@ echo paginate_links( array(
 														   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:red;">A: <?php echo "Registered Seller"; ?></td>
 														</tr>
 														<<tr>
-															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_registered=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_registered=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 														</tr>
 														<tr>
-															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_registered=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_registered=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 														</tr>
 													
 													</table>
@@ -5074,7 +5083,7 @@ echo paginate_links( array(
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -5085,10 +5094,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:red;"><?php echo $all_meta_for_user->user_firstname; ?> <?php echo $all_meta_for_user->user_lastname; ?></td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid red;transition: all 0.1s ease 0s;">
@@ -5150,7 +5159,7 @@ echo paginate_links( array(
                                         $slr_info  = get_userdata($slrID);
                                        ?>
                                        <?php echo $slr_info->first_name; ?> <?php echo $slr_info->last_name; ?></td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:red;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:red;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:red;">$
                                        <?php 
 
@@ -5181,14 +5190,14 @@ echo paginate_links( array(
                         
                                if ( $order_customer_id != $ID  ) { //
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
                                  else
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
                                }
                                echo $Discount;?> </td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
@@ -5299,7 +5308,7 @@ echo paginate_links( array(
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -5446,18 +5455,18 @@ echo paginate_links( array(
 															 $totalAmount=$order->get_subtotal();
 															}													/*   if ( $order_customer_id != $ID  ) { //
 														 $totalAmt    = ($percentage / 100) * $totalAmount;
-														   $Discount = number_format($totalAmt, 2, '.', '');
+														   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
 													   }
 													   else{*/
 														 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 														 {
 															$Discount    = ($percentFifty / 100) * $totalAmount;
-															$Discount = number_format($Discount, 2, '.', '');
+															$Discount = glow_fc_number_format($Discount, 2, '.', '');
 														 }
 														 else
 														 {
 															$Discount    = ($percentage / 100) * $totalAmount;
-															$Discount = number_format($Discount, 2, '.', '');
+															$Discount = glow_fc_number_format($Discount, 2, '.', '');
 															
 														 }
 													  /* }*/
@@ -5486,10 +5495,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:blue;">B: Manually Added Seller</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							<?php
 								$exist_seller=count((array)$seller_name);
@@ -5522,10 +5531,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 18px;margin-top:15px;color:blue;"><?php echo $seller_name[$i]; ?></td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $seller_t=number_format($seller_total_Sale_array[$i], 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $seller_t=glow_fc_number_format($seller_total_Sale_array[$i], 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $seller_r=number_format($seller_rebate_array[$i], 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $seller_r=glow_fc_number_format($seller_rebate_array[$i], 2, '.', ''); ?></span></strong></td>
 								</tr>
 						
 							<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid blue;transition: all 0.1s ease 0s;">
@@ -5593,7 +5602,7 @@ echo paginate_links( array(
 										}
                                        ?>
                                        </td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:blue;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:blue;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:blue;">$
                                        <?php 
 
@@ -5624,18 +5633,18 @@ echo paginate_links( array(
 									}
                               /* if ( $order_customer_id != $ID  ) { 
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{ */
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                              /*  } */
                                echo $Discount;?> </td>
@@ -5749,7 +5758,7 @@ echo paginate_links( array(
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -5760,10 +5769,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:purple;">C: Seller not mentioned</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid purple;transition: all 0.1s ease 0s;">
@@ -5836,7 +5845,7 @@ echo paginate_links( array(
 										{
 											echo "N/A";
 										}  ?></td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:purple;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:purple;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:purple;">$
                                        <?php 
 
@@ -5867,14 +5876,14 @@ echo paginate_links( array(
                         
                                if ( $order_customer_id != $ID  ) { //
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
                                  else
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
                                }
                                echo $Discount;?> </td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
@@ -5952,7 +5961,7 @@ echo paginate_links( array(
 										{
 										 $total_sale_so_far+=$order->get_subtotal();
 										}
-										$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+										$total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', '');
 
                                        foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -5980,13 +5989,13 @@ echo paginate_links( array(
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 									$rebate_so_far+=$Discount;
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -5997,10 +6006,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:#f54298;">D: Fundraiser Online Sales</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid #f54298;transition: all 0.1s ease 0s;">
@@ -6076,7 +6085,7 @@ echo paginate_links( array(
 										}
                                        ?>
                                        </td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#f54298;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#f54298;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#f54298;">$
                                        <?php 
 
@@ -6107,19 +6116,19 @@ echo paginate_links( array(
 									}
                               /* if ( $order_customer_id != $ID  ) { 
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{*/
 							   
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                /*} */
                                echo $Discount;?> </td>
@@ -6203,7 +6212,7 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:#a84032;">E: Fundraiser Catalogue Sales</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#a84032;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#a84032;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid #a84032;transition: all 0.1s ease 0s;">
@@ -6283,7 +6292,7 @@ echo paginate_links( array(
 										}
                                        ?>
                                        </td>-->
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#a84032;">$<?php  echo $total_sale=number_format( $total_sale, 2); ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#a84032;">$<?php  echo $total_sale=glow_fc_number_format( $total_sale, 2); ?></td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#a84032;">$
                                        <?php 
 
@@ -6314,19 +6323,19 @@ echo paginate_links( array(
 									}
                               /* if ( $order_customer_id != $ID  ) { 
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{*/
 							   
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS || !empty($new_catalog_order) && $new_catalog_order == "Yes")
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                /*} */
                                echo $Discount;?> </td>-->
@@ -6404,7 +6413,7 @@ echo paginate_links( array(
 										{
 										 $total_sale_so_far+=$order->get_subtotal();
 										}
-										$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+										$total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -6443,13 +6452,13 @@ echo paginate_links( array(
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFifty / 100) * $total_sale_so_far;
-							$rebate_so_far = number_format($Discount, 2, '.', '');
+							$rebate_so_far = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentage / 100) * $total_sale_so_far;
-                            $rebate_so_far = number_format($Discount, 2, '.', '');
+                            $rebate_so_far = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						?>
@@ -6457,10 +6466,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:#ff5722;">F: Ship to School Orders</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							    <tr>
 									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Sold Items: <strong><span class="fr-total-rebate"><?php echo $item_qty_fund_online; ?></span></strong></td>
@@ -6538,7 +6547,7 @@ echo paginate_links( array(
 									  
                                        ?>
                                        </td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#ff5722;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#ff5722;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
 								</tr>
@@ -6710,7 +6719,7 @@ echo paginate_links( array(
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									   
@@ -6764,7 +6773,7 @@ echo paginate_links( array(
 										 else
 										 {
 											$Discount    = ($percentage / 100) * $totalAmount;
-											$Discount = number_format($Discount, 2, '.', '');
+											$Discount = glow_fc_number_format($Discount, 2, '.', '');
 											 $rebate_so_far+=$Discount;
 										 }
 									}
@@ -6862,7 +6871,7 @@ echo paginate_links( array(
 										{
 										 $total_sale_so_far2+=$order->get_subtotal();
 										}
-										$total_sale_so_far2 = number_format($total_sale_so_far2, 2, '.', '');
+										$total_sale_so_far2 = glow_fc_number_format($total_sale_so_far2, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -6882,19 +6891,19 @@ echo paginate_links( array(
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFifty / 100) * $total_sale_so_far2;
-							$rebate_so_far2 = number_format($Discount, 2, '.', '');
+							$rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentage / 100) * $total_sale_so_far2;
-                            $rebate_so_far2 = number_format($Discount, 2, '.', '');
+                            $rebate_so_far2 = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						
 						$total_rebate_3 = $rebate_so_far + $rebate_so_far2;
 			
-						$total_rebate_3 = number_format($total_rebate_3, 2, '.', '');
+						$total_rebate_3 = glow_fc_number_format($total_rebate_3, 2, '.', '');
 						 // End Ship to school
 		 
 								 $status= get_user_meta( $ID , 'user_status' , true );
@@ -6917,13 +6926,13 @@ echo paginate_links( array(
 		<?php } if($rebate_option=="PayPal"){ $option_val = get_user_meta($ID, 'user_registration_paypal_email', true );  ?>
 		   <td style="display: inline-block;margin-bottom: 0px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;padding: 18px 26px 5px;color: green;">Rebate Pay By PayPal: <span style="color: green;text-transform: lowercase;"><?php echo $option_val; ?><span></td>
 		<?php } ?>
-			<td style="display: block;margin-bottom: 0px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;padding: 5px 26px 5px;color: green;">Total Rebate: <strong>$<span class="fr-total-rebate"><?php echo $total_rebate_3 = number_format($total_rebate_3, 2, '.', '');?></span></strong><?php if($rebate_option=="PayPal"){ echo  do_shortcode('[wp_cart_button name="Fund ID: '.$ID.'" price="'.$total_rebate_3.'"]'); } ?>
+			<td style="display: block;margin-bottom: 0px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;padding: 5px 26px 5px;color: green;">Total Rebate: <strong>$<span class="fr-total-rebate"><?php echo $total_rebate_3 = glow_fc_number_format($total_rebate_3, 2, '.', '');?></span></strong><?php if($rebate_option=="PayPal"){ echo  do_shortcode('[wp_cart_button name="Fund ID: '.$ID.'" price="'.$total_rebate_3.'"]'); } ?>
 			</td>
 			<?php  if( $status==1 && $remaining_rebate <= 0 ){ ?>
 			 <td class="<?php echo $remaining_rebate; ?> gg" style="display: inline-block;margin-bottom: 0px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;padding: 5px 26px 5px;color: green;">Paid Rebate: <span style="color: #333;text-transform: lowercase;"><?php echo "$".$rebate; ?><span></td>
 			
 	<?php } else{ ?>
-	<td class="<?php echo $remaining_rebate; ?>" style="display: block;margin-bottom: 0px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;padding: 5px 26px 5px;color: green;">Remaining Rebate: <span style="color: green;text-transform: lowercase;"><?php $remaining_r = abs($remaining_rebate); $remaing_rebate_cal=number_format($remaining_r, 2, '.', ''); ?><?php echo "$".$remaing_rebate_cal; ?></span></td>
+	<td class="<?php echo $remaining_rebate; ?>" style="display: block;margin-bottom: 0px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;padding: 5px 26px 5px;color: green;">Remaining Rebate: <span style="color: green;text-transform: lowercase;"><?php $remaining_r = abs($remaining_rebate); $remaing_rebate_cal=glow_fc_number_format($remaining_r, 2, '.', ''); ?><?php echo "$".$remaing_rebate_cal; ?></span></td>
 	<?php } ?>
 		</tr>
 		 <?php
@@ -7032,7 +7041,7 @@ echo paginate_links( array(
 										 $total_sale_so_far+=$order->get_subtotal();
 										}
 									/*$total_sale_so_far+=$order->get_subtotal();*/
-									$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+									$total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', '');
 
                                        foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -7061,13 +7070,13 @@ echo paginate_links( array(
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount_d = number_format($Discount, 2, '.', '');
+									$Discount_d = glow_fc_number_format($Discount, 2, '.', '');
 									$rebate_so_far+=$Discount_d;
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount_d = number_format($Discount, 2, '.', '');
+                                    $Discount_d = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount_d;
 								 }
                                
@@ -7087,10 +7096,10 @@ echo paginate_links( array(
 														   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:red;">A: <?php echo "Registered Seller"; ?></td>
 														</tr>
 														<<tr>
-															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_registered=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_registered=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 														</tr>
 														<tr>
-															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_registered=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+															<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_registered=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 														</tr>
 													
 													</table>
@@ -7197,7 +7206,7 @@ echo paginate_links( array(
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -7208,10 +7217,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:red;"><?php echo $all_meta_for_user->user_firstname; ?> <?php echo $all_meta_for_user->user_lastname; ?></td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:red;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid red;transition: all 0.1s ease 0s;">
@@ -7273,7 +7282,7 @@ echo paginate_links( array(
                                         $slr_info  = get_userdata($slrID);
                                        ?>
                                        <?php echo $slr_info->first_name; ?> <?php echo $slr_info->last_name; ?></td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:red;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:red;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:red;">$
                                        <?php 
 
@@ -7304,14 +7313,14 @@ echo paginate_links( array(
                         
                                if ( $order_customer_id != $ID  ) { //
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
                                  else
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
                                }
                                echo $Discount;?> </td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
@@ -7422,7 +7431,7 @@ echo paginate_links( array(
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -7568,18 +7577,18 @@ echo paginate_links( array(
 															 $totalAmount=$order->get_subtotal();
 															}													/*   if ( $order_customer_id != $ID  ) { //
 														 $totalAmt    = ($percentage / 100) * $totalAmount;
-														   $Discount = number_format($totalAmt, 2, '.', '');
+														   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
 													   }
 													   else{*/
 														 if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 														 {
 															$Discount    = ($percentFifty / 100) * $totalAmount;
-															$Discount = number_format($Discount, 2, '.', '');
+															$Discount = glow_fc_number_format($Discount, 2, '.', '');
 														 }
 														 else
 														 {
 															$Discount    = ($percentage / 100) * $totalAmount;
-															$Discount = number_format($Discount, 2, '.', '');
+															$Discount = glow_fc_number_format($Discount, 2, '.', '');
 															
 														 }
 													  /* }*/
@@ -7607,10 +7616,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:blue;">B: Manually Added Seller</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							<?php
 								$exist_seller=count((array)$seller_name);
@@ -7643,10 +7652,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 18px;margin-top:15px;color:blue;"><?php echo $seller_name[$i]; ?></td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $seller_t=number_format($seller_total_Sale_array[$i], 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $seller_t=glow_fc_number_format($seller_total_Sale_array[$i], 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $seller_r=number_format($seller_rebate_array[$i], 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:blue;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $seller_r=glow_fc_number_format($seller_rebate_array[$i], 2, '.', ''); ?></span></strong></td>
 								</tr>
 						
 							<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid blue;transition: all 0.1s ease 0s;">
@@ -7714,7 +7723,7 @@ echo paginate_links( array(
 										}
                                        ?>
                                        </td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:blue;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:blue;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:blue;">$
                                        <?php 
 
@@ -7745,18 +7754,18 @@ echo paginate_links( array(
 									}
                               /* if ( $order_customer_id != $ID  ) { 
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{ */
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                              /*  } */
                                echo $Discount;?> </td>
@@ -7870,7 +7879,7 @@ echo paginate_links( array(
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -7881,10 +7890,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:purple;">C: Seller not mentioned</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:purple;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid purple;transition: all 0.1s ease 0s;">
@@ -7957,7 +7966,7 @@ echo paginate_links( array(
 										{
 											echo "N/A";
 										}  ?></td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:purple;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:purple;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:purple;">$
                                        <?php 
 
@@ -7988,14 +7997,14 @@ echo paginate_links( array(
                         
                                if ( $order_customer_id != $ID  ) { //
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
                                  else
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
                                }
                                echo $Discount;?> </td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
@@ -8073,7 +8082,7 @@ echo paginate_links( array(
 										{
 										 $total_sale_so_far+=$order->get_subtotal();
 										}
-										$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+										$total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', '');
 
                                        foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -8101,13 +8110,13 @@ echo paginate_links( array(
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 									$rebate_so_far+=$Discount;
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 									 $rebate_so_far+=$Discount;
 								 }
                                
@@ -8118,10 +8127,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:#f54298;">D: Fundraiser Online Sales</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#f54298;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid #f54298;transition: all 0.1s ease 0s;">
@@ -8197,7 +8206,7 @@ echo paginate_links( array(
 										}
                                        ?>
                                        </td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#f54298;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#f54298;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#f54298;">$
                                        <?php 
 
@@ -8228,19 +8237,19 @@ echo paginate_links( array(
 									}
                               /* if ( $order_customer_id != $ID  ) { 
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{*/
 							   
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS)
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                /*} */
                                echo $Discount;?> </td>
@@ -8324,7 +8333,7 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:#a84032;">E: Fundraiser Catalogue Sales</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#a84032;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#a84032;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								
 								<tr style="display: flex;flex-flow: wrap; border-bottom: 1px solid #a84032;transition: all 0.1s ease 0s;">
@@ -8405,7 +8414,7 @@ echo paginate_links( array(
 										}
                                        ?>
                                        </td>-->
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#a84032;">$<?php  echo $total_sale=number_format( $total_sale, 2); ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#a84032;">$<?php  echo $total_sale=glow_fc_number_format( $total_sale, 2); ?></td>
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#a84032;">$
                                        <?php 
 
@@ -8436,19 +8445,19 @@ echo paginate_links( array(
 									}
                               /* if ( $order_customer_id != $ID  ) { 
                                  $totalAmt    = ($percentage / 100) * $totalAmount;
-                                   $Discount = number_format($totalAmt, 2, '.', '');
+                                   $Discount = glow_fc_number_format($totalAmt, 2, '.', '');
                                }
                                else{*/
 							   
                                  if (glow_brochure_order_quantity($order) >= GLOW_BROCHURE_PROFIT_MIN_ITEMS || !empty($new_catalog_order) && $new_catalog_order == "Yes")
 								 {
                                     $Discount    = ($percentFifty / 100) * $totalAmount;
-									$Discount = number_format($Discount, 2, '.', '');
+									$Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                  else
 								 {
                                     $Discount    = ($percentage / 100) * $totalAmount;
-                                    $Discount = number_format($Discount, 2, '.', '');
+                                    $Discount = glow_fc_number_format($Discount, 2, '.', '');
 								 }
                                /*} */
                                echo $Discount;?> </td>-->
@@ -8527,7 +8536,7 @@ echo paginate_links( array(
 										{
 										 $total_sale_so_far+=$order->get_subtotal();
 										}
-										$total_sale_so_far = number_format($total_sale_so_far, 2, '.', '');
+										$total_sale_so_far = glow_fc_number_format($total_sale_so_far, 2, '.', '');
 
                                         foreach ($order->get_items() as $item_key => $item_values): 
                                                 $item_data = $item_values->get_data();  
@@ -8566,13 +8575,13 @@ echo paginate_links( array(
 						if ($real_qty_catlog_online > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1))
 						{
                             $Discount    = ($percentFifty / 100) * $total_sale_so_far;
-							$rebate_so_far = number_format($Discount, 2, '.', '');
+							$rebate_so_far = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
                         else
 						{
                             $Discount    = ($percentage / 100) * $total_sale_so_far;
-                            $rebate_so_far = number_format($Discount, 2, '.', '');
+                            $rebate_so_far = glow_fc_number_format($Discount, 2, '.', '');
 							
 						}
 						?>
@@ -8580,10 +8589,10 @@ echo paginate_links( array(
 								   <td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 700;text-transform: uppercase;line-height: 1.3;font-size: 24px;color:#ff5722;">F: Ship to School Orders</td>
                                 </tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Sale So Far: <strong>$<span class="fr-total-sale"><?php echo $total_sale_so_far_seller_not=glow_fc_number_format($total_sale_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 								<tr>
-									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
+									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Rebate So Far: <strong>$<span class="fr-total-rebate"><?php echo $rebate_so_far_seller_not=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?></span></strong></td>
 								</tr>
 							    <tr>
 									<td style="display: inline-block;margin-bottom: 10px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-weight: 400;text-transform: uppercase;line-height: 1.3;font-size: 14px;color:#ff5722;">Total Sold Items: <strong><span class="fr-total-rebate"><?php echo $item_qty_fund_online; ?></span></strong></td>
@@ -8661,7 +8670,7 @@ echo paginate_links( array(
 									  
                                        ?>
                                        </td>
-									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#ff5722;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = number_format( $sub, 2); }  ?></td>
+									<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;color:#ff5722;">$<?php $tdiscount=$order->get_total_discount();if(!empty($tdiscount)) { $sub=$order->get_subtotal()-$tdiscount; echo $decimal = glow_fc_number_format( $sub, 2); } else { $sub=$order->get_subtotal(); echo $decimal = glow_fc_number_format( $sub, 2); }  ?></td>
 									
 									<!--<td class="fr-order-col fr-order-id" style="width: 12%;padding: 10px 5px;font-size: 16px;font-family: 'Roboto';"><span style="color: #fff;background: #000;padding: 7px 15px;font-weight: 500;font-size: 14px;cursor: pointer;position: relative;">Expand</span></td>-->
 								</tr>
@@ -9295,7 +9304,7 @@ echo paginate_links( array(
 							$registered = $udata->user_registered;
 					
 					?>
-			<tr id="<?php echo "fund_".$ID; ?>" class="<?php echo $startDate; ?> <?php if($rebate_so_far>0){ echo 'payDue'; } ?>" <?php if($rebate_so_far>0){ echo 'data-rebate="'.$rebate_so_far.'"';  echo 'data-sale="'.number_format($total_sale_so_far, 2, '.', '').'"'; } ?>>
+			<tr id="<?php echo "fund_".$ID; ?>" class="<?php echo $startDate; ?> <?php if($rebate_so_far>0){ echo 'payDue'; } ?>" <?php if($rebate_so_far>0){ echo 'data-rebate="'.$rebate_so_far.'"';  echo 'data-sale="'.glow_fc_number_format($total_sale_so_far, 2, '.', '').'"'; } ?>>
 				<td id="0_" style="vertical-align: top; text-align: center; "><?php echo $ID;?></td>
 				<td id="1_" style="vertical-align: top; text-align: left;width: 180px;"><?php echo $org; ?></td>
 				<td id="2_" style="vertical-align: top; text-align: left;"><?php echo $all_meta_for_user->user_firstname; ?> <?php echo $all_meta_for_user->user_lastname; ?></td>
@@ -9308,7 +9317,7 @@ echo paginate_links( array(
 				<td id="7_" style="vertical-align: top; text-align: center; width: 240px;">
 					<div class="btn-toolbar"><div class="first-col" style="margin-bottom:10px;">
 					<a href="<?php echo home_url('/print/'); ?>?fund_id=<?php echo $ID;?>" target="_FUND" class="btn btn-inverse btn-mini padtop btn-custom">Print</a>&nbsp;
-					<a href="#" class="btn btn-inverse btn-mini padtop btn-custom status" data-id="<?php echo $ID;?>" data-action="<?php echo $status;?>" data-rebate="<?php echo $rebate_so_far=number_format($rebate_so_far, 2, '.', ''); ?>">Status</a>&nbsp;
+					<a href="#" class="btn btn-inverse btn-mini padtop btn-custom status" data-id="<?php echo $ID;?>" data-action="<?php echo $status;?>" data-rebate="<?php echo $rebate_so_far=glow_fc_number_format($rebate_so_far, 2, '.', ''); ?>">Status</a>&nbsp;
 					<a id="send_report" class="btn btn-inverse btn-mini padtop btn-custom" data-fund_id="<?php echo $ID; ?>">Email Report</a></div><div class="second-col">&nbsp;
 					<a href="?page=fundraiser_operations&rebate=true&fund_id=<?php echo $ID;?>" id="rebate_pay" class="btn btn-inverse btn-mini padtop btn-custom">Rebate</a>&nbsp;
 					<a href="#" class="btn btn-inverse btn-mini padtop btn-custom action_status" data-id="<?php echo $ID;?>" data-action="<?php echo $action_status;?>" data-active="<?php echo $active_date;?>" data-inactive="<?php echo $inactive_date;?>">Action</a>
