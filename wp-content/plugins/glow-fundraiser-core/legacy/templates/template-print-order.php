@@ -190,7 +190,7 @@ if($cat_type=='Catlog' && $query_val_c != 'full' & $query_val_c != 'summary') {
 		?>
 		
 		<h2>
-		<?php  echo $seller_name[$query_val]; ?> - <?php echo $id; ?>
+		<?php  echo $seller_name[$query_val]; ?> - <?php echo esc_html( glow_order_display_id( $id ) ); ?>
 		</h2>
 		<div class="printPage" data-print="">
 		
@@ -268,7 +268,7 @@ if($seller_name[$i]==$s_name_meta)
  <?php if($pageCount==1) { ?>
  <div class="SellerName">
 		<h2>
-		<?php  echo $seller_name[$i]; ?> - <?php echo $id; ?>
+		<?php  echo $seller_name[$i]; ?> - <?php echo esc_html( glow_order_display_id( $id ) ); ?>
 		</h2>
 			<span class="border-line"></span>
 			</div>
@@ -276,7 +276,7 @@ if($seller_name[$i]==$s_name_meta)
  <?php if($pageCount>1) { ?>
 	<div class="SellerName">
 		<h2>
-		<?php  echo $seller_name[$i]; ?> - <?php echo $id; ?> (Page <?php echo $pageCount; ?>)
+		<?php  echo $seller_name[$i]; ?> - <?php echo esc_html( glow_order_display_id( $id ) ); ?> (Page <?php echo $pageCount; ?>)
 		</h2>
 			<span class="border-line"></span>
 			</div>
@@ -342,7 +342,7 @@ if($seller_name[$i]==$s_name_meta)
 	<div class="orderSummary">
 	<div class="SellerName">
 		<h2>
-		Order Summary- <?php echo $id; ?>	
+		Order Summary- <?php echo esc_html( glow_order_display_id( $id ) ); ?>	
 		</h2>
 		<span class="border-line"></span>
 		<?php 
