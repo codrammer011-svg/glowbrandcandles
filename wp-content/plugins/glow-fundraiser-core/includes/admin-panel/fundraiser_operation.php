@@ -56,12 +56,12 @@ function glow_fo_table_tools() {
 	?>
 <style id="glow-fo-table-tools">
 /* Same look as the PAID Fundraisers "Enter Fundraiser ID" search. */
-.widget-content.glow-fo-search{background:transparent;padding:20px;clear:both}
-.glow-fo-search form{width:100%;margin:0 auto;text-align:center;display:block}
-.glow-fo-search .search-item{display:block;width:750px;max-width:100%;margin:0 auto 9px;text-align:left;font-size:14px;font-weight:400}
-.glow-fo-search input[type=search]{width:690px;max-width:calc(100% - 110px);height:30px;padding:4px 8px;border:1px solid #ccc;border-radius:0;box-sizing:border-box;vertical-align:middle}
-.glow-fo-search .glow-fo-submit,.glow-fo-search .glow-fo-clear{background-color:#405e6a!important;text-shadow:0 -1px 0 #22404c;background-image:none;box-shadow:inset 0 2px 4px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.05);color:#fff;padding:5px 33px;border-radius:3px;border:0;display:inline-block;height:30px;line-height:20px;vertical-align:middle;cursor:pointer;text-decoration:none;font-size:14px}
-.glow-fo-search .glow-fo-clear{padding:5px 18px;margin-left:4px;background-color:#8a9aa1!important}
+.widget-content.glow-fo-search{background:#f7f8f9;padding:26px 24px 24px!important;margin:0 0 20px;clear:both;border-bottom:1px solid #e2e4e7}
+.glow-fo-search form{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;max-width:860px;margin:0 auto}
+.glow-fo-search .search-item{flex:0 0 100%;margin:0 0 2px;text-align:left;font-size:14px;font-weight:600;color:#3c434a}
+.glow-fo-search input[type=search]{flex:1 1 320px;min-width:0;height:38px!important;min-height:38px;margin:0;padding:6px 12px;border:1px solid #c3c4c7;border-radius:3px;box-sizing:border-box;font-size:14px}
+.glow-fo-search .glow-fo-submit,.glow-fo-search .glow-fo-clear{background-color:#405e6a!important;text-shadow:0 -1px 0 #22404c;background-image:none;box-shadow:inset 0 2px 4px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.05);color:#fff!important;padding:0 32px;border-radius:3px;border:0;display:inline-flex;align-items:center;justify-content:center;height:38px;margin:0;cursor:pointer;text-decoration:none;font-size:14px;flex:0 0 auto}
+.glow-fo-search .glow-fo-clear{padding:0 20px;background-color:#8a9aa1!important}
 .glow-fo-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin:14px 0 0}
 .glow-fo-tools select{height:30px;padding:2px 8px}
 .glow-fo-tools .glow-fo-count{color:#50575e;font-size:13px}
