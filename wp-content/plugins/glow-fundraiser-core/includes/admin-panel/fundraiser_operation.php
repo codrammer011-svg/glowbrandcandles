@@ -3069,11 +3069,19 @@ else if($_GET['page']=='fundraiser_operations' && ( $_GET['request'] ?? '' )=="c
 						});
 			
 			});
-			jQuery("#orderfid").change(function()
+			// Keep the Ship to School link current while typing, and open it on Enter
+			// instead of submitting the form back to this page.
+			jQuery("#orderfid").on('input change', function()
 			{
-				var orderfid = jQuery(this).val();
-				var fundraiser_id = jQuery("#orderfid").val();
-				jQuery('#shipbyfid').attr("href", "/ship-print-order/?fund_id="+fundraiser_id);
+				var fundraiser_id = jQuery.trim(jQuery(this).val());
+				jQuery('#shipbyfid').attr("href", "/ship-print-order/?fund_id="+encodeURIComponent(fundraiser_id));
+			});
+			jQuery("#printOrderByFid").on('submit', function(e)
+			{
+				e.preventDefault();
+				if (jQuery.trim(jQuery("#orderfid").val()) !== '') {
+					window.open(jQuery('#shipbyfid').attr("href"), '_blank');
+				}
 			});
 		});
 </script>
