@@ -1,13 +1,76 @@
 <?php
 /*
-* Creating a function Fundraiser Outstanding Ajax
+* Fundraiser Outstanding report (admin.php?page=fundraiser_outstanding).
+*
+* Building the report takes about a minute (every fundraiser since 2023 and their orders), longer
+* than a browser request is allowed, so the tab kept loading forever. The report is now built in
+* the background every hour and saved; the tab shows the saved copy at once.
 */
-add_action('wp_ajax_nopriv_fund_outstanding', 'fund_outstanding'); // for not logged in users
 add_action('wp_ajax_fund_outstanding', 'fund_outstanding');
+add_action('glow_refresh_fund_outstanding', 'glow_refresh_fund_outstanding_cache');
+add_action('init', function () {
+	if ( ! wp_next_scheduled( 'glow_refresh_fund_outstanding' ) ) {
+		wp_schedule_event( time() + 60, 'hourly', 'glow_refresh_fund_outstanding' );
+	}
+});
+
 function fund_outstanding()
 {
-	$wp_body ='';
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( '', '', array( 'response' => 403 ) );
+	}
+	$cache      = get_option( 'glow_fund_outstanding_cache' );
+	$refreshing = ! empty( $_POST['refresh'] );
+	if ( $refreshing ) {
+		wp_schedule_single_event( time(), 'glow_refresh_fund_outstanding_now' );
+		spawn_cron();
+	}
+	if ( empty( $cache['html'] ) ) {
+		// First run only: nothing saved yet, so build it now.
+		$cache = glow_refresh_fund_outstanding_cache();
+	}
+	$age = human_time_diff( (int) $cache['time'], time() );
+	?>
+	<div class="glow-fout-updated" style="margin:12px 0;padding:10px 14px;background:#f0f6fc;border-left:4px solid #405e6a;font-size:13px;">
+		<?php if ( $refreshing ) : ?>
+			Refreshing the report in the background. Reload this page in a minute or two to see the new numbers.
+		<?php else : ?>
+			Report updated <?php echo esc_html( $age ); ?> ago (it refreshes every hour).
+			<button type="button" class="button button-small" id="glow-fout-refresh" style="margin-left:8px;">Refresh now</button>
+		<?php endif; ?>
+	</div>
+	<script>
+	jQuery(function ($) {
+		$('#glow-fout-refresh').on('click', function () {
+			var btn = $(this).prop('disabled', true).text('Starting…');
+			$.post(<?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>, { action: 'fund_outstanding', refresh: 1 }, function () {
+				btn.closest('.glow-fout-updated').text('Refreshing the report in the background. Reload this page in a minute or two to see the new numbers.');
+			});
+		});
+	});
+	</script>
+	<?php
+	echo $cache['html']; // Built by glow_render_fund_outstanding() for admins only.
+	die();
+}
+
+add_action('glow_refresh_fund_outstanding_now', 'glow_refresh_fund_outstanding_cache');
+
+/** Build the report and save it with the time it was built. */
+function glow_refresh_fund_outstanding_cache()
+{
+	if ( function_exists( 'set_time_limit' ) ) {
+		@set_time_limit( 0 );
+	}
 	ob_start();
+	glow_render_fund_outstanding();
+	$cache = array( 'html' => ob_get_clean(), 'time' => time() );
+	update_option( 'glow_fund_outstanding_cache', $cache, false );
+	return $cache;
+}
+
+function glow_render_fund_outstanding()
+{
 ?>
 <script>
 		jQuery(document).ready(function () 
@@ -85,10 +148,13 @@ function fund_outstanding()
 								$rebateSFAR=0;
 								$totalSALE=0;
 								
+								 // Only completed and processing orders are counted below, so only load those
+								 // (loading every order of every fundraiser made this tab time out).
 								 $argss = array(
-                                'status'   => "published",
+                                'status'   => array( 'completed', 'processing' ),
                                 'meta_key' => 'fundraiser_field',
-								'meta_value' => $ID
+								'meta_value' => $ID,
+								'limit'    => -1
                             );
                         $orders = wc_get_orders($argss);
                         foreach ( $orders as $order ) {
@@ -231,31 +297,21 @@ function fund_outstanding()
 						 $rebate_so_far2=0;		
 						 $item_qty_fund_online=0;
 						 
-						 $args = array(
-                                'status'   => "published",
-                                'meta_key' => 'fundraiser_field',
-								'meta_value' => $ID,
-								'limit' => -1
-                            );
-                        $orders = wc_get_orders($args);
-                        foreach ( $orders as $order ) {
-								$frID3 = get_post_meta($order->get_id(), 'fundraiser_field', true );
-								$ID3 = get_post_meta($order->get_id(), 'wc_seller_field', true );
-							   	$scat = get_post_meta($order->get_id(), 'ship_with_catalog', true );
-								$order_data = $order->get_data();
-                                $order_customer_id = $order_data['customer_id'];
-								
-								if ($order->has_status('on-hold') || $order->has_status('completed') || $order->has_status('processing')) {
-								  if ($frID3 == $order_customer_id) { 
-								  $order_type = get_post_meta($order->get_id(), 'wc_order_type', true );
-								  if($order_type=="Catlog") 
-									 {
-										 foreach ($order->get_items() as $item_key => $item_values): 
-												$item_data = $item_values->get_data();
-												$total_cat_quantity += $item_data['quantity']; 			//ship to school								
-										  endforeach;	
-								} } }
-						}
+						// Items on the fundraiser's own brochure (Catlog) orders that are on hold, processing
+						// or completed. One query instead of loading every order the fundraiser ever had,
+						// which made this tab take over a minute and never finish loading.
+						global $wpdb;
+						$total_cat_quantity = (int) $wpdb->get_var( $wpdb->prepare(
+							"SELECT COALESCE(SUM(qty.meta_value), 0)
+							 FROM {$wpdb->posts} o
+							 JOIN {$wpdb->postmeta} fid  ON fid.post_id = o.ID AND fid.meta_key = 'fundraiser_field' AND fid.meta_value = %s
+							 JOIN {$wpdb->postmeta} cust ON cust.post_id = o.ID AND cust.meta_key = '_customer_user' AND cust.meta_value = %s
+							 JOIN {$wpdb->postmeta} typ  ON typ.post_id = o.ID AND typ.meta_key = 'wc_order_type' AND typ.meta_value = 'Catlog'
+							 JOIN {$wpdb->prefix}woocommerce_order_items oi ON oi.order_id = o.ID AND oi.order_item_type = 'line_item'
+							 JOIN {$wpdb->prefix}woocommerce_order_itemmeta qty ON qty.order_item_id = oi.order_item_id AND qty.meta_key = '_qty'
+							 WHERE o.post_type = 'shop_order' AND o.post_status IN ('wc-on-hold', 'wc-completed', 'wc-processing')",
+							(string) $ID, (string) $ID
+						) );
 							   
 							   
 							   
@@ -395,9 +451,6 @@ function fund_outstanding()
 		</table>
 		<div id="out_F"></div>
 	</div>
-	<?php 
-	$wp_body = ob_get_contents();
-	ob_end_flush();
-	die();
+	<?php
 	}
 	?>
