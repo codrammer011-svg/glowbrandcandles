@@ -594,6 +594,12 @@ table {
 
          data : {action: 'fund_outstanding'},
 
+         // Stop the spinner and say so if the report cannot be loaded, instead of loading forever.
+         error: function() {
+						jQuery("#loading_fout").removeClass("show_load_fout").addClass("hide_load_fout");
+						jQuery(".widget.widget-table").append('<p style="margin:16px;color:#b42318;">The report could not be loaded. Please reload the page; if it keeps happening, the report may still be building in the background.</p>');
+         },
+
          success: function(response) {
 						
 						console.log(response);
