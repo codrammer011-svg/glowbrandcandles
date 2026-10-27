@@ -528,34 +528,4 @@ $uid = 'glow_sreg_' . wp_rand( 1000, 9999 );
 		})(jQuery);
 		</script>
 	<?php endif; ?>
-	<script type="text/javascript">
-	/*
-	 * Phone field: form 62307 collects it in a plain text field named billing_phone.
-	 * Give it a phone keypad, a readable label for error messages and US formatting.
-	 */
-	(function ($) {
-		function formatUs(value) {
-			var d = value.replace(/\D/g, '');
-			if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);
-			d = d.slice(0, 10);
-			if (d.length > 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
-			if (d.length > 3) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
-			return d;
-		}
-		$('#<?php echo esc_js( $uid ); ?> input[name="billing_phone"]').each(function () {
-			var $input = $(this);
-			$input.attr({
-				inputmode: 'tel',
-				autocomplete: 'tel',
-				maxlength: 14,
-				placeholder: 'Phone Number',
-				'data-label': 'Phone Number'
-			});
-			if ($input.val()) $input.val(formatUs($input.val()));
-			$input.on('input', function () {
-				this.value = formatUs(this.value);
-			});
-		});
-	})(jQuery);
-	</script>
 </div>
