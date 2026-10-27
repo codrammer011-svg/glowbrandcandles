@@ -877,7 +877,7 @@ $m_body=stripslashes($body);
              <td align="left" style="padding: 30px 30px;">
 			 <div class="text-left" style="float:left;">
 				<address style="margin-bottom: 20px;font-style: normal;line-height: 1.428571429;">
-							<strong>Glow Scented Candles:</strong><br>
+							<strong>Glow Brands LLC:</strong><br>
 							3702 Cavalier Drive Suite 100<br>
 							Garland TX 75042<br>
 							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
@@ -4633,7 +4633,7 @@ function wc_new_orders($order_id)
              <td align="left" style="padding: 30px 30px;">
 			 <div class="text-left" style="float:left;">
 				<address style="margin-bottom: 20px;font-style: normal;line-height: 1.428571429;">
-							<strong>Glow Scented Candles:</strong><br>
+							<strong>Glow Brands LLC:</strong><br>
 							3702 Cavalier Drive Suite 100<br>
 							Garland TX 75042<br>
 							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
