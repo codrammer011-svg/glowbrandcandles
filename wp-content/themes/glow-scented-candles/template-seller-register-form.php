@@ -531,8 +531,7 @@ $uid = 'glow_sreg_' . wp_rand( 1000, 9999 );
 	<script type="text/javascript">
 	/*
 	 * Phone field: form 62307 collects it in a plain text field named billing_phone.
-	 * Give it a phone keypad, a readable label for error messages, US formatting and
-	 * a 10-digit check (UR builds its pattern rules on window load, after this runs).
+	 * Give it a phone keypad, a readable label for error messages and US formatting.
 	 */
 	(function ($) {
 		function formatUs(value) {
@@ -551,11 +550,6 @@ $uid = 'glow_sreg_' . wp_rand( 1000, 9999 );
 				maxlength: 14,
 				placeholder: 'Phone Number',
 				'data-label': 'Phone Number'
-			});
-			$input.closest('.ur-field-item').attr({
-				'data-field-pattern-enabled': '1',
-				'data-field-pattern-value': '^\\(\\d{3}\\) \\d{3}-\\d{4}$',
-				'data-field-pattern-message': 'Please enter a 10-digit phone number.'
 			});
 			if ($input.val()) $input.val(formatUs($input.val()));
 			$input.on('input', function () {
