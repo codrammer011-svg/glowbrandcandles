@@ -205,6 +205,7 @@ function glow_sp_render_edit_info( $sid ) {
 		update_user_meta( $sid, 'billing_last_name', $last );
 		update_user_meta( $sid, 'billing_phone', $phone );
 		update_user_meta( $sid, 'user_registration_phone', $phone );
+		update_user_meta( $sid, 'user_registration_billing_phone', $phone );
 		update_user_meta( $sid, glow_sp_meta_key( 'goal' ), $goal );
 		update_user_meta( $sid, 'seller_goal', $goal );
 		wp_safe_redirect( add_query_arg( 'saved', 1, glow_sp_self_url( $sid ) ) );
@@ -212,9 +213,14 @@ function glow_sp_render_edit_info( $sid ) {
 	}
 
 	$u     = get_userdata( $sid );
-	$phone = get_user_meta( $sid, 'billing_phone', true );
-	if ( ! $phone ) {
-		$phone = get_user_meta( $sid, 'user_registration_phone', true );
+	// The Seller Registration form (62307) saves its billing_phone text field as
+	// user_registration_billing_phone; older sellers have billing_phone or user_registration_phone.
+	$phone = '';
+	foreach ( array( 'billing_phone', 'user_registration_billing_phone', 'user_registration_phone' ) as $phone_key ) {
+		$phone = get_user_meta( $sid, $phone_key, true );
+		if ( $phone ) {
+			break;
+		}
 	}
 	$goal = preg_replace( '/[^0-9.]/', '', (string) get_user_meta( $sid, glow_sp_meta_key( 'goal' ), true ) );
 	$fid  = absint( get_user_meta( $sid, glow_sp_meta_key( 'fundraiser_id' ), true ) );
