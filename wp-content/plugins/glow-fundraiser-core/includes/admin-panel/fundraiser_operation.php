@@ -55,23 +55,30 @@ function glow_fo_user_query( $args, $per_page, &$total_pages ) {
 function glow_fo_table_tools() {
 	?>
 <style id="glow-fo-table-tools">
-.glow-fo-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0}
-.glow-fo-tools input[type=search]{min-width:240px;padding:6px 10px;border:1px solid #c3c4c7;border-radius:4px}
-.glow-fo-tools select{padding:4px 8px}
-.glow-fo-tools .glow-fo-count{color:#50575e}
-.glow-fo-pager{display:flex;flex-wrap:wrap;gap:4px;margin:12px 0}
-.glow-fo-pager button{min-width:34px;padding:5px 9px;border:1px solid #c3c4c7;background:#fff;border-radius:4px;cursor:pointer}
-.glow-fo-pager button[aria-current=page]{background:#2c3e50;border-color:#2c3e50;color:#fff}
+/* Same look as the PAID Fundraisers "Enter Fundraiser ID" search. */
+.widget-content.glow-fo-search{background:transparent;padding:20px;clear:both}
+.glow-fo-search form{width:100%;margin:0 auto;text-align:center;display:block}
+.glow-fo-search .search-item{display:block;width:750px;max-width:100%;margin:0 auto 9px;text-align:left;font-size:14px;font-weight:400}
+.glow-fo-search input[type=search]{width:690px;max-width:calc(100% - 110px);height:30px;padding:4px 8px;border:1px solid #ccc;border-radius:0;box-sizing:border-box;vertical-align:middle}
+.glow-fo-search .glow-fo-submit,.glow-fo-search .glow-fo-clear{background-color:#405e6a!important;text-shadow:0 -1px 0 #22404c;background-image:none;box-shadow:inset 0 2px 4px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.05);color:#fff;padding:5px 33px;border-radius:3px;border:0;display:inline-block;height:30px;line-height:20px;vertical-align:middle;cursor:pointer;text-decoration:none;font-size:14px}
+.glow-fo-search .glow-fo-clear{padding:5px 18px;margin-left:4px;background-color:#8a9aa1!important}
+.glow-fo-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin:14px 0 0}
+.glow-fo-tools select{height:30px;padding:2px 8px}
+.glow-fo-tools .glow-fo-count{color:#50575e;font-size:13px}
+.glow-fo-pager{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin:14px 0}
+.glow-fo-pager button{min-width:34px;padding:5px 10px;border:1px solid #c3c4c7;background:#fff;border-radius:3px;cursor:pointer}
+.glow-fo-pager button[aria-current=page]{background:#405e6a;border-color:#405e6a;color:#fff}
 .glow-fo-pager button:disabled{opacity:.45;cursor:default}
 .glow-fo-pager span{padding:5px 4px}
 </style>
 <script id="glow-fo-table-tools-js">
 document.addEventListener('DOMContentLoaded', function () {
+	var params = new URLSearchParams(window.location.search);
 	var serverMarker = document.querySelector('[data-glow-fo-server-search]');
 	var topTables = Array.prototype.filter.call(document.querySelectorAll('table.table-bordered'), function (t) {
 		return !t.parentElement.closest('table');
 	});
-	var tables = topTables.filter(function (t) { return t.tHead && t.tBodies.length && t.tBodies[0].rows.length > 0; });
+	var tables = topTables.filter(function (t) { return t.tHead && t.tBodies.length && t.tBodies[0].rows.length >= 10; });
 	if (!serverMarker && !tables.length) { return; }
 
 	function el(tag, attrs, text) {
@@ -81,24 +88,40 @@ document.addEventListener('DOMContentLoaded', function () {
 		return n;
 	}
 
-	// Lists paged on the server: search on the server so every page is searched.
-	if (serverMarker) {
-		var params = new URLSearchParams(window.location.search);
-		var form = el('form', { method: 'get', 'class': 'glow-fo-tools', role: 'search' });
-		params.forEach(function (value, key) {
-			if (['fs', 'pg', 'paged'].indexOf(key) === -1) { form.appendChild(el('input', { type: 'hidden', name: key, value: value })); }
-		});
-		var input = el('input', { type: 'search', name: 'fs', id: 'glow-fo-search', placeholder: 'Search by fundraiser ID, name, school, email or rep', 'aria-label': 'Search fundraisers' });
-		input.value = serverMarker.getAttribute('data-glow-fo-server-search');
+	// The PAID Fundraisers style search box. It takes the place of an older "Enter Fundraiser ID"
+	// box on the same tab (that one only matched an exact ID); the separate Search tab is left alone.
+	var legacy = params.get('search') === 'true' ? null : document.querySelector('.widget-content.search-section');
+	function searchBox(anchor, idSuffix) {
+		var box = el('div', { 'class': 'widget-content search-section glow-fo-search' });
+		var form = el('form', { method: 'get', role: 'search' });
+		var input = el('input', { type: 'search', name: 'fs', id: 'glow-fo-search' + idSuffix, 'aria-label': 'Enter fundraiser ID or name', autocomplete: 'off' });
+		form.appendChild(el('label', { 'class': 'search-item', 'for': input.id }, 'Enter Fundraiser ID or Name:'));
 		form.appendChild(input);
-		form.appendChild(el('button', { type: 'submit', 'class': 'button' }, 'Search'));
-		if (input.value) {
-			params.delete('fs'); params.delete('pg'); params.delete('paged');
-			form.appendChild(el('a', { href: '?' + params.toString(), 'class': 'button' }, 'Clear'));
+		form.appendChild(document.createTextNode(' '));
+		form.appendChild(el('button', { type: 'submit', 'class': 'glow-fo-submit' }, 'Submit'));
+		box.appendChild(form);
+		if (legacy) {
+			legacy.parentNode.insertBefore(box, legacy);
+			legacy.hidden = true;
+			legacy = null;
+		} else {
+			anchor.parentNode.insertBefore(box, anchor);
 		}
-		// Above the list; with no matches the list may be missing, so fall back to the marker.
-		var anchor = topTables[0] || serverMarker;
-		anchor.parentNode.insertBefore(form, anchor);
+		return { box: box, form: form, input: input };
+	}
+
+	// Lists paged on the server: submit the search so every page is searched.
+	if (serverMarker) {
+		var s = searchBox(topTables[0] || serverMarker, '');
+		params.forEach(function (value, key) {
+			if (['fs', 'pg', 'paged'].indexOf(key) === -1) { s.form.appendChild(el('input', { type: 'hidden', name: key, value: value })); }
+		});
+		s.input.value = serverMarker.getAttribute('data-glow-fo-server-search');
+		if (s.input.value) {
+			var clear = new URLSearchParams(window.location.search);
+			clear.delete('fs'); clear.delete('pg'); clear.delete('paged');
+			s.form.appendChild(el('a', { href: '?' + clear.toString(), 'class': 'glow-fo-clear' }, 'Clear'));
+		}
 		return;
 	}
 
@@ -109,17 +132,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	} catch (e) {}
 
 	tables.forEach(function (table, index) {
-		var body = table.tBodies[0];
-		var rows = Array.prototype.slice.call(body.rows);
-		if (rows.length < 10) { return; }
+		var rows = Array.prototype.slice.call(table.tBodies[0].rows);
 		// Total rows stay visible under every page.
 		var isTotal = function (row) { return /^\s*(grand\s+)?total\b/i.test(row.textContent) || /\bTotal Fundraisers\b/.test(row.textContent); };
 		var data = rows.filter(function (r) { return !isTotal(r); });
 		var texts = data.map(function (r) { return r.textContent.replace(/\s+/g, ' ').toLowerCase(); });
 		var state = { page: 1, per: saved, term: '' };
 
+		var s = searchBox(table, '-' + index);
 		var tools = el('div', { 'class': 'glow-fo-tools' });
-		var search = el('input', { type: 'search', id: 'glow-fo-search-' + index, placeholder: 'Search this list', 'aria-label': 'Search this list' });
 		var per = el('select', { id: 'glow-fo-per-' + index, 'aria-label': 'Rows per page' });
 		[25, 50, 100, 0].forEach(function (n) {
 			var o = el('option', { value: String(n) }, n ? n + ' per page' : 'All');
@@ -127,9 +148,9 @@ document.addEventListener('DOMContentLoaded', function () {
 			per.appendChild(o);
 		});
 		var count = el('span', { 'class': 'glow-fo-count', 'aria-live': 'polite' });
-		tools.appendChild(search); tools.appendChild(per); tools.appendChild(count);
+		tools.appendChild(per); tools.appendChild(count);
+		s.box.appendChild(tools);
 		var pager = el('nav', { 'class': 'glow-fo-pager', 'aria-label': 'Pages' });
-		table.parentNode.insertBefore(tools, table);
 		table.parentNode.insertBefore(pager, table.nextSibling);
 
 		function render() {
@@ -150,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				var b = el('button', { type: 'button' }, label);
 				if (opts && opts.current) { b.setAttribute('aria-current', 'page'); }
 				if (opts && opts.disabled) { b.disabled = true; }
-				b.addEventListener('click', function () { state.page = page; render(); tools.scrollIntoView({ block: 'start' }); });
+				b.addEventListener('click', function () { state.page = page; render(); s.box.scrollIntoView({ block: 'start' }); });
 				pager.appendChild(b);
 			}
 			btn('‹ Previous', state.page - 1, { disabled: state.page === 1 });
@@ -164,7 +185,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 			btn('Next ›', state.page + 1, { disabled: state.page === pages });
 		}
-		search.addEventListener('input', function () { state.term = search.value.trim().toLowerCase(); state.page = 1; render(); });
+		function apply() { state.term = s.input.value.trim().toLowerCase(); state.page = 1; render(); }
+		// Filters as you type; Submit (or Enter) does the same, without reloading the page.
+		s.form.addEventListener('submit', function (e) { e.preventDefault(); apply(); });
+		s.input.addEventListener('input', apply);
 		per.addEventListener('change', function () {
 			state.per = parseInt(per.value, 10); state.page = 1;
 			try { localStorage.setItem('glowFoPerPage', String(state.per || 0)); } catch (e) {}
