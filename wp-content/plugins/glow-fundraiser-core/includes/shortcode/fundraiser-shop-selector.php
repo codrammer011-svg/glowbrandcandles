@@ -358,7 +358,18 @@ function glow_fc_remember_seller_from_profile() {
 	$seller = is_numeric( $query )
 		? get_user_by( 'id', (int) $query )
 		: ( get_user_by( 'login', $query ) ?: get_user_by( 'slug', $query ) );
-	if ( ! $seller || ! in_array( 'seller', (array) $seller->roles, true ) ) {
+	if ( ! $seller ) {
+		return;
+	}
+
+	// A fundraiser's own profile (/profile/{id}/): remember the fundraiser so checkout
+	// fills in the code and loads its sellers; the buyer then picks the seller.
+	if ( in_array( 'fundraiser', (array) $seller->roles, true ) ) {
+		glow_fc_remember_fundraiser_from_profile( $seller );
+		return;
+	}
+
+	if ( ! in_array( 'seller', (array) $seller->roles, true ) ) {
 		return;
 	}
 
@@ -373,6 +384,49 @@ function glow_fc_remember_seller_from_profile() {
 	}
 
 	glow_fc_store_fundraiser_session( $fid, $name );
+}
+
+/**
+ * Store a fundraiser (visited via its profile) for checkout. A seller already
+ * chosen for the same fundraiser is kept; a seller from a different fundraiser
+ * is cleared so it is not prefilled against the wrong group.
+ */
+function glow_fc_remember_fundraiser_from_profile( $fundraiser ) {
+	if ( '2' === (string) get_user_meta( $fundraiser->ID, 'user_action_status', true ) ) {
+		return; // inactive
+	}
+
+	$fid = (string) $fundraiser->ID;
+	if ( strlen( $fid ) !== 6 ) {
+		return;
+	}
+
+	$prev_fid    = '';
+	$prev_seller = '';
+	if ( function_exists( 'WC' ) && WC()->session ) {
+		$prev_fid    = (string) WC()->session->get( 'fridID' );
+		$prev_seller = (string) WC()->session->get( 'seller_name' );
+	}
+	if ( '' === $prev_fid && isset( $_COOKIE['fundraiserID'] ) ) {
+		$prev_fid = sanitize_text_field( $_COOKIE['fundraiserID'] );
+	}
+	if ( '' === $prev_seller && isset( $_COOKIE['seller_name'] ) ) {
+		$prev_seller = sanitize_text_field( $_COOKIE['seller_name'] );
+	}
+
+	if ( $prev_fid === $fid ) {
+		glow_fc_store_fundraiser_session( $fid, $prev_seller );
+		return;
+	}
+
+	if ( function_exists( 'WC' ) && WC()->session ) {
+		WC()->session->__unset( 'seller_name' );
+	}
+	if ( isset( $_COOKIE['seller_name'] ) && ! headers_sent() ) {
+		setcookie( 'seller_name', '', time() - HOUR_IN_SECONDS, COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN );
+		unset( $_COOKIE['seller_name'] );
+	}
+	glow_fc_store_fundraiser_session( $fid, '' );
 }
 
 // Prefill checkout fields from session
