@@ -229,9 +229,10 @@ if($u_id==205821){
              <td align="left" style="padding: 30px 30px;">
 			 <div class="text-left">
 				<address>
-							<strong>Glow Scented Candles:</strong><br>
-							4628 Industrial Street<br>
-							Rowlett, TX 75088<br>
+							<strong>Glow Brands LLC:</strong><br>
+							3702 Cavalier Drive<br>
+							Suite 100<br>
+							Garland TX 75042<br>
 							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							(972) 941-6874
@@ -2188,9 +2189,10 @@ if($u_id==205821){
              <td align="left" style="padding: 30px 30px;">
 			 <div class="text-left">
 				<address>
-							<strong>Glow Scented Candles:</strong><br>
-							4628 Industrial Street<br>
-							Rowlett, TX 75088<br>
+							<strong>Glow Brands LLC:</strong><br>
+							3702 Cavalier Drive<br>
+							Suite 100<br>
+							Garland TX 75042<br>
 							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>
 							contact@glowscentedcandles.com<br>
 							(972) 941-6874

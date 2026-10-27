@@ -347,8 +347,8 @@
              <td align="left" style="padding: 30px 30px;">
 			 <div class="text-left">
 				<address>
-							<strong>Glow Scented Candles:</strong><br>
-							3702 Cavalier Street<br>
+							<strong>Glow Brands LLC:</strong><br>
+							3702 Cavalier Drive<br>
 							Suite 100<br>
 							Garland TX 75042<br>
 							<?php echo esc_url( glow_dynamic_url_base('home') ); ?><br>

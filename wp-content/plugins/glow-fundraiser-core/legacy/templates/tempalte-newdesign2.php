@@ -570,7 +570,7 @@ Glow Scented Candles make it easy for you and your team to fundraise beyond your
 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-sp-12 ApColumn ">
 <div class="block contact-w ApHtml">
 <div class="block_content">
-<div><i class="fal fa-map-marker"></i> GLOW SCENTED CANDLES LLC 3702 Cavalier Street Suite 100 Garland, TX 75042</div>
+<div><i class="fal fa-map-marker"></i> GLOW BRANDS LLC 3702 Cavalier Drive Suite 100 Garland, TX 75042</div>
 <!--<div><i class="fal fa-headphones"></i><a href="tel:972.941.6874">972.941.6874</a></div>-->
 	<div><i class="fal fa-paper-plane"></i><a href="mailto:contact@glowscentedcandles.com"> contact@glowscentedcandles.com</a></div>
 </div>
