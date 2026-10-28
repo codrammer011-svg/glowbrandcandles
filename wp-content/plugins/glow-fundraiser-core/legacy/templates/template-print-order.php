@@ -402,6 +402,8 @@ if($seller_name[$i]==$s_name_meta)
 </div>
 	</div>
 	
+	<?php // The summary view never fills the seller list; count(null) is fatal on PHP 8.
+	if ( ! isset( $seller_name ) || ! is_array( $seller_name ) ) { $seller_name = array(); } ?>
 	<div class="totalSeller">
 	<span>Total Sellers: <?php echo count($seller_name); ?> </span>
 	</div>
