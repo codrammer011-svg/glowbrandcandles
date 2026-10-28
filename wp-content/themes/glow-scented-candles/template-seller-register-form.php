@@ -528,4 +528,19 @@ $uid = 'glow_sreg_' . wp_rand( 1000, 9999 );
 		})(jQuery);
 		</script>
 	<?php endif; ?>
+	<script type="text/javascript">
+	/*
+	 * The phone field is a plain text field named billing_phone. The User Registration
+	 * WooCommerce add-on strips everything but digits and "+" from any #billing_phone
+	 * on input, so detach only that handler and leave the field as normal text.
+	 */
+	jQuery(window).on('load', function () {
+		var $phone = jQuery('#<?php echo esc_js( $uid ); ?> #billing_phone');
+		var events = $phone.length ? jQuery._data($phone[0], 'events') : null;
+		if (!events || !events.input) return;
+		jQuery.each(events.input.slice(), function (i, h) {
+			if (String(h.handler).indexOf('0-9') !== -1) $phone.off('input', h.handler);
+		});
+	});
+	</script>
 </div>
