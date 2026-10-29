@@ -348,6 +348,7 @@ if($seller_name[$i]==$s_name_meta)
 		<?php 
 		$productName=array();
 		$productID=array();
+		$productItem=array();
 		foreach ( $items as $item_id => $item ) : 
 		$product       = $item->get_name(); 
 		$product_id       = $item->get_product_id(); 
@@ -356,6 +357,7 @@ if($seller_name[$i]==$s_name_meta)
 		{
 			$productName[]=$product;
 			$productID[]=$product_id;
+			$productItem[]=$item;
 		}
 		
 		endforeach; 
@@ -387,7 +389,7 @@ if($seller_name[$i]==$s_name_meta)
 		for($i=0;$i<count($productName);$i++) {
 			$total+= $productQty[$i];
 		?>
-		<p data-id="<?php echo $productID[$i]; ?>"><?php echo $productQty[$i].' X '.$productName[$i]; ?><?php echo glow_product_type_html( $productID[$i], 'display:block;font-size:9pt;line-height:11pt;color:#555;' ); ?></p>
+		<p data-id="<?php echo $productID[$i]; ?>"><?php echo $productQty[$i].' X '.$productName[$i]; ?><?php echo glow_product_type_html( $productItem[$i], 'display:block;font-size:9pt;line-height:11pt;color:#555;' ); ?></p>
 		<?php } ?>
 		<span class="border-line border-line-2"></span>
 	<h4>Total Items Sold: <?php echo $total; ?></h4>

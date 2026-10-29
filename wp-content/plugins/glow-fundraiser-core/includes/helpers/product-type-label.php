@@ -45,6 +45,10 @@ function glow_product_type_label( $product ) {
 
 	if ( $product instanceof WC_Order_Item_Product ) {
 		$product_id = $product->get_product_id();
+		// Orders from before the rename were saved as "Fresh Linen <br> Classic Candle" and already carry the type.
+		if ( $product_id && glow_product_type_normalize( $product->get_name() ) !== glow_product_type_normalize( get_the_title( $product_id ) ) ) {
+			return '';
+		}
 	} elseif ( $product instanceof WC_Product ) {
 		$product_id = $product->get_parent_id() ? $product->get_parent_id() : $product->get_id();
 	} else {
@@ -74,6 +78,11 @@ function glow_product_type_label( $product ) {
 	}
 
 	return $cache[ $product_id ] = $label;
+}
+
+function glow_product_type_normalize( $name ) {
+	$name = html_entity_decode( wp_strip_all_tags( str_ireplace( array( '<br>', '<br/>', '<br />' ), ' ', (string) $name ) ), ENT_QUOTES, 'UTF-8' );
+	return strtolower( trim( preg_replace( '/\s+/u', ' ', $name ) ) );
 }
 
 /**
