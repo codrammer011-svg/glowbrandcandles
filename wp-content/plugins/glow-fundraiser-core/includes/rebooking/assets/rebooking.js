@@ -37,7 +37,9 @@
         try { result = await response.json(); } catch (_) { throw new Error('We could not reach GLOW. Please try again.'); }
         if (!response.ok || !result.success) {
             if (response.status === 403) bootstrapPromise = null;
-            throw new Error(result.data && result.data.message || 'Something went wrong. Please try again.');
+            const error = new Error(result.data && result.data.message || 'Something went wrong. Please try again.');
+            error.field = result.data && result.data.field || '';
+            throw error;
         }
         return result.data;
     }
@@ -60,6 +62,31 @@
         const node = root.querySelector('[data-grb-status]');
         node.textContent = message;
         node.classList.toggle('is-error', Boolean(error));
+        node.setAttribute('role', error ? 'alert' : 'status');
+    }
+
+    const FIELD_MESSAGES = { password: 'Incorrect password. Please try again, or use "Forgot your password?" below.' };
+
+    function clearFieldError(input) {
+        input.removeAttribute('aria-invalid');
+        const note = input.parentNode.querySelector('.grb-field-error');
+        if (note) note.remove();
+    }
+
+    function fieldError(form, name) {
+        const input = form.querySelector('input[name="' + name + '"]');
+        if (!input || !FIELD_MESSAGES[name]) return;
+        clearFieldError(input);
+        const note = document.createElement('span');
+        note.className = 'grb-field-error';
+        note.id = 'grb-error-' + name + '-' + Math.random().toString(36).slice(2, 8);
+        note.textContent = FIELD_MESSAGES[name];
+        input.after(note);
+        input.setAttribute('aria-invalid', 'true');
+        input.setAttribute('aria-describedby', note.id);
+        input.addEventListener('input', () => clearFieldError(input), { once: true });
+        input.focus();
+        input.select();
     }
 
     function initialize(root) {
@@ -104,6 +131,9 @@
                 }
             } catch (error) {
                 status(root, error.message, true);
+                // A field error is shown next to its input; otherwise bring the message into view.
+                if (error.field) fieldError(form, error.field);
+                else root.querySelector('[data-grb-status]').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } finally {
                 state.busy = false;
                 form.querySelector('button[type=submit]').disabled = false;
@@ -137,6 +167,7 @@
             if (state.busy) return;
             rebook.reset();
             login.reset();
+            root.querySelectorAll('input[aria-invalid]').forEach(clearFieldError);
             remember('');
             status(root, '');
             showState(root, 'lookup');

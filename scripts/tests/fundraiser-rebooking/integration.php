@@ -247,7 +247,7 @@ try {
     $login_cookies = array();
     $login_nonce = http_call($url, '/ajax', array('operation' => 'bootstrap'), $login_cookies, $url)['body']['data']['nonce'];
     $bad_login = http_call($url, '/ajax', array('operation' => 'login', 'nonce' => $login_nonce, 'email' => 'active@example.invalid', 'password' => 'wrong'), $login_cookies, $url);
-    expect($bad_login['status'] === 401 && $bad_login['body']['data']['message'] === 'Please check your email and password.', 'inline login rejects wrong password');
+    expect($bad_login['status'] === 401 && $bad_login['body']['data']['message'] === 'Your email or password is incorrect.', 'inline login rejects wrong password');
     $good_login = http_call($url, '/ajax', array('operation' => 'login', 'nonce' => $login_nonce, 'email' => 'active@example.invalid', 'password' => 'Test! Same password 123'), $login_cookies, $url);
     expect($good_login['status'] === 200 && !empty($good_login['body']['data']['redirect']), 'inline login succeeds and returns a redirect');
     expect(http_call($url, '/whoami', null, $login_cookies)['body']['data']['id'] === $active, 'inline login signs the browser in');
