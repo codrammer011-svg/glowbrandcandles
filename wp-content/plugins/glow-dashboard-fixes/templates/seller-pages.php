@@ -392,7 +392,11 @@ function glow_sp_seller_orders( $sid ) {
 			$qty = 0; $items = array();
 			foreach ( $order->get_items() as $item ) {
 				$qty += (int) $item->get_quantity();
-				$items[] = $item->get_quantity() . ' × ' . trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) );
+				$type    = function_exists( 'glow_product_type_label' ) ? glow_product_type_label( $item ) : '';
+				$items[] = array(
+					'name' => $item->get_quantity() . ' × ' . trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) ),
+					'type' => $type,
+				);
 			}
 			$type = $order->get_meta( 'wc_order_type' );
 			$rate = ( $qty > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1) ) ? 50 : 40;
@@ -446,7 +450,7 @@ function glow_sp_render_report( $sid ) {
 				<td>#<?php echo (int) $r['id']; ?></td>
 				<td><?php echo esc_html( $r['date'] ); ?></td>
 				<td><?php echo esc_html( $r['customer'] ? $r['customer'] : 'A supporter' ); ?></td>
-				<td><?php echo (int) $r['qty']; ?><div class="glow-sp-items"><?php echo esc_html( implode( ', ', array_slice( $r['items'], 0, 3 ) ) ); echo count( $r['items'] ) > 3 ? ' …' : ''; ?></div></td>
+				<td><?php echo (int) $r['qty']; ?><div class="glow-sp-items"><?php foreach ( array_slice( $r['items'], 0, 3 ) as $line ) : ?><div><?php echo esc_html( $line['name'] ); ?><?php if ( $line['type'] !== '' ) : ?><br><small><?php echo esc_html( $line['type'] ); ?></small><?php endif; ?></div><?php endforeach; ?><?php echo count( $r['items'] ) > 3 ? '…' : ''; ?></div></td>
 				<td><?php echo esc_html( $r['type'] ); ?></td>
 				<td><span class="glow-sp-tag is-<?php echo esc_attr( $r['raw'] ); ?>"><?php echo esc_html( $r['status'] ); ?></span></td>
 				<td style="text-align:right">$<?php echo esc_html( number_format( $r['gross'], 2 ) ); ?></td>

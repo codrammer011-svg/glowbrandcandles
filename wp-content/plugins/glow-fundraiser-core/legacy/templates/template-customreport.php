@@ -359,7 +359,7 @@ if($mode==1)
                                             $item_data = $item_values->get_data();  ?>
 
                                     <div class="fundraiser-order-details-row fr-body line-item-match">
-                                        <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?></div>
+                                        <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?><?php echo glow_product_type_html( $item_values ); ?></div>
                                         <div class="fundraiser-order-details-col product-quantity"><?php echo $item_data['quantity']; ?></div>
                                         <div class="fundraiser-order-details-col product-price show">$<span><?php echo $item_data['subtotal'] = number_format( $item_data['subtotal'], 2);  ?></span>
                                         </div>
@@ -489,7 +489,7 @@ if($mode==1)
                                             $item_data = $item_values->get_data();  ?>
 
                                     <div class="fundraiser-order-details-row fr-body line-item-match">
-                                        <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?></div>
+                                        <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?><?php echo glow_product_type_html( $item_values ); ?></div>
                                         <div class="fundraiser-order-details-col product-quantity"><?php echo $item_data['quantity']; ?></div>
                                         <div class="fundraiser-order-details-col product-price show">$<span><?php echo $item_data['subtotal'] = number_format( $item_data['subtotal'], 2);  ?></span>
                                         </div>
@@ -664,7 +664,7 @@ if($mode==1)
                                     <?php foreach ($order->get_items() as $item_key => $item_values): 
                                             $item_data = $item_values->get_data();  ?>
                                     <div class="fundraiser-order-details-row fr-body">
-                                       <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?></div>
+                                       <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?><?php echo glow_product_type_html( $item_values ); ?></div>
                                        <div class="fundraiser-order-details-col product-quantity"><?php echo $item_data['quantity']; ?></div>
                                        <div class="fundraiser-order-details-col product-price show">$<span><?php echo $item_data['subtotal']=number_format( $item_data['subtotal'], 2); ?></span></div>
                                     </div>                                    
@@ -771,7 +771,7 @@ if($mode==1)
                                     <?php foreach ($order->get_items() as $item_key => $item_values): 
                                             $item_data = $item_values->get_data();  ?>
                                     <div class="fundraiser-order-details-row fr-body">
-                                       <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?></div>
+                                       <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?><?php echo glow_product_type_html( $item_values ); ?></div>
                                        <div class="fundraiser-order-details-col product-quantity"><?php echo $item_data['quantity']; ?></div>
                                        <div class="fundraiser-order-details-col product-price show">$<span><?php echo $item_data['subtotal']=number_format( $item_data['subtotal'], 2); ?></span></div>
                                     </div>                                    
@@ -1047,7 +1047,7 @@ if($mode==1)
 
 										 ?>
                                     <div class="fundraiser-order-details-row fr-body line-item-match">
-                                        <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?></div>
+                                        <div class="fundraiser-order-details-col product-name"><?php echo $item_data['name']; ?><?php echo glow_product_type_html( $item_values ); ?></div>
                                         <div class="fundraiser-order-details-col product-quantity"><?php echo $item_data['quantity']; ?>
                                         </div>
                                         <div class="fundraiser-order-details-col product-seller"><?php echo wc_get_order_item_meta($item_id, "_wdm_seller_display", true);  ?></div>
