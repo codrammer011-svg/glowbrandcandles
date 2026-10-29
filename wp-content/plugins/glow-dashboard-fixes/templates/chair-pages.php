@@ -382,7 +382,8 @@ add_action( 'template_redirect', function () {
 				$q = isset( $items[ $item_id ] ) ? absint( $items[ $item_id ] ) : 0;
 				if ( $q > 0 ) {
 					$issue   = isset( $_POST['claim_issue'][ $item_id ] ) ? sanitize_text_field( wp_unslash( $_POST['claim_issue'][ $item_id ] ) ) : 'missing';
-					$lines[] = sprintf( '%d x %s (%s)', min( $q, $item->get_quantity() ), wp_strip_all_tags( $item->get_name() ), $issue );
+					$type    = function_exists( 'glow_product_type_label' ) ? glow_product_type_label( $item ) : '';
+					$lines[] = sprintf( '%d x %s%s (%s)', min( $q, $item->get_quantity() ), wp_strip_all_tags( $item->get_name() ), $type !== '' ? ' - ' . $type : '', $issue );
 				}
 			}
 			$notes = isset( $_POST['claim_notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['claim_notes'] ) ) : '';
@@ -463,7 +464,7 @@ add_action( 'template_redirect', function () {
 			<tbody>
 			<?php foreach ( $order->get_items() as $item_id => $item ) : ?>
 				<tr>
-					<td><?php echo esc_html( trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) ) ); ?></td>
+					<td><?php echo esc_html( trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) ) ); ?><?php echo function_exists( 'glow_product_type_html' ) ? glow_product_type_html( $item ) : ''; ?></td>
 					<td><?php echo (int) $item->get_quantity(); ?></td>
 					<td><input type="number" name="claim_qty[<?php echo (int) $item_id; ?>]" min="0" max="<?php echo (int) $item->get_quantity(); ?>" value="0" <?php disabled( $saved ); ?>></td>
 					<td><select name="claim_issue[<?php echo (int) $item_id; ?>]" <?php disabled( $saved ); ?>><option value="missing">Missing</option><option value="damaged">Damaged</option><option value="wrong item">Wrong item</option></select></td>

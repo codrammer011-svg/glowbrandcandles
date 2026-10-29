@@ -100,6 +100,31 @@ add_action( 'woocommerce_before_order_itemmeta', function ( $item_id, $item ) {
 	}
 }, 5, 2 );
 
+/*
+ * Order emails, WooCommerce's and the legacy custom ones (both fire woocommerce_order_item_meta_start).
+ * The same hook runs on the customer's My Account / thank-you order table, which stays unchanged.
+ */
+add_action( 'woocommerce_order_details_before_order_table_items', function () {
+	$GLOBALS['glow_in_storefront_order_table'] = true;
+} );
+add_action( 'woocommerce_order_details_after_order_table_items', function () {
+	$GLOBALS['glow_in_storefront_order_table'] = false;
+} );
+add_action( 'woocommerce_order_item_meta_start', function ( $item_id, $item, $order = null, $plain_text = false ) {
+	if ( ! empty( $GLOBALS['glow_in_storefront_order_table'] ) || ! $item instanceof WC_Order_Item_Product ) {
+		return;
+	}
+	$label = glow_product_type_label( $item );
+	if ( $label === '' ) {
+		return;
+	}
+	if ( $plain_text ) {
+		echo "\n" . esc_html( $label ); // phpcs:ignore WordPress.Security.EscapeOutput
+	} else {
+		echo '<br><small style="color:#666;">' . esc_html( $label ) . '</small>';
+	}
+}, 5, 4 );
+
 /* PDF invoice and packing slip. */
 add_action( 'wpo_wcpdf_before_item_meta', function ( $document_type, $item ) {
 	$order_item = isset( $item['item'] ) ? $item['item'] : null;

@@ -392,7 +392,8 @@ function glow_sp_seller_orders( $sid ) {
 			$qty = 0; $items = array();
 			foreach ( $order->get_items() as $item ) {
 				$qty += (int) $item->get_quantity();
-				$items[] = $item->get_quantity() . ' × ' . trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) );
+				$type    = function_exists( 'glow_product_type_label' ) ? glow_product_type_label( $item ) : '';
+				$items[] = $item->get_quantity() . ' × ' . trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) ) . ( $type !== '' ? ' (' . $type . ')' : '' );
 			}
 			$type = $order->get_meta( 'wc_order_type' );
 			$rate = ( $qty > (GLOW_BROCHURE_PROFIT_MIN_ITEMS - 1) ) ? 50 : 40;
