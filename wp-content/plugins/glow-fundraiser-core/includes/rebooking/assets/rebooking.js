@@ -73,6 +73,23 @@
         if (note) note.remove();
     }
 
+    /** Shows a form-level error as an alert just above the form's submit button. */
+    function formError(form, message) {
+        clearFormError(form);
+        // Not a span/div/p: the Elementor popup's form styles strip the border, background and padding from those.
+        const note = document.createElement('output');
+        note.className = 'grb-form-error';
+        note.setAttribute('role', 'alert');
+        note.textContent = message;
+        const button = form.querySelector('button[type=submit]');
+        button.before(note);
+        note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function clearFormError(form) {
+        form.querySelectorAll('.grb-form-error').forEach(note => note.remove());
+    }
+
     /** Shows the error as an alert right under its input; returns false when the field is not on the form. */
     function fieldError(form, name, message) {
         const input = form.querySelector('input[name="' + name + '"]');
@@ -115,6 +132,7 @@
             state.busy = true;
             form.querySelector('button[type=submit]').disabled = true;
             root.setAttribute('aria-busy', 'true');
+            clearFormError(form);
             status(root, pending[operation]);
             try {
                 const boot = await bootstrap();
@@ -138,13 +156,9 @@
                     return;
                 }
             } catch (error) {
-                // A field error is shown as an alert under its input; anything else goes in the status alert.
-                if (error.field && fieldError(form, error.field, error.message)) {
-                    status(root, '');
-                } else {
-                    status(root, error.message, true);
-                    root.querySelector('[data-grb-status]').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+                // A field error is shown under its input; anything else just above the submit button.
+                status(root, '');
+                if (!error.field || !fieldError(form, error.field, error.message)) formError(form, error.message);
             } finally {
                 state.busy = false;
                 form.querySelector('button[type=submit]').disabled = false;
@@ -179,6 +193,7 @@
             rebook.reset();
             login.reset();
             root.querySelectorAll('input[aria-invalid]').forEach(clearFieldError);
+            root.querySelectorAll('form').forEach(clearFormError);
             remember('');
             status(root, '');
             showState(root, 'lookup');
