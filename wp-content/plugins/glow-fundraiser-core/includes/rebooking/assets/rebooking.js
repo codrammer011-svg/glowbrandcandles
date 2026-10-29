@@ -65,7 +65,7 @@
         node.setAttribute('role', error ? 'alert' : 'status');
     }
 
-    const FIELD_MESSAGES = { password: 'Incorrect password. Please try again, or use "Forgot your password?" below.' };
+    const FIELD_HINTS = { password: 'Please try again, or use "Forgot your password?" below.' };
 
     function clearFieldError(input) {
         input.removeAttribute('aria-invalid');
@@ -73,20 +73,27 @@
         if (note) note.remove();
     }
 
-    function fieldError(form, name) {
+    /** Shows the error as an alert right under its input; returns false when the field is not on the form. */
+    function fieldError(form, name, message) {
         const input = form.querySelector('input[name="' + name + '"]');
-        if (!input || !FIELD_MESSAGES[name]) return;
+        if (!input || !FIELD_HINTS[name]) return false;
         clearFieldError(input);
         const note = document.createElement('span');
         note.className = 'grb-field-error';
         note.id = 'grb-error-' + name + '-' + Math.random().toString(36).slice(2, 8);
-        note.textContent = FIELD_MESSAGES[name];
+        note.setAttribute('role', 'alert');
+        const title = document.createElement('strong');
+        title.textContent = message;
+        const hint = document.createElement('span');
+        hint.textContent = FIELD_HINTS[name];
+        note.append(title, hint);
         input.after(note);
         input.setAttribute('aria-invalid', 'true');
         input.setAttribute('aria-describedby', note.id);
         input.addEventListener('input', () => clearFieldError(input), { once: true });
         input.focus();
         input.select();
+        return true;
     }
 
     function initialize(root) {
@@ -130,10 +137,13 @@
                     return;
                 }
             } catch (error) {
-                status(root, error.message, true);
-                // A field error is shown next to its input; otherwise bring the message into view.
-                if (error.field) fieldError(form, error.field);
-                else root.querySelector('[data-grb-status]').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                // A field error is shown as an alert under its input; anything else goes in the status alert.
+                if (error.field && fieldError(form, error.field, error.message)) {
+                    status(root, '');
+                } else {
+                    status(root, error.message, true);
+                    root.querySelector('[data-grb-status]').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             } finally {
                 state.busy = false;
                 form.querySelector('button[type=submit]').disabled = false;
