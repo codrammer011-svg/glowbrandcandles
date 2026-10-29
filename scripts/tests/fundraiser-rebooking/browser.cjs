@@ -48,10 +48,13 @@ const [url, start, end, output] = process.argv.slice(2);
         await form.locator('[name=end_date]').fill(end);
         await form.locator('[name=confirm]').check();
         await form.locator('button[type=submit]').click();
-        await page.getByText('Please check your email and password.', { exact: true }).waitFor();
+        await page.getByText('Your email or password is incorrect.', { exact: true }).waitFor();
         assert.equal(page.url(), url + '/fundraiser-register/');
+        assert.equal(await form.locator('[name=password]').getAttribute('aria-invalid'), 'true');
+        await form.locator('.grb-field-error').waitFor();
         console.log('PASS: invalid password leaves user in popup with error');
         await form.locator('[name=password]').fill('Test! Same password 123');
+        assert.equal(await form.locator('.grb-field-error').count(), 0);
         await page.screenshot({ path: path.join(output, 'rebook-desktop.png'), fullPage: true });
 
         const mobile = await browser.newContext({ viewport: { width: 375, height: 812 }, isMobile: true });

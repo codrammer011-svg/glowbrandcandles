@@ -2,6 +2,8 @@
 defined('ABSPATH') || exit;
 
 final class Glow_FC_Rebooking {
+    const BAD_LOGIN = 'Your email or password is incorrect.';
+
     public static function boot() {
         add_shortcode('glow_fundraiser_rebook_gate', array(__CLASS__, 'gate'));
         add_shortcode('glow_book_next_year', array(__CLASS__, 'dashboard'));
@@ -68,7 +70,7 @@ final class Glow_FC_Rebooking {
                 self::rate_limit('password', 10);
                 $email = sanitize_email(self::input('email'));
                 if (!is_email($email)) {
-                    self::fail('Please check your email and password.', 401);
+                    self::fail(self::BAD_LOGIN, 401);
                 }
                 self::rate_limit('account:' . strtolower($email), 8, false);
                 // wp_signon runs the normal authenticate filters (User Registration approval, archived campaigns).
@@ -76,7 +78,9 @@ final class Glow_FC_Rebooking {
                 if (is_wp_error($user)) {
                     $code = $user->get_error_code();
                     $known = in_array($code, array('invalid_email', 'invalid_username', 'incorrect_password', 'empty_password', 'empty_username'), true);
-                    self::fail($known ? 'Please check your email and password.' : wp_strip_all_tags($user->get_error_message()), 401);
+                    // The lookup step already confirmed the email, so a password error points at the password field.
+                    $field = in_array($code, array('incorrect_password', 'empty_password'), true) ? 'password' : '';
+                    self::fail($known ? self::BAD_LOGIN : wp_strip_all_tags($user->get_error_message()), 401, $field);
                 }
                 $to = apply_filters('login_redirect', home_url('/fundraiser-dashboard/'), '', $user);
                 wp_send_json_success(array('redirect' => wp_validate_redirect($to, home_url('/fundraiser-dashboard/'))));
@@ -106,14 +110,15 @@ final class Glow_FC_Rebooking {
                 self::rate_limit('password', 10);
                 $email = sanitize_email(self::input('email'));
                 if (!is_email($email)) {
-                    self::fail('Please check your email and password.', 401);
+                    self::fail(self::BAD_LOGIN, 401);
                 }
                 self::rate_limit('account:' . strtolower($email), 8, false);
                 $password = self::input('password');
-                $user = $password !== '' ? wp_authenticate($email, $password) : new WP_Error('empty');
+                $user = $password !== '' ? wp_authenticate($email, $password) : new WP_Error('empty_password');
                 unset($password);
                 if (is_wp_error($user) || !Glow_FC_Rebooking_Campaigns::is_fundraiser($user)) {
-                    self::fail('Please check your email and password.', 401);
+                    $field = is_wp_error($user) && in_array($user->get_error_code(), array('incorrect_password', 'empty_password'), true) ? 'password' : '';
+                    self::fail(self::BAD_LOGIN, 401, $field);
                 }
                 // A lost response / repeated request with the original email must not create another campaign.
                 if (!Glow_FC_Rebooking_Campaigns::is_closed($user->ID)) {
@@ -160,8 +165,9 @@ final class Glow_FC_Rebooking {
         return isset($_POST[$key]) && is_string($_POST[$key]) ? wp_unslash($_POST[$key]) : '';
     }
 
-    private static function fail($message, $status = 400) {
-        wp_send_json_error(array('message' => $message), $status);
+    /** $field names the form input the error belongs to, so the popup can mark it. */
+    private static function fail($message, $status = 400, $field = '') {
+        wp_send_json_error($field !== '' ? array('message' => $message, 'field' => $field) : array('message' => $message), $status);
     }
 
     /** DB advisory lock keeps rate counters atomic even without a persistent object cache. */
