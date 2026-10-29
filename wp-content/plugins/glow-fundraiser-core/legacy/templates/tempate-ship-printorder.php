@@ -533,7 +533,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 					$prID = $item_data['product_id'];
 					$prName = $item_data['name'];
 					$quanty = $item_data['quantity'];
-					echo '<p id='.$prID.' style="margin:5px 0;font-size:11pt;line-height:13pt;" class="productName '.$countItem.'" ><span class="pName"> <span class="p-name">'.$quanty.' '.$prName.'</span> <i class="fa fa-edit"></i>'.glow_product_type_html( $item_values, 'display:block;font-size:9pt;line-height:11pt;color:#555;' ).'</span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
+					echo '<p id='.$prID.' style="margin:5px 0;font-size:11pt;line-height:13pt;" class="productName '.$countItem.'" ><span class="pName"> <span class="p-name">'.$quanty.' '.$prName.'</span> <i class="fa fa-edit"></i>'.glow_product_type_html( $item_values, 'display:block;' ).'</span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
 				} 
 	
 			endforeach; 
@@ -777,7 +777,7 @@ if ( in_array( 'administrator', (array) $user->roles ) )
 		$prID = $item_data['product_id'];
 		$prName = $item_data['name'];
 		$quanty = $item_data['quantity'];
-		echo '<p id='.$prID.' class="productName '.$countItem.'" ><span class="pName"> <span class="p-name">'.$quanty.' '.$prName.'</span> <i class="fa fa-edit"></i>'.glow_product_type_html( $item_values, 'display:block;font-size:9pt;line-height:11pt;color:#555;' ).'</span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
+		echo '<p id='.$prID.' class="productName '.$countItem.'" ><span class="pName"> <span class="p-name">'.$quanty.' '.$prName.'</span> <i class="fa fa-edit"></i>'.glow_product_type_html( $item_values, 'display:block;' ).'</span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
 	} 
 	if(($countItem < $itmCount[$s] && $countItem==8) || ($countItem < $itmCount[$s] && $countItem==16 ) || ($countItem < $itmCount[$s] && $countItem==24) || ($countItem < $itmCount[$s] && $countItem==32) || ($countItem < $itmCount[$s] && $countItem==40) || ($countItem < $itmCount[$s] && $countItem==48) || ($countItem < $itmCount[$s] && $countItem==56) || ($countItem < $itmCount[$s] && $countItem==64) || ($countItem < $itmCount[$s] && $countItem==72) || ($countItem < $itmCount[$s] && $countItem==80) || ($countItem < $itmCount[$s] && $countItem==88) || ($countItem < $itmCount[$s] && $countItem==96) || ($countItem < $itmCount[$s] && $countItem==104) || ($countItem < $itmCount[$s] && $countItem==112) || ($countItem < $itmCount[$s] && $countItem==120) || ($countItem < $itmCount[$s] && $countItem==128) || ($countItem < $itmCount[$s] && $countItem==136) || ($countItem < $itmCount[$s] && $countItem==144) || ($countItem < $itmCount[$s] && $countItem==152))
 	{
