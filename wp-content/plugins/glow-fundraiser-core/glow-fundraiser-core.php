@@ -45,6 +45,11 @@ require_once GLOW_FC_DIR . 'includes/shortcode/fundraiser-shop-selector.php';
 require_once GLOW_FC_DIR . 'includes/helpers/image-helpers.php';
 
 /**
+ * Product type (Classic Candles, Room Sprays...) under item names in admin, PDFs and prints.
+ */
+require_once GLOW_FC_DIR . 'includes/helpers/product-type-label.php';
+
+/**
  * Register the bundled legacy page templates in the page "Template" dropdown
  * (they live in the plugin, not the active theme, so WP won't list them otherwise).
  */

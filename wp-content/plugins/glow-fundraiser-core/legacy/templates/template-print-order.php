@@ -206,7 +206,7 @@ if($seller_name[$query_val]==$s_name_meta)
 	$sku           = '';
 	$purchase_note = '';
 	$image         = '';
-	echo '<p>'.wp_kses_post( apply_filters( 'woocommerce_email_order_item_quantity', $item->get_quantity(), $item ) ).' '. wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) ).'</p>'; 
+	echo '<p>'.wp_kses_post( apply_filters( 'woocommerce_email_order_item_quantity', $item->get_quantity(), $item ) ).' '. wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) ).glow_product_type_html( $item, 'display:block;font-size:9pt;line-height:11pt;color:#555;' ).'</p>'; 
 	$count+=$item->get_quantity();
 } ?>
 	<?php endforeach; ?>
@@ -287,7 +287,7 @@ if($seller_name[$i]==$s_name_meta)
 	$sku           = '';
 	$purchase_note = '';
 	$image         = '';
-	echo '<p class="productName"><span class="pName"> <span class="p-name">'.wp_kses_post( apply_filters( 'woocommerce_email_order_item_quantity', $item->get_quantity(), $item ) ).' '. wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) ).'</span> <i class="fa fa-edit"></i></span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
+	echo '<p class="productName"><span class="pName"> <span class="p-name">'.wp_kses_post( apply_filters( 'woocommerce_email_order_item_quantity', $item->get_quantity(), $item ) ).' '. wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) ).'</span> <i class="fa fa-edit"></i>'.glow_product_type_html( $item, 'display:block;font-size:9pt;line-height:11pt;color:#555;' ).'</span> <span class="editName"><input type="text" class="edit"> <i class="fa fa-check"></i></span></p>'; 
 	$count+=$item->get_quantity();
 	if(($countItem < $itmCount[$i] && $countItem==8) || ($countItem < $itmCount[$i] && $countItem==16 ) || ($countItem < $itmCount[$i] && $countItem==24) || ($countItem < $itmCount[$i] && $countItem==32) || ($countItem < $itmCount[$i] && $countItem==40) || ($countItem < $itmCount[$i] && $countItem==48) || ($countItem < $itmCount[$i] && $countItem==56) || ($countItem < $itmCount[$i] && $countItem==64) || ($countItem < $itmCount[$i] && $countItem==72) || ($countItem < $itmCount[$i] && $countItem==80) || ($countItem < $itmCount[$i] && $countItem==88) || ($countItem < $itmCount[$i] && $countItem==96) || ($countItem < $itmCount[$i] && $countItem==104) || ($countItem < $itmCount[$i] && $countItem==112) || ($countItem < $itmCount[$i] && $countItem==120) || ($countItem < $itmCount[$i] && $countItem==128) || ($countItem < $itmCount[$i] && $countItem==136) || ($countItem < $itmCount[$i] && $countItem==144) || ($countItem < $itmCount[$i] && $countItem==152))
 	{
@@ -351,7 +351,8 @@ if($seller_name[$i]==$s_name_meta)
 		foreach ( $items as $item_id => $item ) : 
 		$product       = $item->get_name(); 
 		$product_id       = $item->get_product_id(); 
-		if(!in_array($product,$productName)) 
+		// Group by product, not name: several products share a scent name (candle, spray, melts).
+		if(!in_array($product_id,$productID)) 
 		{
 			$productName[]=$product;
 			$productID[]=$product_id;
@@ -364,9 +365,8 @@ if($seller_name[$i]==$s_name_meta)
 		{
 			$qtyProduct=0;
 			foreach ( $items as $item_id => $item ) : 
-			$product       = $item->get_name();
 			$pQty=$item->get_quantity();			
-			if($product ==$productName[$i])
+			if($item->get_product_id() ==$productID[$i])
 			{
 				$qtyProduct+=$pQty;
 			}
@@ -387,7 +387,7 @@ if($seller_name[$i]==$s_name_meta)
 		for($i=0;$i<count($productName);$i++) {
 			$total+= $productQty[$i];
 		?>
-		<p data-id="<?php echo $productID[$i]; ?>"><?php echo $productQty[$i].' X '.$productName[$i]; ?></p>
+		<p data-id="<?php echo $productID[$i]; ?>"><?php echo $productQty[$i].' X '.$productName[$i]; ?><?php echo glow_product_type_html( $productID[$i], 'display:block;font-size:9pt;line-height:11pt;color:#555;' ); ?></p>
 		<?php } ?>
 		<span class="border-line border-line-2"></span>
 	<h4>Total Items Sold: <?php echo $total; ?></h4>
