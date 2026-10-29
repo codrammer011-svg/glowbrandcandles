@@ -383,7 +383,7 @@ add_action( 'template_redirect', function () {
 				if ( $q > 0 ) {
 					$issue   = isset( $_POST['claim_issue'][ $item_id ] ) ? sanitize_text_field( wp_unslash( $_POST['claim_issue'][ $item_id ] ) ) : 'missing';
 					$type    = function_exists( 'glow_product_type_label' ) ? glow_product_type_label( $item ) : '';
-					$lines[] = sprintf( '%d x %s%s (%s)', min( $q, $item->get_quantity() ), wp_strip_all_tags( $item->get_name() ), $type !== '' ? ' - ' . $type : '', $issue );
+					$lines[] = sprintf( '%d x %s (%s)%s', min( $q, $item->get_quantity() ), wp_strip_all_tags( $item->get_name() ), $issue, $type !== '' ? "\n   " . $type : '' );
 				}
 			}
 			$notes = isset( $_POST['claim_notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['claim_notes'] ) ) : '';
