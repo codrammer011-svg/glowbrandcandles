@@ -78,7 +78,8 @@
         const input = form.querySelector('input[name="' + name + '"]');
         if (!input || !FIELD_HINTS[name]) return false;
         clearFieldError(input);
-        const note = document.createElement('span');
+        // Not a span/div/p: the Elementor popup's form styles strip the border, background and padding from those.
+        const note = document.createElement('output');
         note.className = 'grb-field-error';
         note.id = 'grb-error-' + name + '-' + Math.random().toString(36).slice(2, 8);
         note.setAttribute('role', 'alert');
