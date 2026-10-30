@@ -55,6 +55,11 @@ require_once GLOW_FC_DIR . 'includes/helpers/product-type-label.php';
 require_once GLOW_FC_DIR . 'includes/helpers/fundraiser-rep-cc.php';
 
 /**
+ * ShipStation item names show the product type on a second line.
+ */
+require_once GLOW_FC_DIR . 'includes/shipping/shipstation-product-type.php';
+
+/**
  * Register the bundled legacy page templates in the page "Template" dropdown
  * (they live in the plugin, not the active theme, so WP won't list them otherwise).
  */
