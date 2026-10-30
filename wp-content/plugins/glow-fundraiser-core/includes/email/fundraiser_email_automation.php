@@ -438,7 +438,7 @@ function func_mail_before_oneday_campaign_start_date($id, $email, $start_date, $
 <?php
         $body= ob_get_clean();
         $m_body=stripslashes($body);
-        $headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
+        $headers = array_merge(array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL), glow_fundraiser_rep_cc_headers($u_id));
         if(!empty($multiple_recipients))
         {
             if (wp_mail($multiple_recipients, $subject, $m_body, $headers)) 
@@ -751,7 +751,7 @@ The GLOW Team</strong><br>
     <?php 
     $body= ob_get_clean();
     $m_body=stripslashes($body);
-    $headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
+    $headers = array_merge(array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL), glow_fundraiser_rep_cc_headers($u_id));
         if(!empty($multiple_recipients))
         {
             if (wp_mail($multiple_recipients, $subject, $m_body, $headers)) 
@@ -981,7 +981,7 @@ function func_mail_after_fivetdays_campaign_start_date($id, $email, $start_date,
     <?php 
     $body= ob_get_clean();
     $m_body=stripslashes($body);
-    $headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
+    $headers = array_merge(array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL), glow_fundraiser_rep_cc_headers($u_id));
         if(!empty($multiple_recipients))
         {
             if (wp_mail($multiple_recipients, $subject, $m_body, $headers)) 
@@ -1245,7 +1245,7 @@ function func_mail_before_fivedays_campaign_end_date($id, $email, $end_date, $di
     <?php 
     $body= ob_get_clean();
     $m_body=stripslashes($body);
-    $headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
+    $headers = array_merge(array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL), glow_fundraiser_rep_cc_headers($u_id));
         if(!empty($multiple_recipients))
         {
             if (wp_mail($multiple_recipients, $subject, $m_body, $headers)) 
@@ -1497,7 +1497,7 @@ function send_email_after_few_mintues($user_id,$user_full_name)
 <?php 
 $body= ob_get_clean();
     $m_body=stripslashes($body);
-    $headers = array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL);
+    $headers = array_merge(array('Content-Type: text/html; charset=UTF-8','From: ' . GLOW_FROM_EMAIL), glow_fundraiser_rep_cc_headers($u_id));
     /*if (wp_mail($user_email, $subject, $m_body, $headers)) {
       error_log("email has been successfully sent to user whose email is " . $user_email);
     }
