@@ -50,6 +50,11 @@ require_once GLOW_FC_DIR . 'includes/helpers/image-helpers.php';
 require_once GLOW_FC_DIR . 'includes/helpers/product-type-label.php';
 
 /**
+ * Cc the referring representative on the fundraiser's welcome and campaign emails.
+ */
+require_once GLOW_FC_DIR . 'includes/helpers/fundraiser-rep-cc.php';
+
+/**
  * Register the bundled legacy page templates in the page "Template" dropdown
  * (they live in the plugin, not the active theme, so WP won't list them otherwise).
  */

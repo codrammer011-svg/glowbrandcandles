@@ -645,6 +645,9 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
         'Content-Type: text/html; charset=UTF-8',
         'From: ' . (defined('GLOW_FROM_EMAIL') ? GLOW_FROM_EMAIL : 'Glow Scented Candles <info@glowscentedcandles.com>'),
     );
+    if (function_exists('glow_fundraiser_rep_cc_headers')) {
+        $headers = array_merge($headers, glow_fundraiser_rep_cc_headers($user_id));
+    }
 
     // Queue both emails async so AJAX hook returns before SMTP connects.
     glow_fc_queue_mail($user_email, $subject, $message, $headers, $attachments);
