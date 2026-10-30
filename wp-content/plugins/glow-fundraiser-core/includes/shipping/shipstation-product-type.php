@@ -29,7 +29,14 @@ function glow_shipstation_item_name( $item ) {
 /* REST API connection. */
 add_filter( 'woocommerce_shipstation_fulfillment_item', function ( $fulfillment_item, $order, $item ) {
 	$name = glow_shipstation_item_name( $item );
-	if ( null !== $name && isset( $fulfillment_item['description'] ) ) {
+	if ( null === $name ) {
+		return $fulfillment_item;
+	}
+	// ShipStation lists the item by product.name; description is the line's own label.
+	if ( isset( $fulfillment_item['product']['name'] ) ) {
+		$fulfillment_item['product']['name'] = $name;
+	}
+	if ( isset( $fulfillment_item['description'] ) ) {
 		$fulfillment_item['description'] = $name;
 	}
 	return $fulfillment_item;
