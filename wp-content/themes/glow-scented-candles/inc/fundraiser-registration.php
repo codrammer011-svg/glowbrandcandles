@@ -653,6 +653,65 @@ function glow_email_user_fundraiser_welcome($valid_form_data, $form_id, $user_id
 }
 
 /**
+ * A rebooked fundraiser gets the same $0 kit order (Processing, imported by ShipStation)
+ * that glow_create_zero_order_after_registration() creates for a new registration.
+ * Runs before the emails, like on registration. The address comes from the new
+ * campaign's user meta, which already holds any address changed while rebooking.
+ */
+add_action('glow_fc_fundraiser_rebooked', 'glow_create_fundraiser_rebooked_order', 5, 2);
+function glow_create_fundraiser_rebooked_order($user_id, $previous_id)
+{
+    if (!function_exists('glow_create_fundraiser_shipping_order') || !function_exists('glow_fundraiser_shipping_product')) {
+        return;
+    }
+    try {
+        $user = get_userdata($user_id);
+        $product = glow_fundraiser_shipping_product();
+        if (!$user || !$product) {
+            return;
+        }
+        // A repeated hook call must not ship a second kit.
+        $existing = wc_get_orders(array(
+            'limit'      => -1,
+            'meta_key'   => 'fundraiser_field',
+            'meta_value' => $user_id,
+            'status'     => array_keys(wc_get_order_statuses()),
+        ));
+        foreach ($existing as $order) {
+            foreach ($order->get_items() as $item) {
+                if ((int) $item->get_product_id() === $product->get_id()) {
+                    return;
+                }
+            }
+        }
+
+        $meta = function (...$keys) use ($user_id) {
+            foreach ($keys as $key) {
+                $value = trim((string) get_user_meta($user_id, $key, true));
+                if ('' !== $value) {
+                    return $value;
+                }
+            }
+            return '';
+        };
+        glow_create_fundraiser_shipping_order($user_id, array(
+            'first_name' => $meta('first_name'),
+            'last_name'  => $meta('last_name'),
+            'company'    => $meta('user_registration_name_of_school_business'),
+            'email'      => $user->user_email,
+            'phone'      => $meta('user_registration_input_box_1595312762', 'user_registration_input_box_phone'),
+            'address_1'  => $meta('user_registration_street_address', 'shipping_address_1', 'billing_address_1'),
+            'city'       => $meta('user_registration_City2', 'shipping_city', 'billing_city'),
+            'state'      => $meta('user_registration_select_state', 'shipping_state', 'billing_state'),
+            'postcode'   => $meta('user_registration_input_box_zip', 'shipping_postcode', 'billing_postcode'),
+        ));
+    } catch (Throwable $error) {
+        // The rebooking hook wraps every callback in one try; a failed order must not skip the emails.
+        error_log('[GLOW Rebooking] Kit order failed for campaign ' . (int) $user_id . ': ' . $error->getMessage());
+    }
+}
+
+/**
  * A rebooked fundraiser (new user ID from glow-fundraiser-core's rebooking) gets the
  * same registration emails; the helpers above switch the title to "Rebooked" via
  * the _grb_previous_campaign marker. Form ID 0: the fundraiser guards use user meta.
