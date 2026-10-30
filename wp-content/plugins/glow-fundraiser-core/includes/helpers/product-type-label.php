@@ -96,6 +96,36 @@ add_action( 'woocommerce_before_order_itemmeta', function ( $item_id, $item ) {
 }, 5, 2 );
 
 /*
+ * WooCommerce prints the name and the SKU together with no hook between them, so the
+ * type above is printed after the SKU; move it up under the name. Items are re-rendered
+ * by AJAX after edits, hence the observer.
+ */
+add_action( 'admin_footer', function () {
+	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+	if ( ! $screen || ! in_array( $screen->id, array( 'shop_order', 'woocommerce_page_wc-orders' ), true ) ) {
+		return;
+	}
+	?>
+	<script>
+	(function () {
+		var box = document.getElementById('woocommerce-order-items');
+		if (!box) { return; }
+		function moveTypes() {
+			box.querySelectorAll('td.name .glow-product-type').forEach(function (type) {
+				var name = type.closest('td.name').querySelector('.wc-order-item-name');
+				if (name && name.nextElementSibling !== type) {
+					name.insertAdjacentElement('afterend', type);
+				}
+			});
+		}
+		moveTypes();
+		new MutationObserver(moveTypes).observe(box, { childList: true, subtree: true });
+	})();
+	</script>
+	<?php
+} );
+
+/*
  * Order emails, WooCommerce's and the legacy custom ones (both fire woocommerce_order_item_meta_start).
  * The same hook runs on the customer's My Account / thank-you order table, which stays unchanged.
  */
