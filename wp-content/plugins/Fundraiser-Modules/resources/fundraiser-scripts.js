@@ -39,7 +39,7 @@ jQuery('.popup-fundraiser-id').on('input',function(e){
 jQuery(window).load(function() {
     jQuery("div#DataTables_Table_0_length > label").prepend("<span>Products per page: </span>");
    // jQuery("#DataTables_Table_0_filter, #DataTables_Table_0_paginate").prepend("<span class='catalogue-dynamic-popup-btn'>Add Order to Cart</span>");
-    jQuery("#DataTables_Table_0_filter, #DataTables_Table_0_paginate").prepend('<form method="post" class="seller-buyer-cookie-form"><input type="text" name="mass-seller-name-new" class="mass-seller-name-new" style="display:none;"><select class="mass-order-seller-name" style="display:none;"><option value="No-seller">No Seller</option></select><input class="popup-submit-button popup-submit-button-cart catalogue-dynamic-popup-btn" type="submit" value="Add Order To Cart"></form>');
+    jQuery("#DataTables_Table_0_filter, #DataTables_Table_0_paginate").prepend('<form method="post" class="seller-buyer-cookie-form"><input type="text" name="mass-seller-name-new" class="mass-seller-name-new" style="display:none;"><select class="mass-order-seller-name" style="display:none;"><option value="No-seller">Select Seller</option></select><input class="popup-submit-button popup-submit-button-cart catalogue-dynamic-popup-btn" type="submit" value="Add Order To Cart"></form>');
     jQuery("#DataTables_Table_0 tr[role='row']").each(function(){
     var trProductValue = jQuery("td:nth-child(4)", this).html();
         //console.log(trProductValue);

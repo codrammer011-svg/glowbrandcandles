@@ -227,7 +227,7 @@ if ( ! function_exists( 'seller_drop_down_list' ) ) {
 		// logged-in fundraiser, who must pick one of their sellers or add one.
 		$is_fundraiser = in_array( 'fundraiser', (array) wp_get_current_user()->roles, true );
 		if ( ! $is_fundraiser ) {
-			echo '<option value="No-seller" selected="selected">No Seller</option>';
+			echo '<option value="No-seller" selected="selected">Select Seller</option>';
 		}
 
 		if ( strlen( $fid ) !== 6 ) {

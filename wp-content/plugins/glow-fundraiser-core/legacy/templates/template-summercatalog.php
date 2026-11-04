@@ -809,7 +809,7 @@ input[type=number] {
 			<label style="display:none;">Seller Name</label>
               <input type="text" name="mass-seller-name-new" class="mass-seller-name-new" style="display:none;">
               <select class="mass-order-seller-name" style="display:none;">
-                <option value="No-seller">No Seller</option>
+                <option value="No-seller">Select Seller</option>
               </select>
 			   <span class="alert-selection"></span>
             <input class="popup-submit-button popup-submit-button-cart" type="submit" value="Add Another Order"><br>
