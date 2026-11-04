@@ -100,7 +100,7 @@
               <label>Seller Name</label>
               <input type="text" name="mass-seller-name-new" class="mass-seller-name-new">
               <select class="mass-order-seller-name" style="display:none;">
-                <option value="No-seller">No Seller</option>
+                <option value="No-seller">Select Seller</option>
               </select>
             <input class="popup-submit-button" type="submit" value="Add Another Order"><br>
             <input class="popup-submit-button" type="submit" value="Checkout">

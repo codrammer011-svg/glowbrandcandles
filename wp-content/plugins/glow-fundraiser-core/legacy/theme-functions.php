@@ -10537,7 +10537,7 @@ function seller_drop_down_list()
 		if(!in_array( 'fundraiser', (array) $user_info->roles ))
 		{
 		?>
-		<option value="No-seller" selected="selected">No Seller</option> 		
+		<option value="No-seller" selected="selected">Select Seller</option> 		
 		<?php
 		}
 		if(in_array( 'fundraiser', (array) $user_info->roles ))
@@ -10547,7 +10547,7 @@ function seller_drop_down_list()
 			{
 				$status_code=1; //inactive
 			?>
-			<option value="No-seller" selected="selected">No Seller</option> 
+			<option value="No-seller" selected="selected">Select Seller</option> 
 			<?php
 			}
 			else if((empty($fundr_status) || $fundr_status==1) || ($fundr_status==2 && is_user_logged_in() && $_SESSION['sellername']=='Catlog' ))
@@ -10591,7 +10591,7 @@ function seller_drop_down_list()
 			{
 		?>
 		
-		<option value="No-seller" selected="selected">No Seller</option> 
+		<option value="No-seller" selected="selected">Select Seller</option> 
 		<?php
 			}
             foreach ( $all_seller_found as $sellerUser ) { ?>
