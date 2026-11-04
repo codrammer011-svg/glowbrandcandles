@@ -11435,8 +11435,8 @@ function custom_new_order_email_send_check($order_id)
 	{
 		$checkbox=get_post_meta( $order_id, 'wc_checkbox_field', true );
 		$slr_info  = get_userdata($slrID);
-		$user_email = $slr_info->user_email;
-	
+		$user_email = $slr_info ? $slr_info->user_email : '';
+
 		if(!empty($referral_email))
 		{
 			$multiple_recipients = array(
@@ -12043,11 +12043,18 @@ function custom_new_order_email_send_check($order_id)
 //     "candacethompson12@gmail.com",
 //     "hamzatechypros105@gmail.com"
 // );
-   	$admin_email = array_filter(array(
+   	// Always include the purchaser: with "No" fundraiser there is no fundraiser_field,
+   	// so the fundraiser/referral addresses are empty and only the admin would get it.
+   	$purchaser_email = $order ? $order->get_billing_email() : '';
+   	if ( ! is_email( $purchaser_email ) && $order && $order->get_user() ) {
+   		$purchaser_email = $order->get_user()->user_email;
+   	}
+   	$admin_email = array_values( array_unique( array_filter( array(
     "candace@glowscentedcandles.com",
     $user_email ?? '',
-    $referral_email ?? ''
-));
+    $referral_email ?? '',
+    $purchaser_email
+), 'is_email' ) ) );
    
 //hamzawork
 
