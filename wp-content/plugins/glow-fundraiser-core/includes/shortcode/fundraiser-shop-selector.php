@@ -223,8 +223,12 @@ if ( ! function_exists( 'seller_drop_down_list' ) ) {
 	function glow_fc_seller_drop_down_list() {
 		$fid = isset( $_POST['request_id'] ) ? preg_replace( '/\D/', '', (string) $_POST['request_id'] ) : '';
 
-		// Always emit the placeholder the JS expects (it skips "No-seller").
-		echo '<option value="No-seller" selected="selected">No Seller</option>';
+		// Emit the placeholder the JS expects (it skips "No-seller"), except for a
+		// logged-in fundraiser, who must pick one of their sellers or add one.
+		$is_fundraiser = in_array( 'fundraiser', (array) wp_get_current_user()->roles, true );
+		if ( ! $is_fundraiser ) {
+			echo '<option value="No-seller" selected="selected">No Seller</option>';
+		}
 
 		if ( strlen( $fid ) !== 6 ) {
 			wp_die();
@@ -246,6 +250,11 @@ if ( ! function_exists( 'seller_drop_down_list' ) ) {
 		// Checkout passes the seller saved in the session; mark that option
 		// id="selectSeller" so checkout's JS selects it.
 		$wanted = isset( $_POST['glow_seller'] ) ? strtolower( trim( preg_replace( '/\s+/', ' ', wp_unslash( (string) $_POST['glow_seller'] ) ) ) ) : '';
+
+		// A fundraiser with sellers chooses one explicitly; with none, "Add Seller" is selected.
+		if ( $is_fundraiser && $sellers ) {
+			echo '<option value="" disabled="disabled" selected="selected">Select Seller</option>';
+		}
 
 		foreach ( $sellers as $s ) {
 			$first = get_user_meta( $s->ID, 'first_name', true );

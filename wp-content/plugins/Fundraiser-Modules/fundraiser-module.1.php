@@ -920,6 +920,8 @@ function gsc_cookie_for_fundraiser() {
 									jQuery("select#wc_seller_field").empty().append(res);
 									jQuery('.woocommerce-checkout select#wc_seller_field option#selectSeller').prop('selected', true);	
 									jQuery('.woocommerce-checkout select#wc_seller_field option#selectCustom').prop('selected', true);
+									// Show "Enter Seller Name" when "Add Seller" ends up selected (no sellers yet).
+									jQuery("select#wc_seller_field").trigger('change');
 								}
 							});
 		<?php } 
@@ -1022,6 +1024,7 @@ function gsc_cookie_for_fundraiser() {
 								success: function (res) {
 								jQuery("select#wc_seller_field").empty();
 									jQuery("select#wc_seller_field").append(res);
+									jQuery("select#wc_seller_field").trigger('change');
 								}
 							});
 		   }
@@ -1189,18 +1192,24 @@ function gsc_add_select_checkout_field( $checkout ) {
 	{
 		$default="Yes";
 	}
+	// A logged-in fundraiser always orders for their own fundraiser: the Yes/No question
+	// is answered "Yes" and hidden (the radio stays so the checkout JS still reads it).
+	$is_fundraiser = in_array( 'fundraiser', (array) wp_get_current_user()->roles, true );
+	if ( $is_fundraiser ) {
+		echo '<style>#wc_checkbox_field_field{display:none !important;}</style>';
+	}
 	woocommerce_form_field( 'wc_checkbox_field', array(
 	    'type'          => 'radio',
 	    'class'         => array( 'gsc-drop','are_pu_support' ),
 	    'label'         => __( '<span class="c_note">DO NOT CLICK "NO FUNDRAISER & ENTER IN NOTES" GROUP WILL NOT EARN CREDIT.</span><br/>Are you purchasing to support a fundraiser?' ),
 		'required' 		=> true,
-	    'options' => array(
+	    'options' => $is_fundraiser ? array( 'Yes' => 'Yes' ) : array(
 		'Yes' => 'Yes',
 		'No' => 'No'
 		),
-		'default'=> $default
+		'default'=> $is_fundraiser ? 'Yes' : $default
 	),
-	$checkout->get_value( 'wc_checkbox_field' ));
+	$is_fundraiser ? 'Yes' : $checkout->get_value( 'wc_checkbox_field' ));
 	woocommerce_form_field( 'fundraiser_field', array(
 	    'type'          => 'number',
 		'custom_attributes' => array( 'list' => 'fundraiser_fields' ),
@@ -1218,7 +1227,10 @@ function gsc_add_select_checkout_field( $checkout ) {
 	    'class'         => array( 'gsc-drop' ),
 	    'label'         => __( 'Seller Name' ),
        'required' 		=> false,
-	    'options'       => array(
+	    // Fundraisers pick one of their sellers (loaded by AJAX) or add one; no "No Seller".
+	    'options'       => $is_fundraiser ? array(
+        'custom'		=> __( 'Add Seller')
+        ) : array(
         'No-seller'		=> __( 'No Seller')
         )
 	),
@@ -1425,6 +1437,13 @@ function gsc_add_select_checkout_field( $checkout ) {
 //     // Optional: clear WC session value after order is placed
 //     WC()->session->__unset('seller_name');
 // }
+	// A fundraiser's own order always supports their fundraiser.
+	if ( in_array( 'fundraiser', (array) $user->roles, true ) ) {
+		$_POST['wc_checkbox_field'] = 'Yes';
+		if ( empty( $_POST['fundraiser_field'] ) ) {
+			$_POST['fundraiser_field'] = $user->ID;
+		}
+	}
 	if ($_POST['wc_checkbox_field']) update_post_meta( $order_id, 'wc_checkbox_field', esc_attr($_POST['wc_checkbox_field']));
 	
 	
