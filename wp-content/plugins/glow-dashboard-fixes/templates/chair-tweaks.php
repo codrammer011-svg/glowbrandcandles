@@ -422,3 +422,175 @@ add_action( 'wp_footer', function () {
 	</script>
 	<?php
 }, 25 );
+
+
+/* ======================================================================
+   Sales & Reports: Final Report Overview card (added v1.7.16)
+   ====================================================================== */
+/**
+ * Sales & Reports page: "Final report" recap card at the top
+ * (Brochure sales / Online ship-to-home / Online ship-to-group / Payments & credits),
+ * matching the summary block of the old printed Fundraiser Report.
+ */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+function glow_rr_is_reports() {
+	return false !== strpos( (string) $_SERVER['REQUEST_URI'], '/fundraiser-reports' );
+}
+
+/** Same rules as the Fundraiser Reports template (and the old printed report). */
+function glow_rr_data( $fid ) {
+	$min    = defined( 'GLOW_BROCHURE_PROFIT_MIN_ITEMS' ) ? (int) GLOW_BROCHURE_PROFIT_MIN_ITEMS : 100;
+	$orders = wc_get_orders( array(
+		'limit'      => -1,
+		'status'     => array( 'completed', 'processing', 'on-hold', 'waiting-call', 'processing-call' ),
+		'meta_key'   => 'fundraiser_field',
+		'meta_value' => (string) $fid,
+	) );
+	$d = array(
+		'online_sales' => 0.0, 'online_profit' => 0.0, 'online_orders' => 0,
+		'broch_sales'  => 0.0, 'broch_profit'  => 0.0, 'broch_charge'  => 0.0, 'broch_qty' => 0, 'broch_orders' => 0,
+		'group_sales'  => 0.0, 'group_profit'  => 0.0, 'group_qty'     => 0,   'group_orders' => 0, 'group_pct' => 40,
+	);
+	$group_rows = array();
+	/* closed-out fundraiser: orders dated after the close-out date are ignored (same as the report) */
+	$closed_at = (string) get_user_meta( $fid, 'user_close_out_date_inactive', true );
+	$is_closed = 2 === (int) get_user_meta( $fid, 'user_action_status', true ) && '' !== $closed_at;
+	foreach ( $orders as $o ) {
+		$status = $o->get_status();
+		if ( $is_closed && $o->get_date_created() && $o->get_date_created()->date( 'Y-m-d H:i:s' ) > $closed_at ) { continue; }
+		$type   = (string) $o->get_meta( 'wc_order_type' );
+		$is_fr  = (int) $o->get_customer_id() === (int) $fid;
+		$sub    = (float) $o->get_subtotal();
+		$disc   = (float) $o->get_total_discount();
+		$net    = $disc > 0 ? $sub - $disc : $sub;
+		$qty    = 0;
+		foreach ( $o->get_items() as $it ) { $qty += (int) $it->get_quantity(); }
+
+		if ( 'Catlog' === $type && $is_fr ) {
+			/* brochure orders placed by the chairperson — only settled statuses, like the report */
+			if ( ! in_array( $status, array( 'completed', 'processing', 'on-hold' ), true ) ) { continue; }
+			$pct = $qty >= $min ? 50 : 40;
+			$d['broch_sales']  += $sub;
+			$d['broch_profit'] += $sub * $pct / 100;
+			$d['broch_charge'] += $sub - ( $sub * $pct / 100 );
+			$d['broch_qty']    += $qty;
+			$d['broch_orders']++;
+		} elseif ( 'ship-to-school' === $type && ! $is_fr ) {
+			/* online ship-to-group: the report counts only "Waiting call" orders flagged ship_with_catalog */
+			if ( 'waiting-call' !== $status || 1 !== (int) $o->get_meta( 'ship_with_catalog' ) ) { continue; }
+			$group_rows[] = array( 'net' => $net, 'qty' => $qty );
+		} elseif ( ! $is_fr && in_array( $status, array( 'completed', 'processing', 'on-hold' ), true ) ) {
+			/* online ship-to-home */
+			$d['online_sales']  += $net;
+			$d['online_profit'] += $net * 40 / 100;
+			$d['online_orders']++;
+		}
+	}
+	foreach ( $group_rows as $g ) { $d['group_sales'] += $g['net']; $d['group_qty'] += $g['qty']; $d['group_orders']++; }
+	$d['group_pct']    = ( $d['broch_qty'] + $d['group_qty'] ) >= $min ? 50 : 40;
+	$d['group_profit'] = $d['group_sales'] * $d['group_pct'] / 100;
+
+	$d['credits']  = $d['online_profit'] + $d['group_profit'];   // online store credits
+	$d['charges']  = $d['broch_charge'];                          // brochure invoice
+	$d['balance']  = $d['charges'] - $d['credits'];               // + owed to Glow, − Glow owes group
+	$d['profits']  = $d['broch_profit'] + $d['credits'];
+	$d['min']      = $min;
+	return $d;
+}
+
+add_action( 'wp_footer', function () {
+	if ( ! is_user_logged_in() || ! glow_rr_is_reports() || ! function_exists( 'wc_get_orders' ) ) { return; }
+	$fid = function_exists( 'glow_ct_fid' ) ? glow_ct_fid() : get_current_user_id();
+	if ( ! $fid ) { return; }
+	$d  = glow_rr_data( $fid );
+	$m  = function ( $v ) { return '$' . number_format( (float) $v, 2 ); };
+	$u  = get_userdata( $fid );
+	$org = get_user_meta( $fid, 'user_registration_name_of_school_business', true );
+	$sd  = get_user_meta( $fid, 'user_registration_start_date', true );
+	$ed  = get_user_meta( $fid, 'user_registration_end_date', true );
+	$pay = get_user_meta( $fid, 'user_registration_profit_check_payable', true );
+	if ( ! $pay ) { $pay = get_user_meta( $fid, 'profit_check_payable', true ); }
+	$owed = $d['balance'] > 0.004;
+	ob_start(); ?>
+	<section class="glow-rr" id="glow-rr">
+		<div class="glow-rr-head">
+			<div><h3>Final Report Overview</h3><p><?php echo esc_html( $org ? $org : ( $u ? $u->display_name : '' ) ); ?> &middot; Fund ID <?php echo (int) $fid; ?><?php if ( $sd || $ed ) : ?> &middot; <?php echo esc_html( $sd ); ?> to <?php echo esc_html( $ed ); ?><?php endif; ?></p></div>
+			<a class="glow-rr-print" href="#" onclick="window.print();return false;">Print</a>
+		</div>
+		<div class="glow-rr-grid">
+			<div class="glow-rr-box is-broch">
+				<h4>Brochure Sales</h4>
+				<dl>
+					<dt>Total Brochure Sales</dt><dd><?php echo $m( $d['broch_sales'] ); ?></dd>
+					<dt>Profit (<?php echo $d['broch_qty'] >= $d['min'] ? '50' : '40'; ?>%)</dt><dd><?php echo $m( $d['broch_profit'] ); ?></dd>
+					<dt>Brochure invoice (amount charged)</dt><dd><?php echo $m( $d['broch_charge'] ); ?></dd>
+					<dt>Items / orders</dt><dd><?php echo (int) $d['broch_qty']; ?> / <?php echo (int) $d['broch_orders']; ?></dd>
+				</dl>
+			</div>
+			<div class="glow-rr-box is-online">
+				<h4>Online Sales — Ship to Home</h4>
+				<dl>
+					<dt>Total Online Sales</dt><dd><?php echo $m( $d['online_sales'] ); ?></dd>
+					<dt>Profit (40%)</dt><dd><?php echo $m( $d['online_profit'] ); ?></dd>
+					<dt>Orders</dt><dd><?php echo (int) $d['online_orders']; ?></dd>
+				</dl>
+			</div>
+			<div class="glow-rr-box is-group">
+				<h4>Online Sales — Ship to Group</h4>
+				<dl>
+					<dt>Total Ship-to-Group Sales</dt><dd><?php echo $m( $d['group_sales'] ); ?></dd>
+					<dt>Profit (<?php echo (int) $d['group_pct']; ?>%)</dt><dd><?php echo $m( $d['group_profit'] ); ?></dd>
+					<dt>Items / orders</dt><dd><?php echo (int) $d['group_qty']; ?> / <?php echo (int) $d['group_orders']; ?></dd>
+					<dt>Total Online Sales Profit</dt><dd><?php echo $m( $d['credits'] ); ?></dd>
+				</dl>
+			</div>
+			<div class="glow-rr-box is-pay">
+				<h4>Payments &amp; Credits</h4>
+				<dl>
+					<dt>Total charges (brochure invoice)</dt><dd><?php echo $m( $d['charges'] ); ?></dd>
+					<dt>Online store credits</dt><dd><?php echo $m( $d['credits'] ); ?></dd>
+					<dt>Current balance</dt><dd class="<?php echo $owed ? 'is-due' : 'is-credit'; ?>"><?php echo ( $d['balance'] < 0 ? '-' : '' ) . $m( abs( $d['balance'] ) ); ?></dd>
+					<dt>Amount due to Glow</dt><dd class="<?php echo $owed ? 'is-due' : ''; ?>"><?php echo $owed ? $m( $d['balance'] ) : '$0.00'; ?></dd>
+					<?php if ( ! $owed && $d['balance'] < -0.004 ) : ?><dt>Profit check from Glow</dt><dd class="is-credit"><?php echo $m( abs( $d['balance'] ) ); ?></dd><?php endif; ?>
+				</dl>
+				<div class="glow-rr-total"><span>Your GLOW total profits</span><b><?php echo $m( $d['profits'] ); ?></b></div>
+				<?php if ( $pay ) : ?><p class="glow-rr-note">Checks made payable to: <?php echo esc_html( $pay ); ?></p><?php endif; ?>
+			</div>
+		</div>
+		<p class="glow-rr-foot">Brochure sales: 40% profit, or 50% when <?php echo (int) $d['min']; ?>+ items are sold. Online ship-to-home: 40%. Ship-to-group: 40% or 50% based on combined brochure + ship-to-group items. Figures update as orders are processed.</p>
+	</section>
+	<?php $html = ob_get_clean(); ?>
+	<style id="glow-rr-css">
+	.glow-rr{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#fff;border:1px solid #e8e8f0;border-radius:20px;box-shadow:0 2px 6px rgba(22,20,50,.05);padding:22px 24px;margin:0 0 18px;color:#181735}
+	.glow-rr-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+	.glow-rr-head h3{margin:0;font-size:18px;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+	.glow-rr-head p{margin:4px 0 0;font-size:13.5px;color:#6f6c85}
+	.glow-rr-print{flex:0 0 auto;border:1px solid #d9d7e6;border-radius:999px;padding:8px 16px;font-size:12.5px;font-weight:700;color:#181735 !important;text-decoration:none !important}
+	.glow-rr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+	.glow-rr-box{border-radius:16px;padding:16px 18px;border:1px solid #ecebf3;background:#faf9fc}
+	.glow-rr-box.is-broch{background:#fff4ee;border-color:#ffd9c2}.glow-rr-box.is-online{background:#fff1f5;border-color:#ffd3e0}.glow-rr-box.is-group{background:#fff8e6;border-color:#ffe3a0}.glow-rr-box.is-pay{background:#eefaf4;border-color:#bfe9d6}
+	.glow-rr-box h4{margin:0 0 10px;font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+	.glow-rr-box.is-broch h4{color:#a84032}.glow-rr-box.is-online h4{color:#d81b60}.glow-rr-box.is-group h4{color:#b26a00}.glow-rr-box.is-pay h4{color:#0d6b50}
+	.glow-rr-box dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 10px;font-size:13.5px}
+	.glow-rr-box dt{color:#5b5873}.glow-rr-box dd{margin:0;font-weight:800;text-align:right;white-space:nowrap}
+	.glow-rr-box dd.is-due{color:#c62828}.glow-rr-box dd.is-credit{color:#0d6b50}
+	.glow-rr-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px dashed #bfe9d6;font-size:13px;font-weight:700;color:#0d6b50}
+	.glow-rr-total b{font-size:20px;font-weight:900}
+	.glow-rr-note{margin:8px 0 0;font-size:12.5px;color:#6f6c85}
+	.glow-rr-foot{margin:14px 0 0;font-size:12px;color:#8d8aa0}
+	@media(max-width:1100px){.glow-rr-grid{grid-template-columns:1fr 1fr}}
+	@media(max-width:640px){.glow-rr-grid{grid-template-columns:1fr}}
+	@media print{.glow-rr{box-shadow:none;border-color:#999}}
+	</style>
+	<script id="glow-rr-js">
+	(function(){
+		if (document.getElementById('glow-rr')) return;
+		var first = document.querySelector('.fundraiser-dashboard-section, .glow-cp-wrap, .fundraiser-reports');
+		var t = document.createElement('div'); t.innerHTML = <?php echo wp_json_encode( $html ); ?>;
+		var card = t.firstElementChild;
+		if (first && first.parentNode) first.parentNode.insertBefore(card, first); else document.body.insertBefore(card, document.body.firstChild);
+	})();
+	</script>
+	<?php
+}, 40 );
