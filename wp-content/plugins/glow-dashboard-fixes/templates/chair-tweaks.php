@@ -453,12 +453,12 @@ function glow_rr_data( $fid ) {
 		'group_sales'  => 0.0, 'group_profit'  => 0.0, 'group_qty'     => 0,   'group_orders' => 0, 'group_pct' => 40,
 	);
 	$group_rows = array();
-	/* closed-out fundraiser: orders dated after the close-out date are ignored (same as the report) */
+	/* closed-out fundraiser: online orders dated after the close-out date are ignored (same as the report). Brochure orders are not: they are usually placed at or after close-out, and the report's Catalogue Sale table lists them all. */
 	$closed_at = (string) get_user_meta( $fid, 'user_close_out_date_inactive', true );
 	$is_closed = 2 === (int) get_user_meta( $fid, 'user_action_status', true ) && '' !== $closed_at;
 	foreach ( $orders as $o ) {
 		$status = $o->get_status();
-		if ( $is_closed && $o->get_date_created() && $o->get_date_created()->date( 'Y-m-d H:i:s' ) > $closed_at ) { continue; }
+		if ( $is_closed && 'Catlog' !== $o->get_meta( 'wc_order_type' ) && $o->get_date_created() && $o->get_date_created()->date( 'Y-m-d H:i:s' ) > $closed_at ) { continue; }
 		$type   = (string) $o->get_meta( 'wc_order_type' );
 		$is_fr  = (int) $o->get_customer_id() === (int) $fid;
 		$sub    = (float) $o->get_subtotal();
@@ -470,7 +470,7 @@ function glow_rr_data( $fid ) {
 		if ( 'Catlog' === $type && $is_fr ) {
 			/* brochure orders placed by the chairperson — only settled statuses, like the report */
 			if ( ! in_array( $status, array( 'completed', 'processing', 'on-hold' ), true ) ) { continue; }
-			$pct = $qty >= $min ? 50 : 40;
+			$pct = ( $qty >= $min || 'Yes' === (string) $o->get_meta( 'new_catalog_order_50_percent' ) ) ? 50 : 40; // same rule as the Catalogue Sale table
 			$d['broch_sales']  += $sub;
 			$d['broch_profit'] += $sub * $pct / 100;
 			$d['broch_charge'] += $sub - ( $sub * $pct / 100 );
@@ -523,7 +523,7 @@ add_action( 'wp_footer', function () {
 				<h4>Brochure Sales</h4>
 				<dl>
 					<dt>Total Brochure Sales</dt><dd><?php echo $m( $d['broch_sales'] ); ?></dd>
-					<dt>Profit (<?php echo $d['broch_qty'] >= $d['min'] ? '50' : '40'; ?>%)</dt><dd><?php echo $m( $d['broch_profit'] ); ?></dd>
+					<dt>Profit (<?php echo $d['broch_sales'] > 0 ? round( $d['broch_profit'] / $d['broch_sales'] * 100 ) : 40; ?>%)</dt><dd><?php echo $m( $d['broch_profit'] ); ?></dd>
 					<dt>Brochure invoice (amount charged)</dt><dd><?php echo $m( $d['broch_charge'] ); ?></dd>
 					<dt>Items / orders</dt><dd><?php echo (int) $d['broch_qty']; ?> / <?php echo (int) $d['broch_orders']; ?></dd>
 				</dl>

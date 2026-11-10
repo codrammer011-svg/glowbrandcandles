@@ -8002,6 +8002,10 @@ function wdm_restore_cart_details()
 		$wdm_selected_cart_key='cart-restore';
 		/*$cart_content = get_user_meta($user_id, $wdm_selected_cart_key, true);*/
 		$cart_content = get_user_meta($user_id, 'cart-restore', true);
+		if ( empty( $cart_content ) || ! is_array( $cart_content ) ) {
+			echo "No saved order to restore.";
+			return;
+		}
 		  // clear current cart, incase you want to replace cart contents, else skip this step
 		 $woocommerce->cart->empty_cart();
 		if (session_status() === PHP_SESSION_NONE && !headers_sent()) { @session_start(); }
