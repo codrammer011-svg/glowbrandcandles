@@ -48,3 +48,46 @@ function glow_fc_release_cancelled_profit_credit($order_id) {
 }
 add_action('woocommerce_order_status_cancelled', 'glow_fc_release_cancelled_profit_credit');
 add_action('woocommerce_order_status_failed', 'glow_fc_release_cancelled_profit_credit');
+
+/** True when the cart at checkout is the fundraiser's saved brochure order. */
+function glow_fc_cart_is_saved_order($saved) {
+    if (!is_array($saved) || !$saved || !WC()->cart) return false;
+    $cart_qty = [];
+    foreach (WC()->cart->get_cart() as $item) {
+        // Seller orders sent to the cart carry the same flag but are not the saved order.
+        if (($item['restore_saved_order'] ?? '') === 'Yes' && empty($item['glow_seller_order_id'])) return true;
+        $product_id = (int)($item['product_id'] ?? 0);
+        $cart_qty[$product_id] = ($cart_qty[$product_id] ?? 0) + (int)($item['quantity'] ?? 0);
+    }
+    // Saved at checkout and placed straight away: the lines are never flagged as restored.
+    $saved_qty = [];
+    foreach ($saved as $item) {
+        $product_id = (int)($item['product_id'] ?? 0);
+        $saved_qty[$product_id] = ($saved_qty[$product_id] ?? 0) + (int)($item['quantity'] ?? 0);
+    }
+    foreach ($saved_qty as $product_id => $qty) {
+        if (($cart_qty[$product_id] ?? 0) < $qty) return false;
+    }
+    return true;
+}
+
+// The cart is only available here, but a declined card must not lose the saved order,
+// so remember the match on the order and clear the save once the order is really placed.
+add_action('woocommerce_checkout_create_order', function ($order) {
+    $user_id = $order->get_customer_id();
+    if ($user_id && glow_fc_cart_is_saved_order(get_user_meta($user_id, 'cart-restore', true))) {
+        $order->update_meta_data('_glow_from_saved_order', 'yes');
+    }
+});
+
+function glow_fc_clear_placed_saved_order($order_id) {
+    $order = wc_get_order($order_id);
+    if (!$order || $order->get_meta('_glow_from_saved_order') !== 'yes') return;
+    delete_user_meta($order->get_customer_id(), 'cart-restore');
+    $order->delete_meta_data('_glow_from_saved_order');
+    $order->save_meta_data();
+}
+// Priority 1: legacy on-hold hooks can stop the request before later callbacks run.
+foreach (['on-hold', 'processing', 'completed', 'waiting-call', 'processing-call'] as $glow_status) {
+    add_action("woocommerce_order_status_{$glow_status}", 'glow_fc_clear_placed_saved_order', 1);
+}
