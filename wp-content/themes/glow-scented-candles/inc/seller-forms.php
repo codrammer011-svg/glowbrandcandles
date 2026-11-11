@@ -270,6 +270,18 @@ function glow_email_user_seller_welcome($valid_form_data, $form_id, $user_id)
     update_user_meta($user_id, '_glow_seller_welcome_sent', current_time('mysql'));
 }
 
+/**
+ * A re-booked seller (new user ID from glow-fundraiser-core's seller rebooking) gets
+ * a QR code for the new account and the same "Seller Registered" email as a new seller,
+ * now naming the new fundraiser.
+ */
+add_action('glow_fc_seller_rebooked', 'glow_seller_rebooked_followup', 10, 2);
+function glow_seller_rebooked_followup($user_id, $previous_id)
+{
+    glow_seller_qr_url($user_id);
+    glow_email_user_seller_welcome(array(), 0, $user_id);
+}
+
 /** Load the native Elementor popup without adding another overlay or click handler. */
 add_action('wp_footer', 'glow_register_native_fundraiser_popup', 5);
 function glow_register_native_fundraiser_popup()

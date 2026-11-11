@@ -109,7 +109,7 @@ final class Glow_FC_Rebooking_Campaigns {
     }
 
     /** All tables changed by this service must support rollback. */
-    private static function require_transactions() {
+    public static function require_transactions() {
         global $wpdb;
         if (is_multisite()) {
             throw new RuntimeException('This rebooking flow requires a single-site WordPress installation.');
@@ -124,7 +124,7 @@ final class Glow_FC_Rebooking_Campaigns {
         }
     }
 
-    private static function check_db() {
+    public static function check_db() {
         global $wpdb;
         if ($wpdb->last_error) {
             throw new RuntimeException('The new campaign could not be saved. Your previous campaign is unchanged.');

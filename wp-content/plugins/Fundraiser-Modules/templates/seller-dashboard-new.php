@@ -561,8 +561,13 @@ if ( ! $sid ) {
 $fid = glow_sd_fundraiser_id( $sid );
 
 if ( ! $fid ) {
+	$gsr_can = ! glow_sd_is_admin_view( $sid ) && class_exists( 'Glow_FC_Seller_Rebooking' ) && Glow_FC_Seller_Rebooking::can_rebook( $sid );
 	echo '<div class="glow-sd-gate"><h2>No fundraiser linked</h2>'
-	   . '<p>This account is not registered to a fundraiser yet. Ask your chairperson for the seller registration link.</p></div>';
+	   . ( $gsr_can
+		   ? '<p>This account is not registered to a fundraiser. Enter the Fundraiser ID from your chairperson to re-book.</p>'
+			 . '<a class="glow-sd-gate-btn" href="#" data-gsr-open>Re-book</a>'
+		   : '<p>This account is not registered to a fundraiser yet. Ask your chairperson for the seller registration link.</p>' )
+	   . '</div>';
 	get_footer();
 	return;
 }
@@ -571,6 +576,10 @@ glow_sd_maybe_refresh( $sid );
 
 $seller    = glow_sd_seller( $sid );
 $campaign  = glow_sd_campaign( $fid );
+// A deleted fundraiser leaves no status meta behind, so it must not read as "active".
+$fund_state          = class_exists( 'Glow_FC_Seller_Rebooking' ) ? Glow_FC_Seller_Rebooking::fundraiser_state( $fid ) : ( $campaign['closed'] ? 'closed' : 'active' );
+$campaign['missing'] = ( 'deleted' === $fund_state );
+$campaign['ended']   = $campaign['closed'] || $campaign['missing'];
 $stats     = glow_sd_stats( $sid );
 $checklist = glow_sd_checklist( $sid );
 $config    = glow_sd_config();
@@ -663,7 +672,9 @@ $is_admin_view = glow_sd_is_admin_view( $sid );
 				<button type="button" class="glow-sd-code-copy" data-copy="<?php echo esc_attr( $sid ); ?>">COPY</button>
 			</div>
 			<div class="glow-sd-statusrow">
-				<?php if ( $campaign['closed'] ) : ?>
+				<?php if ( $campaign['missing'] ) : ?>
+					<span class="glow-sd-live is-off"><i></i>FUNDRAISER UNAVAILABLE</span>
+				<?php elseif ( $campaign['closed'] ) : ?>
 					<span class="glow-sd-live is-off"><i></i>CAMPAIGN CLOSED</span>
 				<?php elseif ( $campaign['active'] ) : ?>
 					<span class="glow-sd-live is-on"><i></i>SELLER ACTIVE</span>
@@ -696,10 +707,20 @@ $is_admin_view = glow_sd_is_admin_view( $sid );
 			<div class="glow-sd-notice is-admin">Admin view &mdash; you are looking at seller #<?php echo esc_html( $sid ); ?>.</div>
 		<?php endif; ?>
 
-		<?php if ( $campaign['closed'] ) : ?>
+		<?php
+		// Re-book shows when the linked fundraiser is closed out or deleted (no ID is handled by the gate above).
+		$gsr_can = ! $is_admin_view && class_exists( 'Glow_FC_Seller_Rebooking' ) && Glow_FC_Seller_Rebooking::can_rebook( $sid );
+		?>
+		<?php if ( $campaign['ended'] ) : ?>
 			<div class="glow-sd-notice is-done">
-				This fundraiser has been closed out. Sales profits are sent to your chairperson on the 15th of the month.
-				<a href="#" id="rebook_ajax" data-id="<?php echo esc_attr( $sid ); ?>">Register for a new campaign</a>
+				<?php if ( $campaign['missing'] ) : ?>
+					The fundraiser this seller account was registered with is no longer available.
+				<?php else : ?>
+					This fundraiser has been closed out. Sales profits are sent to your chairperson on the 15th of the month.
+				<?php endif; ?>
+				<?php if ( $gsr_can ) : ?>
+					<a href="#" data-gsr-open>Re-book for a new fundraiser</a>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 
@@ -858,7 +879,7 @@ $is_admin_view = glow_sd_is_admin_view( $sid );
 				<span class="glow-sd-tile-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></span>
 			</a>
 
-			<?php if ( $can_brochure && ! $campaign['closed'] ) : ?>
+			<?php if ( $can_brochure && ! $campaign['ended'] ) : ?>
 				<a class="glow-sd-tile is-brochure" href="#glow-sd-brochures">
 			<?php else : ?>
 				<span class="glow-sd-tile is-brochure is-locked" title="Your chairperson has not opened brochure orders yet">
@@ -871,7 +892,7 @@ $is_admin_view = glow_sd_is_admin_view( $sid );
 					<span>Submit your group's paper order form.<br>(if available)</span>
 				</span>
 				<span class="glow-sd-tile-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></span>
-			<?php echo ( $can_brochure && ! $campaign['closed'] ) ? '</a>' : '</span>'; ?>
+			<?php echo ( $can_brochure && ! $campaign['ended'] ) ? '</a>' : '</span>'; ?>
 
 			<a class="glow-sd-tile is-reports" href="<?php echo esc_url( glow_sd_url( 'report' ) ); ?>">
 				<span class="glow-sd-tile-icon">
@@ -910,7 +931,7 @@ $is_admin_view = glow_sd_is_admin_view( $sid );
 								   title="<?php echo $done ? 'Mark as not done' : 'Mark as done'; ?>"
 								   aria-pressed="<?php echo $done ? 'true' : 'false'; ?>"><span><?php echo esc_html( $n ); ?></span></a>
 								<span class="glow-sd-step-label"><?php echo esc_html( $label ); ?></span>
-								<?php if ( $current && ! $campaign['closed'] ) : ?>
+								<?php if ( $current && ! $campaign['ended'] ) : ?>
 									<a class="glow-sd-step-badge" href="<?php echo esc_url( $step_actions[ $k ]['url'] ); ?>"><?php echo esc_html( $step_actions[ $k ]['label'] ); ?></a>
 								<?php else : ?>
 									<span class="glow-sd-step-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4.5 4.5L19 7"/></svg></span>
@@ -1049,9 +1070,9 @@ $is_admin_view = glow_sd_is_admin_view( $sid );
 				<h3>SUBMIT YOUR BROCHURE ORDER</h3>
 			</div>
 
-			<?php if ( $campaign['closed'] ) : ?>
+			<?php if ( $campaign['ended'] ) : ?>
 
-				<p class="glow-sd-empty">This fundraiser has been closed. Brochure orders are no longer accepted.</p>
+				<p class="glow-sd-empty">This fundraiser is no longer open. Brochure orders are no longer accepted.</p>
 
 			<?php else : ?>
 
@@ -1334,59 +1355,7 @@ var GLOW_SD = {
 		}
 	});
 
-	/* ---- rebook (styled confirmation modal) ---- */
-	var rebook = document.getElementById('rebook_ajax');
-	if (rebook) {
-		var gsStyle = document.createElement('style');
-		gsStyle.textContent =
-			'.glow-sd-rbk-overlay{position:fixed;inset:0;background:rgba(22,21,43,.55);display:none;align-items:center;justify-content:center;z-index:99999;padding:20px;}' +
-			'.glow-sd-rbk-overlay.show{display:flex;}' +
-			'.glow-sd-rbk-card{background:#fff;border:3px solid #c9a227;border-radius:16px;max-width:560px;width:100%;padding:34px 34px 30px;box-shadow:0 24px 60px rgba(0,0,0,.28);text-align:center;}' +
-			'.glow-sd-rbk-title{color:#c9a227;font-size:22px;font-weight:800;margin:0 0 14px;line-height:1.3;}' +
-			'.glow-sd-rbk-divider{border-top:2px dotted #e3ce8f;margin:0 0 18px;}' +
-			'.glow-sd-rbk-note{color:#3a3a4a;font-size:15px;line-height:1.65;margin:0 0 24px;}' +
-			'.glow-sd-rbk-red{color:#e02424;}' +
-			'.glow-sd-rbk-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}' +
-			'.glow-sd-rbk-btn{min-width:120px;padding:12px 30px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;color:#fff;transition:background .2s;}' +
-			'.glow-sd-rbk-yes{background:#c9a227;}.glow-sd-rbk-yes:hover{background:#b08e1f;}' +
-			'.glow-sd-rbk-no{background:#c9b587;}.glow-sd-rbk-no:hover{background:#b3a071;}';
-		document.head.appendChild(gsStyle);
-
-		var gsModal = document.createElement('div');
-		gsModal.className = 'glow-sd-rbk-overlay';
-		gsModal.innerHTML =
-			'<div class="glow-sd-rbk-card" role="dialog" aria-modal="true">' +
-				'<h3 class="glow-sd-rbk-title">Ready to reregister your NEW SELLER ACCOUNT?</h3>' +
-				'<div class="glow-sd-rbk-divider"></div>' +
-				'<p class="glow-sd-rbk-note"><strong class="glow-sd-rbk-red">Note:</strong> Once you click the <strong>YES</strong> button, you will no longer have access to this seller dashboard or detailed reports. <strong>Please note</strong>&mdash;if you need any of these reports, please print them and come back to book here. Please complete the Seller Register form and submit. You will receive New Seller Dashboard login credentials via email.</p>' +
-				'<div class="glow-sd-rbk-actions">' +
-					'<button type="button" class="glow-sd-rbk-btn glow-sd-rbk-yes">Yes</button>' +
-					'<button type="button" class="glow-sd-rbk-btn glow-sd-rbk-no">No</button>' +
-				'</div>' +
-			'</div>';
-		document.body.appendChild(gsModal);
-
-		function gsCloseRebook() { gsModal.classList.remove('show'); }
-
-		rebook.addEventListener('click', function (e) {
-			e.preventDefault();
-			gsModal.classList.add('show');
-		});
-		gsModal.querySelector('.glow-sd-rbk-no').addEventListener('click', gsCloseRebook);
-		gsModal.addEventListener('click', function (e) { if (e.target === gsModal) gsCloseRebook(); });
-		gsModal.querySelector('.glow-sd-rbk-yes').addEventListener('click', function () {
-			gsCloseRebook();
-			jQuery.post(GLOW_SD.ajax, {
-				action: 'seller_wp_rebooking_ajax',
-				rebook_id: GLOW_SD.sid,
-				yes_action: 'yes'
-			}).done(function (res) {
-				window.location.href = GLOW_SD.rebook + '?rebook_seller_id=' + res;
-			}).fail(function () {
-				toast('Something went wrong. Please try again.');
-			});
-		});
-	}
+	/* Re-book: the dialog and its script come from glow-fundraiser-core (Glow_FC_Seller_Rebooking). */
 })();
 </script>
 

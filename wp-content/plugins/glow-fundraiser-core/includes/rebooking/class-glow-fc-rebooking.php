@@ -139,7 +139,7 @@ final class Glow_FC_Rebooking {
         }
     }
 
-    private static function same_origin($origin) {
+    public static function same_origin($origin) {
         $site = wp_parse_url(home_url());
         $request = wp_parse_url($origin);
         return is_array($request) && strtolower($request['host'] ?? '') === strtolower($site['host'] ?? '')
@@ -147,7 +147,7 @@ final class Glow_FC_Rebooking {
             && ($request['port'] ?? null) === ($site['port'] ?? null);
     }
 
-    private static function sign_in($id) {
+    public static function sign_in($id) {
         // Empty the previous campaign's shopping cart/session before switching identities.
         if (function_exists('WC') && WC()->cart) {
             WC()->cart->empty_cart();
@@ -161,17 +161,17 @@ final class Glow_FC_Rebooking {
         do_action('wp_login', get_userdata($id)->user_login, get_userdata($id));
     }
 
-    private static function input($key) {
+    public static function input($key) {
         return isset($_POST[$key]) && is_string($_POST[$key]) ? wp_unslash($_POST[$key]) : '';
     }
 
     /** $field names the form input the error belongs to, so the popup can mark it. */
-    private static function fail($message, $status = 400, $field = '') {
+    public static function fail($message, $status = 400, $field = '') {
         wp_send_json_error($field !== '' ? array('message' => $message, 'field' => $field) : array('message' => $message), $status);
     }
 
     /** DB advisory lock keeps rate counters atomic even without a persistent object cache. */
-    private static function rate_limit($purpose, $limit, $use_ip = true) {
+    public static function rate_limit($purpose, $limit, $use_ip = true) {
         global $wpdb;
         $identity = $use_ip ? ($_SERVER['REMOTE_ADDR'] ?? 'unknown') : '';
         // Trust the connection IP, never a user-controlled X-Forwarded-For header.
