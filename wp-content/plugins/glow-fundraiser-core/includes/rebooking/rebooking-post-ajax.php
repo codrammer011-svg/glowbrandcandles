@@ -8,46 +8,12 @@ function wp_rebooking_ajax()
     Glow_FC_Rebooking::legacy_request();
 }
 
-/* Seller Rebooking Ajax */
-add_action('wp_ajax_nopriv_seller_wp_rebooking_ajax', 'seller_wp_rebooking_ajax'); 
+/* Seller Rebooking Ajax (retired) */
+add_action('wp_ajax_nopriv_seller_wp_rebooking_ajax', 'seller_wp_rebooking_ajax');
 add_action('wp_ajax_seller_wp_rebooking_ajax', 'seller_wp_rebooking_ajax');
 function seller_wp_rebooking_ajax()
 {
-	if(isset($_POST['rebook_id']) && isset($_POST['yes_action']) && $_POST['yes_action']=="yes")
-	{
-		$current_date="";
-		$date_time="";
-		$user_id=$_POST['rebook_id'];
-		$action=$_POST['yes_action'];
-		date_default_timezone_set('America/Chicago');
-		$current_date = date('Y-m-d');
-		$current_time = date('H:i:s');
-		$date_time=$current_date."_".$current_time;
-		if(!empty($action))
-		{
-			
-			update_user_meta($user_id, "rebook_yes" , $action);
-		}
-		update_user_meta($user_id, "rebook_date", $current_date);
-		$user_info = get_userdata($user_id);
-		$userEmail = $user_info->user_email;
-		update_user_meta($user_id, "rebook_email", $userEmail);
-		$prefix="rebook_".$date_time."_";
-		$new_email= $prefix.$userEmail;
-		$args = array(
-			'ID'         => $user_id,
-			'user_email' => esc_attr( $new_email )
-		);
-		$user_data = wp_update_user( $args );
-	
-		if( !is_wp_error($user_data) ) {
-			echo $user_id;
-			wp_logout();
-		} else {
-			echo $user_data->get_error_message();
-		}
-		
-		exit;
-	}
+    // The old handler renamed ANY user's email from an unauthenticated request.
+    // Sellers now re-book from the dashboard form (Glow_FC_Seller_Rebooking).
+    wp_send_json_error(array('message' => 'Please reload your seller dashboard and use Re-book to enter your new Fundraiser ID.'), 409);
 }
-?>
