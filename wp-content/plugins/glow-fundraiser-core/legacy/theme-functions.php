@@ -15132,6 +15132,43 @@ function glow_create_zero_order_after_registration( $valid_form_data, $form_id, 
 }
 
 /**
+ * Create the same $0 Processing order for the Join Us ("Join As Sales") form, so
+ * ShipStation imports it and the new sales rep's kit ships like a fundraiser's.
+ * Tagged with glow_join_us_user (not fundraiser_field) so it stays out of fundraiser reports.
+ */
+add_action( 'user_registration_after_register_user_action', 'glow_create_join_us_order_after_registration', 10, 3 );
+
+function glow_create_join_us_order_after_registration( $valid_form_data, $form_id, $user_id ) {
+    if ( 62311 !== (int) $form_id || empty( $user_id ) ) {
+        return;
+    }
+
+    $field = function( $key ) use ( $valid_form_data ) {
+        return isset( $valid_form_data[ $key ]->value ) ? trim( (string) $valid_form_data[ $key ]->value ) : '';
+    };
+
+    // The form has one "Full Name" field; split it for the shipping label.
+    $name  = preg_split( '/\s+/', $field( 'full_name' ), 2 );
+    $phone = $field( 'phone' ) ?: $field( 'cell' );
+
+    $order_id = glow_create_fundraiser_shipping_order( $user_id, array(
+        'first_name' => $name[0] ?? '',
+        'last_name'  => $name[1] ?? '',
+        'company'    => $field( 'comp_name' ),
+        'email'      => $field( 'user_email' ),
+        'phone'      => $phone,
+        'address_1'  => $field( 'shippping_address' ), // sic: the form's field name
+        'city'       => $field( 'city' ),
+        'state'      => $field( 'state' ),
+        'postcode'   => $field( 'zip' ),
+    ), 'glow_join_us_user' );
+
+    if ( $order_id && ( $order = wc_get_order( $order_id ) ) ) {
+        $order->add_order_note( 'Join Us sign-up (Join As Sales form).' );
+    }
+}
+
+/**
  * The $0 "Fundraiser product". Its ID differs per database (58612 before the
  * Oct 2026 migration, 60634 after), so fall back to finding it by title.
  */
@@ -15155,7 +15192,7 @@ function glow_fundraiser_shipping_product() {
 /**
  * Create the $0 Processing order ShipStation imports to ship the fundraiser's kit.
  */
-function glow_create_fundraiser_shipping_order( $user_id, $billing_data ) {
+function glow_create_fundraiser_shipping_order( $user_id, $billing_data, $link_key = 'fundraiser_field' ) {
     $quantity = 1;
 
     // Bail SAFELY if the product is missing on this environment. Previously a
@@ -15212,7 +15249,7 @@ function glow_create_fundraiser_shipping_order( $user_id, $billing_data ) {
     // 🔥 Then move back to Processing (for ShipStation)
     $order->update_status( 'processing', 'Moved back to processing for ShipStation.' );
 	$order_id = $order->get_id();
-	update_post_meta( $order_id, 'fundraiser_field', $user_id );
+	update_post_meta( $order_id, $link_key, $user_id );
 	return $order_id;
 }
 
