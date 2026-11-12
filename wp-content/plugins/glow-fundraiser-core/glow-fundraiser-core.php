@@ -58,6 +58,7 @@ require_once GLOW_FC_DIR . 'includes/helpers/fundraiser-rep-cc.php';
  * ShipStation item names show the product type on a second line.
  */
 require_once GLOW_FC_DIR . 'includes/shipping/shipstation-product-type.php';
+require_once GLOW_FC_DIR . 'includes/shipping/referral-tracking-email.php';
 
 /**
  * Register the bundled legacy page templates in the page "Template" dropdown
