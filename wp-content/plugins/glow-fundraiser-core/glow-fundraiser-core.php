@@ -75,6 +75,7 @@ require_once GLOW_FC_DIR . 'includes/compat/royal-shims.php';
  * Free shipping on catalog (brochure) orders over $99 (Fundraiser Dashboard flow).
  */
 require_once GLOW_FC_DIR . 'includes/checkout/catalog-context.php';
+require_once GLOW_FC_DIR . 'includes/checkout/require-seller.php';
 require_once GLOW_FC_DIR . 'includes/shipping/catalog-free-shipping.php';
 require_once GLOW_FC_DIR . 'includes/shipping/ship-to-group-checkout.php';
 

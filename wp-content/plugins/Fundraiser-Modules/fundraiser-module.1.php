@@ -1226,7 +1226,7 @@ function gsc_add_select_checkout_field( $checkout ) {
 	    'type'          => 'select',
 	    'class'         => array( 'gsc-drop' ),
 	    'label'         => __( 'Seller Name' ),
-       'required' 		=> false,
+       'required' 		=> ! $is_fundraiser, // enforced in glow-fundraiser-core/includes/checkout/require-seller.php
 	    // Fundraisers pick one of their sellers (loaded by AJAX) or add one; no "No-seller" option.
 	    'options'       => $is_fundraiser ? array(
         'custom'		=> __( 'Add Seller')
