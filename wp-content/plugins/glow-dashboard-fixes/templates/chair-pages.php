@@ -350,6 +350,34 @@ add_filter( 'woocommerce_order_query_args', function ( $args ) {
 /* ------------------------------------------------------------------ */
 /* C. Claims / replacements form at /my-account/view-my-order/ID        */
 /* ------------------------------------------------------------------ */
+
+/** Full name of a user ID, falling back to the display name. */
+function glow_cp_user_name( $uid ) {
+	$u = $uid ? get_userdata( (int) $uid ) : false;
+	if ( ! $u ) {
+		return '';
+	}
+	$name = trim( $u->first_name . ' ' . $u->last_name );
+	return '' !== $name ? $name : $u->display_name;
+}
+
+/**
+ * Seller of an order line: brochure orders store it per item (_wdm_seller_*),
+ * online orders store it on the order (wc_seller_field = user ID or "custom").
+ */
+function glow_cp_claim_seller( $order, $item ) {
+	$name = trim( wp_strip_all_tags( (string) $item->get_meta( '_wdm_seller_display' ) ) );
+	if ( '' === $name ) {
+		$raw  = trim( (string) $item->get_meta( '_wdm_seller_name' ) );
+		$name = is_numeric( $raw ) ? glow_cp_user_name( $raw ) : $raw;
+	}
+	if ( '' === $name ) {
+		$sid  = $order->get_meta( 'wc_seller_field' );
+		$name = 'custom' === $sid ? trim( (string) $order->get_meta( 'wc_seller_field_custom' ) ) : ( is_numeric( $sid ) ? glow_cp_user_name( $sid ) : '' );
+	}
+	return '' !== $name ? $name : 'No seller selected';
+}
+
 add_action( 'template_redirect', function () {
 	$uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
 	if ( ! preg_match( '#/my-account/view-my-order/(\d+)/?#', $uri, $m ) ) {
@@ -376,29 +404,81 @@ add_action( 'template_redirect', function () {
 		if ( ! wp_verify_nonce( $_POST['glow_claim_nonce'], 'glow_claim_' . $order->get_id() ) ) {
 			$error = 'Your session expired. Please try again.';
 		} else {
-			$lines = array();
-			$items = isset( $_POST['claim_qty'] ) ? (array) $_POST['claim_qty'] : array();
+			$issues = array( 'missing' => 'Missing', 'broken' => 'Broken / damaged', 'wrong item' => 'Wrong item' );
+			$lines  = array();
+			$rows   = array();
+			$items  = isset( $_POST['claim_qty'] ) ? (array) $_POST['claim_qty'] : array();
 			foreach ( $order->get_items() as $item_id => $item ) {
 				$q = isset( $items[ $item_id ] ) ? absint( $items[ $item_id ] ) : 0;
 				if ( $q > 0 ) {
-					$issue   = isset( $_POST['claim_issue'][ $item_id ] ) ? sanitize_text_field( wp_unslash( $_POST['claim_issue'][ $item_id ] ) ) : 'missing';
+					$key     = isset( $_POST['claim_issue'][ $item_id ] ) ? sanitize_text_field( wp_unslash( $_POST['claim_issue'][ $item_id ] ) ) : 'missing';
+					$issue   = isset( $issues[ $key ] ) ? $issues[ $key ] : 'Missing';
 					$type    = function_exists( 'glow_product_type_label' ) ? glow_product_type_label( $item ) : '';
-					$lines[] = sprintf( '%d x %s (%s)%s', min( $q, $item->get_quantity() ), wp_strip_all_tags( $item->get_name() ), $issue, $type !== '' ? "\n   " . $type : '' );
+					$product = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) ) . ( '' !== $type ? ' (' . $type . ')' : '' );
+					$seller  = glow_cp_claim_seller( $order, $item );
+					$q       = min( $q, $item->get_quantity() );
+					$lines[] = sprintf( '%d x %s - %s - Seller: %s', $q, $product, $issue, $seller );
+					$rows[]  = array( $item->get_product_id(), $product, $q, $seller, $issue );
 				}
 			}
 			$notes = isset( $_POST['claim_notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['claim_notes'] ) ) : '';
 			if ( ! $lines && '' === trim( $notes ) ) {
 				$error = 'Please enter a quantity for at least one item, or describe the problem.';
 			} else {
-				$text = "Missing / damaged report\n" . implode( "\n", $lines ) . ( $notes ? "\nNotes: " . $notes : '' )
-					. "\nSubmitted by: " . wp_get_current_user()->display_name . ' (#' . $uid . ')';
+				$me      = wp_get_current_user();
+				$by      = ( glow_cp_user_name( $uid ) ?: $me->display_name ) . ' (' . $me->user_email . ', #' . $uid . ')';
+				$fr_name = $fid ? glow_cp_user_name( $fid ) : '';
+				$text    = "Missing / damaged report\n" . implode( "\n", $lines ) . ( $notes ? "\nNotes: " . $notes : '' )
+					. "\nSubmitted by: " . $by;
 				$order->update_meta_data( 'claim_requested', 1 );
 				$order->update_meta_data( 'claim_details', $text );
 				$order->update_meta_data( 'claim_date', current_time( 'mysql' ) );
 				$order->save();
 				$order->add_order_note( $text, false, true );
+
+				// HTML email laid out like the old site's "Order Reconciliation" claim email.
+				$ship_name = trim( $order->get_shipping_first_name() . ' ' . $order->get_shipping_last_name() );
+				$address   = $order->get_shipping_address_1() ? $order->get_formatted_shipping_address() : $order->get_formatted_billing_address();
+				$details   = array(
+					'Order ID'         => $order->get_id(),
+					'Fundraiser'       => $fid ? trim( $fr_name . ' (#' . $fid . ')' ) : '',
+					'Order Date'       => $order->get_date_created() ? $order->get_date_created()->date_i18n( 'Y-m-d' ) : '',
+					'Shipping Date'    => $order->get_date_completed() ? $order->get_date_completed()->date_i18n( 'Y-m-d' ) : '',
+					'Shipping Method'  => $order->get_shipping_method(),
+					'Shipping Name'    => '' !== $ship_name ? $ship_name : trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ),
+					'Shipping Address' => wp_strip_all_tags( preg_replace( '#<br\s*/?>#i', ', ', $address ) ),
+					'Customer Phone'   => $order->get_billing_phone(),
+					'Payment Method'   => $order->get_payment_method_title(),
+					'Transaction ID'   => $order->get_transaction_id(),
+					'Total Payment'    => html_entity_decode( wp_strip_all_tags( wc_price( $order->get_total() ) ) ),
+					'Submitted By'     => $by,
+				);
+				$td   = 'style="padding:6px 10px;border:1px solid #999;text-align:left"';
+				$html = '<h3><u>ORDER DETAILS</u></h3><table style="border-collapse:collapse;width:80%">';
+				foreach ( $details as $k => $v ) {
+					$html .= '<tr><th ' . $td . '>' . esc_html( $k ) . '</th><td ' . $td . '>' . esc_html( (string) $v ) . '</td></tr>';
+				}
+				$html .= '</table><hr style="width:80%;margin-left:0"><h3><u>PRODUCT CLAIM DETAILS</u></h3>';
+				if ( $rows ) {
+					$html .= '<table style="border-collapse:collapse;width:80%"><tr><th ' . $td . '>Product ID</th><th ' . $td . '>Product name</th><th ' . $td . '>Quantity</th><th ' . $td . '>Seller name</th><th ' . $td . '>Problem</th></tr>';
+					foreach ( $rows as $r ) {
+						$html .= '<tr>';
+						foreach ( $r as $cell ) {
+							$html .= '<td ' . $td . '>' . esc_html( (string) $cell ) . '</td>';
+						}
+						$html .= '</tr>';
+					}
+					$html .= '</table>';
+				} else {
+					$html .= '<p>No individual items selected &ndash; see notes.</p>';
+				}
+				if ( $notes ) {
+					$html .= '<h3><u>NOTES</u></h3><p>' . nl2br( esc_html( $notes ) ) . '</p>';
+				}
+				$html .= '<p><a href="' . esc_url( admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) ) . '">Open order #' . (int) $order->get_id() . ' in admin</a></p>';
+
 				$to = array_unique( array_filter( array( get_option( 'admin_email' ), get_option( 'woocommerce_email_from_address' ) ) ) );
-				wp_mail( $to, sprintf( '[GLOW] Missing / damaged report for order #%d', $order->get_id() ), $text . "\n\n" . admin_url( 'post.php?post=' . $order->get_id() . '&action=edit' ) );
+				wp_mail( $to, sprintf( '[GLOW] Missing / damaged report for order #%d%s', $order->get_id(), '' !== $fr_name ? ' - ' . $fr_name : '' ), $html, array( 'Content-Type: text/html; charset=UTF-8' ) );
 				$saved = true;
 			}
 		}
@@ -460,14 +540,15 @@ add_action( 'template_redirect', function () {
 		<?php wp_nonce_field( 'glow_claim_' . $order->get_id(), 'glow_claim_nonce' ); ?>
 		<h3>Items in this order</h3>
 		<div style="overflow-x:auto"><table>
-			<thead><tr><th>Product</th><th>Ordered</th><th>Qty affected</th><th>Problem</th></tr></thead>
+			<thead><tr><th>Product</th><th>Seller</th><th>Ordered</th><th>Qty affected</th><th>Problem</th></tr></thead>
 			<tbody>
 			<?php foreach ( $order->get_items() as $item_id => $item ) : ?>
 				<tr>
 					<td><?php echo esc_html( trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( str_replace( array( '<br>', '<br/>', '<br />' ), ' ', $item->get_name() ) ) ) ) ); ?><?php echo function_exists( 'glow_product_type_html' ) ? glow_product_type_html( $item ) : ''; ?></td>
+					<td><?php echo esc_html( glow_cp_claim_seller( $order, $item ) ); ?></td>
 					<td><?php echo (int) $item->get_quantity(); ?></td>
 					<td><input type="number" name="claim_qty[<?php echo (int) $item_id; ?>]" min="0" max="<?php echo (int) $item->get_quantity(); ?>" value="0" <?php disabled( $saved ); ?>></td>
-					<td><select name="claim_issue[<?php echo (int) $item_id; ?>]" <?php disabled( $saved ); ?>><option value="missing">Missing</option><option value="damaged">Damaged</option><option value="wrong item">Wrong item</option></select></td>
+					<td><select name="claim_issue[<?php echo (int) $item_id; ?>]" <?php disabled( $saved ); ?>><option value="missing">Missing</option><option value="broken">Broken / damaged</option><option value="wrong item">Wrong item</option></select></td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
