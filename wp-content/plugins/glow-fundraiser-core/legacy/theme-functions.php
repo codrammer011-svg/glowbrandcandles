@@ -402,7 +402,8 @@ add_action('wpcf7_before_send_mail', 'create_user_from_join_us', 1);
 
 add_filter( 'woocommerce_states', 'custom_us_states', 10, 1 );
 function custom_us_states( $states ) {
-    $non_allowed_us_states = array( 'AK', 'HI'); 
+    // Lower 48 + DC only: no Alaska, Hawaii or overseas military (APO/FPO) addresses.
+    $non_allowed_us_states = array( 'AK', 'HI', 'AA', 'AE', 'AP' );
 
     // Loop through your non allowed us states and remove them
     foreach( $non_allowed_us_states as $state_code ) {
