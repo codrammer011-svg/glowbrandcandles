@@ -123,7 +123,8 @@ if ( ! function_exists( 'glow_shop_category_options' ) ) {
             'Wax Melts'                     => 154,
             'Essential Oils'                => 110,
             'Room Sprays'                   => 177,
-            'Glow for Less'                 => 207,
+			/* Glow for Less category is hidden because it has no products, as requested by the client. 
+            'Glow for Less'                 => 207,*/
         );
  
         $sale = get_term_by( 'slug', 'sale-product', 'product_cat' );
