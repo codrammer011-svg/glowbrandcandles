@@ -125,7 +125,9 @@ function glow_seller_share_popup_output() {
 	#glow-share-pop .gs-foot{display:flex;align-items:center;justify-content:center;gap:calc(var(--u) * 28);margin-top:calc(var(--u) * 46);font-size:calc(var(--u) * 30);font-weight:600;line-height:1.2;}
 	#glow-share-pop .gs-qr-btn,#glow-share-pop .gs-later{margin:0;padding:calc(var(--u) * 6) calc(var(--u) * 4);border:0;background:none;color:var(--navy);font:inherit;cursor:pointer;}
 	#glow-share-pop .gs-qr-btn:hover,#glow-share-pop .gs-later:hover{color:var(--pink);}
-	#glow-share-pop .gs-dash{padding:calc(var(--u) * 6) calc(var(--u) * 4);color:var(--pink);font:inherit;font-weight:700;text-decoration:none;}
+	/* "Go to My Dashboard" sits on its own centred line under the other footer links. */
+	#glow-share-pop .gs-foot{flex-wrap:wrap;row-gap:calc(var(--u) * 10);}
+	#glow-share-pop .gs-dash{flex-basis:100%;padding:calc(var(--u) * 6) calc(var(--u) * 4);color:var(--pink);font:inherit;font-weight:700;text-align:center;text-decoration:none;}
 	#glow-share-pop .gs-dash:hover{text-decoration:underline;}
 	#glow-share-pop .gs-qr{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(254,248,242,.94);}
 	#glow-share-pop .gs-qr-box{display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 30px;border-radius:20px;background:#fff;box-shadow:0 18px 40px rgba(19,35,79,.16);text-align:center;}
@@ -202,7 +204,6 @@ function glow_seller_share_popup_output() {
 					<button type="button" class="gs-qr-btn" id="gs-qr-btn" hidden>Show QR code</button>
 					<span class="gs-dot" aria-hidden="true" hidden>•</span>
 					<span class="gs-later" id="gs-later" role="button" tabindex="0">I’ll share later</span>
-					<span aria-hidden="true">•</span>
 					<a class="gs-dash" id="gs-dash" href="<?php echo esc_url( home_url( '/seller-dashboard/' ) ); ?>">Go to My Dashboard &rarr;</a>
 				</div>
 			</div>
