@@ -4,6 +4,18 @@
  * Auto-split from functions.php – edit this file, not the monolith.
  */
 
+/**
+ * Phone fields on the registration forms are plain text boxes: no country flag, input
+ * mask or number check (the "smart" phone check rejected numbers sellers really use).
+ * Required fields still have to be filled in.
+ */
+add_filter('user_registration_form_field_args', function ($args) {
+    if (isset($args['type']) && 'phone' === $args['type']) {
+        $args['type'] = 'text';
+    }
+    return $args;
+});
+
 
 /**
  * Hook triggered after Seller Registration Form submission.
