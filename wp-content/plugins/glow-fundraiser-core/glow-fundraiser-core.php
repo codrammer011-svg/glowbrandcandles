@@ -79,6 +79,7 @@ require_once GLOW_FC_DIR . 'includes/checkout/catalog-context.php';
 require_once GLOW_FC_DIR . 'includes/checkout/require-seller.php';
 require_once GLOW_FC_DIR . 'includes/shipping/catalog-free-shipping.php';
 require_once GLOW_FC_DIR . 'includes/shipping/ship-to-group-checkout.php';
+require_once GLOW_FC_DIR . 'includes/shipping/ship-to-group-stock.php';
 
 /**
  * Recompute the online-store profit deduction on checkout via a hook (was in the
