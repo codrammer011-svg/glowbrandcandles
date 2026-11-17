@@ -26,12 +26,23 @@ function glow_ship_to_group_order_emails($order_id, $order = null) {
     if (!glow_is_ship_to_group_order($order)) {
         return;
     }
+    // This runs while the close out is still saving the order, so a failure inside an
+    // email (e.g. a plugin hook choking on a deleted product) must not stop the close out.
     $emails = WC()->mailer()->get_emails();
-    if (!empty($emails['WC_Email_New_Order'])) {
-        $emails['WC_Email_New_Order']->trigger($order->get_id(), $order);
-    }
-    if (!empty($emails['WC_Email_Customer_Processing_Order'])) {
-        $emails['WC_Email_Customer_Processing_Order']->trigger($order->get_id(), $order);
+    foreach (array('WC_Email_New_Order', 'WC_Email_Customer_Processing_Order') as $class) {
+        if (empty($emails[$class])) {
+            continue;
+        }
+        $buffers = ob_get_level();
+        try {
+            $emails[$class]->trigger($order->get_id(), $order);
+        } catch (\Throwable $e) {
+            while (ob_get_level() > $buffers) {
+                ob_end_clean(); // drop the half-rendered email template
+            }
+            error_log(sprintf('glow_ship_to_group_order_emails: %s for order %d failed: %s', $class, $order->get_id(), $e->getMessage()));
+            $order->add_order_note(sprintf('Ship to Group email (%s) could not be sent: %s', $class, $e->getMessage()));
+        }
     }
 }
 
