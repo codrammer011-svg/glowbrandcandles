@@ -233,6 +233,10 @@ do_action('et_page_heading');
 										$states = array(
 											'Alabama','Alaska','Arizona','Arkansas','Armed Forces Americas (AA)','Armed Forces Europe (AE)','Armed Forces Pacific (AP)','California','Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Islands','Virginia','Washington','West Virginia','Wisconsin','Wyoming','Alberta','British Columbia','Manitoba','New Brunswick','Newfoundland','Northwest Territories','Nova Scotia','Nunavut','Ontario','Prince Edward Island','Quebec','Saskatchewan','Yukon'
 										);
+										// Lower 48 + DC only (includes/shipping/lower-48.php).
+										if ( function_exists( 'glow_lower48_state_names' ) ) {
+											$states = glow_lower48_state_names();
+										}
 										foreach ($states as $st) {
 											printf('<option value="%1$s" %2$s>%1$s</option>', esc_attr($st), selected($select_state, $st, false));
 										}
