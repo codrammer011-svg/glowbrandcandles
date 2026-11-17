@@ -1394,7 +1394,7 @@ $is_admin_view = glow_fd_is_admin_view( $fid );
 						<tbody>
 						<?php foreach ( $stats['table'] as $row ) : ?>
 							<tr>
-								<td>#<?php echo esc_html( $row['id'] ); ?></td>
+								<td>#<?php echo esc_html( function_exists( 'glow_order_display_id' ) ? glow_order_display_id( $row['id'] ) : $row['id'] ); ?></td>
 								<td><?php echo esc_html( $row['seller'] ); ?></td>
 								<td><?php echo esc_html( $row['customer'] ); ?></td>
 								<td><?php echo esc_html( $row['date'] ); ?></td>
