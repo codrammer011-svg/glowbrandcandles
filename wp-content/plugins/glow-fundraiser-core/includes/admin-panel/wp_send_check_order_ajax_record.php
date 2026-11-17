@@ -64,7 +64,7 @@ function wp_send_check_order_ajax_record()
 					
 				<tr id="<?php echo "fund_".$order->get_id(); ?>" class="<?php  echo 'sr_'.$cno." "; if($cno % 2 == 0){ echo "even "; } else{ echo "odd "; } echo $payment_method."  ".$payment_title; ?>">
 				<!--<td id="<?php echo 'sr_'.$cno." "; ?>" style="vertical-align: top; text-align: center; "><?php echo $cno; ?></td> -->
-				<td id="0_" style="vertical-align: top; text-align: center; "><?php echo "#".$order->get_id(); ?></td>
+				<td id="0_" style="vertical-align: top; text-align: center; "><?php echo "#".glow_order_display_id($order->get_id()); ?></td>
 				<td id="1_" style="vertical-align: top; text-align: center;"><?php echo $frID3;?></td>
 				<td id="10_" style="vertical-align: top; text-align: center;"><?php echo $org; ?></td>
 				<td id="2_" style="vertical-align: top; text-align: center; "><?php echo $created_date_str; ?></td>

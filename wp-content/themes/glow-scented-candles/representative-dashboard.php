@@ -2132,7 +2132,7 @@ span.page-numbers.current {
 							}
 							else{}
 						?>
-							<td style="vertical-align: top; text-align: left; ">#<?php echo $c_order->get_id();  ?></td>
+							<td style="vertical-align: top; text-align: left; ">#<?php echo glow_order_display_id($c_order->get_id());  ?></td>
 							<!-- <td><?php echo $s_id[0];  ?></td> -->
 							<!--<td style="vertical-align: top; text-align: left; "><?php echo $s_name;  ?></td>-->
 							<td style="vertical-align: top; text-align: left; "><?php echo $order_billing_first_name . ' '. $order_billing_last_name;  ?></td>
@@ -2170,7 +2170,7 @@ span.page-numbers.current {
 									<div class="order_details">
 										<h3 style="text-align: center;margin-top: 20px;margin-bottom: 20px;"><u>ORDER DETAILS</u></h3>
 										<h4>
-										Order No : <?php echo "#".$c_order->get_id(); ?></h4>
+										Order No : <?php echo "#".glow_order_display_id($c_order->get_id()); ?></h4>
 										<!--<b>Seller name : <?php echo $s_name;  ?>
 										</b>-->
 										<table style="margin-top: 10px;">
@@ -2351,7 +2351,7 @@ span.page-numbers.current {
 							}
 							else{}
 						?>
-							<td style="vertical-align: top; text-align: left; ">#<?php echo $c_order->get_id();  ?></td>
+							<td style="vertical-align: top; text-align: left; ">#<?php echo glow_order_display_id($c_order->get_id());  ?></td>
 							<!-- <td><?php echo $s_id[0];  ?></td> -->
 							<!--<td style="vertical-align: top; text-align: left; "><?php echo $s_name;  ?></td>-->
 							<td style="vertical-align: top; text-align: left; "><?php echo $order_billing_first_name . ' '. $order_billing_last_name;  ?></td>
@@ -2389,7 +2389,7 @@ span.page-numbers.current {
 									<div class="order_details">
 										<h3 style="text-align: center;margin-top: 20px;margin-bottom: 20px;"><u>ORDER DETAILS</u></h3>
 										<h4>
-										Order No : <?php echo "#".$c_order->get_id(); ?></h4>
+										Order No : <?php echo "#".glow_order_display_id($c_order->get_id()); ?></h4>
 										<!--<b>Seller name : <?php echo $s_name;  ?>
 										</b>-->
 										<table style="margin-top: 10px;">
@@ -2570,7 +2570,7 @@ span.page-numbers.current {
 							}
 							else{}
 						?>
-							<td style="vertical-align: top; text-align: left; ">#<?php echo $c_order->get_id();  ?></td>
+							<td style="vertical-align: top; text-align: left; ">#<?php echo glow_order_display_id($c_order->get_id());  ?></td>
 							<!-- <td><?php echo $s_id[0];  ?></td> -->
 							<!--<td style="vertical-align: top; text-align: left; "><?php echo $s_name;  ?></td>-->
 							<td style="vertical-align: top; text-align: left; "><?php echo $order_billing_first_name . ' '. $order_billing_last_name;  ?></td>
@@ -2608,7 +2608,7 @@ span.page-numbers.current {
 									<div class="order_details">
 										<h3 style="text-align: center;margin-top: 20px;margin-bottom: 20px;"><u>ORDER DETAILS</u></h3>
 										<h4>
-										Order No : <?php echo "#".$c_order->get_id(); ?></h4>
+										Order No : <?php echo "#".glow_order_display_id($c_order->get_id()); ?></h4>
 										<!--<b>Seller name : <?php echo $s_name;  ?>
 										</b>-->
 										<table style="margin-top: 10px;">
