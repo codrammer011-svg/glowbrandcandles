@@ -15207,6 +15207,16 @@ function glow_create_fundraiser_shipping_order( $user_id, $billing_data, $link_k
         return false;
     }
 
+    // Lower 48 + DC only: no kit order for Alaska, Hawaii, military or territory addresses.
+    if ( function_exists( 'glow_is_blocked_ship_address' ) && glow_is_blocked_ship_address( 'US', $billing_data['state'] ?? '' ) ) {
+        wp_mail(
+            get_option( 'admin_email' ),
+            sprintf( '[GLOW] No kit order created for user #%d: address outside shipping area', $user_id ),
+            sprintf( "User #%d (%s) registered with an address in %s. GLOW ships to the lower 48 states and DC only, so no kit order was created.\n\n%s", $user_id, $billing_data['email'] ?? '', $billing_data['state'], admin_url( 'user-edit.php?user_id=' . $user_id ) )
+        );
+        return false;
+    }
+
     // Create order
     $order = wc_create_order( array(
         'customer_id' => $user_id
