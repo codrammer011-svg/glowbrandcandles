@@ -83,6 +83,7 @@ require_once GLOW_FC_DIR . 'includes/shipping/ship-to-group-checkout.php';
 require_once GLOW_FC_DIR . 'includes/shipping/ship-to-group-stock.php';
 require_once GLOW_FC_DIR . 'includes/shipping/lower-48.php';
 require_once GLOW_FC_DIR . 'includes/shipping/ship-to-group-order-email.php';
+require_once GLOW_FC_DIR . 'includes/shipping/shipstation-address-line2.php';
 
 /**
  * Recompute the online-store profit deduction on checkout via a hook (was in the
