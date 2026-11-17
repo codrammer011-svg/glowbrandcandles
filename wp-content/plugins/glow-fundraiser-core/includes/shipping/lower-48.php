@@ -49,10 +49,11 @@ add_filter('user_registration_form_field_args', function ($args) {
     if (!in_array('Texas', $options, true) || !in_array('Alaska', $options, true)) {
         return $args; // not a US state list
     }
+    // Keys are the submitted values ("Texas" => "Texas"), so keep them as they are.
     $keep = glow_lower48_state_names();
-    $args['options'] = array_values(array_filter($options, function ($o) use ($keep) {
+    $args['options'] = array_filter($options, function ($o) use ($keep) {
         return in_array($o, $keep, true) || 0 === stripos((string) $o, 'Please select') || '' === trim((string) $o);
-    }));
+    });
     return $args;
 });
 
