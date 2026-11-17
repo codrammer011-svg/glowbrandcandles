@@ -37,7 +37,7 @@ function glow_is_blocked_ship_address($country, $state) {
     if (in_array($state, $codes, true)) {
         return true;
     }
-    return (bool) preg_match('/^(alaska|hawaii|armed forces|guam|puerto rico|(us |u\.s\. )?virgin islands|american samoa|northern mariana|marshall islands|palau|micronesia)/', $state);
+    return (bool) preg_match('/^(alaska|hawaii|armed forces|guam|puerto rico|(us |u\.s\. )?virgin islands|american samoa|northern mariana|marshall islands|palau|micronesia|alberta|british columbia|manitoba|new brunswick|newfoundland|northwest territories|nova scotia|nunavut|ontario|prince edward island|quebec|saskatchewan|yukon)/', $state);
 }
 
 /** User Registration state dropdowns (fundraiser registration, Join Us): lower 48 + DC only. */
